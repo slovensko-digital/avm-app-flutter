@@ -14,11 +14,15 @@ dependencies:
   autogram_sign:
     path: ../autogram_sign
   chopper: any
+  injectable: ^2.2.0
+  get_it: ^7.6.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  build_runner: any
+  injectable_generator: ^2.2.0
 
 # The following section is specific to Flutter packages.
 flutter:
