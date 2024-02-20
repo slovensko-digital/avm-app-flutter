@@ -1,5 +1,4 @@
-import 'package:autogram_sign/autogram_authenticator.dart';
-import 'package:autogram_sign/generated/autogram.swagger.dart';
+import 'package:autogram_sign/autogram_sign.dart';
 import 'package:eidmsdk/eidmsdk.dart';
 import 'package:flutter/material.dart';
 
