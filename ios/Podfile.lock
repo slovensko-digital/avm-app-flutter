@@ -1,0 +1,37 @@
+PODS:
+  - eidmsdk (0.0.1):
+    - Flutter
+    - JWTDecode
+    - lottie-ios
+    - OpenSSL-Universal
+  - Flutter (1.0.0)
+  - JWTDecode (3.1.0)
+  - lottie-ios (4.4.0)
+  - OpenSSL-Universal (1.1.2200)
+
+DEPENDENCIES:
+  - eidmsdk (from `.symlinks/plugins/eidmsdk/ios`)
+  - Flutter (from `Flutter`)
+
+SPEC REPOS:
+  trunk:
+    - JWTDecode
+    - lottie-ios
+    - OpenSSL-Universal
+
+EXTERNAL SOURCES:
+  eidmsdk:
+    :path: ".symlinks/plugins/eidmsdk/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  eidmsdk: 7856887449a2fd22ef48d36f8616f07213b4efeb
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  JWTDecode: 3eaab1e06b6f4dcbdd6716aff09ba4c2104ca8b7
+  lottie-ios: ef1be1f90d54255f08e09d767950e43714661178
+  OpenSSL-Universal: 6e1ae0555546e604dbc632a2b9a24a9c46c41ef6
+
+PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+
+COCOAPODS: 1.15.2
