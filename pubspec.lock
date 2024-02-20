@@ -83,7 +83,7 @@ packages:
   eidmsdk:
     dependency: "direct main"
     description:
-      path: "../eidmsdk"
+      path: "../eidmsdk_flutter"
       relative: true
     source: path
     version: "0.0.1"
