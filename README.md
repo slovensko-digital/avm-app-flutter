@@ -1,16 +1,18 @@
-# autogram
+# Autogram Mobile App (AVM)
 
-A new Flutter project.
+## Project init
 
-## Getting Started
+1. Download and setup [`fvm`](https://fvm.app), then run:
 
-This project is a starting point for a Flutter application.
+   ```shell
+   fvm install
+   ```
 
-A few resources to get you started if this is your first Flutter project:
+2. Set **Flutter SDK** - in Android Studio, go to "Languages & Frameworks > Flutter" and set
+   **Flutter SDK** path to [/absolute-path-to-this-project/.fvm/flutter_sdk](.fvm/flutter_sdk).
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+3. Get the packages:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+   ```shell
+   fvm flutter pub get
+   ```
