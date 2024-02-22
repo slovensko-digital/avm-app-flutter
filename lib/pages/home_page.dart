@@ -1,43 +1,84 @@
+import 'dart:convert';
+
+import 'package:share_plus/share_plus.dart';
+
+import '../utils.dart';
 import 'package:autogram_sign/autogram_sign.dart';
 import 'package:eidmsdk/eidmsdk.dart';
+import 'package:eidmsdk/eidmsdk_platform_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class HomePage extends StatelessWidget {
-  static final eidmsdk = Eidmsdk();
+import '../hooks.dart';
 
-  const HomePage({super.key});
+class HomePage extends HookWidget {
+  final eidmsdk = Eidmsdk();
+
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final localStorage = useLocalStorage('document');
+    // final testValue = useLocalStorageItem<String>(localStorage, 'test');
+
+    final encryptionKey = useLocalStorageItem<String>(
+        localStorage, 'encryptionKey', () => Utils.createCryptoRandomString());
+    final autogram = useMemoized(
+        () => AutogramService(
+            baseUrl: Uri.parse("https://autogram.slovensko.digital/api/v1"),
+            encryptionKey: encryptionKey.value ?? ''),
+        [encryptionKey.value]);
+    final documentId = useLocalStorageItem<String?>(localStorage, 'documentId');
+    final signingTime = useLocalStorageItem<int?>(localStorage, 'signingTime');
+    final certificateIndex =
+        useLocalStorageItem<int?>(localStorage, 'certificateIndex');
+    final certificateData =
+        useLocalStorageItem<String?>(localStorage, 'certificateData');
+    final dataToSign = useLocalStorageItem<String?>(localStorage, 'dataToSign');
+    final signedData = useLocalStorageItem<String?>(localStorage, 'signedData');
+    final signedDocumentInfo = useLocalStorageItem<Map<String, dynamic>?>(
+        localStorage, 'signedDocumentInfo');
+
+    final signedDocumentInfoController = useTextEditingController();
+
+    useEffect(
+      () {
+        signedDocumentInfoController.text = const JsonEncoder.withIndent('  ')
+            .convert(signedDocumentInfo.value);
+
+        return null;
+      },
+      [signedDocumentInfo.value],
+    );
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Autogram'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              child: const Text('Post document'),
-              onPressed: () async {
-                final autogram = Autogram.create(
-                  baseUrl:
-                      Uri.parse("https://autogram.slovensko.digital/api/v1"),
-                  interceptors: [
-                    AutogramAuthenticator(
-                      encryptionKey: "xEncryptionKey",
-                    ),
-                    // (Request request) {
-                    //   print(request.headers);
-                    //   return request;
-                    // },
-                  ],
-                );
-
-                try {
-                  final response = await autogram.documentsPost(
-                      body: const DocumentPostRequestBody(
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Text('Test value: ${testValue.value ?? '<none>'}'),
+              // ElevatedButton(
+              //   child: const Text('Set'),
+              //   onPressed: () {
+              //     testValue.value = DateTime.timestamp().toIso8601String();
+              //   },
+              // ),
+              // ElevatedButton(
+              //   child: const Text('Delete'),
+              //   onPressed: () {
+              //     localStorage.deleteItem('test');
+              //   },
+              // ),
+              ElevatedButton(
+                child: const Text('1. Create document'),
+                onPressed: () async {
+                  final newDocumentId =
+                      await autogram.createDocument(const DocumentPostRequestBody(
                     document: Document(
                       filename: 'sample.pdf',
                       content:
@@ -50,27 +91,110 @@ class HomePage extends StatelessWidget {
                     payloadMimeType: "application/pdf;base64",
                   ));
 
-                  print(response.statusCode);
-                  print(response.isSuccessful);
-                  print(response.body?.guid);
-                  print(response.error);
-                } on Exception catch (e) {
-                  print('Unknown exception: $e');
-                }
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Sign'),
-              onPressed: () async {
-                final result = await eidmsdk.signData(
-                  certIndex: 1,
-                  signatureScheme: '1.2.840.113549.1.1.11',
-                  dataToSign: "hello world",
-                );
-                print(result);
-              },
-            ),
-          ],
+                  documentId.value = newDocumentId;
+                },
+              ),
+              Text("Document ID: ${documentId.value ?? "<none>"}"),
+              ElevatedButton(
+                child: const Text('2. Choose certificate'),
+                onPressed: () async {
+                  final certificates = await eidmsdk
+                      .getCertificates(types: [EIDCertificateIndex.qes]);
+                  certificateIndex.value =
+                      certificates!['certificates'][0]['certIndex'] as int;
+                  certificateData.value =
+                      certificates['certificates'][0]['certData'] as String;
+                },
+              ),
+              Text(
+                  "Certificate: #${certificateIndex.value ?? "<none>"} ${certificateData.value ?? "<none>"}"),
+              ElevatedButton(
+                child: const Text('3. Get data to sign'),
+                onPressed: () async {
+                  if (documentId.value == null || certificateData.value == null) {
+                    return;
+                  }
+                  final result = await autogram.setDataToSign(
+                      documentId.value!,
+                      DocumentsGuidDatatosignPost$RequestBody(
+                          signingCertificate: certificateData.value!));
+                  dataToSign.value = result.dataToSign;
+                  signingTime.value = result.signingTime;
+                },
+              ),
+              Text("Data to sign: ${dataToSign.value ?? "<none>"}"),
+              Text("Signing time: ${signingTime.value ?? "<none>"}"),
+              ElevatedButton(
+                child: const Text('4. Sign data'),
+                onPressed: () async {
+                  if (certificateIndex.value == null ||
+                      dataToSign.value == null) {
+                    return;
+                  }
+
+                  final result = await eidmsdk.signData(
+                    certIndex: certificateIndex.value!,
+                    signatureScheme: '1.2.840.113549.1.1.11',
+                    dataToSign: dataToSign.value!,
+                  );
+
+                  signedData.value = result;
+                },
+              ),
+              Text("Signed data: ${signedData.value ?? "<none>"}"),
+              ElevatedButton(
+                child: const Text('5. Submit signed data'),
+                onPressed: () async {
+                  if (documentId.value == null ||
+                      signedData.value == null ||
+                      dataToSign.value == null ||
+                      certificateData.value == null ||
+                      signingTime.value == null) {
+                    return;
+                  }
+
+                  final result = await autogram.signDocument(
+                      documentId.value!,
+                      SignRequestBody(
+                          signedData: signedData.value!,
+                          dataToSignStructure: DataToSignStructure(
+                            dataToSign: dataToSign.value!,
+                            signingCertificate: certificateData.value!,
+                            signingTime: signingTime.value!,
+                          )));
+
+                  if (result is Map<String, dynamic>) {
+                    signedDocumentInfo.value = result;
+                  } else {
+                    print(result);
+                  }
+                },
+              ),
+              TextField(
+                controller: signedDocumentInfoController,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+              ),
+              ElevatedButton(
+                child: const Text('6. Open signed document'),
+                onPressed: () async {
+                  if (signedDocumentInfo.value == null) {
+                    return;
+                  }
+
+                  final currentDocumentInfo = signedDocumentInfo.value!;
+
+                  Share.shareXFiles([
+                    XFile.fromData(
+                      base64Decode(currentDocumentInfo['content']),
+                      mimeType: currentDocumentInfo['mimeType'],
+                      name: currentDocumentInfo['filename'],
+                    ),
+                  ]);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

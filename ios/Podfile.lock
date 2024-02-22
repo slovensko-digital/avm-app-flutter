@@ -8,10 +8,17 @@ PODS:
   - JWTDecode (3.1.0)
   - lottie-ios (4.4.0)
   - OpenSSL-Universal (1.1.2200)
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - share_plus (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - eidmsdk (from `.symlinks/plugins/eidmsdk/ios`)
   - Flutter (from `Flutter`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - share_plus (from `.symlinks/plugins/share_plus/ios`)
 
 SPEC REPOS:
   trunk:
@@ -24,6 +31,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/eidmsdk/ios"
   Flutter:
     :path: Flutter
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  share_plus:
+    :path: ".symlinks/plugins/share_plus/ios"
 
 SPEC CHECKSUMS:
   eidmsdk: 7856887449a2fd22ef48d36f8616f07213b4efeb
@@ -31,6 +42,8 @@ SPEC CHECKSUMS:
   JWTDecode: 3eaab1e06b6f4dcbdd6716aff09ba4c2104ca8b7
   lottie-ios: ef1be1f90d54255f08e09d767950e43714661178
   OpenSSL-Universal: 6e1ae0555546e604dbc632a2b9a24a9c46c41ef6
+  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
+  share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
 
 PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 
