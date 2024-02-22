@@ -1,5 +1,6 @@
-import 'package:autogram/pages/home_page.dart';
 import 'package:flutter/material.dart';
+
+import 'pages/home_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -12,6 +13,6 @@ class App extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
-        home: HomePage(),
+        home: const HomePage(),
       );
 }
