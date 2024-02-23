@@ -41,7 +41,7 @@ class TestPage extends HookWidget {
     final certificates = useState<CertificatesInfo?>(null);
     final dataToSign = useState<String?>(null);
     final signedData = useState<String?>(null);
-    final signedDocumentInfo = useState<Map<String, dynamic>?>(null);
+    final signedDocumentInfo = useState<GetDocumentResponse?>(null);
 
     useEffect(() {
       if (localStorageReady.data == true) {
@@ -226,7 +226,7 @@ class TestPage extends HookWidget {
             title: "6. Submit signed data",
             details: [
               Text(const JsonEncoder.withIndent('  ').convert(
-                  Map<String, dynamic>.from(signedDocumentInfo.value ?? {})
+                  Map<String, dynamic>.from(signedDocumentInfo.value?.toJson() ?? {})
                     ..update(
                       'content',
                       (value) =>
@@ -245,22 +245,20 @@ class TestPage extends HookWidget {
                   return;
                 }
 
-                final result = await autogram.signDocument(
-                    documentId.value!,
-                    SignRequestBody(
-                        signedData: signedData.value!,
-                        dataToSignStructure: DataToSignStructure(
-                          dataToSign: dataToSign.value!,
-                          signingCertificate:
-                              certificates.value!.certificates.first.certData,
-                          signingTime: signingTime.value!,
-                        )));
+                await autogram.signDocument(
+                  documentId.value!,
+                  SignRequestBody(
+                      signedData: signedData.value!,
+                      dataToSignStructure: DataToSignStructure(
+                        dataToSign: dataToSign.value!,
+                        signingCertificate:
+                            certificates.value!.certificates.first.certData,
+                        signingTime: signingTime.value!,
+                      )),
+                  false,
+                );
 
-                if (result is Map<String, dynamic>) {
-                  signedDocumentInfo.value = result;
-                } else {
-                  print(result);
-                }
+                signedDocumentInfo.value = await autogram.getDocument(documentId.value!);
               },
             ),
           ),
@@ -272,7 +270,7 @@ class TestPage extends HookWidget {
                   height: 300,
                   child: PdfPreview(
                     build: (format) =>
-                        base64Decode(signedDocumentInfo.value!['content']),
+                        base64Decode(signedDocumentInfo.value!.content),
                   ),
                 ),
             ],
@@ -287,9 +285,9 @@ class TestPage extends HookWidget {
 
                 Share.shareXFiles([
                   XFile.fromData(
-                    base64Decode(currentDocumentInfo['content']),
-                    mimeType: currentDocumentInfo['mimeType'],
-                    name: currentDocumentInfo['filename'],
+                    base64Decode(currentDocumentInfo.content),
+                    mimeType: currentDocumentInfo.mimeType.value,
+                    name: currentDocumentInfo.filename,
                   ),
                 ]);
               },
