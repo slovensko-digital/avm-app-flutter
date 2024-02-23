@@ -18,9 +18,19 @@ ValueNotifier<T?> useLocalStorageItem<T>(LocalStorage localStorage, String key,
     [T? Function()? defaultValue]) {
   final ready = useFuture(localStorage.ready);
 
-  final value = useState<T?>(defaultValue != null ? defaultValue() : null);
+  final value = useState<T?>(null);
   useEffect(() {
-    value.value = localStorage.getItem(key);
+    final storedValue = localStorage.getItem(key);
+    final initialValue = defaultValue == null ? null : defaultValue();
+    if (storedValue == null && initialValue != null) {
+      value.value = initialValue;
+    } else {
+      if (storedValue.runtimeType != value.value.runtimeType) {
+        value.value = null;
+      } else {
+        value.value = storedValue;
+      }
+    }
     return null;
   }, [ready.data, localStorage, key]);
 
