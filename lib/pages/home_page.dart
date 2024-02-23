@@ -58,242 +58,239 @@ class TestPage extends HookWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Autogram'),
       ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-        child: ListView(
-          children: [
-            ActionTile(
-              title: "Document to sign",
-              details: [
-                if (fileContent != null)
-                  SizedBox(
-                    height: 300,
-                    child: PdfPreview(
-                      build: (format) => fileContent,
-                    ),
+      body: ListView(
+        children: [
+          ActionTile(
+            title: "Document to sign",
+            details: [
+              if (fileContent != null)
+                SizedBox(
+                  height: 300,
+                  child: PdfPreview(
+                    build: (format) => fileContent,
                   ),
+                ),
+            ],
+            action: ElevatedButton(
+              child: const Text('Open'),
+              onPressed: () async {
+                if (fileContent == null) {
+                  return;
+                }
+
+                Share.shareXFiles([
+                  XFile.fromData(
+                    fileContent,
+                    mimeType: file.mimeType,
+                    name: file.name,
+                  ),
+                ]);
+              },
+            ),
+          ),
+          ActionTile(
+            title: "1. Encryption key",
+            details: [Text(encryptionKey.value ?? "<none>")],
+            action: ElevatedButton(
+              child: const Text('Regenerate'),
+              onPressed: () async {
+                encryptionKey.value = Utils.createCryptoRandomString();
+              },
+            ),
+          ),
+          ActionTile(
+            title: "2. Document ID",
+            details: [Text(documentId.value ?? "<none>")],
+            action: ElevatedButton(
+              child: const Text('Create'),
+              onPressed: () async {
+                if (encryptionKey.value == null || fileContent == null) {
+                  return;
+                }
+
+                final newDocumentId =
+                    await autogram.createDocument(DocumentPostRequestBody(
+                  document: Document(
+                    filename: file.name,
+                    content: base64Encode(fileContent),
+                  ),
+                  parameters: const SigningParameters(
+                    level: SigningParametersLevel.padesBaselineB,
+                    container: null,
+                  ),
+                  payloadMimeType: "application/pdf;base64",
+                ));
+
+                documentId.value = newDocumentId;
+              },
+            ),
+          ),
+          ActionTile(
+            title: "3. Certificate",
+            details: [
+              Text(const JsonEncoder.withIndent('  ')
+                  .convert(Map<String, dynamic>.from(certificates.value ?? {})
+                    ..update('certificates', (value) {
+                      return List<Map<String, dynamic>>.from(value)
+                          .map((cert) {
+                        return Map<String, dynamic>.from(cert)
+                          ..update(
+                              'certData',
+                              (value) =>
+                                  '<... ${base64Decode(value).length} bytes>');
+                      }).toList();
+                    }, ifAbsent: () => null)))
+            ],
+            action: Column(
+              children: [
+                ElevatedButton(
+                  child: const Text('Choose'),
+                  onPressed: () async {
+                    certificates.value = await eidmsdk
+                        .getCertificates(types: [EIDCertificateIndex.qes]);
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text('Clear'),
+                  onPressed: () async {
+                    certificates.value = {};
+                  },
+                ),
               ],
-              action: ElevatedButton(
-                child: const Text('Open'),
-                onPressed: () async {
-                  if (fileContent == null) {
-                    return;
-                  }
-
-                  Share.shareXFiles([
-                    XFile.fromData(
-                      fileContent,
-                      mimeType: file.mimeType,
-                      name: file.name,
-                    ),
-                  ]);
-                },
-              ),
             ),
-            ActionTile(
-              title: "1. Encryption key",
-              details: [Text(encryptionKey.value ?? "<none>")],
-              action: ElevatedButton(
-                child: const Text('Regenerate'),
-                onPressed: () async {
-                  encryptionKey.value = Utils.createCryptoRandomString();
-                },
-              ),
-            ),
-            ActionTile(
-              title: "2. Document ID",
-              details: [Text(documentId.value ?? "<none>")],
-              action: ElevatedButton(
-                child: const Text('Create'),
-                onPressed: () async {
-                  if (encryptionKey.value == null || fileContent == null) {
-                    return;
-                  }
-
-                  final newDocumentId =
-                      await autogram.createDocument(DocumentPostRequestBody(
-                    document: Document(
-                      filename: file.name,
-                      content: base64Encode(fileContent),
-                    ),
-                    parameters: const SigningParameters(
-                      level: SigningParametersLevel.padesBaselineB,
-                      container: null,
-                    ),
-                    payloadMimeType: "application/pdf;base64",
-                  ));
-
-                  documentId.value = newDocumentId;
-                },
-              ),
-            ),
-            ActionTile(
-              title: "3. Certificate",
-              details: [
-                Text(const JsonEncoder.withIndent('  ')
-                    .convert(Map<String, dynamic>.from(certificates.value ?? {})
-                      ..update('certificates', (value) {
-                        return List<Map<String, dynamic>>.from(value)
-                            .map((cert) {
-                          return Map<String, dynamic>.from(cert)
-                            ..update(
-                                'certData',
-                                (value) =>
-                                    '<... ${base64Decode(value).length} bytes>');
-                        }).toList();
-                      }, ifAbsent: () => null)))
-              ],
-              action: Column(
+          ),
+          ActionTile(
+            title: "4. Data to sign",
+            details: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ElevatedButton(
-                    child: const Text('Choose'),
-                    onPressed: () async {
-                      certificates.value = await eidmsdk
-                          .getCertificates(types: [EIDCertificateIndex.qes]);
-                    },
-                  ),
-                  ElevatedButton(
-                    child: const Text('Clear'),
-                    onPressed: () async {
-                      certificates.value = {};
-                    },
-                  ),
+                  Text(dataToSign.value ?? "<none>"),
+                  if (signingTime.value != null)
+                    Text(
+                        "${DateTime.fromMillisecondsSinceEpoch(signingTime.value!)} (${signingTime.value})")
+                  else
+                    const Text("<none>"),
                 ],
-              ),
+              )
+            ],
+            action: ElevatedButton(
+              child: const Text('Fetch'),
+              onPressed: () async {
+                if (documentId.value == null || certificates.value == null) {
+                  return;
+                }
+                final result = await autogram.setDataToSign(
+                    documentId.value!,
+                    DocumentsGuidDatatosignPost$RequestBody(
+                      signingCertificate: certificates.value!['certificates']
+                          [0]['certData'],
+                    ));
+                dataToSign.value = result.dataToSign;
+                signingTime.value = result.signingTime;
+              },
             ),
-            ActionTile(
-              title: "4. Data to sign",
-              details: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(dataToSign.value ?? "<none>"),
-                    if (signingTime.value != null)
-                      Text(
-                          "${DateTime.fromMillisecondsSinceEpoch(signingTime.value!)} (${signingTime.value})")
-                    else
-                      const Text("<none>"),
-                  ],
-                )
-              ],
-              action: ElevatedButton(
-                child: const Text('Fetch'),
-                onPressed: () async {
-                  if (documentId.value == null || certificates.value == null) {
-                    return;
-                  }
-                  final result = await autogram.setDataToSign(
-                      documentId.value!,
-                      DocumentsGuidDatatosignPost$RequestBody(
-                        signingCertificate: certificates.value!['certificates']
-                            [0]['certData'],
-                      ));
-                  dataToSign.value = result.dataToSign;
-                  signingTime.value = result.signingTime;
-                },
-              ),
+          ),
+          ActionTile(
+            title: "5. Signed data",
+            details: [Text(signedData.value ?? "<none>")],
+            action: ElevatedButton(
+              child: const Text('Sign'),
+              onPressed: () async {
+                if (certificates.value == null || dataToSign.value == null) {
+                  return;
+                }
+
+                final certificateIndex = certificates.value!['certificates']
+                    [0]['certIndex'] as int?;
+                if (certificateIndex == null || dataToSign.value == null) {
+                  return;
+                }
+
+                final result = await eidmsdk.signData(
+                  certIndex: certificateIndex,
+                  signatureScheme: '1.2.840.113549.1.1.11',
+                  dataToSign: dataToSign.value!,
+                );
+
+                signedData.value = result;
+              },
             ),
-            ActionTile(
-              title: "5. Signed data",
-              details: [Text(signedData.value ?? "<none>")],
-              action: ElevatedButton(
-                child: const Text('Sign'),
-                onPressed: () async {
-                  if (certificates.value == null || dataToSign.value == null) {
-                    return;
-                  }
+          ),
+          ActionTile(
+            title: "6. Submit signed data",
+            details: [
+              Text(const JsonEncoder.withIndent('  ').convert(
+                  Map<String, dynamic>.from(signedDocumentInfo.value ?? {})
+                    ..update(
+                      'content',
+                      (value) =>
+                          '<... ${base64Decode(value as String).length} bytes>',
+                      ifAbsent: () => null,
+                    )))
+            ],
+            action: ElevatedButton(
+              child: const Text('Submit'),
+              onPressed: () async {
+                if (documentId.value == null ||
+                    signedData.value == null ||
+                    dataToSign.value == null ||
+                    certificates.value == null ||
+                    signingTime.value == null) {
+                  return;
+                }
 
-                  final certificateIndex = certificates.value!['certificates']
-                      [0]['certIndex'] as int?;
-                  if (certificateIndex == null || dataToSign.value == null) {
-                    return;
-                  }
+                final result = await autogram.signDocument(
+                    documentId.value!,
+                    SignRequestBody(
+                        signedData: signedData.value!,
+                        dataToSignStructure: DataToSignStructure(
+                          dataToSign: dataToSign.value!,
+                          signingCertificate: certificates
+                              .value!['certificates'][0]['certData'],
+                          signingTime: signingTime.value!,
+                        )));
 
-                  final result = await eidmsdk.signData(
-                    certIndex: certificateIndex,
-                    signatureScheme: '1.2.840.113549.1.1.11',
-                    dataToSign: dataToSign.value!,
-                  );
-
-                  signedData.value = result;
-                },
-              ),
+                if (result is Map<String, dynamic>) {
+                  signedDocumentInfo.value = result;
+                } else {
+                  print(result);
+                }
+              },
             ),
-            ActionTile(
-              title: "6. Submit signed data",
-              details: [
-                Text(const JsonEncoder.withIndent('  ').convert(
-                    Map<String, dynamic>.from(signedDocumentInfo.value ?? {})
-                      ..update(
-                        'content',
-                        (value) =>
-                            '<... ${base64Decode(value as String).length} bytes>',
-                        ifAbsent: () => null,
-                      )))
-              ],
-              action: ElevatedButton(
-                child: const Text('Submit'),
-                onPressed: () async {
-                  if (documentId.value == null ||
-                      signedData.value == null ||
-                      dataToSign.value == null ||
-                      certificates.value == null ||
-                      signingTime.value == null) {
-                    return;
-                  }
-
-                  final result = await autogram.signDocument(
-                      documentId.value!,
-                      SignRequestBody(
-                          signedData: signedData.value!,
-                          dataToSignStructure: DataToSignStructure(
-                            dataToSign: dataToSign.value!,
-                            signingCertificate: certificates
-                                .value!['certificates'][0]['certData'],
-                            signingTime: signingTime.value!,
-                          )));
-
-                  if (result is Map<String, dynamic>) {
-                    signedDocumentInfo.value = result;
-                  } else {
-                    print(result);
-                  }
-                },
-              ),
-            ),
-            ActionTile(
-              title: "7. Open signed document",
-              details: [
-                if (signedDocumentInfo.value != null)
-                  SizedBox(
-                    height: 300,
-                    child: PdfPreview(
-                      build: (format) =>
-                          base64Decode(signedDocumentInfo.value!['content']),
-                    ),
+          ),
+          ActionTile(
+            title: "7. Open signed document",
+            details: [
+              if (signedDocumentInfo.value != null)
+                SizedBox(
+                  height: 300,
+                  child: PdfPreview(
+                    build: (format) =>
+                        base64Decode(signedDocumentInfo.value!['content']),
                   ),
-              ],
-              action: ElevatedButton(
-                child: const Text('Open'),
-                onPressed: () async {
-                  if (signedDocumentInfo.value == null) {
-                    return;
-                  }
+                ),
+            ],
+            action: ElevatedButton(
+              child: const Text('Open'),
+              onPressed: () async {
+                if (signedDocumentInfo.value == null) {
+                  return;
+                }
 
-                  final currentDocumentInfo = signedDocumentInfo.value!;
+                final currentDocumentInfo = signedDocumentInfo.value!;
 
-                  Share.shareXFiles([
-                    XFile.fromData(
-                      base64Decode(currentDocumentInfo['content']),
-                      mimeType: currentDocumentInfo['mimeType'],
-                      name: currentDocumentInfo['filename'],
-                    ),
-                  ]);
-                },
-              ),
+                Share.shareXFiles([
+                  XFile.fromData(
+                    base64Decode(currentDocumentInfo['content']),
+                    mimeType: currentDocumentInfo['mimeType'],
+                    name: currentDocumentInfo['filename'],
+                  ),
+                ]);
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
