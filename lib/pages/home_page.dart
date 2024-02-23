@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:eidmsdk/types.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -285,13 +288,17 @@ class TestPage extends HookWidget {
 
                 final currentDocumentInfo = signedDocumentInfo.value!;
 
-                Share.shareXFiles([
-                  XFile.fromData(
-                    base64Decode(currentDocumentInfo.content),
-                    mimeType: currentDocumentInfo.mimeType.value,
-                    name: currentDocumentInfo.filename,
-                  ),
-                ]);
+                var documentFile = XFile.fromData(
+                  base64Decode(currentDocumentInfo.content),
+                  mimeType: currentDocumentInfo.mimeType.value,
+                  name: currentDocumentInfo.filename,
+                );
+                final directory = await getTemporaryDirectory();
+                final documentPath = path.join(directory.path, currentDocumentInfo.filename);
+                await documentFile.saveTo(documentPath);
+                documentFile = XFile(documentPath);
+                await Share.shareXFiles([documentFile]);
+                await File(documentFile.path).delete();
               },
             ),
           ),
