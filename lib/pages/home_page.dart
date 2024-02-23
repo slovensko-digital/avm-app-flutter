@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:eidmsdk/types.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
@@ -37,14 +38,19 @@ class TestPage extends HookWidget {
     }, [encryptionKey.value]);
     final documentId = useState<String?>(null);
     final signingTime = useState<int?>(null);
-    final certificates = useState<Map<String, dynamic>?>(null);
+    final certificates = useState<CertificatesInfo?>(null);
     final dataToSign = useState<String?>(null);
     final signedData = useState<String?>(null);
     final signedDocumentInfo = useState<Map<String, dynamic>?>(null);
 
     useEffect(() {
       if (localStorageReady.data == true) {
-        certificates.value = localStorage.getItem('certificates');
+        final storedValue = localStorage.getItem('certificates');
+        if (storedValue.runtimeType == certificates.value.runtimeType) {
+          certificates.value = storedValue;
+        } else {
+          certificates.value = null;
+        }
       }
       return null;
     }, [localStorageReady.data]);
@@ -128,18 +134,17 @@ class TestPage extends HookWidget {
           ActionTile(
             title: "3. Certificate",
             details: [
-              Text(const JsonEncoder.withIndent('  ')
-                  .convert(Map<String, dynamic>.from(certificates.value ?? {})
+              Text(const JsonEncoder.withIndent('  ').convert(
+                  Map<String, dynamic>.from(certificates.value?.toJson() ?? {})
                     ..update('certificates', (value) {
-                      return List<Map<String, dynamic>>.from(value)
-                          .map((cert) {
+                      return List<Map<String, dynamic>>.from(value).map((cert) {
                         return Map<String, dynamic>.from(cert)
                           ..update(
                               'certData',
                               (value) =>
                                   '<... ${base64Decode(value).length} bytes>');
                       }).toList();
-                    }, ifAbsent: () => null)))
+                    }, ifAbsent: () => null))),
             ],
             action: Column(
               children: [
@@ -153,7 +158,7 @@ class TestPage extends HookWidget {
                 ElevatedButton(
                   child: const Text('Clear'),
                   onPressed: () async {
-                    certificates.value = {};
+                    certificates.value = null;
                   },
                 ),
               ],
@@ -183,8 +188,8 @@ class TestPage extends HookWidget {
                 final result = await autogram.setDataToSign(
                     documentId.value!,
                     DocumentsGuidDatatosignPost$RequestBody(
-                      signingCertificate: certificates.value!['certificates']
-                          [0]['certData'],
+                      signingCertificate:
+                          certificates.value!.certificates.first.certData,
                     ));
                 dataToSign.value = result.dataToSign;
                 signingTime.value = result.signingTime;
@@ -201,8 +206,8 @@ class TestPage extends HookWidget {
                   return;
                 }
 
-                final certificateIndex = certificates.value!['certificates']
-                    [0]['certIndex'] as int?;
+                final certificateIndex =
+                    certificates.value!.certificates.firstOrNull?.certIndex;
                 if (certificateIndex == null || dataToSign.value == null) {
                   return;
                 }
@@ -246,8 +251,8 @@ class TestPage extends HookWidget {
                         signedData: signedData.value!,
                         dataToSignStructure: DataToSignStructure(
                           dataToSign: dataToSign.value!,
-                          signingCertificate: certificates
-                              .value!['certificates'][0]['certData'],
+                          signingCertificate:
+                              certificates.value!.certificates.first.certData,
                           signingTime: signingTime.value!,
                         )));
 
