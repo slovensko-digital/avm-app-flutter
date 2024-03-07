@@ -1,26 +1,30 @@
 # Autogram Mobile App (AVM)
 
-## Project init
+## Entry points
 
-1. Download and setup [`fvm`](https://fvm.app), then run:
+- [main](lib/main.dart) - main app
+- [preview](lib/preview.dart) - [Widgetbook](https://www.widgetbook.io/blog/getting-started) app
 
-   ```shell
-   fvm install
-   ```
+## Scripts
 
-2. Set **Flutter SDK** - in Android Studio, go to "Languages & Frameworks > Flutter" and set
-   **Flutter SDK** path to [/absolute-path-to-this-project/.fvm/flutter_sdk](.fvm/flutter_sdk).
+FVM init and Pub get:
 
-3. Get the packages:
+```shell
+fvm install
+```
 
-   ```shell
-   fvm flutter pub get
-   ```
+```shell
+fvm flutter pub get
+```
 
-## Code generation
-
-To generate code, run this command:
+To generate code:
 
 ```shell
 fvm dart run build_runner build --delete-conflicting-outputs
+```
+
+Build Android APK:
+
+```shell
+fvm flutter build apk
 ```

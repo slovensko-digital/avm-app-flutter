@@ -1,26 +1,30 @@
 import 'package:autogram_sign/autogram_sign.dart';
+import 'package:eidmsdk/eidmsdk.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import 'di.config.dart';
+import 'utils.dart';
 
 final getIt = GetIt.instance;
 
-@InjectableInit(
-  initializerName: 'init', // default
-  preferRelativeImports: true, // default
-  asExtension: true, // default
-)
+@InjectableInit(preferRelativeImports: true)
 void configureDependencies() {
   getIt.init();
 
-  final serviceUrl = Uri.parse("https://autogram.slovensko.digital/api/v1");
-
+  // Manually register external types
   getIt.registerLazySingleton<IAutogramService>(
-    () => AutogramService(
-      baseUrl: serviceUrl,
-      // TODO Custom encryptionKey for this instance
-      encryptionKey: 'encryptionKey',
-    ),
+    () {
+      final serviceUrl = Uri.parse("https://autogram.slovensko.digital/api/v1");
+
+      return AutogramService(
+        baseUrl: serviceUrl,
+        encryptionKey: Utils.createCryptoRandomString(),
+      );
+    },
+  );
+
+  getIt.registerLazySingleton<Eidmsdk>(
+    () => Eidmsdk(),
   );
 }

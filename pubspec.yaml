@@ -1,7 +1,7 @@
 name: autogram
 description: "Autogram v mobile"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.0+1
+version: 1.0.0+3
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -19,10 +19,19 @@ dependencies:
   flutter_hooks: ^0.20.5
   localstorage: ^4.0.1+4
   share_plus: ^7.2.2
+  pdf: any
   printing: ^5.12.0
+  webview_flutter: any
   logging:
   path:
   path_provider:
+  file_picker: any
+  flutter_bloc: ^8.0.0
+  basic_utils: any
+  intl: any
+  dotted_border: ^2.1.0
+  widgetbook_annotation: ^3.1.0
+  widgetbook: ^3.7.0
 
 dev_dependencies:
   flutter_test:
@@ -30,7 +39,10 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   build_runner: any
   injectable_generator: ^2.2.0
+  widgetbook_generator: ^3.7.0
 
 # The following section is specific to Flutter packages.
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
