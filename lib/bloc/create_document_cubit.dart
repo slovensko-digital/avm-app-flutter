@@ -6,14 +6,16 @@ import 'package:flutter_bloc/flutter_bloc.dart' show Cubit;
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 
+import '../data/pdf_signing_option.dart';
 import '../file_extensions.dart';
+import '../ui/screens/open_document_screen.dart';
 import '../utils.dart';
 import 'create_document_state.dart';
 import 'preview_document_cubit.dart';
 
 export 'create_document_state.dart';
 
-/// Cubit with only [createDocument] function.
+/// Cubit for the [OpenDocumentScreen] with only [createDocument] function.
 ///
 /// See also:
 ///  - [PreviewDocumentCubit]
@@ -22,11 +24,14 @@ class CreateDocumentCubit extends Cubit<CreateDocumentState> {
   static final _log = Logger("CreateDocumentCubit");
 
   final IAutogramService _service;
+  final PdfSigningOption _pdfSigningOption;
 
   CreateDocumentCubit({
     required IAutogramService service,
     @factoryParam required File file,
+    @factoryParam required PdfSigningOption pdfSigningOption,
   })  : _service = service,
+        _pdfSigningOption = pdfSigningOption,
         super(CreateDocumentInitialState(file));
 
   Future<void> createDocument() async {
@@ -60,13 +65,17 @@ class CreateDocumentCubit extends Cubit<CreateDocumentState> {
   }
 
   /// Gets the [SigningParameters] for [file].
-  static SigningParameters getSigningParameters(File file) {
+  SigningParameters getSigningParameters(File file) {
     final extension = file.extension.replaceFirst('.', '').toLowerCase();
 
     return switch (extension) {
-      "pdf" => const SigningParameters(
-          level: SigningParametersLevel.padesBaselineB,
-          container: null,
+      "pdf" => SigningParameters(
+          level: _pdfSigningOption.level,
+          container: switch (_pdfSigningOption) {
+            PdfSigningOption.pades => null,
+            PdfSigningOption.xades => SigningParametersContainer.asicE,
+            PdfSigningOption.cades => SigningParametersContainer.asicE,
+          },
         ),
       _ => const SigningParameters(
           level: SigningParametersLevel.xadesBaselineB,

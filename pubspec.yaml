@@ -27,9 +27,11 @@ dependencies:
   path_provider:
   file_picker: any
   flutter_bloc: ^8.0.0
+  provider: any
   basic_utils: any
   intl: any
   dotted_border: ^2.1.0
+  notified_preferences: any
   widgetbook_annotation: ^3.1.0
   widgetbook: ^3.7.0
 

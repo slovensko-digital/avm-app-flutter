@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../bloc/create_document_cubit.dart';
+import '../../data/settings.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
 import 'preview_document_screen.dart';
@@ -39,8 +40,13 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<CreateDocumentCubit>(
       create: (context) {
-        return GetIt.instance.get<CreateDocumentCubit>(param1: file)
-          ..createDocument();
+        final settings = context.read<Settings>();
+        final pdfSigningOption = settings.signingPdfContainer.value;
+
+        return GetIt.instance.get<CreateDocumentCubit>(
+          param1: file,
+          param2: pdfSigningOption,
+        )..createDocument();
       },
       child: BlocConsumer<CreateDocumentCubit, CreateDocumentState>(
         listener: (context, state) {

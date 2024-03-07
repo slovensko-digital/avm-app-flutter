@@ -10,15 +10,16 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:autogram/ui/screens/present_signed_document_screen.dart'
-    as _i10;
+    as _i11;
 import 'package:autogram/ui/widgets/autogram_logo.dart' as _i2;
-import 'package:autogram/ui/widgets/certificate_picker.dart' as _i9;
+import 'package:autogram/ui/widgets/certificate_picker.dart' as _i10;
 import 'package:autogram/ui/widgets/document_visualization.dart' as _i3;
 import 'package:autogram/ui/widgets/error_content.dart' as _i4;
 import 'package:autogram/ui/widgets/loading_content.dart' as _i5;
-import 'package:autogram/ui/widgets/preference_tile.dart' as _i6;
-import 'package:autogram/ui/widgets/result_view.dart' as _i7;
-import 'package:autogram/ui/widgets/retry_view.dart' as _i8;
+import 'package:autogram/ui/widgets/option_picker.dart' as _i6;
+import 'package:autogram/ui/widgets/preference_tile.dart' as _i7;
+import 'package:autogram/ui/widgets/result_view.dart' as _i8;
+import 'package:autogram/ui/widgets/retry_view.dart' as _i9;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -54,10 +55,17 @@ final directories = <_i1.WidgetbookNode>[
         ),
       ),
       _i1.WidgetbookLeafComponent(
+        name: 'OptionPicker',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'OptionPicker',
+          builder: _i6.previewOptionPicker,
+        ),
+      ),
+      _i1.WidgetbookLeafComponent(
         name: 'PreferenceTile',
         useCase: _i1.WidgetbookUseCase(
           name: 'PreferenceTile',
-          builder: _i6.previewPreferenceTile,
+          builder: _i7.previewPreferenceTile,
         ),
       ),
       _i1.WidgetbookComponent(
@@ -65,11 +73,11 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i7.previewErrorResultView,
+            builder: _i8.previewErrorResultView,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i7.previewSuccessResultView,
+            builder: _i8.previewSuccessResultView,
           ),
         ],
       ),
@@ -77,7 +85,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'RetryView',
         useCase: _i1.WidgetbookUseCase(
           name: 'RetryView',
-          builder: _i8.previewRetryView,
+          builder: _i9.previewRetryView,
         ),
       ),
     ],
@@ -89,7 +97,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'CertificatePicker',
         useCase: _i1.WidgetbookUseCase(
           name: 'AutogramLogo',
-          builder: _i9.previewCertificatePicker,
+          builder: _i10.previewCertificatePicker,
         ),
       )
     ],
@@ -102,15 +110,15 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i10.previewErrorPresentSignedDocumentBody,
+            builder: _i11.previewErrorPresentSignedDocumentBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i10.previewLoadingPresentSignedDocumentBody,
+            builder: _i11.previewLoadingPresentSignedDocumentBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i10.previewSuccessPresentSignedDocumentBody,
+            builder: _i11.previewSuccessPresentSignedDocumentBody,
           ),
         ],
       )
