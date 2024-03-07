@@ -8,8 +8,8 @@ import 'package:logging/logging.dart';
 
 import '../data/pdf_signing_option.dart';
 import '../file_extensions.dart';
+import '../files.dart';
 import '../ui/screens/open_document_screen.dart';
-import '../utils.dart';
 import 'create_document_state.dart';
 import 'preview_document_cubit.dart';
 
@@ -48,7 +48,7 @@ class CreateDocumentCubit extends Cubit<CreateDocumentState> {
       final body = DocumentPostRequestBody(
         document: Document(
           filename: file.basename,
-          // TODO Test text/plain w/o base64Encode
+          // It has to be always base64 encoded even if it's text/xxxl
           content: base64Encode(fileContent),
         ),
         parameters: signingParameters,
@@ -86,6 +86,6 @@ class CreateDocumentCubit extends Cubit<CreateDocumentState> {
 
   /// Gets the payload Mime type for [file].
   static String getPayloadMimeType(File file) {
-    return Utils.getFileMimeType(file);
+    return Files.getFileMimeType(file);
   }
 }

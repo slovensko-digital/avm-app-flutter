@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
+import '../../files.dart';
 import '../widgets/autogram_logo.dart';
 import 'open_document_screen.dart';
 import 'settings_screen.dart';
@@ -56,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
       dialogTitle: "Vyberte súbor",
       allowMultiple: false,
       type: FileType.custom,
-      allowedExtensions: const ["pdf", "jpg", "jpeg", "png", "txt", "xml"],
+      allowedExtensions: Files.supportedExtensions,
     );
 
     final selectedFile = result?.files.singleOrNull;
