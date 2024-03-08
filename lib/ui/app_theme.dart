@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+const EdgeInsets kScreenMargin = EdgeInsets.all(16);
+
+const Size kPrimaryButtonMinimumSize = Size.fromHeight(60);
+
 /// Returns M3 [ThemeData].
 ThemeData appTheme(
   BuildContext context, {

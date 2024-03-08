@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/pdf_signing_option.dart';
 import '../../data/settings.dart';
+import '../app_theme.dart';
 import '../widgets/option_picker.dart';
 import '../widgets/preference_tile.dart';
 
@@ -34,7 +35,7 @@ class _SettingsScreenBody extends StatelessWidget {
 
     return ListView(
       primary: true,
-      padding: const EdgeInsets.all(16),
+      padding: kScreenMargin,
       children: [
         StatefulBuilder(
           builder: (context, setState) {

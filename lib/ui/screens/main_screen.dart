@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
 import '../../files.dart';
+import '../app_theme.dart';
 import '../widgets/autogram_logo.dart';
 import 'open_document_screen.dart';
 import 'settings_screen.dart';
@@ -36,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
         title: const Text("Autogram"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: kScreenMargin,
         child: _MainScreenContent(
           onOpenFileRequested: _onOpenFileRequested,
         ),
@@ -101,8 +102,8 @@ class _MainScreenContent extends StatelessWidget {
 
         // Primary button
         FilledButton(
-          style: ElevatedButton.styleFrom(
-            minimumSize: const Size.fromHeight(kMinInteractiveDimension),
+          style: FilledButton.styleFrom(
+            minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: onOpenFileRequested,
           child: const Text("Vybrať dokument"),

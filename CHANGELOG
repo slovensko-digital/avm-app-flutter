@@ -1,5 +1,11 @@
 # Changelog
 
+## 2024-03-08 - v1.0.0(6)
+
+- Add share action into preview screen
+- Increase primary button height
+- Export common theme constants
+
 ## 2024-03-08 - v1.0.0(5)
 
 - Implement screen for case when ID card have no QES certificate

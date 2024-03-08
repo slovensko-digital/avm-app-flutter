@@ -7,6 +7,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import '../../bloc/select_certificate_cubit.dart';
 import '../../certificate_extensions.dart';
 import '../../oids.dart';
+import '../app_theme.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
 import '../widgets/retry_view.dart';
@@ -92,12 +93,12 @@ class SelectCertificateBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
-      child: _getChild(context, state),
+      padding: kScreenMargin,
+      child: _getChild(context),
     );
   }
 
-  Widget _getChild(BuildContext context, SelectCertificateState state) {
+  Widget _getChild(BuildContext context) {
     return switch (state) {
       SelectCertificateLoadingState _ => const LoadingContent(),
       SelectCertificateCanceledState _ => RetryView(
@@ -168,8 +169,8 @@ class _SelectSignatureTypeContentState
         Expanded(
           flex: 0,
           child: FilledButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size.fromHeight(kMinInteractiveDimension),
+            style: FilledButton.styleFrom(
+              minimumSize: kPrimaryButtonMinimumSize,
             ),
             onPressed: (_addTimeStamp == null
                 ? null

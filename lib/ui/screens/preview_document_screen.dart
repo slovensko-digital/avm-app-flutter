@@ -1,10 +1,15 @@
+import 'dart:io' show File;
+
 import 'package:autogram_sign/autogram_sign.dart' show VisualizationResponse;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../bloc/preview_document_cubit.dart';
+import '../../file_extensions.dart';
+import '../app_theme.dart';
 import '../widgets/document_visualization.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
@@ -20,10 +25,12 @@ import 'select_certificate_screen.dart';
 /// See also:
 ///  - [OpenDocumentScreen]
 class PreviewDocumentScreen extends StatelessWidget {
+  final File file;
   final String documentId;
 
   const PreviewDocumentScreen({
     super.key,
+    required this.file,
     required this.documentId,
   });
 
@@ -32,8 +39,23 @@ class PreviewDocumentScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Náhľad dokumentu"),
+        actions: [
+          IconButton(
+            onPressed: _onShareRequested,
+            icon: const Icon(Icons.share_outlined),
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ],
       ),
       body: _Body(documentId: documentId),
+    );
+  }
+
+  Future<void> _onShareRequested() async {
+    await Share.shareXFiles(
+      [XFile(file.path)],
+      subject: file.basename,
+      text: "\n\nSúbor z aplikácie Autogram v Mobile",
     );
   }
 }
@@ -65,7 +87,7 @@ class _Body extends StatelessWidget {
           };
 
           return Padding(
-            padding: const EdgeInsets.all(16),
+            padding: kScreenMargin,
             child: child,
           );
         },
@@ -118,8 +140,8 @@ class _SuccessContent extends StatelessWidget {
         Expanded(
           flex: 0,
           child: FilledButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size.fromHeight(kMinInteractiveDimension),
+            style: FilledButton.styleFrom(
+              minimumSize: kPrimaryButtonMinimumSize,
             ),
             onPressed: onSignRequested,
             child: const Text("Podpísať"),

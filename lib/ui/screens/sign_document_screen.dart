@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../bloc/sign_document_cubit.dart';
+import '../app_theme.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
 import '../widgets/retry_view.dart';
@@ -73,7 +74,7 @@ class _Body extends StatelessWidget {
       },
       builder: (context, state) {
         return Padding(
-          padding: const EdgeInsets.all(16),
+          padding: kScreenMargin,
           child: _getChild(context, state),
         );
       },

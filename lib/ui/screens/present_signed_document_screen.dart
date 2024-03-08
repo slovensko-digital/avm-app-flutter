@@ -9,6 +9,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/present_signed_document_cubit.dart';
 import '../../file_extensions.dart';
+import '../app_theme.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
 import '../widgets/result_view.dart';
@@ -88,7 +89,7 @@ class PresentSignedDocumentBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: kScreenMargin,
       child: _getChild(context),
     );
   }
@@ -145,11 +146,11 @@ class _SuccessContent extends StatelessWidget {
 
         // Primary button
         FilledButton(
-          style: ElevatedButton.styleFrom(
-            minimumSize: const Size.fromHeight(kMinInteractiveDimension),
+          style: FilledButton.styleFrom(
+            minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: onShareFileRequested,
-          child: const Text("Poslať na ďalší podpis"),
+          child: const Text("Uložiť alebo zdieľať"),
         ),
       ],
     );
