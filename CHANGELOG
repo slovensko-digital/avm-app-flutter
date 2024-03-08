@@ -1,0 +1,22 @@
+# Changelog
+
+## 2024-03-07 - v1.0.0(4)
+
+- Option to specify PDF container - PAdES / XAdES / CAdES
+- Allow to open .sce, .asice, .asics
+
+## 2024-03-07 - v1.0.0(3)
+
+- Custom Android icon and name
+- Implement document signing flow with success state where able to share generated file
+
+## 2024-03-06 - v1.0.0(2)
+
+- Fix text (TXT, HTML) visualization encoding
+- Displaying QES certificates
+- Implement basic document signing flow w/o custom UI
+
+## 2024-03-06 - v1.0.0(1)
+
+- Implement basic app skeleton with navigation and document signing flow
+- Implement feature to list certificates from ID card
