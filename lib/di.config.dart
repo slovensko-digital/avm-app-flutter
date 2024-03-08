@@ -12,6 +12,7 @@ import 'dart:io' as _i4;
 
 import 'package:autogram_sign/autogram_sign.dart' as _i6;
 import 'package:eidmsdk/eidmsdk.dart' as _i10;
+import 'package:eidmsdk/types.dart' as _i12;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -58,14 +59,15 @@ extension GetItInjectableX on _i1.GetIt {
         ));
     gh.factory<_i9.SelectCertificateCubit>(
         () => _i9.SelectCertificateCubit(eidmsdk: gh<_i10.Eidmsdk>()));
-    gh.factoryParam<_i11.SignDocumentCubit, String, dynamic>((
+    gh.factoryParam<_i11.SignDocumentCubit, String, _i12.Certificate>((
       documentId,
-      _,
+      certificate,
     ) =>
         _i11.SignDocumentCubit(
           service: gh<_i6.IAutogramService>(),
           eidmsdk: gh<_i10.Eidmsdk>(),
           documentId: documentId,
+          certificate: certificate,
         ));
     return this;
   }

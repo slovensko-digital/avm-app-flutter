@@ -23,7 +23,8 @@ class SettingsScreen extends StatelessWidget {
 }
 
 // TODO Create preview
-// Need to pass / provide Settings
+// Need to pass Settings OR a set of ValueNotifier<T>
+
 class _SettingsScreenBody extends StatelessWidget {
   const _SettingsScreenBody();
 
@@ -68,7 +69,6 @@ class _SettingsScreenBody extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: const Text("Podpisovanie PDF"),
-          surfaceTintColor: Theme.of(context).colorScheme.background,
           content: _pdfSigningOptionSelection(
             selectedValue: setting.value,
             onValueSet: (PdfSigningOption value) {

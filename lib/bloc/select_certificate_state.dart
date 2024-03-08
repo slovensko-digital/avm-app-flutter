@@ -16,12 +16,16 @@ sealed class SelectCertificateState {
     return SelectCertificateErrorState(error);
   }
 
-  SelectCertificateSuccessState toSuccess(CertificatesInfo certificates) {
-    return SelectCertificateSuccessState(certificates);
+  SelectCertificateSuccessState toSuccess(Certificate certificate) {
+    return SelectCertificateSuccessState(certificate);
   }
 
-  SelectCertificateCanceledState toCanceledState() {
+  SelectCertificateCanceledState toCanceled() {
     return const SelectCertificateCanceledState();
+  }
+
+  SelectCertificateNoCertificateState toNoCertificate() {
+    return const SelectCertificateNoCertificateState();
   }
 
   @override
@@ -53,13 +57,17 @@ class SelectCertificateCanceledState extends SelectCertificateState {
   const SelectCertificateCanceledState();
 }
 
-class SelectCertificateSuccessState extends SelectCertificateState {
-  final CertificatesInfo certificates;
+class SelectCertificateNoCertificateState extends SelectCertificateState {
+  const SelectCertificateNoCertificateState();
+}
 
-  const SelectCertificateSuccessState(this.certificates);
+class SelectCertificateSuccessState extends SelectCertificateState {
+  final Certificate certificate;
+
+  const SelectCertificateSuccessState(this.certificate);
 
   @override
   String toString() {
-    return "$runtimeType(certificates: $certificates)";
+    return "$runtimeType(certificate: $certificate)";
   }
 }

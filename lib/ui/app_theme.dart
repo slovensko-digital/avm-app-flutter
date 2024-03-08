@@ -10,10 +10,17 @@ ThemeData appTheme(
     brightness: brightness ?? MediaQuery.platformBrightnessOf(context),
     seedColor: color,
   );
+  final dialogTheme = DialogTheme(
+    surfaceTintColor: colorScheme.background,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(4)),
+    ),
+  );
 
   return ThemeData(
     useMaterial3: true,
     primaryColor: color,
     colorScheme: colorScheme,
+    dialogTheme: dialogTheme,
   );
 }

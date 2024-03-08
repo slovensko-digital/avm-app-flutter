@@ -33,9 +33,15 @@ class SelectCertificateCubit extends Cubit<SelectCertificateState> {
 
       // Will be null when it's cancelled by user
       if (certificates == null) {
-        emit(state.toCanceledState());
+        emit(state.toCanceled());
       } else {
-        emit(state.toSuccess(certificates));
+        final certificate = certificates.certificates.firstOrNull;
+
+        if (certificate == null) {
+          emit(state.toNoCertificate());
+        } else {
+          emit(state.toSuccess(certificate));
+        }
       }
 
       _log.info("Got Certificates: ${certificates?.runtimeType}.");

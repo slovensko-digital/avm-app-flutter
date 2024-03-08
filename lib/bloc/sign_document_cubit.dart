@@ -16,23 +16,23 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
   static final _log = Logger("SignDocumentCubit");
   static const _defaultLanguage = 'sk';
 
-  final String documentId;
   final IAutogramService _service;
   final Eidmsdk _eidmsdk;
+
+  final String documentId;
+  final Certificate certificate;
 
   SignDocumentCubit({
     required IAutogramService service,
     required Eidmsdk eidmsdk,
     @factoryParam required this.documentId,
+    @factoryParam required this.certificate,
   })  : _service = service,
         _eidmsdk = eidmsdk,
         super(const SignDocumentInitialState());
 
   /// Signs the document using given [certificate].
-  Future<void> signDocument(
-    Certificate certificate, [
-    bool addTimestamp = false,
-  ]) async {
+  Future<void> signDocument(bool addTimestamp) async {
     DataToSignStructure data;
 
     try {

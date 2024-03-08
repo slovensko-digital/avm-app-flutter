@@ -10,7 +10,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:autogram/ui/screens/present_signed_document_screen.dart'
-    as _i11;
+    as _i12;
+import 'package:autogram/ui/screens/select_certificate_screen.dart' as _i13;
 import 'package:autogram/ui/widgets/autogram_logo.dart' as _i2;
 import 'package:autogram/ui/widgets/certificate_picker.dart' as _i10;
 import 'package:autogram/ui/widgets/document_visualization.dart' as _i3;
@@ -20,6 +21,7 @@ import 'package:autogram/ui/widgets/option_picker.dart' as _i6;
 import 'package:autogram/ui/widgets/preference_tile.dart' as _i7;
 import 'package:autogram/ui/widgets/result_view.dart' as _i8;
 import 'package:autogram/ui/widgets/retry_view.dart' as _i9;
+import 'package:autogram/ui/widgets/signature_type_picker.dart' as _i11;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -96,10 +98,17 @@ final directories = <_i1.WidgetbookNode>[
       _i1.WidgetbookLeafComponent(
         name: 'CertificatePicker',
         useCase: _i1.WidgetbookUseCase(
-          name: 'AutogramLogo',
+          name: 'CertificatePicker',
           builder: _i10.previewCertificatePicker,
         ),
-      )
+      ),
+      _i1.WidgetbookLeafComponent(
+        name: 'SignatureTypePicker',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'SignatureTypePicker',
+          builder: _i11.previewSignatureTypePicker,
+        ),
+      ),
     ],
   ),
   _i1.WidgetbookCategory(
@@ -110,18 +119,43 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i11.previewErrorPresentSignedDocumentBody,
+            builder: _i12.previewErrorPresentSignedDocumentBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i11.previewLoadingPresentSignedDocumentBody,
+            builder: _i12.previewLoadingPresentSignedDocumentBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i11.previewSuccessPresentSignedDocumentBody,
+            builder: _i12.previewSuccessPresentSignedDocumentBody,
           ),
         ],
-      )
+      ),
+      _i1.WidgetbookComponent(
+        name: 'SelectCertificateBody',
+        useCases: [
+          _i1.WidgetbookUseCase(
+            name: 'canceled',
+            builder: _i13.previewCanceledSelectCertificateBody,
+          ),
+          _i1.WidgetbookUseCase(
+            name: 'error',
+            builder: _i13.previewErrorCertificateBody,
+          ),
+          _i1.WidgetbookUseCase(
+            name: 'loading',
+            builder: _i13.previewLoadingSelectCertificateBody,
+          ),
+          _i1.WidgetbookUseCase(
+            name: 'no certificate',
+            builder: _i13.previewNoCertificateCertificateBody,
+          ),
+          _i1.WidgetbookUseCase(
+            name: 'success',
+            builder: _i13.previewSuccessCertificateCertificateBody,
+          ),
+        ],
+      ),
     ],
   ),
 ];

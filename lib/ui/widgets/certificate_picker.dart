@@ -40,7 +40,7 @@ class CertificatePicker extends StatelessWidget {
 
 @widgetbook.UseCase(
   path: '[Lists]',
-  name: 'AutogramLogo',
+  name: 'CertificatePicker',
   type: CertificatePicker,
 )
 Widget previewCertificatePicker(BuildContext context) {

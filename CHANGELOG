@@ -1,5 +1,11 @@
 # Changelog
 
+## 2024-03-08 - v1.0.0(5)
+
+- Implement screen for case when ID card have no QES certificate
+- Implement option to select signature type - to add timestamp
+- Fix dialog theme
+
 ## 2024-03-07 - v1.0.0(4)
 
 - Option to specify PDF container - PAdES / XAdES / CAdES

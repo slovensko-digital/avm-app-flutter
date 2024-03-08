@@ -15,19 +15,23 @@ import 'present_signed_document_screen.dart';
 class SignDocumentScreen extends StatelessWidget {
   final String documentId;
   final Certificate certificate;
+  final bool addTimeStamp;
 
   const SignDocumentScreen({
     super.key,
     required this.documentId,
     required this.certificate,
+    required this.addTimeStamp,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SignDocumentCubit>(
       create: (context) {
-        return GetIt.instance.get<SignDocumentCubit>(param1: documentId)
-          ..signDocument(certificate);
+        return GetIt.instance.get<SignDocumentCubit>(
+          param1: documentId,
+          param2: certificate,
+        )..signDocument(addTimeStamp);
       },
       child: Scaffold(
         appBar: AppBar(title: const Text("Podpisovanie dokumentu")),
@@ -35,7 +39,7 @@ class SignDocumentScreen extends StatelessWidget {
           // Need outer Context to access Cubit
           return _Body(
             onRetryRequested: () {
-              context.read<SignDocumentCubit>().signDocument(certificate);
+              context.read<SignDocumentCubit>().signDocument(addTimeStamp);
             },
           );
         }),

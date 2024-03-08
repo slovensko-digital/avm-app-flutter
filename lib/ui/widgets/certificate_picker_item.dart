@@ -23,9 +23,6 @@ class CertificatePickerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO Create custom widget for CertificatePicker item based on designs
-    // https://www.figma.com/file/9i8kwShc6o8Urp2lYoPg6M/Autogram-v-mobile-(WIP)?type=design&node-id=74-818&mode=design&t=T0uOG8BkTEdwFGKy-0
-
     final cert = certificate.tbsCertificate;
 
     return RadioListTile(

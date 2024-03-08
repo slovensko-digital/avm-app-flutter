@@ -58,7 +58,6 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   }
 
   Future<File> _getTargetFile() async {
-    // TODO Name "originalDocument_signed.ext" with suffix -NNN if file already exists
     var directory = await getApplicationDocumentsDirectory();
 
     if (directory.path.endsWith("app_flutter")) {
