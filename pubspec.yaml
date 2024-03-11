@@ -48,3 +48,14 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+  fonts:
+    - family: Source Sans 3
+      fonts:
+        - asset: assets/fonts/SourceSans3-Regular.ttf
+        - asset: assets/fonts/SourceSans3-It.ttf
+          style: italic
+        - asset: assets/fonts/SourceSans3-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/SourceSans3-BoldIt.ttf
+          weight: 700
+          style: italic

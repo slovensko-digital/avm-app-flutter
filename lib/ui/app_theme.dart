@@ -24,6 +24,7 @@ ThemeData appTheme(
   return ThemeData(
     useMaterial3: true,
     primaryColor: color,
+    fontFamily: "Source Sans 3", // see /assets/fonts
     colorScheme: colorScheme,
     dialogTheme: dialogTheme,
   );
