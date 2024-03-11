@@ -13,6 +13,7 @@ dependencies:
     path: ../eidmsdk_flutter
   autogram_sign:
     path: ../autogram_sign
+  package_info_plus: ^5.0.1
   chopper: any
   injectable: ^2.2.0
   get_it: ^7.6.1

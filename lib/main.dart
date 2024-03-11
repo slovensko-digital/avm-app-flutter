@@ -24,7 +24,7 @@ void main() async {
 
   // Run App
   runApp(
-    Provider.value(
+    Provider<ISettings>.value(
       value: settings,
       child: const App(),
     ),

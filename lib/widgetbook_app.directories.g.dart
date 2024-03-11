@@ -12,6 +12,7 @@
 import 'package:autogram/ui/screens/present_signed_document_screen.dart'
     as _i12;
 import 'package:autogram/ui/screens/select_certificate_screen.dart' as _i13;
+import 'package:autogram/ui/screens/settings_screen.dart' as _i14;
 import 'package:autogram/ui/widgets/autogram_logo.dart' as _i2;
 import 'package:autogram/ui/widgets/certificate_picker.dart' as _i10;
 import 'package:autogram/ui/widgets/document_visualization.dart' as _i3;
@@ -155,6 +156,13 @@ final directories = <_i1.WidgetbookNode>[
             builder: _i13.previewSuccessCertificateCertificateBody,
           ),
         ],
+      ),
+      _i1.WidgetbookLeafComponent(
+        name: 'SettingsScreen',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'SettingsScreen',
+          builder: _i14.previewSettingsScreen,
+        ),
       ),
     ],
   ),

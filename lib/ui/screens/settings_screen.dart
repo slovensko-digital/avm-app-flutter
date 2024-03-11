@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_info_plus/package_info_plus.dart' show PackageInfo;
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../data/pdf_signing_option.dart';
 import '../../data/settings.dart';
@@ -18,24 +20,22 @@ class SettingsScreen extends StatelessWidget {
         automaticallyImplyLeading: true,
         title: const Text("Nastavenia"),
       ),
-      body: const _SettingsScreenBody(),
+      body: _SettingsScreenBody(
+        settings: context.read(),
+      ),
     );
   }
 }
 
-// TODO Create preview
-// Need to pass Settings OR a set of ValueNotifier<T>
-
 class _SettingsScreenBody extends StatelessWidget {
-  const _SettingsScreenBody();
+  final ISettings settings;
+
+  const _SettingsScreenBody({required this.settings});
 
   @override
   Widget build(BuildContext context) {
-    final settings = context.read<Settings>();
-
-    return ListView(
+    final settingsChild = ListView(
       primary: true,
-      padding: kScreenMargin,
       children: [
         StatefulBuilder(
           builder: (context, setState) {
@@ -57,6 +57,26 @@ class _SettingsScreenBody extends StatelessWidget {
         ),
         const Divider(height: 1),
       ],
+    );
+
+    final child = Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: settingsChild,
+        ),
+        TextButton(
+          onPressed: () {
+            _showAbout(context);
+          },
+          child: const Text("O aplikácii"),
+        ),
+      ],
+    );
+
+    return Padding(
+      padding: kScreenMargin,
+      child: child,
     );
   }
 
@@ -81,14 +101,25 @@ class _SettingsScreenBody extends StatelessWidget {
     );
 
     if (result != null) {
-      if (context.mounted) {
-        setting.value = result;
-
-        return true;
-      }
+      setting.value = result;
     }
 
-    return false;
+    return (result != null);
+  }
+
+  void _showAbout(BuildContext context) async {
+    final pi = await PackageInfo.fromPlatform();
+    final versionText = "Verzia: ${pi.version} (${pi.buildNumber})";
+
+    if (context.mounted) {
+      showAboutDialog(
+        context: context,
+        applicationVersion: versionText,
+        applicationLegalese: "Nový, lepší a krajší podpisovač v\u{00A0}mobile",
+        //applicationLegalese:
+        //    "### Typically this is a copyright notice. ###",
+      );
+    }
   }
 }
 
@@ -106,4 +137,23 @@ Widget _pdfSigningOptionSelection({
       labelBuilder: (PdfSigningOption value) => Text(value.label),
     ),
   );
+}
+
+@widgetbook.UseCase(
+  path: '[Screens]',
+  name: 'SettingsScreen',
+  type: SettingsScreen,
+)
+Widget previewSettingsScreen(BuildContext context) {
+  final settings = _MockSettings();
+
+  return _SettingsScreenBody(
+    settings: settings,
+  );
+}
+
+class _MockSettings implements ISettings {
+  @override
+  late final ValueNotifier<PdfSigningOption> signingPdfContainer =
+      ValueNotifier(PdfSigningOption.pades);
 }
