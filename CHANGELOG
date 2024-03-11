@@ -1,5 +1,12 @@
 # Changelog
 
+## 2024-03-11 - v1.0.0(7)
+
+- Supporting opening any file by Autogram
+- Using brand Source Sans 3 font
+- Displaying license info via Settings -> About
+- Tweak button theme
+
 ## 2024-03-08 - v1.0.0(6)
 
 - Add share action into preview screen
