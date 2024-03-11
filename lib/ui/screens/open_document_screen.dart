@@ -42,7 +42,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<CreateDocumentCubit>(
       create: (context) {
-        final settings = context.read<Settings>();
+        final settings = context.read<ISettings>();
         final pdfSigningOption = settings.signingPdfContainer.value;
 
         return GetIt.instance.get<CreateDocumentCubit>(

@@ -27,5 +27,12 @@ ThemeData appTheme(
     fontFamily: "Source Sans 3", // see /assets/fonts
     colorScheme: colorScheme,
     dialogTheme: dialogTheme,
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+      ),
+    ),
   );
 }
