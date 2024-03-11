@@ -32,4 +32,16 @@ class AppService {
     throw UnimplementedError(
         "Method 'getSharedFileName' is not implemented in iOS.");
   }
+
+  /// Returns [Directory] with path to the public "Downloads" directory.
+  Future<Directory> getDownloadsDirectory() {
+    if (Platform.isAndroid) {
+      return _platform
+          .invokeMethod<String>('getDownloadsDirectory')
+          .then((path) => Directory(path!));
+    }
+
+    throw UnimplementedError(
+        "Method 'getDownloadsDirectory' is not implemented in iOS.");
+  }
 }

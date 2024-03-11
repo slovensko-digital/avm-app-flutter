@@ -52,7 +52,10 @@ extension GetItInjectableX on _i1.GetIt {
       signedDocument,
       _,
     ) =>
-        _i9.PresentSignedDocumentCubit(signedDocument: signedDocument));
+        _i9.PresentSignedDocumentCubit(
+          appService: gh<_i3.AppService>(),
+          signedDocument: signedDocument,
+        ));
     gh.factoryParam<_i10.PreviewDocumentCubit, String, dynamic>((
       documentId,
       _,

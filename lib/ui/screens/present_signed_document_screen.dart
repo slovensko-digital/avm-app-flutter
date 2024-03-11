@@ -1,6 +1,7 @@
 import 'dart:io' show File;
 
 import 'package:autogram_sign/autogram_sign.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -65,6 +66,8 @@ class PresentSignedDocumentScreen extends StatelessWidget {
 
   Future<void> _handleShareFile(BuildContext context) async {
     final cubit = context.read<PresentSignedDocumentCubit>();
+
+    // TODO Handle case when file was manually deleted
     final file = await cubit.getAccessibleFile();
 
     await Share.shareXFiles(
@@ -136,6 +139,8 @@ class _SuccessContent extends StatelessWidget {
                   TextSpan(
                     text: file.basename,
                     style: const TextStyle(fontStyle: FontStyle.italic),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = onShareFileRequested,
                   )
                 ],
               ),
@@ -150,7 +155,7 @@ class _SuccessContent extends StatelessWidget {
             minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: onShareFileRequested,
-          child: const Text("Uložiť alebo zdieľať"),
+          child: const Text("Zdieľať podpísaný dokument"),
         ),
       ],
     );

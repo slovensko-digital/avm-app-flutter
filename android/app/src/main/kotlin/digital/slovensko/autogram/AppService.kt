@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import androidx.core.os.BundleCompat
-
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -18,6 +18,7 @@ import java.io.InputStream
  * Provides functionality for Flutter app:
  *  - `getSharedFileName` - returns only file name that was shared to this app
  *  - `getSharedFile` - returns absolute accessible path to file that was shared to this app
+ *  - `onGetDownloadsDirectory` - returns path to "Download" directory
  */
 internal class AppService(
     private val context: Context,
@@ -54,6 +55,7 @@ internal class AppService(
         when (call.method) {
             "getSharedFileName" -> result.onGetSharedFileName()
             "getSharedFile" -> result.onGetSharedFile()
+            "getDownloadsDirectory" -> result.onGetDownloadsDirectory()
         }
     }
 
@@ -95,6 +97,12 @@ internal class AppService(
                 error("GET_SHARED_FILE_ERROR", it.message, null)
             }
         )
+    }
+
+    private fun MethodChannel.Result.onGetDownloadsDirectory() {
+        val result = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
+
+        success(result)
     }
 
 
