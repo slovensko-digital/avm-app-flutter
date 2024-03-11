@@ -38,9 +38,9 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
 
       await file.writeAsBytes(bytes);
 
-      emit(state.toSuccess(file));
-
       _log.info("Document was saved into $file");
+
+      emit(state.toSuccess(file));
     } catch (error) {
       emit(state.toError(error));
     }

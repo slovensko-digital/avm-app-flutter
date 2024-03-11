@@ -1,16 +1,21 @@
+import 'dart:async';
 import 'dart:io' show File;
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
 
+import '../../app_service.dart';
 import '../../files.dart';
 import '../app_theme.dart';
 import '../widgets/autogram_logo.dart';
 import 'open_document_screen.dart';
 import 'settings_screen.dart';
 
-/// Main app screen.
+/// Main app screen that presents app features.
+///
+/// Has ability to open new file or navigate to Settings.
 ///
 /// Navigates to other screens:
 ///  - [SettingsScreen]
@@ -24,6 +29,26 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   static final _logger = Logger('_MainScreenState');
+  late final AppService _appService;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _appService = GetIt.instance.get<AppService>();
+
+    Future.microtask(() async {
+      final sharedFileName = await _appService.getSharedFileName();
+
+      if (sharedFileName != null) {
+        // Directly navigate to next screen ignoring any progress indicator
+        // or error handlers
+        final sharedFile = _appService.getSharedFile().then((value) => value!);
+
+        _openNewFile(sharedFile);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +94,15 @@ class _MainScreenState extends State<MainScreen> {
       _logger.fine('File selected: $file');
 
       if (context.mounted) {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => OpenDocumentScreen(file: file),
-        ));
+        _openNewFile(file);
       }
     }
+  }
+
+  Future<void> _openNewFile(FutureOr<File> file) {
+    return Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => OpenDocumentScreen(file: file),
+    ));
   }
 }
 

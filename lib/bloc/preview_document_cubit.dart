@@ -32,9 +32,9 @@ class PreviewDocumentCubit extends Cubit<PreviewDocumentState> {
     try {
       final visualization = await _service.getDocumentVisualization(documentId);
 
-      emit(state.toSuccess(visualization));
-
       _log.info("Got Document Visualisation: ${visualization.runtimeType}.");
+
+      emit(state.toSuccess(visualization));
     } catch (error) {
       emit(state.toError(error));
     }

@@ -31,6 +31,8 @@ class SelectCertificateCubit extends Cubit<SelectCertificateState> {
         language: _defaultLanguage,
       );
 
+      _log.info("Got Certificates: ${certificates?.runtimeType}.");
+
       // Will be null when it's cancelled by user
       if (certificates == null) {
         emit(state.toCanceled());
@@ -43,8 +45,6 @@ class SelectCertificateCubit extends Cubit<SelectCertificateState> {
           emit(state.toSuccess(certificate));
         }
       }
-
-      _log.info("Got Certificates: ${certificates?.runtimeType}.");
     } catch (error) {
       emit(state.toError(error));
     }

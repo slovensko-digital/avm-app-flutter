@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io' show File;
 
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ import 'preview_document_screen.dart';
 ///
 /// Navigates next to [PreviewDocumentScreen].
 class OpenDocumentScreen extends StatelessWidget {
-  final File file;
+  final FutureOr<File> file;
 
   const OpenDocumentScreen({super.key, required this.file});
 
@@ -33,7 +34,7 @@ class OpenDocumentScreen extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  final File file;
+  final FutureOr<File> file;
 
   const _Body({required this.file});
 
@@ -56,7 +57,7 @@ class _Body extends StatelessWidget {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => PreviewDocumentScreen(
-                  file: file,
+                  file: state.file,
                   documentId: state.documentId,
                 ),
               ),

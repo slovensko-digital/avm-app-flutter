@@ -7,40 +7,38 @@ import 'create_document_cubit.dart';
 /// State for [CreateDocumentCubit].
 @immutable
 sealed class CreateDocumentState {
-  final File file;
-
-  const CreateDocumentState(this.file);
+  const CreateDocumentState();
 
   CreateDocumentLoadingState toLoading() {
-    return CreateDocumentLoadingState(file);
+    return const CreateDocumentLoadingState();
   }
 
-  CreateDocumentSuccessState toSuccess(String documentId) {
+  CreateDocumentSuccessState toSuccess(File file, String documentId) {
     return CreateDocumentSuccessState(file, documentId);
   }
 
   CreateDocumentErrorState toError(Object error) {
-    return CreateDocumentErrorState(file, error);
+    return CreateDocumentErrorState(error);
   }
 
   @override
   String toString() {
-    return "$runtimeType(file: $file)";
+    return "$runtimeType()";
   }
 }
 
 class CreateDocumentInitialState extends CreateDocumentState {
-  const CreateDocumentInitialState(super.file);
+  const CreateDocumentInitialState();
 }
 
 class CreateDocumentLoadingState extends CreateDocumentState {
-  const CreateDocumentLoadingState(super.file);
+  const CreateDocumentLoadingState();
 }
 
 class CreateDocumentErrorState extends CreateDocumentState {
   final Object error;
 
-  const CreateDocumentErrorState(super.file, this.error);
+  const CreateDocumentErrorState(this.error);
 
   @override
   String toString() {
@@ -49,12 +47,13 @@ class CreateDocumentErrorState extends CreateDocumentState {
 }
 
 class CreateDocumentSuccessState extends CreateDocumentState {
+  final File file;
   final String documentId;
 
-  const CreateDocumentSuccessState(super.file, this.documentId);
+  const CreateDocumentSuccessState(this.file, this.documentId);
 
   @override
   String toString() {
-    return "$runtimeType(documentId: $documentId)";
+    return "$runtimeType(file: $file, documentId: $documentId)";
   }
 }

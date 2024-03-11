@@ -8,20 +8,22 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:io' as _i4;
+import 'dart:async' as _i5;
+import 'dart:io' as _i6;
 
-import 'package:autogram_sign/autogram_sign.dart' as _i6;
-import 'package:eidmsdk/eidmsdk.dart' as _i10;
-import 'package:eidmsdk/types.dart' as _i12;
+import 'package:autogram_sign/autogram_sign.dart' as _i8;
+import 'package:eidmsdk/eidmsdk.dart' as _i12;
+import 'package:eidmsdk/types.dart' as _i14;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'bloc/create_document_cubit.dart' as _i3;
-import 'bloc/present_signed_document_cubit.dart' as _i7;
-import 'bloc/preview_document_cubit.dart' as _i8;
-import 'bloc/select_certificate_cubit.dart' as _i9;
-import 'bloc/sign_document_cubit.dart' as _i11;
-import 'data/pdf_signing_option.dart' as _i5;
+import 'app_service.dart' as _i3;
+import 'bloc/create_document_cubit.dart' as _i4;
+import 'bloc/present_signed_document_cubit.dart' as _i9;
+import 'bloc/preview_document_cubit.dart' as _i10;
+import 'bloc/select_certificate_cubit.dart' as _i11;
+import 'bloc/sign_document_cubit.dart' as _i13;
+import 'data/pdf_signing_option.dart' as _i7;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -34,38 +36,40 @@ extension GetItInjectableX on _i1.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factoryParam<_i3.CreateDocumentCubit, _i4.File, _i5.PdfSigningOption>((
+    gh.factory<_i3.AppService>(() => const _i3.AppService());
+    gh.factoryParam<_i4.CreateDocumentCubit, _i5.FutureOr<_i6.File>,
+        _i7.PdfSigningOption>((
       file,
       pdfSigningOption,
     ) =>
-        _i3.CreateDocumentCubit(
-          service: gh<_i6.IAutogramService>(),
+        _i4.CreateDocumentCubit(
+          service: gh<_i8.IAutogramService>(),
           file: file,
           pdfSigningOption: pdfSigningOption,
         ));
-    gh.factoryParam<_i7.PresentSignedDocumentCubit, _i6.SignDocumentResponse,
+    gh.factoryParam<_i9.PresentSignedDocumentCubit, _i8.SignDocumentResponse,
         dynamic>((
       signedDocument,
       _,
     ) =>
-        _i7.PresentSignedDocumentCubit(signedDocument: signedDocument));
-    gh.factoryParam<_i8.PreviewDocumentCubit, String, dynamic>((
+        _i9.PresentSignedDocumentCubit(signedDocument: signedDocument));
+    gh.factoryParam<_i10.PreviewDocumentCubit, String, dynamic>((
       documentId,
       _,
     ) =>
-        _i8.PreviewDocumentCubit(
-          service: gh<_i6.IAutogramService>(),
+        _i10.PreviewDocumentCubit(
+          service: gh<_i8.IAutogramService>(),
           documentId: documentId,
         ));
-    gh.factory<_i9.SelectCertificateCubit>(
-        () => _i9.SelectCertificateCubit(eidmsdk: gh<_i10.Eidmsdk>()));
-    gh.factoryParam<_i11.SignDocumentCubit, String, _i12.Certificate>((
+    gh.factory<_i11.SelectCertificateCubit>(
+        () => _i11.SelectCertificateCubit(eidmsdk: gh<_i12.Eidmsdk>()));
+    gh.factoryParam<_i13.SignDocumentCubit, String, _i14.Certificate>((
       documentId,
       certificate,
     ) =>
-        _i11.SignDocumentCubit(
-          service: gh<_i6.IAutogramService>(),
-          eidmsdk: gh<_i10.Eidmsdk>(),
+        _i13.SignDocumentCubit(
+          service: gh<_i8.IAutogramService>(),
+          eidmsdk: gh<_i12.Eidmsdk>(),
           documentId: documentId,
           certificate: certificate,
         ));

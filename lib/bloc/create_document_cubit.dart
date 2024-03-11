@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert' show base64Encode;
 import 'dart:io' show File;
 
@@ -24,22 +25,26 @@ class CreateDocumentCubit extends Cubit<CreateDocumentState> {
   static final _log = Logger("CreateDocumentCubit");
 
   final IAutogramService _service;
+  final FutureOr<File> _file;
   final PdfSigningOption _pdfSigningOption;
 
   CreateDocumentCubit({
     required IAutogramService service,
-    @factoryParam required File file,
+    @factoryParam required FutureOr<File> file,
     @factoryParam required PdfSigningOption pdfSigningOption,
   })  : _service = service,
+        _file = file,
         _pdfSigningOption = pdfSigningOption,
-        super(CreateDocumentInitialState(file));
+        super(const CreateDocumentInitialState());
 
   Future<void> createDocument() async {
     emit(state.toLoading());
 
-    final file = state.file;
-
     try {
+      final file = await _file;
+
+      // TODO Make intermediate states, when file is File and then content is loaded
+
       final payloadMimeType = getPayloadMimeType(file);
       final fileContent = await file.readAsBytes();
 
@@ -48,7 +53,7 @@ class CreateDocumentCubit extends Cubit<CreateDocumentState> {
       final body = DocumentPostRequestBody(
         document: Document(
           filename: file.basename,
-          // It has to be always base64 encoded even if it's text/xxxl
+          // It has to be always base64 encoded even if it's text/xxx
           content: base64Encode(fileContent),
         ),
         parameters: signingParameters,
@@ -56,9 +61,9 @@ class CreateDocumentCubit extends Cubit<CreateDocumentState> {
       );
       final documentId = await _service.createDocument(body);
 
-      emit(state.toSuccess(documentId));
-
       _log.info("New Document created: '$documentId'.");
+
+      emit(state.toSuccess(file, documentId));
     } catch (error) {
       emit(state.toError(error));
     }
