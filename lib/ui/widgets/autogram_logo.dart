@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 /// "Autogram" logo.
+///
+/// Only for light theme!
 class AutogramLogo extends StatelessWidget {
   final double? width;
 
@@ -22,5 +24,8 @@ class AutogramLogo extends StatelessWidget {
   type: AutogramLogo,
 )
 Widget previewAutogramLogo(BuildContext context) {
-  return const AutogramLogo();
+  return const Padding(
+    padding: EdgeInsets.all(16),
+    child: Center(child: AutogramLogo()),
+  );
 }
