@@ -24,8 +24,11 @@ ThemeData appTheme(
   return ThemeData(
     useMaterial3: true,
     primaryColor: color,
-    fontFamily: "Source Sans 3", // see /assets/fonts
     colorScheme: colorScheme,
+    fontFamily: "Source Sans 3", // see /assets/fonts
+    textTheme: Theme.of(context).textTheme.apply(
+          fontSizeFactor: 1.2,
+        ),
     dialogTheme: dialogTheme,
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
