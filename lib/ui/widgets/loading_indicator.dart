@@ -1,13 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-/// Widget for displaying loading indicator
+/// Widget for displaying indeterminate loading indicator.
 class LoadingIndicator extends StatelessWidget {
-  const LoadingIndicator({super.key});
+  static const size = 24;
+
+  final Color color;
+  final Color backgroundColor;
+
+  const LoadingIndicator({
+    super.key,
+    this.color = const Color(0xFF126dff),
+    this.backgroundColor = const Color(0xFFc3d9f9),
+  });
 
   @override
   Widget build(BuildContext context) {
-    // TODO Add also optional text on the right
-    // https://www.figma.com/file/9i8kwShc6o8Urp2lYoPg6M/Autogram-v-mobile-(WIP)?type=design&node-id=74-328&mode=design&t=LuXUEfCXSSwa3qBf-0
-    return const CircularProgressIndicator();
+    return Transform.scale(
+      scale: size / 36, // _kMinCircularProgressIndicatorSize is 36
+      child: CircularProgressIndicator(
+        color: color,
+        backgroundColor: backgroundColor,
+        strokeWidth: 6,
+      ),
+    );
   }
+}
+
+@widgetbook.UseCase(
+  path: '[AVM]',
+  name: 'LoadingIndicator',
+  type: LoadingIndicator,
+)
+Widget previewLoadingIndicator(BuildContext context) {
+  return const Center(
+    child: LoadingIndicator(),
+  );
 }

@@ -77,6 +77,7 @@ class SelectCertificateScreen extends StatelessWidget {
   }
 }
 
+/// [SelectCertificateScreen] body.
 class SelectCertificateBody extends StatelessWidget {
   final SelectCertificateState state;
   final void Function(Certificate certificate, bool addTimeStamp)?

@@ -19,7 +19,7 @@ class AutogramLogo extends StatelessWidget {
 }
 
 @widgetbook.UseCase(
-  path: '[Core]',
+  path: '[AVM]',
   name: 'AutogramLogo',
   type: AutogramLogo,
 )

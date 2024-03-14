@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:developer' as developer;
 import 'dart:io' show File;
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../app_service.dart';
 import '../../files.dart';
@@ -53,13 +55,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 4,
-        leading: IconButton(
-          icon: const Icon(Icons.menu_sharp),
-          onPressed: _onShowSettingsRequested,
-        ),
-        title: const Text("Autogram"),
+      appBar: _MainAppBar(
+        onShowSettingsRequested: _onShowSettingsRequested,
       ),
       body: Padding(
         padding: kScreenMargin,
@@ -106,6 +103,26 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
+// ignore: non_constant_identifier_names
+AppBar _MainAppBar({
+  VoidCallback? onShowSettingsRequested,
+}) {
+  return AppBar(
+    foregroundColor: kMainAppBarForegroundColor,
+    backgroundColor: kMainAppBarBackgroundColor,
+    leading: IconButton(
+      icon: const Icon(Icons.menu_sharp),
+      onPressed: onShowSettingsRequested,
+    ),
+    title: const Text(
+      "Autogram",
+      style: TextStyle(
+        color: kMainAppBarForegroundColor,
+      ),
+    ),
+  );
+}
+
 class _MainScreenContent extends StatelessWidget {
   final VoidCallback? onOpenFileRequested;
 
@@ -140,4 +157,20 @@ class _MainScreenContent extends StatelessWidget {
       ],
     );
   }
+}
+
+@widgetbook.UseCase(
+  path: '[AVM]',
+  name: 'main',
+  type: AppBar,
+)
+Widget previewMainAppBar(BuildContext context) {
+  return SizedBox(
+    height: kToolbarHeight,
+    child: _MainAppBar(
+      onShowSettingsRequested: () {
+        developer.log("onShowSettingsRequested");
+      },
+    ),
+  );
 }
