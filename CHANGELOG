@@ -1,5 +1,10 @@
 # Changelog
 
+## 2024-03-14 - v1.0.0(9)
+
+- Increase font size to scale 110%
+- Using custom Android app icon and logo
+
 ## 2024-03-11 - v1.0.0(8)
 
 - Saving signed document into Downloads folder
