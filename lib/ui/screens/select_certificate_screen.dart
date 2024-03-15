@@ -157,7 +157,6 @@ class _SelectSignatureTypeContentState
     return Column(
       children: [
         Expanded(
-          flex: 1,
           child: SignatureTypePicker(
             value: _addTimeStamp,
             onValueChanged: (final bool value) {
@@ -167,28 +166,30 @@ class _SelectSignatureTypeContentState
             },
           ),
         ),
-        Expanded(
-          flex: 0,
-          child: FilledButton(
-            style: FilledButton.styleFrom(
-              minimumSize: kPrimaryButtonMinimumSize,
-            ),
-            onPressed: (_addTimeStamp == null
-                ? null
-                : () {
-                    widget.onSignDocumentRequested?.call(_addTimeStamp!);
-                  }),
-            child: Text("Podpísať ako ${widget.subject}"),
-            // Extract data
+
+        // Primary button
+        FilledButton(
+          style: FilledButton.styleFrom(
+            minimumSize: kPrimaryButtonMinimumSize,
           ),
+          onPressed: (_addTimeStamp == null
+              ? null
+              : () {
+                  widget.onSignDocumentRequested?.call(_addTimeStamp!);
+                }),
+          child: Text("Podpísať ako ${widget.subject}"),
+          // Extract data
         ),
-        const SizedBox(height: 16),
-        Expanded(
-          flex: 0,
-          child: TextButton(
-            onPressed: widget.onReloadCertificatesRequested,
-            child: const Text("Podpísať iným certifikátom"),
+
+        const SizedBox(height: kButtonSpace),
+
+        // Secondary button
+        TextButton(
+          style: TextButton.styleFrom(
+            minimumSize: kPrimaryButtonMinimumSize,
           ),
+          onPressed: widget.onReloadCertificatesRequested,
+          child: const Text("Podpísať iným certifikátom"),
         ),
       ],
     );
@@ -289,7 +290,8 @@ DiH5uEqBXExjrj0FslxcVKdVj5glVcSmkLwZKbEU1OKwleT/iXFhvooWhQ==
     certData: aliceCert,
   );
 
-  return const SelectCertificateBody(
-    state: SelectCertificateSuccessState(certificate),
+  return SelectCertificateBody(
+    state: const SelectCertificateSuccessState(certificate),
+    onReloadCertificatesRequested: () {},
   );
 }

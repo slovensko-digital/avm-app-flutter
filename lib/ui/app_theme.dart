@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+import 'widgets/loading_indicator.dart';
 
 /// Screen margin.
 const EdgeInsets kScreenMargin = EdgeInsets.all(16);
+
+/// Space between wo buttons.
+const double kButtonSpace = 16;
 
 /// Primary button minimum size.
 const Size kPrimaryButtonMinimumSize = Size.fromHeight(60);
@@ -45,6 +51,13 @@ ThemeData appTheme(
       borderRadius: BorderRadius.all(Radius.circular(4)),
     ),
   );
+  const buttonShape = RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(8)),
+  );
+  const buttonTextStyle = TextStyle(
+    fontWeight: FontWeight.bold,
+    letterSpacing: 1.2,
+  );
 
   return ThemeData(
     useMaterial3: true,
@@ -55,14 +68,58 @@ ThemeData appTheme(
     textTheme: textTheme,
     appBarTheme: appBarTheme,
     dialogTheme: dialogTheme,
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        shape: buttonShape,
+        textStyle: buttonTextStyle,
+      ),
+    ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
+        shape: buttonShape,
+        textStyle: buttonTextStyle,
       ),
     ),
     // radioTheme: not set
+  );
+}
+
+/// Just placeholder class for widgetbook preview.
+abstract class Button {}
+
+@widgetbook.UseCase(
+  path: '[AVM]',
+  name: 'text',
+  type: Button,
+)
+Widget previewTextButton(BuildContext context) {
+  return Padding(
+    padding: kScreenMargin,
+    child: TextButton(
+      onPressed: () {},
+      child: const Text("Button text"),
+    ),
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[AVM]',
+  name: 'filled',
+  type: Button,
+)
+Widget previewFilledButton(BuildContext context) {
+  final isLoading = context.knobs.boolean(label: "Loading?");
+  final child = switch (isLoading) {
+    false => const Text("Button text"),
+    true => const LoadingIndicator(),
+  };
+
+  return Padding(
+    padding: kScreenMargin,
+    child: FilledButton(
+      onPressed: () {},
+      child: child,
+    ),
   );
 }
 

@@ -58,11 +58,8 @@ class _MainScreenState extends State<MainScreen> {
       appBar: _MainAppBar(
         onShowSettingsRequested: _onShowSettingsRequested,
       ),
-      body: Padding(
-        padding: kScreenMargin,
-        child: _MainScreenContent(
-          onOpenFileRequested: _onOpenFileRequested,
-        ),
+      body: MainBody(
+        onOpenFileRequested: _onOpenFileRequested,
       ),
     );
   }
@@ -123,38 +120,42 @@ AppBar _MainAppBar({
   );
 }
 
-class _MainScreenContent extends StatelessWidget {
+/// [MainScreen] body.
+class MainBody extends StatelessWidget {
   final VoidCallback? onOpenFileRequested;
 
-  const _MainScreenContent({required this.onOpenFileRequested});
+  const MainBody({super.key, required this.onOpenFileRequested});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 64),
-        const AutogramLogo(),
-        const SizedBox(height: 32),
-        const Text(
-          "Nový, lepší a krajší podpisovač v\u{00A0}mobile",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 24),
-        const Text(
-          "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie",
-        ),
-        const Spacer(),
-
-        // Primary button
-        FilledButton(
-          style: FilledButton.styleFrom(
-            minimumSize: kPrimaryButtonMinimumSize,
+    return Padding(
+      padding: kScreenMargin,
+      child: Column(
+        children: [
+          const SizedBox(height: 140),
+          const AutogramLogo(),
+          const SizedBox(height: 32),
+          const Text(
+            "Nový, lepší a krajší podpisovač v\u{00A0}mobile",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          onPressed: onOpenFileRequested,
-          child: const Text("Vybrať dokument"),
-        ),
-      ],
+          const SizedBox(height: 24),
+          const Text(
+            "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie",
+          ),
+          const Spacer(),
+
+          // Primary button
+          FilledButton(
+            style: FilledButton.styleFrom(
+              minimumSize: kPrimaryButtonMinimumSize,
+            ),
+            onPressed: onOpenFileRequested,
+            child: const Text("Vybrať dokument"),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -172,5 +173,16 @@ Widget previewMainAppBar(BuildContext context) {
         developer.log("onShowSettingsRequested");
       },
     ),
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[Screens]',
+  name: 'MainBody',
+  type: MainBody,
+)
+Widget previewMainBody(BuildContext context) {
+  return MainBody(
+    onOpenFileRequested: () {},
   );
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/present_signed_document_cubit.dart';
@@ -38,14 +39,6 @@ class PresentSignedDocumentScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.maybeOf(context)?.pop(signedDocument);
-              },
-              icon: const Icon(Icons.close_outlined),
-            )
-          ],
         ),
         body: Builder(
           builder: (context) {
@@ -56,6 +49,7 @@ class PresentSignedDocumentScreen extends StatelessWidget {
                 return PresentSignedDocumentBody(
                   state: state,
                   onShareFileRequested: () => _handleShareFile(context),
+                  onCloseRequested: () => _handleClose(context),
                 );
               },
             );
@@ -65,6 +59,7 @@ class PresentSignedDocumentScreen extends StatelessWidget {
     );
   }
 
+  /// Handles share file request.
   Future<void> _handleShareFile(BuildContext context) async {
     final cubit = context.read<PresentSignedDocumentCubit>();
 
@@ -90,17 +85,24 @@ class PresentSignedDocumentScreen extends StatelessWidget {
       }
     }
   }
+
+  /// Handles close request.
+  Future<void> _handleClose(BuildContext context) {
+    return Navigator.of(context).maybePop();
+  }
 }
 
 /// [PresentSignedDocumentScreen] body.
 class PresentSignedDocumentBody extends StatelessWidget {
   final PresentSignedDocumentState state;
   final VoidCallback? onShareFileRequested;
+  final VoidCallback? onCloseRequested;
 
   const PresentSignedDocumentBody({
     super.key,
     required this.state,
     this.onShareFileRequested,
+    this.onCloseRequested,
   });
 
   @override
@@ -121,7 +123,9 @@ class PresentSignedDocumentBody extends StatelessWidget {
       PresentSignedDocumentSuccessState state => _SuccessContent(
           file: state.file,
           onShareFileRequested: onShareFileRequested,
+          onCloseRequested: onCloseRequested,
         ),
+      // TODO Drop ###
       _ => Text("### $state ###"),
     };
   }
@@ -130,36 +134,44 @@ class PresentSignedDocumentBody extends StatelessWidget {
 class _SuccessContent extends StatelessWidget {
   final File file;
   final VoidCallback? onShareFileRequested;
+  final VoidCallback? onCloseRequested;
 
   const _SuccessContent({
     required this.file,
     required this.onShareFileRequested,
+    required this.onCloseRequested,
   });
 
   @override
   Widget build(BuildContext context) {
+    final fileNameTextStyle = TextStyle(
+      color: Theme.of(context).colorScheme.primary,
+      decoration: TextDecoration.underline,
+      fontWeight: FontWeight.bold,
+    );
+    final body = RichText(
+      text: TextSpan(
+        text: "Dokument bol uložený do Downloads pod\u{00A0}názvom ",
+        style: Theme.of(context).textTheme.bodyLarge,
+        //style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+        children: [
+          // Emphasize file name
+          TextSpan(
+            text: file.basename,
+            style: fileNameTextStyle,
+            recognizer: TapGestureRecognizer()..onTap = onShareFileRequested,
+          )
+        ],
+      ),
+      textAlign: TextAlign.center,
+    );
+
     return Column(
       children: [
         Expanded(
           child: ResultView.success(
             headlineText: "Dokument bol úspešne podpísaný",
-            body: RichText(
-              text: TextSpan(
-                text: "Dokument bol uložený pod\u{00A0}názvom\n",
-                style: Theme.of(context).textTheme.bodyLarge,
-                //style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
-                children: [
-                  // Emphasize file name
-                  TextSpan(
-                    text: file.basename,
-                    style: const TextStyle(fontStyle: FontStyle.italic),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = onShareFileRequested,
-                  )
-                ],
-              ),
-              textAlign: TextAlign.center,
-            ),
+            body: body,
           ),
         ),
 
@@ -170,6 +182,17 @@ class _SuccessContent extends StatelessWidget {
           ),
           onPressed: onShareFileRequested,
           child: const Text("Zdieľať podpísaný dokument"),
+        ),
+
+        const SizedBox(height: kButtonSpace),
+
+        // Secondary button
+        TextButton(
+          style: TextButton.styleFrom(
+            minimumSize: kPrimaryButtonMinimumSize,
+          ),
+          onPressed: onCloseRequested,
+          child: const Text("Zavrieť"),
         ),
       ],
     );
@@ -204,9 +227,15 @@ Widget previewErrorPresentSignedDocumentBody(BuildContext context) {
   type: PresentSignedDocumentBody,
 )
 Widget previewSuccessPresentSignedDocumentBody(BuildContext context) {
-  final file = File("document_signed.pdf");
+  final fileName = context.knobs.string(
+    label: "File name",
+    initialValue: "document_signed.pdf",
+  );
+  final file = File(fileName);
 
   return PresentSignedDocumentBody(
     state: PresentSignedDocumentSuccessState(file),
+    onShareFileRequested: () {},
+    onCloseRequested: () {},
   );
 }

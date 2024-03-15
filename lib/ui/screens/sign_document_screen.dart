@@ -49,6 +49,8 @@ class SignDocumentScreen extends StatelessWidget {
   }
 }
 
+/// [SignDocumentScreen] body.
+// TODO Extract and add previews
 class _Body extends StatelessWidget {
   final VoidCallback onRetryRequested;
 

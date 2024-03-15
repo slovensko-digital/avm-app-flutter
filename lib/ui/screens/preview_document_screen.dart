@@ -60,6 +60,8 @@ class PreviewDocumentScreen extends StatelessWidget {
   }
 }
 
+// TODO Extract Body with state param + previews
+/// [PreviewDocumentScreen] body.
 class _Body extends StatelessWidget {
   final String documentId;
 
@@ -121,7 +123,6 @@ class _SuccessContent extends StatelessWidget {
       children: [
         // Document preview
         Expanded(
-          flex: 1,
           child: Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: DottedBorder(
@@ -137,15 +138,12 @@ class _SuccessContent extends StatelessWidget {
         ),
 
         // Primary button
-        Expanded(
-          flex: 0,
-          child: FilledButton(
-            style: FilledButton.styleFrom(
-              minimumSize: kPrimaryButtonMinimumSize,
-            ),
-            onPressed: onSignRequested,
-            child: const Text("Podpísať"),
+        FilledButton(
+          style: FilledButton.styleFrom(
+            minimumSize: kPrimaryButtonMinimumSize,
           ),
+          onPressed: onSignRequested,
+          child: const Text("Podpísať"),
         ),
       ],
     );

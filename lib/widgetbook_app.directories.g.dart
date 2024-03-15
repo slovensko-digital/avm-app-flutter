@@ -51,6 +51,19 @@ final directories = <_i1.WidgetbookNode>[
           builder: _i4.previewAutogramLogo,
         ),
       ),
+      _i1.WidgetbookComponent(
+        name: 'Button',
+        useCases: [
+          _i1.WidgetbookUseCase(
+            name: 'filled',
+            builder: _i3.previewFilledButton,
+          ),
+          _i1.WidgetbookUseCase(
+            name: 'text',
+            builder: _i3.previewTextButton,
+          ),
+        ],
+      ),
       _i1.WidgetbookLeafComponent(
         name: 'LoadingIndicator',
         useCase: _i1.WidgetbookUseCase(
@@ -142,6 +155,13 @@ final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookCategory(
     name: 'Screens',
     children: [
+      _i1.WidgetbookLeafComponent(
+        name: 'MainBody',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'MainBody',
+          builder: _i2.previewMainBody,
+        ),
+      ),
       _i1.WidgetbookComponent(
         name: 'PresentSignedDocumentBody',
         useCases: [

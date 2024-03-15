@@ -33,6 +33,7 @@ class OpenDocumentScreen extends StatelessWidget {
   }
 }
 
+/// [OpenDocumentScreen] body.
 class _Body extends StatelessWidget {
   final FutureOr<File> file;
 
