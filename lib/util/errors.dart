@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show PlatformException;
 /// Extracts human-readable error message from [error].
 String getErrorMessage(Object error) {
   return switch (error) {
+    String _ => error,
     ServiceException error => error.message,
     // TODO Extract error message from Object from other types; add tests
     // IOException - file not found, cannot be saved

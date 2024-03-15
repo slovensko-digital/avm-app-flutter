@@ -170,7 +170,7 @@ class _SuccessContent extends StatelessWidget {
       children: [
         Expanded(
           child: ResultView.success(
-            headlineText: "Dokument bol úspešne podpísaný",
+            titleText: "Dokument bol úspešne podpísaný",
             body: body,
           ),
         ),

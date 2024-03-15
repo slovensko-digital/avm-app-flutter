@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../util/errors.dart';
 import 'loading_content.dart';
 import 'result_view.dart';
 
@@ -17,8 +18,8 @@ class ErrorContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResultView.error(
-      headlineText: title,
-      body: Text(error.toString()),
+      titleText: title,
+      body: Text(getErrorMessage(error)),
     );
   }
 }

@@ -3,7 +3,10 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import 'retry_view.dart';
 
-/// Widget for displaying [ResultView.success] or [ResultView.error] result.
+/// Widget for displaying some result with [icon] and [titleText].
+///
+/// Provides predefined: [ResultView.success], [ResultView.error] and
+/// [ResultView.info].
 ///
 /// See also:
 ///  - [RetryView]
@@ -11,19 +14,19 @@ class ResultView extends StatelessWidget {
   static const double _iconSize = 96;
 
   final Widget icon;
-  final String headlineText;
+  final String titleText;
   final Widget? body;
 
   const ResultView({
     super.key,
     required this.icon,
-    required this.headlineText,
+    required this.titleText,
     this.body,
   });
 
   const ResultView.success({
     super.key,
-    required this.headlineText,
+    required this.titleText,
     this.body,
   }) : icon = const Image(
           image: AssetImage('assets/images/result_success.png'),
@@ -33,10 +36,20 @@ class ResultView extends StatelessWidget {
 
   const ResultView.error({
     super.key,
-    required this.headlineText,
+    required this.titleText,
     this.body,
   }) : icon = const Image(
           image: AssetImage('assets/images/result_error.png'),
+          width: _iconSize,
+          height: _iconSize,
+        );
+
+  const ResultView.info({
+    super.key,
+    required this.titleText,
+    this.body,
+  }) : icon = const Image(
+          image: AssetImage('assets/images/result_info.png'),
           width: _iconSize,
           height: _iconSize,
         );
@@ -47,20 +60,21 @@ class ResultView extends StatelessWidget {
       fontWeight: FontWeight.bold,
       fontSize: 20,
     );
+    final headline = Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Text(
+        titleText,
+        textAlign: TextAlign.center,
+        style: headlineTextStyle,
+      ),
+    );
 
     return SizedBox.expand(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           icon,
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Text(
-              headlineText,
-              textAlign: TextAlign.center,
-              style: headlineTextStyle,
-            ),
-          ),
+          headline,
           if (body != null) body!,
         ],
       ),
@@ -70,12 +84,24 @@ class ResultView extends StatelessWidget {
 
 @widgetbook.UseCase(
   path: '[Core]',
+  name: 'info',
+  type: ResultView,
+)
+Widget previewInfoResultView(BuildContext context) {
+  return const ResultView.info(
+    titleText: "Operation failed successfully 😉",
+    body: Text("Body text"),
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[Core]',
   name: 'success',
   type: ResultView,
 )
 Widget previewSuccessResultView(BuildContext context) {
   return const ResultView.success(
-    headlineText: "Operation was successful!",
+    titleText: "Operation was successful!",
     body: Text("Body text"),
   );
 }
@@ -87,7 +113,7 @@ Widget previewSuccessResultView(BuildContext context) {
 )
 Widget previewErrorResultView(BuildContext context) {
   return const ResultView.error(
-    headlineText: "Operation failed!",
+    titleText: "Operation failed!",
     body: Text("Body text"),
   );
 }

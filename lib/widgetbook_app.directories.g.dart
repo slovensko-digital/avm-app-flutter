@@ -65,6 +65,13 @@ final directories = <_i1.WidgetbookNode>[
         ],
       ),
       _i1.WidgetbookLeafComponent(
+        name: 'Dialog',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'Dialog',
+          builder: _i3.previewDialog,
+        ),
+      ),
+      _i1.WidgetbookLeafComponent(
         name: 'LoadingIndicator',
         useCase: _i1.WidgetbookUseCase(
           name: 'LoadingIndicator',
@@ -72,10 +79,24 @@ final directories = <_i1.WidgetbookNode>[
         ),
       ),
       _i1.WidgetbookLeafComponent(
+        name: 'MaterialBanner',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'MaterialBanner ',
+          builder: _i3.previewMaterialBanner,
+        ),
+      ),
+      _i1.WidgetbookLeafComponent(
         name: 'Radio',
         useCase: _i1.WidgetbookUseCase(
           name: 'Radio',
           builder: _i3.previewRadio,
+        ),
+      ),
+      _i1.WidgetbookLeafComponent(
+        name: 'SnackBar',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'SnackBar',
+          builder: _i3.previewSnackBar,
         ),
       ),
     ],
@@ -124,6 +145,10 @@ final directories = <_i1.WidgetbookNode>[
           _i1.WidgetbookUseCase(
             name: 'error',
             builder: _i11.previewErrorResultView,
+          ),
+          _i1.WidgetbookUseCase(
+            name: 'info',
+            builder: _i11.previewInfoResultView,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',

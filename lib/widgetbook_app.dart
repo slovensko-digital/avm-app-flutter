@@ -38,8 +38,10 @@ class WidgetbookApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: appTheme(context),
-          home: Material(
-            child: child,
+          home: Scaffold(
+            body: SizedBox.expand(
+              child: child,
+            ),
           ),
         );
       },

@@ -134,6 +134,12 @@ Widget previewAppBar(BuildContext context) {
     child: AppBar(
       leading: const BackButton(),
       title: const Text("Náhľad dokumentu"),
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.refresh_outlined),
+        ),
+      ],
     ),
   );
 }
@@ -188,4 +194,97 @@ Widget previewRadio(BuildContext context) {
       ],
     );
   });
+}
+
+@widgetbook.UseCase(
+  path: '[AVM]',
+  name: 'Dialog',
+  type: Dialog,
+)
+Widget previewDialog(BuildContext context) {
+  return Container(
+    color: Colors.grey.withOpacity(0.25),
+    child: const Dialog(
+      child: SizedBox(
+        width: 240,
+        height: 180,
+      ),
+    ),
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[AVM]',
+  name: 'SnackBar',
+  type: SnackBar,
+)
+Widget previewSnackBar(BuildContext context) {
+  final message = context.knobs.string(
+    label: "Message",
+    initialValue: "Single line message",
+    maxLines: 3,
+  );
+  final snackBar = SnackBar(
+    behavior: SnackBarBehavior.floating,
+    content: Text(
+      message,
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
+    ),
+    action: SnackBarAction(
+      onPressed: () {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      },
+      label: "OK",
+    ),
+  );
+
+  return Padding(
+    padding: kScreenMargin,
+    child: ElevatedButton(
+      onPressed: () {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(snackBar);
+      },
+      child: const Text("Show SnackBar"),
+    ),
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[AVM]',
+  name: 'MaterialBanner ',
+  type: MaterialBanner,
+)
+Widget previewMaterialBanner(BuildContext context) {
+  final message = context.knobs.string(
+    label: "Message",
+    initialValue: "Single line message",
+    maxLines: 5,
+  );
+  final banner = MaterialBanner(
+    leading: const Icon(Icons.info_outline),
+    content: Text(message),
+    actions: [
+      TextButton(
+        onPressed: () {
+          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+        },
+        child: const Text("Close"),
+      ),
+    ],
+  );
+
+  return Padding(
+    padding: kScreenMargin,
+    child: ElevatedButton(
+      onPressed: () {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentMaterialBanner()
+          ..showMaterialBanner(banner);
+      },
+      child: const Text("Show Banner"),
+    ),
+  );
 }
