@@ -23,6 +23,7 @@ dependencies:
   pdf: any
   printing: ^5.12.0
   webview_flutter: any
+  webview_flutter_web: any
   logging:
   path:
   path_provider:

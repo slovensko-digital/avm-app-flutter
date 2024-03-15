@@ -10,6 +10,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/present_signed_document_cubit.dart';
 import '../../file_extensions.dart';
+import '../../util/errors.dart';
 import '../app_theme.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
@@ -67,14 +68,27 @@ class PresentSignedDocumentScreen extends StatelessWidget {
   Future<void> _handleShareFile(BuildContext context) async {
     final cubit = context.read<PresentSignedDocumentCubit>();
 
-    // TODO Handle case when file was manually deleted
-    final file = await cubit.getAccessibleFile();
+    try {
+      final file = await cubit.getAccessibleFile();
 
-    await Share.shareXFiles(
-      [XFile(file.path)],
-      subject: "Elektronicky podpísaný dokument",
-      text: "\n\nPodpísané aplikáciou Autogram v Mobile",
-    );
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        subject: "Elektronicky podpísaný dokument",
+        text: "\n\nPodpísané aplikáciou Autogram v Mobile",
+      );
+    } catch (error) {
+      final snackBar = SnackBar(
+        content: Text("Chyba: ${getErrorMessage(error)}"),
+        action: SnackBarAction(
+          label: "OK",
+          onPressed: () {},
+        ),
+      );
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    }
   }
 }
 

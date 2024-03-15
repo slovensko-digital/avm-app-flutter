@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -29,7 +30,9 @@ class _HtmlPreviewState extends State<HtmlPreview> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    controller.setBackgroundColor(Theme.of(context).colorScheme.background);
+    if (!kIsWeb) {
+      controller.setBackgroundColor(Theme.of(context).colorScheme.background);
+    }
   }
 
   @override

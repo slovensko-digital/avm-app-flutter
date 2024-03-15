@@ -12,11 +12,10 @@
 import 'package:autogram/ui/app_theme.dart' as _i3;
 import 'package:autogram/ui/screens/main_screen.dart' as _i2;
 import 'package:autogram/ui/screens/present_signed_document_screen.dart'
-    as _i15;
-import 'package:autogram/ui/screens/select_certificate_screen.dart' as _i16;
-import 'package:autogram/ui/screens/settings_screen.dart' as _i17;
+    as _i14;
+import 'package:autogram/ui/screens/select_certificate_screen.dart' as _i15;
+import 'package:autogram/ui/screens/settings_screen.dart' as _i16;
 import 'package:autogram/ui/widgets/autogram_logo.dart' as _i4;
-import 'package:autogram/ui/widgets/certificate_picker.dart' as _i13;
 import 'package:autogram/ui/widgets/document_visualization.dart' as _i6;
 import 'package:autogram/ui/widgets/error_content.dart' as _i7;
 import 'package:autogram/ui/widgets/loading_content.dart' as _i8;
@@ -25,7 +24,7 @@ import 'package:autogram/ui/widgets/option_picker.dart' as _i9;
 import 'package:autogram/ui/widgets/preference_tile.dart' as _i10;
 import 'package:autogram/ui/widgets/result_view.dart' as _i11;
 import 'package:autogram/ui/widgets/retry_view.dart' as _i12;
-import 'package:autogram/ui/widgets/signature_type_picker.dart' as _i14;
+import 'package:autogram/ui/widgets/signature_type_picker.dart' as _i13;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -132,19 +131,12 @@ final directories = <_i1.WidgetbookNode>[
     name: 'Lists',
     children: [
       _i1.WidgetbookLeafComponent(
-        name: 'CertificatePicker',
-        useCase: _i1.WidgetbookUseCase(
-          name: 'CertificatePicker',
-          builder: _i13.previewCertificatePicker,
-        ),
-      ),
-      _i1.WidgetbookLeafComponent(
         name: 'SignatureTypePicker',
         useCase: _i1.WidgetbookUseCase(
           name: 'SignatureTypePicker',
-          builder: _i14.previewSignatureTypePicker,
+          builder: _i13.previewSignatureTypePicker,
         ),
-      ),
+      )
     ],
   ),
   _i1.WidgetbookCategory(
@@ -155,15 +147,15 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i15.previewErrorPresentSignedDocumentBody,
+            builder: _i14.previewErrorPresentSignedDocumentBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i15.previewLoadingPresentSignedDocumentBody,
+            builder: _i14.previewLoadingPresentSignedDocumentBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i15.previewSuccessPresentSignedDocumentBody,
+            builder: _i14.previewSuccessPresentSignedDocumentBody,
           ),
         ],
       ),
@@ -172,23 +164,23 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'canceled',
-            builder: _i16.previewCanceledSelectCertificateBody,
+            builder: _i15.previewCanceledSelectCertificateBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i16.previewErrorCertificateBody,
+            builder: _i15.previewErrorCertificateBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i16.previewLoadingSelectCertificateBody,
+            builder: _i15.previewLoadingSelectCertificateBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'no certificate',
-            builder: _i16.previewNoCertificateCertificateBody,
+            builder: _i15.previewNoCertificateCertificateBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i16.previewSuccessCertificateCertificateBody,
+            builder: _i15.previewSuccessCertificateCertificateBody,
           ),
         ],
       ),
@@ -196,7 +188,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'SettingsScreen',
         useCase: _i1.WidgetbookUseCase(
           name: 'SettingsScreen',
-          builder: _i17.previewSettingsScreen,
+          builder: _i16.previewSettingsScreen,
         ),
       ),
     ],

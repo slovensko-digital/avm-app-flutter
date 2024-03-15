@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 @injectable
 @singleton
 class AppService {
-  // TODO Implement both functions also in iOS
+  // TODO Implement missing functions also in iOS
   static const _platform = MethodChannel('digital.slovensko.autogram');
 
   const AppService();

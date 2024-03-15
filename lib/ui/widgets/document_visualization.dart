@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:convert' show utf8, base64Decode;
-import 'dart:isolate' show Isolate;
-import 'dart:typed_data' show Uint8List;
 
 import 'package:autogram_sign/autogram_sign.dart' show VisualizationResponse;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:printing/printing.dart' show PdfPreview;
 import 'package:widgetbook/widgetbook.dart';
@@ -25,22 +24,17 @@ class DocumentVisualization extends StatelessWidget {
     final mimeType = visualization.mimeType;
     final child = switch (mimeType) {
       "application/pdf;base64" => _pdfPreview(
-          Isolate.run(() => base64Decode(visualization.content)),
+          compute(base64Decode, visualization.content),
         ),
-      "text/plain;base64" => _htmlPreview(
-          Isolate.run(() {
-            final bytes = base64Decode(visualization.content);
-            final text = utf8.decode(bytes);
+      "text/plain;base64" => _htmlPreview(compute((content) {
+          final text = utf8.decode(base64Decode(content));
 
-            return _htmlDocumentFromText(text);
-          }),
-        ),
+          return _htmlDocumentFromText(text);
+        }, visualization.content)),
       "text/html;base64" => _htmlPreview(
-          Isolate.run(() {
-            final bytes = base64Decode(visualization.content);
-
-            return utf8.decode(bytes);
-          }),
+          compute((content) {
+            return utf8.decode(base64Decode(content));
+          }, visualization.content),
         ),
       _ => _error(context, "Neviem vizualizovať '$mimeType' typ."),
     };

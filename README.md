@@ -28,3 +28,9 @@ Build Android APK:
 ```shell
 fvm flutter build apk
 ```
+
+Build WEB:
+
+```shell
+fvm flutter build web --target=lib/preview.dart
+```

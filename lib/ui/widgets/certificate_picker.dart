@@ -1,6 +1,5 @@
 import 'package:eidmsdk/types.dart' show Certificate;
 import 'package:flutter/material.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import 'certificate_picker_item.dart';
 
@@ -38,11 +37,11 @@ class CertificatePicker extends StatelessWidget {
   }
 }
 
-@widgetbook.UseCase(
-  path: '[Lists]',
-  name: 'CertificatePicker',
-  type: CertificatePicker,
-)
+// @widgetbook.UseCase(
+//   path: '[Lists]',
+//   name: 'CertificatePicker',
+//   type: CertificatePicker,
+// )
 Widget previewCertificatePicker(BuildContext context) {
   const aliceCert = """
 MIIGJzCCBA+gAwIBAgIBATANBgkqhkiG9w0BAQUFADCBsjELMAkGA1UEBhMCRlIx
