@@ -15,8 +15,11 @@ allprojects {
         google()
         mavenCentral()
         maven {
-            // Local distribution
-            url = uri("../../../eidmsdk_flutter/android/libs")
+            url = "https://maven.pkg.github.com/eIDmSDK/eID-mSDK-Android/"
+            credentials {
+                username = "eIDmSDK"
+                password = "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"
+            }
         }
     }
 }

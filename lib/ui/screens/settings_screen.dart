@@ -1,3 +1,4 @@
+import 'package:eidmsdk/types.dart' show Certificate;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart' show PackageInfo;
@@ -156,4 +157,8 @@ class _MockSettings implements ISettings {
   @override
   late final ValueNotifier<PdfSigningOption> signingPdfContainer =
       ValueNotifier(PdfSigningOption.pades);
+
+  @override
+  late final ValueNotifier<Certificate?> signingCertificate =
+      ValueNotifier(null);
 }

@@ -31,20 +31,27 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
         super(const PresentSignedDocumentInitialState());
 
   Future<void> saveDocument() async {
+    _log.info("Saving signed document: ${signedDocument.filename}.");
+
     emit(state.toLoading());
 
+    File? file;
+
     try {
-      final file = await _getTargetFile();
+      file = await _getTargetFile();
       final bytes = await Future.microtask(
         () => base64Decode(signedDocument.content),
       );
 
       await file.writeAsBytes(bytes);
 
-      _log.info("Document was saved into $file");
+      _log.info("Signed Document was saved into $file");
 
       emit(state.toSuccess(file));
-    } catch (error) {
+    } catch (error, stackTrace) {
+      _log.severe(
+          "Error saving signed Document into $file.", error, stackTrace);
+
       emit(state.toError(error));
     }
   }

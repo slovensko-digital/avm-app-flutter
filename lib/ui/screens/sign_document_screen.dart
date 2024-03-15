@@ -85,6 +85,7 @@ class _Body extends StatelessWidget {
 
   Widget _getChild(BuildContext context, SignDocumentState state) {
     return switch (state) {
+      SignDocumentInitialState() => const LoadingContent(),
       SignDocumentLoadingState _ => const LoadingContent(),
       SignDocumentCanceledState _ => RetryView(
           headlineText:
@@ -95,7 +96,7 @@ class _Body extends StatelessWidget {
           title: "Pri podpisovaní sa vyskytla chyba",
           error: state.error,
         ),
-      _ => Text("### $state ###"),
+      SignDocumentSuccessState() => const LoadingContent(), // see listener
     };
   }
 }

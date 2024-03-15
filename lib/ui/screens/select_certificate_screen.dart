@@ -6,6 +6,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/select_certificate_cubit.dart';
 import '../../certificate_extensions.dart';
+import '../../data/settings.dart';
 import '../../oids.dart';
 import '../app_theme.dart';
 import '../widgets/error_content.dart';
@@ -14,10 +15,12 @@ import '../widgets/retry_view.dart';
 import '../widgets/signature_type_picker.dart';
 import 'sign_document_screen.dart';
 
-/// Screen for selecting the signature type.
+/// Screen for selecting the signature type using [SignatureTypePicker].
 /// Expecting to have at most 1 QES [Certificate].
 ///
 /// Uses [SelectCertificateCubit].
+///
+/// Navigates to [SignDocumentScreen].
 class SelectCertificateScreen extends StatelessWidget {
   final String documentId;
 
@@ -34,8 +37,12 @@ class SelectCertificateScreen extends StatelessWidget {
       ),
       body: BlocProvider<SelectCertificateCubit>(
         create: (context) {
-          return GetIt.instance.get<SelectCertificateCubit>()
-            ..getCertificates();
+          final settings = context.read<ISettings>();
+          final signingCertificate = settings.signingCertificate;
+
+          return GetIt.instance.get<SelectCertificateCubit>(
+            param1: signingCertificate,
+          )..getCertificates();
         },
         child: BlocBuilder<SelectCertificateCubit, SelectCertificateState>(
           builder: (context, state) {
@@ -63,6 +70,8 @@ class SelectCertificateScreen extends StatelessWidget {
     required Certificate certificate,
     required bool addTimeStamp,
   }) {
+    context.read<ISettings>().signingCertificate.value = certificate;
+
     return Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => SignDocumentScreen(
         documentId: documentId,
@@ -73,7 +82,9 @@ class SelectCertificateScreen extends StatelessWidget {
   }
 
   Future<void> _onReloadCertificatesRequested(BuildContext context) {
-    return context.read<SelectCertificateCubit>().getCertificates();
+    return context
+        .read<SelectCertificateCubit>()
+        .getCertificates(refresh: true);
   }
 }
 
@@ -101,19 +112,20 @@ class SelectCertificateBody extends StatelessWidget {
 
   Widget _getChild(BuildContext context) {
     return switch (state) {
+      SelectCertificateInitialState _ => const LoadingContent(),
       SelectCertificateLoadingState _ => const LoadingContent(),
       SelectCertificateCanceledState _ => RetryView(
           headlineText:
               "Načítavanie certifikátov z\u{00A0}OP\nbolo zrušené používateľom",
           onRetryRequested: () {
-            context.read<SelectCertificateCubit>().getCertificates();
+            onReloadCertificatesRequested?.call();
           },
         ),
       SelectCertificateNoCertificateState _ => RetryView(
           headlineText:
               "Použitý OP neobsahuje “Kvalifikovaný certifikát pre\u{00A0}elektronický podpis”.\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.",
           onRetryRequested: () {
-            context.read<SelectCertificateCubit>().getCertificates();
+            onReloadCertificatesRequested?.call();
           },
         ),
       SelectCertificateErrorState state => ErrorContent(
@@ -127,7 +139,6 @@ class SelectCertificateBody extends StatelessWidget {
           },
           onReloadCertificatesRequested: onReloadCertificatesRequested,
         ),
-      _ => Text("### $state ###"),
     };
   }
 }

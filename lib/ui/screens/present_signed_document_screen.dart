@@ -115,7 +115,9 @@ class PresentSignedDocumentBody extends StatelessWidget {
 
   Widget _getChild(BuildContext context) {
     return switch (state) {
+      PresentSignedDocumentInitialState _ => const LoadingContent(),
       PresentSignedDocumentLoadingState _ => const LoadingContent(),
+      // TODO UI for case, when unable to save file, however it can be still shared
       PresentSignedDocumentErrorState state => ErrorContent(
           title: "Pri ukladaní súboru sa vyskytla chyba",
           error: state.error,
@@ -125,8 +127,6 @@ class PresentSignedDocumentBody extends StatelessWidget {
           onShareFileRequested: onShareFileRequested,
           onCloseRequested: onCloseRequested,
         ),
-      // TODO Drop ###
-      _ => Text("### $state ###"),
     };
   }
 }

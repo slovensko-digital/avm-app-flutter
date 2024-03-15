@@ -34,19 +34,24 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
   /// Signs the document using given [certificate].
   Future<void> signDocument(bool addTimestamp) async {
     DataToSignStructure data;
+    final signingCertificate = certificate.certData;
+
+    _log.info("Start signing Document with id: $documentId.");
 
     try {
       emit(state.toLoading());
 
       final dataToSignRequest = DocumentsGuidDatatosignPost$RequestBody(
-        signingCertificate: certificate.certData,
+        signingCertificate: signingCertificate,
         addTimestamp: addTimestamp,
       );
 
       data = await _service.setDataToSign(documentId, dataToSignRequest);
 
-      _log.info("Got data to sign from backend.");
-    } catch (error) {
+      _log.info("Got data to sign.");
+    } catch (error, stackTrace) {
+      _log.severe("Error getting data to sign.", error, stackTrace);
+
       emit(state.toError(error));
       return;
     }
@@ -69,8 +74,12 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
         return;
       }
 
+      _log.info("Got signed data.");
+
       // TODO Set state with signResult so we can retry next operation (need to check it on top)
-    } catch (error) {
+    } catch (error, stackTrace) {
+      _log.severe("Error signing data.", error, stackTrace);
+
       emit(state.toError(error));
       return;
     }
@@ -82,7 +91,7 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
         signedData: signResult,
         dataToSignStructure: DataToSignStructure(
           dataToSign: data.dataToSign,
-          signingCertificate: certificate.certData,
+          signingCertificate: signingCertificate,
           signingTime: data.signingTime,
         ),
       );
@@ -95,7 +104,9 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
       emit(state.toSuccess(signedDocument));
 
       _log.info("Document was successfully signed.");
-    } catch (error) {
+    } catch (error, stackTrace) {
+      _log.severe("Error signing Document.", error, stackTrace);
+
       emit(state.toError(error));
       return;
     }

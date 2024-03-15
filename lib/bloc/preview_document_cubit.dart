@@ -17,8 +17,8 @@ export 'preview_document_state.dart';
 class PreviewDocumentCubit extends Cubit<PreviewDocumentState> {
   static final _log = Logger("PreviewDocumentCubit");
 
-  final String documentId;
   final IAutogramService _service;
+  final String documentId;
 
   PreviewDocumentCubit({
     required IAutogramService service,
@@ -26,16 +26,21 @@ class PreviewDocumentCubit extends Cubit<PreviewDocumentState> {
   })  : _service = service,
         super(const PreviewDocumentInitialState());
 
+  /// Gets the Document Visualisation for [documentId].
   Future<void> getVisualization() async {
     emit(state.toLoading());
 
     try {
+      _log.info("Getting Document Visualisation for DocumentId: $documentId");
+
       final visualization = await _service.getDocumentVisualization(documentId);
 
-      _log.info("Got Document Visualisation: ${visualization.runtimeType}.");
+      _log.info("Got Document Visualisation.");
 
       emit(state.toSuccess(visualization));
-    } catch (error) {
+    } catch (error, stackTrace) {
+      _log.severe("Error getting Document Visualisation.", error, stackTrace);
+
       emit(state.toError(error));
     }
   }
