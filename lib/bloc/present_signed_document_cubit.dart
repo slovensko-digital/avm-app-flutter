@@ -45,7 +45,6 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
       final bytes = await Future.microtask(
         () => base64Decode(signedDocument.content),
       );
-
       await file.writeAsBytes(bytes);
 
       _log.info("Signed Document was saved into $file");
@@ -59,15 +58,27 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
     }
   }
 
-  /// Copies the file into TEMP directory so it's accessible by other apps.
-  Future<File> getAccessibleFile() async {
-    final state = (this.state as PresentSignedDocumentSuccessState);
+  /// Gets the [File] for share action.
+  Future<File> getShareableFile() async {
+    final state = this.state;
 
+    if (state is PresentSignedDocumentSuccessState) {
+      final file = state.file;
+
+      if (await file.exists()) {
+        return file;
+      }
+    }
+
+    final name = signedDocument.filename;
     final directory = await getTemporaryDirectory();
-    final sourceFile = state.file;
-    final path = p.join(directory.path, sourceFile.basename);
+    final path = p.join(directory.path, name);
+    final bytes = await Future.microtask(
+      () => base64Decode(signedDocument.content),
+    );
+    final file = File(path);
 
-    return sourceFile.copy(path);
+    return file.writeAsBytes(bytes, flush: true);
   }
 
   /// Returns target [File] where to save new file from [signedDocument].
@@ -87,6 +98,8 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   @visibleForTesting
   static String getTargetFileName(
     String name, [
+    // TODO This should get exact DateTime from previous cubit when it was really signed
+    // SignDocumentCubit signingTime
     ValueGetter<DateTime> clock = DateTime.now,
   ]) {
     // NAME-signed-pades-baseline-b.pdf

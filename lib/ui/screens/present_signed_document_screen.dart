@@ -1,4 +1,4 @@
-import 'dart:io' show File;
+import 'dart:io' show File, OSError, PathAccessException;
 
 import 'package:autogram_sign/autogram_sign.dart';
 import 'package:flutter/gestures.dart';
@@ -13,7 +13,6 @@ import '../../bloc/present_signed_document_cubit.dart';
 import '../../file_extensions.dart';
 import '../../util/errors.dart';
 import '../app_theme.dart';
-import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
 import '../widgets/result_view.dart';
 
@@ -43,8 +42,17 @@ class PresentSignedDocumentScreen extends StatelessWidget {
         body: Builder(
           builder: (context) {
             // Need outer Context to access Cubit
-            return BlocBuilder<PresentSignedDocumentCubit,
+            return BlocConsumer<PresentSignedDocumentCubit,
                 PresentSignedDocumentState>(
+              listener: (context, state) {
+                if (state is PresentSignedDocumentErrorState) {
+                  final error = state.error;
+                  final message =
+                      "Pri ukladaní súboru sa vyskytla chyba:\n${getErrorMessage(error)}";
+
+                  _showError(context, message);
+                }
+              },
               builder: (context, state) {
                 return PresentSignedDocumentBody(
                   state: state,
@@ -59,12 +67,28 @@ class PresentSignedDocumentScreen extends StatelessWidget {
     );
   }
 
+  void _showError(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      duration: const Duration(seconds: 10),
+      content: Text(message),
+      action: SnackBarAction(
+        onPressed: () {
+          // Hides automatically
+        },
+        label: "OK",
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   /// Handles share file request.
   Future<void> _handleShareFile(BuildContext context) async {
     final cubit = context.read<PresentSignedDocumentCubit>();
 
     try {
-      final file = await cubit.getAccessibleFile();
+      final file = await cubit.getShareableFile();
 
       await Share.shareXFiles(
         [XFile(file.path)],
@@ -72,16 +96,10 @@ class PresentSignedDocumentScreen extends StatelessWidget {
         text: "\n\nPodpísané aplikáciou Autogram v Mobile",
       );
     } catch (error) {
-      final snackBar = SnackBar(
-        content: Text("Chyba: ${getErrorMessage(error)}"),
-        action: SnackBarAction(
-          label: "OK",
-          onPressed: () {},
-        ),
-      );
-
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        final message =
+            "Pri zdieľaní súboru sa vyskytla chyba:\n${getErrorMessage(error)}";
+        _showError(context, message);
       }
     }
   }
@@ -117,10 +135,10 @@ class PresentSignedDocumentBody extends StatelessWidget {
     return switch (state) {
       PresentSignedDocumentInitialState _ => const LoadingContent(),
       PresentSignedDocumentLoadingState _ => const LoadingContent(),
-      // TODO UI for case, when unable to save file, however it can be still shared
-      PresentSignedDocumentErrorState state => ErrorContent(
-          title: "Pri ukladaní súboru sa vyskytla chyba",
-          error: state.error,
+      PresentSignedDocumentErrorState _ => _SuccessContent(
+          file: null,
+          onShareFileRequested: onShareFileRequested,
+          onCloseRequested: onCloseRequested,
         ),
       PresentSignedDocumentSuccessState state => _SuccessContent(
           file: state.file,
@@ -131,8 +149,10 @@ class PresentSignedDocumentBody extends StatelessWidget {
   }
 }
 
+/// This presents main content when [File] also cannot be saved for some reason.
+/// However, still can request to share it and navigate.
 class _SuccessContent extends StatelessWidget {
-  final File file;
+  final File? file;
   final VoidCallback? onShareFileRequested;
   final VoidCallback? onCloseRequested;
 
@@ -144,27 +164,32 @@ class _SuccessContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fileNameTextStyle = TextStyle(
-      color: Theme.of(context).colorScheme.primary,
-      decoration: TextDecoration.underline,
-      fontWeight: FontWeight.bold,
-    );
-    final body = RichText(
-      text: TextSpan(
-        text: "Dokument bol uložený do Downloads pod\u{00A0}názvom ",
-        style: Theme.of(context).textTheme.bodyLarge,
-        //style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
-        children: [
-          // Emphasize file name
-          TextSpan(
-            text: file.basename,
-            style: fileNameTextStyle,
-            recognizer: TapGestureRecognizer()..onTap = onShareFileRequested,
-          )
-        ],
-      ),
-      textAlign: TextAlign.center,
-    );
+    final file = this.file;
+    Widget body = const SizedBox(height: 58);
+
+    if (file != null) {
+      final fileNameTextStyle = TextStyle(
+        color: Theme.of(context).colorScheme.primary,
+        decoration: TextDecoration.underline,
+        fontWeight: FontWeight.bold,
+      );
+      body = RichText(
+        text: TextSpan(
+          text: "Dokument bol uložený do Downloads pod\u{00A0}názvom ",
+          style: Theme.of(context).textTheme.bodyLarge,
+          //style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+          children: [
+            // Emphasize file name
+            TextSpan(
+              text: file.basename,
+              style: fileNameTextStyle,
+              recognizer: TapGestureRecognizer()..onTap = onShareFileRequested,
+            )
+          ],
+        ),
+        textAlign: TextAlign.center,
+      );
+    }
 
     return Column(
       children: [
@@ -216,8 +241,16 @@ Widget previewLoadingPresentSignedDocumentBody(BuildContext context) {
   type: PresentSignedDocumentBody,
 )
 Widget previewErrorPresentSignedDocumentBody(BuildContext context) {
-  return const PresentSignedDocumentBody(
-    state: PresentSignedDocumentErrorState("Error!"),
+  const error = PathAccessException(
+    "/storage/emulated/0/Download/container-signed-xades-baseline-b.sce",
+    OSError("Permission denied", 13),
+    "Cannot open file",
+  );
+
+  return PresentSignedDocumentBody(
+    state: const PresentSignedDocumentErrorState(error),
+    onShareFileRequested: () {},
+    onCloseRequested: () {},
   );
 }
 
