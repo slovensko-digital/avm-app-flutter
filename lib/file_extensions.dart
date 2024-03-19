@@ -9,4 +9,8 @@ extension FileExtensions on File {
 
   /// Calls [path.basename] on this [File].
   String get basename => path.basename(this.path);
+
+  /// Calls [path.basenameWithoutExtension] on this [File].
+  String get basenameWithoutExtension =>
+      path.basenameWithoutExtension(this.path);
 }

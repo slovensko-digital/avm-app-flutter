@@ -2,8 +2,10 @@ import 'dart:convert' show base64Decode;
 import 'dart:io' show File;
 
 import 'package:autogram_sign/autogram_sign.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -19,6 +21,7 @@ export 'present_signed_document_state.dart';
 @injectable
 class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   static final _log = Logger("PresentSignedDocumentCubit");
+  static final _tsDateFormat = DateFormat('yyyyMMddHHmmss');
 
   final AppService _appService;
 
@@ -68,10 +71,37 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   }
 
   /// Returns target [File] where to save new file from [signedDocument].
+  ///
+  /// See also:
+  ///  - [getTargetFileName]
   Future<File> _getTargetFile() async {
     final directory = await _appService.getDownloadsDirectory();
-    final path = p.join(directory.path, signedDocument.filename);
+    final name = getTargetFileName(signedDocument.filename);
+    final path = p.join(directory.path, name);
 
     return File(path);
+  }
+
+  /// Gets the target file name.
+  /// Drops suffix and adds timestamp.
+  @visibleForTesting
+  static String getTargetFileName(
+    String name, [
+    ValueGetter<DateTime> clock = DateTime.now,
+  ]) {
+    // NAME-signed-pades-baseline-b.pdf
+
+    // 1. Drop container type from name
+    final file = File(name);
+    final cleanName = file.basenameWithoutExtension
+        .replaceAll(RegExp('-signed-[cxp]ades-baseline-[bt]'), '-signed');
+    final ext = file.extension;
+
+    // 2. Get timestamp
+    final date = clock();
+    final ts = _tsDateFormat.format(date);
+
+    // 3. Final format
+    return "$cleanName-$ts$ext";
   }
 }
