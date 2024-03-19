@@ -1,5 +1,12 @@
 # Changelog
 
+## 2024-03-19 - v1.0.0(10)
+
+- Tweak Autogram logo
+- Update core UI elements (Buttons, Radio, AppBar, Loading indicator) based on "AVM" design system
+- Storing and using previously selected signing certificate
+- Appending timestamp to signed file name
+
 ## 2024-03-14 - v1.0.0(9)
 
 - Increase font size to scale 110%
