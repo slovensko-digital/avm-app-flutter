@@ -112,7 +112,7 @@ AppBar _MainAppBar({
       onPressed: onShowSettingsRequested,
     ),
     title: const Text(
-      "Autogram",
+      "Autogram v mobile",
       style: TextStyle(
         color: kMainAppBarForegroundColor,
       ),

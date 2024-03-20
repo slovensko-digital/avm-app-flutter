@@ -10,11 +10,18 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:autogram/ui/app_theme.dart' as _i3;
+import 'package:autogram/ui/fragment/show_web_page_fragment.dart' as _i14;
 import 'package:autogram/ui/screens/main_screen.dart' as _i2;
+import 'package:autogram/ui/screens/onboarding_accept_terms_of_service_screen.dart'
+    as _i16;
+import 'package:autogram/ui/screens/onboarding_finished_screen.dart' as _i17;
+import 'package:autogram/ui/screens/onboarding_screen.dart' as _i18;
+import 'package:autogram/ui/screens/onboarding_select_certificate_screen.dart'
+    as _i19;
 import 'package:autogram/ui/screens/present_signed_document_screen.dart'
-    as _i14;
-import 'package:autogram/ui/screens/select_certificate_screen.dart' as _i15;
-import 'package:autogram/ui/screens/settings_screen.dart' as _i16;
+    as _i20;
+import 'package:autogram/ui/screens/select_certificate_screen.dart' as _i21;
+import 'package:autogram/ui/screens/settings_screen.dart' as _i22;
 import 'package:autogram/ui/widgets/autogram_logo.dart' as _i4;
 import 'package:autogram/ui/widgets/document_visualization.dart' as _i6;
 import 'package:autogram/ui/widgets/error_content.dart' as _i7;
@@ -24,7 +31,8 @@ import 'package:autogram/ui/widgets/option_picker.dart' as _i9;
 import 'package:autogram/ui/widgets/preference_tile.dart' as _i10;
 import 'package:autogram/ui/widgets/result_view.dart' as _i11;
 import 'package:autogram/ui/widgets/retry_view.dart' as _i12;
-import 'package:autogram/ui/widgets/signature_type_picker.dart' as _i13;
+import 'package:autogram/ui/widgets/signature_type_picker.dart' as _i15;
+import 'package:autogram/ui/widgets/step_indicator.dart' as _i13;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -163,6 +171,25 @@ final directories = <_i1.WidgetbookNode>[
           builder: _i12.previewRetryView,
         ),
       ),
+      _i1.WidgetbookLeafComponent(
+        name: 'StepIndicator',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'StepIndicator',
+          builder: _i13.previewStepIndicator,
+        ),
+      ),
+    ],
+  ),
+  _i1.WidgetbookCategory(
+    name: 'Fragments',
+    children: [
+      _i1.WidgetbookLeafComponent(
+        name: 'ShowWebPageFragment',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'ShowWebPageFragment',
+          builder: _i14.previewShowWebPageFragment,
+        ),
+      )
     ],
   ),
   _i1.WidgetbookCategory(
@@ -172,7 +199,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'SignatureTypePicker',
         useCase: _i1.WidgetbookUseCase(
           name: 'SignatureTypePicker',
-          builder: _i13.previewSignatureTypePicker,
+          builder: _i15.previewSignatureTypePicker,
         ),
       )
     ],
@@ -187,20 +214,48 @@ final directories = <_i1.WidgetbookNode>[
           builder: _i2.previewMainBody,
         ),
       ),
+      _i1.WidgetbookLeafComponent(
+        name: 'OnboardingAcceptTermsOfServiceScreen',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'OnboardingAcceptTermsOfServiceScreen',
+          builder: _i16.previewOnboardingAcceptTermsOfServiceScreen,
+        ),
+      ),
+      _i1.WidgetbookLeafComponent(
+        name: 'OnboardingFinishedScreen',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'OnboardingFinishedScreen',
+          builder: _i17.previewOnboardingFinishedScreen,
+        ),
+      ),
+      _i1.WidgetbookLeafComponent(
+        name: 'OnboardingScreen',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'OnboardingScreen',
+          builder: _i18.previewOnboardingScreen,
+        ),
+      ),
+      _i1.WidgetbookLeafComponent(
+        name: 'OnboardingSelectCertificateScreen',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'OnboardingSelectCertificateScreen',
+          builder: _i19.previewOnboardingSelectCertificateScreen,
+        ),
+      ),
       _i1.WidgetbookComponent(
         name: 'PresentSignedDocumentBody',
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i14.previewErrorPresentSignedDocumentBody,
+            builder: _i20.previewErrorPresentSignedDocumentBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i14.previewLoadingPresentSignedDocumentBody,
+            builder: _i20.previewLoadingPresentSignedDocumentBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i14.previewSuccessPresentSignedDocumentBody,
+            builder: _i20.previewSuccessPresentSignedDocumentBody,
           ),
         ],
       ),
@@ -209,23 +264,23 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'canceled',
-            builder: _i15.previewCanceledSelectCertificateBody,
+            builder: _i21.previewCanceledSelectCertificateBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i15.previewErrorCertificateBody,
+            builder: _i21.previewErrorCertificateBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i15.previewLoadingSelectCertificateBody,
+            builder: _i21.previewLoadingSelectCertificateBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'no certificate',
-            builder: _i15.previewNoCertificateCertificateBody,
+            builder: _i21.previewNoCertificateCertificateBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i15.previewSuccessCertificateCertificateBody,
+            builder: _i21.previewSuccessCertificateCertificateBody,
           ),
         ],
       ),
@@ -233,7 +288,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'SettingsScreen',
         useCase: _i1.WidgetbookUseCase(
           name: 'SettingsScreen',
-          builder: _i16.previewSettingsScreen,
+          builder: _i22.previewSettingsScreen,
         ),
       ),
     ],

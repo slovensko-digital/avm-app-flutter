@@ -19,11 +19,13 @@ class PreferenceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     const titleTextStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
 
-    return ListTile(
-      onTap: onPressed,
-      title: Text(title, style: titleTextStyle),
-      subtitle: Text(summary ?? ''),
-      trailing: const Icon(Icons.arrow_forward_ios_outlined),
+    return Material(
+      child: ListTile(
+        onTap: onPressed,
+        title: Text(title, style: titleTextStyle),
+        subtitle: summary != null ? Text(summary ?? '') : null,
+        trailing: const Icon(Icons.arrow_forward_ios_outlined),
+      ),
     );
   }
 }
@@ -34,14 +36,22 @@ class PreferenceTile extends StatelessWidget {
   type: PreferenceTile,
 )
 Widget previewPreferenceTile(BuildContext context) {
+  final title = context.knobs.string(
+    label: "Title",
+    initialValue: "Preference title",
+  );
+  final summary = context.knobs.stringOrNull(
+    label: "Summary",
+    initialValue: "Preference summary",
+  );
   final enabled = context.knobs.boolean(
     label: "Enabled",
     initialValue: true,
   );
 
   return PreferenceTile(
-    title: "Preference title",
-    summary: "Preference summary",
+    title: title,
+    summary: summary,
     onPressed: (enabled ? () {} : null),
   );
 }
