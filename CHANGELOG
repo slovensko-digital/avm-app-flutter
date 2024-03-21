@@ -1,9 +1,11 @@
 # Changelog
 
-## NEXT - v1.0.0(11)
+## 2024-03-21 - v1.0.0(11)
 
 - After document was signed, displaying success screen even if unable to save file into Downloads
   so that user can at least Share it
+- Prepare Terms and Conditions web page - accessible from Setting
+- iOS: Update app icon, lock screen orientation
 
 ## 2024-03-19 - v1.0.0(10)
 
