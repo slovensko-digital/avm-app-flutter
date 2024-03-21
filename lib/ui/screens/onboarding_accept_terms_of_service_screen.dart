@@ -1,14 +1,20 @@
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../data/settings.dart';
 import '../app_theme.dart';
 import '../fragment/show_web_page_fragment.dart';
 import '../widgets/step_indicator.dart';
 import 'onboarding_screen.dart';
 
 /// [OnboardingScreen] to accept Terms of Service document.
+///
+/// Saves version into [ISettings.acceptedTermsOfServiceVersion].
+///
+/// Consumes [ISettings].
 class OnboardingAcceptTermsOfServiceScreen extends StatefulWidget {
   final VoidCallback onTermsOfServiceAccepted;
 
@@ -70,12 +76,20 @@ class _OnboardingAcceptTermsOfServiceScreenState
             style: FilledButton.styleFrom(
               minimumSize: kPrimaryButtonMinimumSize,
             ),
-            onPressed: documentLoaded ? widget.onTermsOfServiceAccepted : null,
+            onPressed: documentLoaded ? _onAccept : null,
             child: const Text("Súhlasím"),
           ),
         ),
       ],
     );
+  }
+
+  void _onAccept() {
+    // TODO Get current ToS document version
+    const version = 1;
+
+    context.read<ISettings?>()?.acceptedTermsOfServiceVersion.value = version;
+    widget.onTermsOfServiceAccepted.call();
   }
 }
 

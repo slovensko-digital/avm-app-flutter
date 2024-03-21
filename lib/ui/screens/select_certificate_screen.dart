@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-import '../../bloc/select_certificate_cubit.dart';
+import '../../bloc/select_signing_certificate_cubit.dart';
 import '../../certificate_extensions.dart';
 import '../../data/settings.dart';
 import '../../oids.dart';
@@ -18,7 +18,7 @@ import 'sign_document_screen.dart';
 /// Screen for selecting the signature type using [SignatureTypePicker].
 /// Expecting to have at most 1 QES [Certificate].
 ///
-/// Uses [SelectCertificateCubit].
+/// Uses [SelectSigningCertificateCubit].
 ///
 /// Navigates to [SignDocumentScreen].
 class SelectCertificateScreen extends StatelessWidget {
@@ -35,16 +35,17 @@ class SelectCertificateScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Výber typu podpisu"),
       ),
-      body: BlocProvider<SelectCertificateCubit>(
+      body: BlocProvider<SelectSigningCertificateCubit>(
         create: (context) {
           final settings = context.read<ISettings>();
           final signingCertificate = settings.signingCertificate;
 
-          return GetIt.instance.get<SelectCertificateCubit>(
+          return GetIt.instance.get<SelectSigningCertificateCubit>(
             param1: signingCertificate,
           )..getCertificates();
         },
-        child: BlocBuilder<SelectCertificateCubit, SelectCertificateState>(
+        child: BlocBuilder<SelectSigningCertificateCubit,
+            SelectSigningCertificateState>(
           builder: (context, state) {
             return SelectCertificateBody(
               state: state,
@@ -83,14 +84,14 @@ class SelectCertificateScreen extends StatelessWidget {
 
   Future<void> _onReloadCertificatesRequested(BuildContext context) {
     return context
-        .read<SelectCertificateCubit>()
+        .read<SelectSigningCertificateCubit>()
         .getCertificates(refresh: true);
   }
 }
 
 /// [SelectCertificateScreen] body.
 class SelectCertificateBody extends StatelessWidget {
-  final SelectCertificateState state;
+  final SelectSigningCertificateState state;
   final void Function(Certificate certificate, bool addTimeStamp)?
       onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
@@ -112,27 +113,27 @@ class SelectCertificateBody extends StatelessWidget {
 
   Widget _getChild(BuildContext context) {
     return switch (state) {
-      SelectCertificateInitialState _ => const LoadingContent(),
-      SelectCertificateLoadingState _ => const LoadingContent(),
-      SelectCertificateCanceledState _ => RetryView(
+      SelectSigningCertificateInitialState _ => const LoadingContent(),
+      SelectSigningCertificateLoadingState _ => const LoadingContent(),
+      SelectSigningCertificateCanceledState _ => RetryView(
           headlineText:
               "Načítavanie certifikátov z\u{00A0}OP\nbolo zrušené používateľom",
           onRetryRequested: () {
             onReloadCertificatesRequested?.call();
           },
         ),
-      SelectCertificateNoCertificateState _ => RetryView(
+      SelectSigningCertificateNoCertificateState _ => RetryView(
           headlineText:
               "Použitý OP neobsahuje “Kvalifikovaný certifikát pre\u{00A0}elektronický podpis”.\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.",
           onRetryRequested: () {
             onReloadCertificatesRequested?.call();
           },
         ),
-      SelectCertificateErrorState state => ErrorContent(
+      SelectSigningCertificateErrorState state => ErrorContent(
           title: "Chyba pri načítavaní certifikátov z\u{00A0}OP.",
           error: state.error,
         ),
-      SelectCertificateSuccessState state => _SelectSignatureTypeContent(
+      SelectSigningCertificateSuccessState state => _SelectSignatureTypeContent(
           certificate: state.certificate,
           onSignDocumentRequested: (final bool addTimeStamp) {
             onSignDocumentRequested?.call(state.certificate, addTimeStamp);
@@ -214,7 +215,7 @@ class _SelectSignatureTypeContentState
 )
 Widget previewLoadingSelectCertificateBody(BuildContext context) {
   return const SelectCertificateBody(
-    state: SelectCertificateLoadingState(),
+    state: SelectSigningCertificateLoadingState(),
   );
 }
 
@@ -225,7 +226,7 @@ Widget previewLoadingSelectCertificateBody(BuildContext context) {
 )
 Widget previewCanceledSelectCertificateBody(BuildContext context) {
   return const SelectCertificateBody(
-    state: SelectCertificateCanceledState(),
+    state: SelectSigningCertificateCanceledState(),
   );
 }
 
@@ -236,7 +237,7 @@ Widget previewCanceledSelectCertificateBody(BuildContext context) {
 )
 Widget previewNoCertificateCertificateBody(BuildContext context) {
   return const SelectCertificateBody(
-    state: SelectCertificateNoCertificateState(),
+    state: SelectSigningCertificateNoCertificateState(),
   );
 }
 
@@ -247,7 +248,7 @@ Widget previewNoCertificateCertificateBody(BuildContext context) {
 )
 Widget previewErrorCertificateBody(BuildContext context) {
   return const SelectCertificateBody(
-    state: SelectCertificateErrorState("Error message!"),
+    state: SelectSigningCertificateErrorState("Error message!"),
   );
 }
 
@@ -302,7 +303,7 @@ DiH5uEqBXExjrj0FslxcVKdVj5glVcSmkLwZKbEU1OKwleT/iXFhvooWhQ==
   );
 
   return SelectCertificateBody(
-    state: const SelectCertificateSuccessState(certificate),
+    state: const SelectSigningCertificateSuccessState(certificate),
     onReloadCertificatesRequested: () {},
   );
 }

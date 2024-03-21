@@ -3,9 +3,15 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../data/pdf_signing_option.dart';
 import '../app_theme.dart';
+import 'certificate_picker.dart';
+import 'signature_type_picker.dart';
 
 /// Reusable widget to pick single option.
-/// Represented as vertical list of [Radio].
+/// Represented as vertical list of [Radio] + label.
+///
+/// See also:
+///  - [CertificatePicker]
+///  - [SignatureTypePicker]
 class OptionPicker<T> extends StatelessWidget {
   final List<T> values;
   final T? selectedValue;
@@ -22,46 +28,51 @@ class OptionPicker<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelBuilder = this.labelBuilder ?? _defaultLabelBuilder;
-
     return ListView.builder(
       itemCount: values.length,
       itemBuilder: (context, index) {
         final value = values[index];
-        final label = labelBuilder(value);
-        final radio = Transform.scale(
-          scale: kRadioScale,
-          child: Radio<T>(
-            value: value,
-            groupValue: selectedValue,
-            onChanged: (value) {
-              if (value != null) {
-                onValueChanged(value);
-              }
-            },
-            activeColor: kRadioActiveColor,
-          ),
-        );
+        final child = _listItem(value);
 
         return Padding(
           padding: kMaterialListPadding,
-          child: Material(
-            child: InkWell(
-              onTap: () {
-                onValueChanged(value);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  radio,
-                  const SizedBox(width: 16),
-                  label,
-                ],
-              ),
-            ),
-          ),
+          child: child,
         );
       },
+    );
+  }
+
+  Widget _listItem(T value) {
+    final labelBuilder = this.labelBuilder ?? _defaultLabelBuilder;
+    final label = labelBuilder(value);
+    final radio = Transform.scale(
+      scale: kRadioScale,
+      child: Radio<T>(
+        value: value,
+        groupValue: selectedValue,
+        onChanged: (value) {
+          if (value != null) {
+            onValueChanged(value);
+          }
+        },
+        activeColor: kRadioActiveColor,
+      ),
+    );
+
+    return Material(
+      child: InkWell(
+        onTap: () {
+          onValueChanged(value);
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            radio,
+            const SizedBox(width: 16),
+            label,
+          ],
+        ),
+      ),
     );
   }
 

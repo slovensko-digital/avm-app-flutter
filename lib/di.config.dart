@@ -22,7 +22,7 @@ import 'app_service.dart' as _i3;
 import 'bloc/create_document_cubit.dart' as _i4;
 import 'bloc/present_signed_document_cubit.dart' as _i9;
 import 'bloc/preview_document_cubit.dart' as _i10;
-import 'bloc/select_certificate_cubit.dart' as _i11;
+import 'bloc/select_signing_certificate_cubit.dart' as _i11;
 import 'bloc/sign_document_cubit.dart' as _i15;
 import 'data/pdf_signing_option.dart' as _i7;
 
@@ -65,12 +65,12 @@ extension GetItInjectableX on _i1.GetIt {
           service: gh<_i8.IAutogramService>(),
           documentId: documentId,
         ));
-    gh.factoryParam<_i11.SelectCertificateCubit,
+    gh.factoryParam<_i11.SelectSigningCertificateCubit,
         _i12.ValueNotifier<_i13.Certificate?>, dynamic>((
       signingCertificate,
       _,
     ) =>
-        _i11.SelectCertificateCubit(
+        _i11.SelectSigningCertificateCubit(
           eidmsdk: gh<_i14.Eidmsdk>(),
           signingCertificate: signingCertificate,
         ));

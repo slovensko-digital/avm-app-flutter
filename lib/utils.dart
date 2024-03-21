@@ -4,6 +4,7 @@ import 'dart:math' show Random;
 import 'package:basic_utils/basic_utils.dart'
     show X509CertificateData, X509Utils;
 
+// TODO Drop "Utils" class and make as global functions
 class Utils {
   static final Random _random = Random.secure();
 

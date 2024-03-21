@@ -2,7 +2,18 @@
 class X500Oids {
   const X500Oids();
 
+  /// Common name (CN).
   static const cn = '2.5.4.3';
+
+  /// Organization name (ON).
   static const on = '2.5.4.10';
+
+  /// Serial number (SN).
   static const sn = '2.5.4.5';
+
+  /// Country (C).
+  static const c = '2.5.4.6';
+
+  /// Locality name (LN).
+  static const ln = '2.5.4.7';
 }

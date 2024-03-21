@@ -6,6 +6,9 @@ import 'pdf_signing_option.dart';
 
 /// Interface for general app settings.
 abstract interface class ISettings {
+  /// Accepted Terms of Service (ToS) document version value.
+  ValueNotifier<int?> get acceptedTermsOfServiceVersion;
+
   /// The signing container value.
   ValueNotifier<PdfSigningOption> get signingPdfContainer;
 
@@ -17,6 +20,13 @@ abstract interface class ISettings {
 ///
 /// Uses **Shared Preferences** - need to call [Settings.initialize] before use.
 class Settings with NotifiedPreferences implements ISettings {
+  @override
+  late final ValueNotifier<int?> acceptedTermsOfServiceVersion =
+      createSetting<int?>(
+    key: 'accepted.tos.version',
+    initialValue: null,
+  );
+
   @override
   late final ValueNotifier<PdfSigningOption> signingPdfContainer =
       createEnumSetting(

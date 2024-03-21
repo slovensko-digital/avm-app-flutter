@@ -11,8 +11,8 @@ import '../widgets/loading_indicator.dart';
 ///
 /// Params:
 ///  - [url] - initial URL to load
-///  - [onUrlLoaded] - called when that URL was loaded
-///  - [onWebResourceError] - called on web resource error
+///  - [onUrlLoaded] - called when that URL was loaded (NOT on WEB)
+///  - [onWebResourceError] - called on web resource error (NOT on WEB)
 class ShowWebPageFragment extends StatefulWidget {
   final Uri url;
   final VoidCallback? onUrlLoaded;
@@ -31,14 +31,14 @@ class ShowWebPageFragment extends StatefulWidget {
 
 class _ShowWebPageFragmentState extends State<ShowWebPageFragment> {
   final WebViewController controller = WebViewController();
-  bool isLoading = true;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
 
     controller.loadRequest(widget.url);
-    isLoading = true;
+    isLoading = !kIsWeb;
   }
 
   @override
@@ -46,33 +46,34 @@ class _ShowWebPageFragmentState extends State<ShowWebPageFragment> {
     super.didChangeDependencies();
 
     if (!kIsWeb) {
-      controller.setBackgroundColor(Theme.of(context).colorScheme.background);
-    }
-
-    controller
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(NavigationDelegate(
-        onPageStarted: (final String url) {
-          if (mounted) {
-            setState(() {
-              isLoading = true;
-            });
-          }
-        },
-        onPageFinished: (final String url) {
-          if (mounted) {
-            setState(() {
-              isLoading = false;
-            });
-            if (widget.url.toString() == url) {
-              widget.onUrlLoaded?.call();
+      controller
+        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+        ..setBackgroundColor(Theme.of(context).colorScheme.background)
+        // In HTML, onPageFinished could be iframe.onload,
+        // however there is no case for onPageStarted, onWebResourceError
+        ..setNavigationDelegate(NavigationDelegate(
+          onPageStarted: (final String url) {
+            if (mounted) {
+              setState(() {
+                isLoading = true;
+              });
             }
-          }
-        },
-        onWebResourceError: (error) {
-          widget.onWebResourceError?.call(error);
-        },
-      ));
+          },
+          onPageFinished: (final String url) {
+            if (mounted) {
+              setState(() {
+                isLoading = false;
+              });
+              if (widget.url.toString() == url) {
+                widget.onUrlLoaded?.call();
+              }
+            }
+          },
+          onWebResourceError: (error) {
+            widget.onWebResourceError?.call(error);
+          },
+        ));
+    }
   }
 
   @override

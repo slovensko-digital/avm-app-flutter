@@ -22,7 +22,8 @@ class SignatureTypePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      primary: true,
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
       children: [
         _listItem(false),
         const SizedBox(height: 8),

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import 'onboarding_accept_terms_of_service_screen.dart';
 import 'onboarding_finished_screen.dart';
+import 'onboarding_select_signing_certificate_screen.dart';
 
 /// Screen for whole onboarding flow.
+/// Uses its own [Navigator].
 ///
-/// Flow based on steps from [OnboardingStep] :
-///  - Accept Terms of Service - [OnboardingAcceptTermsOfServiceScreen]
-///  - Select Signing Certificate - ...
-///  - Success - [OnboardingFinishedScreen]
+/// Flow based on steps from [_OnboardingStep] values:
+///  1. Accept Terms of Service - [OnboardingAcceptTermsOfServiceScreen]
+///  2. Select Signing Certificate - [OnboardingSelectSigningCertificateScreen]
+///  3. Success - [OnboardingFinishedScreen]
 class OnboardingScreen extends StatefulWidget {
-  // TODO Add all params here, so it can be properly mocked
   const OnboardingScreen({super.key});
 
   @override
@@ -20,44 +20,68 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  OnboardingStep step = OnboardingStep.acceptTermsOfService;
 
   @override
   Widget build(BuildContext context) {
     // Need child Navigator so we can navigate between steps
     return Navigator(
       key: navigatorKey,
+      initialRoute: _OnboardingStep.values.first.name,
       onGenerateRoute: _generateRoute,
     );
   }
 
   Route<dynamic>? _generateRoute(RouteSettings settings) {
-    // TODO Impl. switch based on current step
+    final route = settings.name!;
+    final step = _OnboardingStep.values.byName(route);
+    final Widget child = switch (step) {
+      _OnboardingStep.acceptTermsOfService =>
+        OnboardingAcceptTermsOfServiceScreen(
+          onTermsOfServiceAccepted: _handleTermsOfServiceAccepted,
+        ),
+      _OnboardingStep.selectSigningCertificate =>
+        OnboardingSelectSigningCertificateScreen(
+          onCertificateSelected: _handleCertificateSelected,
+          onSkipRequested: _handleCertificateSelectionSkipped,
+        ),
+      _OnboardingStep.showSummary => OnboardingFinishedScreen(
+          onStartRequested: _handleStartRequested,
+        ),
+    };
 
     return MaterialPageRoute(
-      builder: (context) {
-        return OnboardingAcceptTermsOfServiceScreen(
-          onTermsOfServiceAccepted: () {
-            // TODO Save terms + navigate next
-          },
-        );
-      },
+      builder: (context) => child,
     );
+  }
+
+  void _navigateToStep(_OnboardingStep step) {
+    navigatorKey.currentState?.pushNamed(step.name);
+  }
+
+  void _handleTermsOfServiceAccepted() {
+    // TODO Onboarding - handle case when signing cert. was selected but need to accept only new ToS
+    _navigateToStep(_OnboardingStep.selectSigningCertificate);
+  }
+
+  void _handleCertificateSelectionSkipped() {
+    _navigateToStep(_OnboardingStep.showSummary);
+  }
+
+  void _handleCertificateSelected() {
+    _navigateToStep(_OnboardingStep.showSummary);
+  }
+
+  void _handleStartRequested() {
+    Navigator.of(context).popUntil((route) {
+      // Remove until MainScreen
+      return route.settings.name == '/';
+    });
   }
 }
 
 /// Step for [OnboardingScreen].
-enum OnboardingStep {
+enum _OnboardingStep {
   acceptTermsOfService,
   selectSigningCertificate,
   showSummary,
-}
-
-@widgetbook.UseCase(
-  path: '[Screens]',
-  name: 'OnboardingScreen',
-  type: OnboardingScreen,
-)
-Widget previewOnboardingScreen(BuildContext context) {
-  return const OnboardingScreen();
 }

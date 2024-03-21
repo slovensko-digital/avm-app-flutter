@@ -1,10 +1,15 @@
 import 'package:eidmsdk/types.dart' show Certificate;
 import 'package:flutter/material.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import 'certificate_picker_item.dart';
+import 'signature_type_picker.dart';
 
 /// Displays [certificates] in a vertical list of [CertificatePickerItem]
 /// to pick one.
+///
+/// See also:
+///  - [SignatureTypePicker]
 class CertificatePicker extends StatelessWidget {
   final List<Certificate> certificates;
   final Certificate? selectedCertificate;
@@ -20,7 +25,8 @@ class CertificatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      primary: true,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       children: [
         for (final certificate in certificates) _listItem(certificate),
       ],
@@ -29,7 +35,7 @@ class CertificatePicker extends StatelessWidget {
 
   Widget _listItem(Certificate certificate) {
     return CertificatePickerItem(
-      key: ObjectKey(certificate),
+      key: ValueKey(certificate.certIndex),
       certificate: certificate,
       selectedCertificate: selectedCertificate,
       onCertificateChanged: onCertificateChanged,
@@ -37,11 +43,11 @@ class CertificatePicker extends StatelessWidget {
   }
 }
 
-// @widgetbook.UseCase(
-//   path: '[Lists]',
-//   name: 'CertificatePicker',
-//   type: CertificatePicker,
-// )
+@widgetbook.UseCase(
+  path: '[Lists]',
+  name: 'CertificatePicker',
+  type: CertificatePicker,
+)
 Widget previewCertificatePicker(BuildContext context) {
   const aliceCert = """
 MIIGJzCCBA+gAwIBAgIBATANBgkqhkiG9w0BAQUFADCBsjELMAkGA1UEBhMCRlIx
@@ -114,42 +120,6 @@ gTa2q+6oZ4/uu/5vyR+KH+/pyXpSQK2gPyNFemOVmD0SuOLzC4gQOARosPGni9Bh
 1w8vzxdRIet2aS0Z6AHFM/1hzUZkh4lD6THQvoigooIMf59mQTqaWmo=
 """;
 
-  const carolCert = """
-  MIIGJzCCBA+gAwIBAgIBAzANBgkqhkiG9w0BAQUFADCBsjELMAkGA1UEBhMCRlIx
-DzANBgNVBAgMBkFsc2FjZTETMBEGA1UEBwwKU3RyYXNib3VyZzEYMBYGA1UECgwP
-d3d3LmZyZWVsYW4ub3JnMRAwDgYDVQQLDAdmcmVlbGFuMS0wKwYDVQQDDCRGcmVl
-bGFuIFNhbXBsZSBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkxIjAgBgkqhkiG9w0BCQEW
-E2NvbnRhY3RAZnJlZWxhbi5vcmcwHhcNMTIwNDI3MTA1NDUzWhcNMjIwNDI1MTA1
-NDUzWjB+MQswCQYDVQQGEwJGUjEPMA0GA1UECAwGQWxzYWNlMRgwFgYDVQQKDA93
-d3cuZnJlZWxhbi5vcmcxEDAOBgNVBAsMB2ZyZWVsYW4xDjAMBgNVBAMMBWNhcm9s
-MSIwIAYJKoZIhvcNAQkBFhNjb250YWN0QGZyZWVsYW4ub3JnMIICIjANBgkqhkiG
-9w0BAQEFAAOCAg8AMIICCgKCAgEA18CnxulIxFNAs3bZLzcoPaPEQtB2zQibUOMc
-UeUUcvoroLEGI/PBrZJ8ef4VVNHlZ2La7YGqfuKxUKn72CkJ2oRNPPRuE6sL1e6A
-YzJ9V6+DPBwn7exn1v0cEy1Av9Hav3q2Z36wdTttYZ3MbBqX8Vben4DTFmC7im9G
-m740dcNM0vHI8z6YKDDkyy0lYWJIvi7c7ZCTrnS3+klDZSCsjv5SbACOUT62msZP
-RBx7hBe9XPY26UyRiW9OrawQQcXFZYogyPcno+qsW3QJmSeIYMdEaRgMMhp38kdT
-RuMSxWmVRRWaFGB2IKe1jFG/WlcZWseovAvEMMoL5tD4xKiE2SSikvaE8hPqpJOX
-/u132C91eiw5iDxEVgrvElfVno81jn+E5xrRGY0j27XOxX/hiG0E1gHe8HI+UZUd
-TzC2MgoPhLUANOS/gHEQYhTBMlqppt7CWOhS62ZauF7CBnymajPyHopBB1O7a0GS
-WYV5BKnfVkzgYh6Yh5UHsRBJNJyQTAuDJSefASf70MRuUMz1AkcsRZox5c59ho/b
-/YPqpgBJcRREoY6duqSkz50VIC1ndkKBY6J2Tksitd492PjgQ3+jEPBz+27hajeZ
-3IejBUwp9WMUm+ujOpsrtFH1BQPeQeXLGo5260eTU5BxxY+GX54LTTOcPIiKkJ+Q
-pjWQgfECAwEAAaN7MHkwCQYDVR0TBAIwADAsBglghkgBhvhCAQ0EHxYdT3BlblNT
-TCBHZW5lcmF0ZWQgQ2VydGlmaWNhdGUwHQYDVR0OBBYEFLVdDU9V9nUaI7P1jLxr
-WraWbK7gMB8GA1UdIwQYMBaAFCNsLT0+KV14uGw+quK7Lh5sh/JTMA0GCSqGSIb3
-DQEBBQUAA4ICAQC/P+cWorqxz9Z584TtpRA+YEIO1RrG6bE5hlou3a62txYzMxc+
-g/eh97QbCXSPmw2OTMeh1mZsAjq18nKqyeSzxp1uwEjcOSEwGKBvywm+3g9jgwQy
-c6e8QjS3odwhIQiGZbwuxXiu+/6r+4uFv2Hg4qpSXx4NGSITlHq0vVwwjUMitOkT
-Yn4+9eJ6KjvaH1dKXbhsTPVuNLm9tB/ciNAoIKIMMeh/OiO4YEjITuECYq4A+9Cl
-dsvq89d1DZ5WSMEuRMcMnwOzrJbFoqAGnivD67UEFTN5Sp4olB0oUJjj67V0aX9p
-vGFy0YrM+4m+UTSBEXv6is/nv4GRNBoRY5JB62J9eipaK6OFNls5CEBrDby37TZC
-YEXuDCfxQTie25mPD/8b6gKYnxkhM8qiR4nLHalMlLY9suK/HfcSjQH/d9ZyZXDK
-gI6iLXgMsp2EOlD56I6FA1jrCtNb01XQvX3eyFuA6g5T1jWGYBDtvQb0WRVkdUy9
-L/uK+sHQwtloCSuakcQAsWV9bajCQtHX8XGu25Yz56kpJ/OJjcishxT6pc/sthum
-A5PX739JsNUi/p5aG+H/6eNx+ukJP7QaM646YCfS5i8S9DJUvim+/BSlKi2ZiOCd
-0MYH4Xb7lmAOTNmTvSYpKo9J2fZ9erw0MYSBTyjh6F7PRbHBiivgUnJfGQ==
-""";
-
   const certificates = [
     Certificate(
       slot: "1",
@@ -164,13 +134,6 @@ A5PX739JsNUi/p5aG+H/6eNx+ukJP7QaM646YCfS5i8S9DJUvim+/BSlKi2ZiOCd
       isQualified: false,
       certIndex: 2,
       certData: bobCert,
-    ),
-    Certificate(
-      slot: "3",
-      supportedSchemes: [],
-      isQualified: false,
-      certIndex: 3,
-      certData: carolCert,
     ),
   ];
 

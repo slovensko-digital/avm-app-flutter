@@ -6,26 +6,27 @@ import 'package:flutter_bloc/flutter_bloc.dart' show Cubit;
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 
-import '../ui/screens/select_certificate_screen.dart';
-import 'select_certificate_state.dart';
+import '../ui/fragment/select_signing_certificate_fragment.dart';
+import 'select_signing_certificate_state.dart';
 
-export 'select_certificate_state.dart';
+export 'select_signing_certificate_state.dart';
 
-/// Cubit for the [SelectCertificateScreen].
+/// Cubit for the [SelectSigningCertificateFragment].
 @injectable
-class SelectCertificateCubit extends Cubit<SelectCertificateState> {
+class SelectSigningCertificateCubit
+    extends Cubit<SelectSigningCertificateState> {
   static final _log = Logger("SelectCertificateCubit");
   static const _defaultLanguage = 'sk';
 
   final Eidmsdk _eidmsdk;
   final ValueNotifier<Certificate?> _signingCertificate;
 
-  SelectCertificateCubit({
+  SelectSigningCertificateCubit({
     required Eidmsdk eidmsdk,
     @factoryParam required ValueNotifier<Certificate?> signingCertificate,
   })  : _eidmsdk = eidmsdk,
         _signingCertificate = signingCertificate,
-        super(const SelectCertificateInitialState());
+        super(const SelectSigningCertificateInitialState());
 
   /// Gets the certificates.
   ///

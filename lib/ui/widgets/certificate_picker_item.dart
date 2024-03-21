@@ -4,9 +4,14 @@ import 'package:intl/intl.dart' show DateFormat;
 
 import '../../certificate_extensions.dart';
 import '../../oids.dart';
+import '../app_theme.dart';
 import 'certificate_picker.dart';
 
-/// [Certificate] item for [CertificatePicker].
+/// [CertificatePicker] item do display [certificate] info:
+///  - Subject CN, LN, C
+///  - Subject SN
+///  - Issuer CN
+///  - Not After
 class CertificatePickerItem extends StatelessWidget {
   static final DateFormat _dateFormat = DateFormat("dd.MM.yyyy");
 
@@ -25,27 +30,42 @@ class CertificatePickerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final cert = certificate.tbsCertificate;
 
-    return RadioListTile(
-      value: certificate.certIndex,
-      groupValue: selectedCertificate?.certIndex,
-      onChanged: (final int? value) {
-        if (value != null) {
-          onCertificateChanged(certificate);
-        }
+    // NOT using  RadioListTile because need to scale-up and style Radio
+
+    final title = [
+      cert.subject[X500Oids.cn],
+      cert.subject[X500Oids.ln],
+      cert.subject[X500Oids.c],
+    ].whereType<String>().join(", ");
+    final identity = "${cert.subject[X500Oids.sn]}";
+    final issuer = "Vydavateľ: ${cert.issuer[X500Oids.cn]}";
+    final validTo = "Platný do: ${_dateFormat.format(cert.validity.notAfter)}";
+
+    return ListTile(
+      onTap: () {
+        onCertificateChanged(certificate);
       },
+      leading: Transform.scale(
+        scale: kRadioScale,
+        child: Radio<int>(
+          value: certificate.certIndex,
+          groupValue: selectedCertificate?.certIndex,
+          onChanged: (_) {
+            onCertificateChanged(certificate);
+          },
+          activeColor: kRadioActiveColor,
+        ),
+      ),
       title: Text(
-        certificate.usageLabel ?? '',
+        title,
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //Text(cert.issuer[X500Oids.cn] ?? ''),
-          //Text("Slot: ${certificate.slot}"),
-          Text("Sériové číslo: ${cert.serialNumber.toRadixString(16)}"),
-          Text("Platný do: ${_dateFormat.format(cert.validity.notAfter)}"),
-          Text("Celé meno: ${cert.subject[X500Oids.cn]}"),
-          Text("Identifikátor: ${cert.subject[X500Oids.sn]}"),
+          Text(identity),
+          Text(issuer),
+          Text(validTo),
         ],
       ),
     );

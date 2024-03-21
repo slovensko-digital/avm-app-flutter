@@ -205,6 +205,10 @@ Widget previewSettingsScreen(BuildContext context) {
 
 class _MockSettings implements ISettings {
   @override
+  late final ValueNotifier<int?> acceptedTermsOfServiceVersion =
+      ValueNotifier(null);
+
+  @override
   late final ValueNotifier<PdfSigningOption> signingPdfContainer =
       ValueNotifier(PdfSigningOption.pades);
 
