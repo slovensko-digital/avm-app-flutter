@@ -51,6 +51,12 @@ Build Android APK:
 fvm flutter build apk
 ```
 
+Build iOS IPA:
+
+```shell
+fvm flutter build ipa
+```
+
 Build WEB:
 
 ```shell
