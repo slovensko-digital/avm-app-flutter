@@ -20,7 +20,7 @@ import 'sign_document_screen.dart';
 ///
 /// Uses [SelectSigningCertificateCubit].
 ///
-/// Navigates to [SignDocumentScreen].
+/// Navigates next to [SignDocumentScreen].
 class SelectCertificateScreen extends StatelessWidget {
   final String documentId;
 

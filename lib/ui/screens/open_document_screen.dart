@@ -4,6 +4,7 @@ import 'dart:io' show File;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/create_document_cubit.dart';
 import '../../data/settings.dart';
@@ -16,7 +17,7 @@ import 'preview_document_screen.dart';
 ///
 /// Uses [CreateDocumentCubit].
 ///
-/// Navigates next to [PreviewDocumentScreen].
+/// Navigates next to [PreviewDocumentScreen] on success.
 class OpenDocumentScreen extends StatelessWidget {
   final FutureOr<File> file;
 
@@ -24,24 +25,7 @@ class OpenDocumentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Otváranie dokumentu"),
-      ),
-      body: _Body(file: file),
-    );
-  }
-}
-
-/// [OpenDocumentScreen] body.
-class _Body extends StatelessWidget {
-  final FutureOr<File> file;
-
-  const _Body({required this.file});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider<CreateDocumentCubit>(
+    final body = BlocProvider<CreateDocumentCubit>(
       create: (context) {
         final settings = context.read<ISettings>();
         final pdfSigningOption = settings.signingPdfContainer.value;
@@ -55,31 +39,79 @@ class _Body extends StatelessWidget {
         listener: (context, state) {
           // On success move to next screen replacing this
           if (state is CreateDocumentSuccessState) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => PreviewDocumentScreen(
-                  file: state.file,
-                  documentId: state.documentId,
-                ),
-              ),
-            );
+            _onSuccess(context, state);
           }
         },
         builder: (context, state) {
-          final child = switch (state) {
-            CreateDocumentErrorState state => ErrorContent(
-                title: "Chyba pri vytváraní dokumentu",
-                error: state.error,
-              ),
-            _ => const LoadingContent(),
-          };
-
-          return Padding(
-            padding: kScreenMargin,
-            child: child,
-          );
+          return _Body(state: state);
         },
       ),
     );
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Otváranie dokumentu"),
+        ),
+        body: body,
+      ),
+    );
   }
+
+  void _onSuccess(BuildContext context, CreateDocumentSuccessState state) {
+    final screen = PreviewDocumentScreen(
+      file: state.file,
+      documentId: state.documentId,
+    );
+    final route = MaterialPageRoute(
+      builder: (context) => screen,
+    );
+
+    Navigator.of(context).pushReplacement(route);
+  }
+}
+
+/// [OpenDocumentScreen] body.
+class _Body extends StatelessWidget {
+  final CreateDocumentState state;
+
+  const _Body({required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    final child = switch (state) {
+      CreateDocumentErrorState state => ErrorContent(
+          title: "Chyba pri vytváraní dokumentu",
+          error: state.error,
+        ),
+      _ => const LoadingContent(),
+    };
+
+    return Padding(
+      padding: kScreenMargin,
+      child: child,
+    );
+  }
+}
+
+@widgetbook.UseCase(
+  path: '[Screens]',
+  name: 'loading',
+  type: OpenDocumentScreen,
+)
+Widget previewLoadingOpenDocumentScreen(BuildContext context) {
+  return const _Body(
+    state: CreateDocumentLoadingState(),
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[Screens]',
+  name: 'error',
+  type: OpenDocumentScreen,
+)
+Widget previewErrorOpenDocumentScreen(BuildContext context) {
+  return const _Body(
+    state: CreateDocumentErrorState("Error message!"),
+  );
 }

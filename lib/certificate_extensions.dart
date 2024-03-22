@@ -1,13 +1,13 @@
 import 'package:basic_utils/basic_utils.dart';
 import 'package:eidmsdk/types.dart';
 
-import 'utils.dart';
+import 'utils.dart' as utils;
 
 /// A set of extensions on [Certificate] type.
 extension CertificateExtensions on Certificate {
   /// Gets the [TbsCertificate].
   TbsCertificate get tbsCertificate {
-    final x509CertificateData = Utils.x509CertificateDataFromDer(certData);
+    final x509CertificateData = utils.x509CertificateDataFromDer(certData);
 
     return x509CertificateData.tbsCertificate!;
   }
@@ -26,20 +26,20 @@ extension CertificateExtensions on Certificate {
       return "Kvalifikovaný certifikát pre elektronický podpis";
     }
 
-    if (keyUsage != null) {
-      if (keyUsage.contains(KeyUsage.DIGITAL_SIGNATURE)) {
-        return "Certifikát pre elektronický podpis";
-      }
-
-      if (keyUsage.contains(KeyUsage.DATA_ENCIPHERMENT)) {
-        return "Šifrovací certifikát";
-      }
-
-      return keyUsage
-          .map((e) => e.name.toLowerCase().replaceAll('_', ' '))
-          .join(", ");
+    if (keyUsage == null) {
+      return null;
     }
 
-    return null;
+    if (keyUsage.contains(KeyUsage.DIGITAL_SIGNATURE)) {
+      return "Certifikát pre elektronický podpis";
+    }
+
+    if (keyUsage.contains(KeyUsage.DATA_ENCIPHERMENT)) {
+      return "Šifrovací certifikát";
+    }
+
+    return keyUsage
+        .map((e) => e.name.toLowerCase().replaceAll('_', ' '))
+        .join(", ");
   }
 }

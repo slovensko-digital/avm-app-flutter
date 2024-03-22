@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import 'di.config.dart';
-import 'utils.dart';
+import 'utils.dart' as utils;
 
 final getIt = GetIt.instance;
 
@@ -19,7 +19,7 @@ void configureDependencies() {
 
       return AutogramService(
         baseUrl: serviceUrl,
-        encryptionKey: Utils.createCryptoRandomString(),
+        encryptionKey: utils.createCryptoRandomString(),
       );
     },
   );

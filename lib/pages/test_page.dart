@@ -1,19 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:autogram_sign/autogram_sign.dart';
+import 'package:eidmsdk/eidmsdk.dart';
+import 'package:eidmsdk/eidmsdk_platform_interface.dart';
 import 'package:eidmsdk/types.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../utils.dart';
-import 'package:autogram_sign/autogram_sign.dart';
-import 'package:eidmsdk/eidmsdk.dart';
-import 'package:eidmsdk/eidmsdk_platform_interface.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import '../utils.dart' as utils;
 
 class TestPage extends HookWidget {
   const TestPage({super.key});
@@ -32,7 +32,7 @@ class TestPage extends HookWidget {
     final localStorage = LocalStorage('document');
     final localStorageReady = useFuture(localStorage.ready);
 
-    final encryptionKey = useState<String?>(Utils.createCryptoRandomString());
+    final encryptionKey = useState<String?>(utils.createCryptoRandomString());
     final autogram = useMemoized(
         () => AutogramService(
             baseUrl: Uri.parse("https://autogram.slovensko.digital/api/v1"),
@@ -102,7 +102,7 @@ class TestPage extends HookWidget {
             action: ElevatedButton(
               child: const Text('Regenerate'),
               onPressed: () async {
-                encryptionKey.value = Utils.createCryptoRandomString();
+                encryptionKey.value = utils.createCryptoRandomString();
               },
             ),
           ),
@@ -294,7 +294,8 @@ class TestPage extends HookWidget {
                   name: currentDocumentInfo.filename,
                 );
                 final directory = await getTemporaryDirectory();
-                final documentPath = path.join(directory.path, currentDocumentInfo.filename);
+                final documentPath =
+                    path.join(directory.path, currentDocumentInfo.filename);
                 await documentFile.saveTo(documentPath);
                 documentFile = XFile(documentPath);
                 await Share.shareXFiles([documentFile]);
