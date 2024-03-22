@@ -31,23 +31,26 @@ class SelectCertificateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Výber typu podpisu"),
-      ),
-      body: BlocProvider<SelectSigningCertificateCubit>(
-        create: (context) {
-          final settings = context.read<ISettings>();
-          final signingCertificate = settings.signingCertificate;
+    return BlocProvider<SelectSigningCertificateCubit>(
+      create: (context) {
+        final settings = context.read<ISettings>();
+        final signingCertificate = settings.signingCertificate;
 
-          return GetIt.instance.get<SelectSigningCertificateCubit>(
-            param1: signingCertificate,
-          )..getCertificates();
-        },
-        child: BlocBuilder<SelectSigningCertificateCubit,
-            SelectSigningCertificateState>(
-          builder: (context, state) {
-            return SelectCertificateBody(
+        return GetIt.instance.get<SelectSigningCertificateCubit>(
+          param1: signingCertificate,
+        )..getCertificates();
+      },
+      child: BlocBuilder<SelectSigningCertificateCubit,
+          SelectSigningCertificateState>(
+        builder: (context, state) {
+          final showTitle = state is! SelectSigningCertificateLoadingState;
+
+          return Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: showTitle,
+              title: showTitle ? const Text("Výber typu podpisu") : null,
+            ),
+            body: _Body(
               state: state,
               onSignDocumentRequested: (certificate, addTimeStamp) {
                 _onSignDocumentRequested(
@@ -59,9 +62,9 @@ class SelectCertificateScreen extends StatelessWidget {
               onReloadCertificatesRequested: () {
                 _onReloadCertificatesRequested(context);
               },
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -90,14 +93,13 @@ class SelectCertificateScreen extends StatelessWidget {
 }
 
 /// [SelectCertificateScreen] body.
-class SelectCertificateBody extends StatelessWidget {
+class _Body extends StatelessWidget {
   final SelectSigningCertificateState state;
   final void Function(Certificate certificate, bool addTimeStamp)?
       onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
 
-  const SelectCertificateBody({
-    super.key,
+  const _Body({
     required this.state,
     this.onSignDocumentRequested,
     this.onReloadCertificatesRequested,
@@ -211,10 +213,10 @@ class _SelectSignatureTypeContentState
 @widgetbook.UseCase(
   path: '[Screens]',
   name: 'loading',
-  type: SelectCertificateBody,
+  type: SelectCertificateScreen,
 )
-Widget previewLoadingSelectCertificateBody(BuildContext context) {
-  return const SelectCertificateBody(
+Widget previewLoadingSelectCertificateScreen(BuildContext context) {
+  return const _Body(
     state: SelectSigningCertificateLoadingState(),
   );
 }
@@ -222,10 +224,10 @@ Widget previewLoadingSelectCertificateBody(BuildContext context) {
 @widgetbook.UseCase(
   path: '[Screens]',
   name: 'canceled',
-  type: SelectCertificateBody,
+  type: SelectCertificateScreen,
 )
-Widget previewCanceledSelectCertificateBody(BuildContext context) {
-  return const SelectCertificateBody(
+Widget previewCanceledSelectCertificateScreen(BuildContext context) {
+  return const _Body(
     state: SelectSigningCertificateCanceledState(),
   );
 }
@@ -233,10 +235,10 @@ Widget previewCanceledSelectCertificateBody(BuildContext context) {
 @widgetbook.UseCase(
   path: '[Screens]',
   name: 'no certificate',
-  type: SelectCertificateBody,
+  type: SelectCertificateScreen,
 )
-Widget previewNoCertificateCertificateBody(BuildContext context) {
-  return const SelectCertificateBody(
+Widget previewNoCertificateSelectCertificateScreen(BuildContext context) {
+  return const _Body(
     state: SelectSigningCertificateNoCertificateState(),
   );
 }
@@ -244,10 +246,10 @@ Widget previewNoCertificateCertificateBody(BuildContext context) {
 @widgetbook.UseCase(
   path: '[Screens]',
   name: 'error',
-  type: SelectCertificateBody,
+  type: SelectCertificateScreen,
 )
-Widget previewErrorCertificateBody(BuildContext context) {
-  return const SelectCertificateBody(
+Widget previewErrorSelectCertificateScreen(BuildContext context) {
+  return const _Body(
     state: SelectSigningCertificateErrorState("Error message!"),
   );
 }
@@ -255,9 +257,9 @@ Widget previewErrorCertificateBody(BuildContext context) {
 @widgetbook.UseCase(
   path: '[Screens]',
   name: 'success',
-  type: SelectCertificateBody,
+  type: SelectCertificateScreen,
 )
-Widget previewSuccessCertificateCertificateBody(BuildContext context) {
+Widget previewSuccessSelectCertificateScreen(BuildContext context) {
   const aliceCert = """
 MIIGJzCCBA+gAwIBAgIBATANBgkqhkiG9w0BAQUFADCBsjELMAkGA1UEBhMCRlIx
 DzANBgNVBAgMBkFsc2FjZTETMBEGA1UEBwwKU3RyYXNib3VyZzEYMBYGA1UECgwP
@@ -302,7 +304,7 @@ DiH5uEqBXExjrj0FslxcVKdVj5glVcSmkLwZKbEU1OKwleT/iXFhvooWhQ==
     certData: aliceCert,
   );
 
-  return SelectCertificateBody(
+  return _Body(
     state: const SelectSigningCertificateSuccessState(certificate),
     onReloadCertificatesRequested: () {},
   );

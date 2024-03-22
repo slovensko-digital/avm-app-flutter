@@ -49,10 +49,10 @@ class OnboardingFinishedScreen extends StatelessWidget {
       child: child,
     );
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: null,
-        body: body,
+    return Scaffold(
+      appBar: null,
+      body: SafeArea(
+        child: body,
       ),
     );
   }

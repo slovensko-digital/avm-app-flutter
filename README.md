@@ -7,7 +7,7 @@
 
 ## Key concepts
 
-- Business logic should be separated in **Bloc** and placed in [lib/bloc/](lib/bloc/)
+- Business logic should be separated in **Bloc** and placed in [lib/bloc/](lib/bloc)
   - `NameCubit`
   - separate `sealed class NameState`
 - For services and Bloc using `@injectable` and also `Provider`

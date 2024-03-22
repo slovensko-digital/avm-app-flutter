@@ -1,5 +1,11 @@
 # Changelog
 
+## 2024-03-22 - v1.0.0(12)
+
+- Change Application Id / Bundle ID to "digital.slovensko.avm"
+- Tweak displaying licenses in Settings -> About
+- Signature type selection screen - don't displaying app bar when it's loading
+
 ## 2024-03-21 - v1.0.0(11)
 
 - After document was signed, displaying success screen even if unable to save file into Downloads

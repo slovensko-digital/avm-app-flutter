@@ -35,13 +35,13 @@ class _OnboardingAcceptTermsOfServiceScreenState
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: const BackButton(),
-          title: const Text("Podmienky používania"),
-        ),
-        body: _getBody(),
+    return Scaffold(
+      appBar: AppBar(
+        leading: const BackButton(),
+        title: const Text("Podmienky používania"),
+      ),
+      body: SafeArea(
+        child: _getBody(),
       ),
     );
   }

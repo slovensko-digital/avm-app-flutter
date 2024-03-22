@@ -48,12 +48,12 @@ class OpenDocumentScreen extends StatelessWidget {
       ),
     );
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Otváranie dokumentu"),
-        ),
-        body: body,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Otváranie dokumentu"),
+      ),
+      body: SafeArea(
+        child: body,
       ),
     );
   }

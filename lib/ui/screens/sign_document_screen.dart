@@ -55,12 +55,12 @@ class SignDocumentScreen extends StatelessWidget {
       ),
     );
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Podpisovanie dokumentu"),
-        ),
-        body: body,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Podpisovanie dokumentu"),
+      ),
+      body: SafeArea(
+        child: body,
       ),
     );
   }

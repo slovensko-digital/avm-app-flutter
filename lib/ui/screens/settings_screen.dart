@@ -1,22 +1,22 @@
 import 'package:eidmsdk/types.dart' show Certificate;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:package_info_plus/package_info_plus.dart' show PackageInfo;
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../data/pdf_signing_option.dart';
-import '../../data/settings.dart';
+import '../../data/settings.dart' show ISettings;
 import '../app_theme.dart';
-import '../fragment/show_web_page_fragment.dart';
 import '../widgets/option_picker.dart';
 import '../widgets/preference_tile.dart';
+import 'about_screen.dart';
+import 'show_terms_of_service_screen.dart';
 
-/// App setting screen for editing [Settings].
+/// App setting screen for editing [ISettings].
 ///
 /// Contains:
 ///  - [ISettings.signingPdfContainer]
-///  - link to show ToS
-///  - app version
+///  - link to display [ShowTermsOfServiceScreen]
+///  - link to display [AboutScreen]
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -27,17 +27,20 @@ class SettingsScreen extends StatelessWidget {
         automaticallyImplyLeading: true,
         title: const Text("Nastavenia"),
       ),
-      body: _SettingsScreenBody(
-        settings: context.read(),
+      body: SafeArea(
+        child: _Body(
+          settings: context.read(),
+        ),
       ),
     );
   }
 }
 
-class _SettingsScreenBody extends StatelessWidget {
+/// [SettingsScreen] body.
+class _Body extends StatelessWidget {
   final ISettings settings;
 
-  const _SettingsScreenBody({required this.settings});
+  const _Body({required this.settings});
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +52,11 @@ class _SettingsScreenBody extends StatelessWidget {
           child: settingsChild,
         ),
         TextButton(
+          style: TextButton.styleFrom(
+            minimumSize: kPrimaryButtonMinimumSize,
+          ),
           onPressed: () {
-            _showAbout(context);
+            _showInDialog(context, const AboutScreen());
           },
           child: const Text("O aplikácii"),
         ),
@@ -95,7 +101,7 @@ class _SettingsScreenBody extends StatelessWidget {
         PreferenceTile(
           title: "Podmienky používania",
           onPressed: () {
-            _showTermsOfService(context);
+            _showInDialog(context, const ShowTermsOfServiceScreen());
           },
         ),
         const Divider(height: 1),
@@ -130,47 +136,14 @@ class _SettingsScreenBody extends StatelessWidget {
     return (result != null);
   }
 
-  /// Shows Terms of Service in dialog.
-  Future<void> _showTermsOfService(BuildContext context) {
-    final url = Uri.parse("https://slovensko.digital/o-nas/stanovy/");
-    final content = SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Text("Podmienky používania"),
-          actions: const [
-            CloseButton(),
-          ],
-        ),
-        body: ShowWebPageFragment(
-          url: url,
-        ),
-      ),
+  /// Shows [child] in full screen dialog.
+  Future<dynamic> _showInDialog(BuildContext context, Widget child) {
+    final route = MaterialPageRoute(
+      fullscreenDialog: true,
+      builder: (_) => child,
     );
 
-    // OR showDialog() + Dialog.fullscreen
-    return showGeneralDialog(
-      context: context,
-      pageBuilder: (context, __, ___) {
-        return content;
-      },
-    );
-  }
-
-  /// Shows About dialog.
-  void _showAbout(BuildContext context) async {
-    final pi = await PackageInfo.fromPlatform();
-    final versionText = "Verzia: ${pi.version} (${pi.buildNumber})";
-
-    if (context.mounted) {
-      showAboutDialog(
-        context: context,
-        applicationVersion: versionText,
-        applicationLegalese: "Nový, lepší a krajší podpisovač v\u{00A0}mobile",
-        //applicationLegalese:
-        //    "### Typically this is a copyright notice. ###",
-      );
-    }
+    return Navigator.of(context).push(route);
   }
 }
 
@@ -198,7 +171,7 @@ Widget _pdfSigningOptionSelection({
 Widget previewSettingsScreen(BuildContext context) {
   final settings = _MockSettings();
 
-  return _SettingsScreenBody(
+  return _Body(
     settings: settings,
   );
 }

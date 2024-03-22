@@ -55,19 +55,19 @@ class PreviewDocumentScreen extends StatelessWidget {
       ),
     );
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Náhľad dokumentu"),
-          actions: [
-            IconButton(
-              onPressed: _onShareRequested,
-              icon: const Icon(Icons.share_outlined),
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ],
-        ),
-        body: body,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Náhľad dokumentu"),
+        actions: [
+          IconButton(
+            onPressed: _onShareRequested,
+            icon: const Icon(Icons.share_outlined),
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: body,
       ),
     );
   }
