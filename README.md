@@ -5,7 +5,26 @@
 - [main](lib/main.dart) - main app
 - [preview](lib/preview.dart) - [Widgetbook](https://www.widgetbook.io/blog/getting-started) app
 
-## Flows
+## Key concepts
+
+- Business logic should be separated in **Bloc** and placed in [lib/bloc/](lib/bloc/)
+  - `NameCubit`
+  - separate `sealed class NameState`
+- For services and Bloc using `@injectable` and also `Provider`
+- For persistent app **preferences** use [`ISettings`](lib/data/settings.dart)
+- Custom **widgets**:
+  - are placed in [`lib/ui`](lib/ui)
+  - should have reasonable previews with `@widgetbook.UseCase` without relying on any `Bloc` or `Provider` types
+
+## Implemented app flows
+
+### Onboarding
+
+User onboarding - starts with one [`OnboardingScreen`](lib/ui/screens/onboarding_screen.dart):
+
+1. [`OnboardingAcceptTermsOfServiceScreen`](lib/ui/screens/onboarding_accept_terms_of_service_screen.dart) 
+2. [`OnboardingSelectSigningCertificateScreen`](lib/ui/screens/onboarding_select_signing_certificate_screen.dart)
+3. [`OnboardingFinishedScreen`](lib/ui/screens/onboarding_finished_screen.dart)
 
 ### Sign single document
 
