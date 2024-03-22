@@ -1,5 +1,5 @@
 import 'package:autogram_sign/autogram_sign.dart'
-    show SignDocumentResponse, SignDocumentResponseMimeType;
+    show SignDocumentResponseBody, SignDocumentResponseBodyMimeType;
 import 'package:eidmsdk/types.dart' show Certificate;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -146,9 +146,9 @@ Widget previewErrorSignDocumentScreen(BuildContext context) {
 Widget previewSuccessSignDocumentScreen(BuildContext context) {
   return const _Body(
     state: SignDocumentSuccessState(
-      SignDocumentResponse(
+      SignDocumentResponseBody(
         filename: "document.pdf",
-        mimeType: SignDocumentResponseMimeType.applicationPdfBase64,
+        mimeType: SignDocumentResponseBodyMimeType.applicationPdfBase64,
         content: "",
         issuedBy: "",
         signedBy: "",

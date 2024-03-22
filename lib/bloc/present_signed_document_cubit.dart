@@ -1,7 +1,7 @@
 import 'dart:convert' show base64Decode;
 import 'dart:io' show File;
 
-import 'package:autogram_sign/autogram_sign.dart';
+import 'package:autogram_sign/autogram_sign.dart' show SignDocumentResponseBody;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -25,7 +25,7 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
 
   final AppService _appService;
 
-  final SignDocumentResponse signedDocument;
+  final SignDocumentResponseBody signedDocument;
 
   PresentSignedDocumentCubit({
     required AppService appService,

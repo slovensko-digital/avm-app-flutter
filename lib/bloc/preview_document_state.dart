@@ -1,4 +1,5 @@
-import 'package:autogram_sign/autogram_sign.dart' show VisualizationResponse;
+import 'package:autogram_sign/autogram_sign.dart'
+    show DocumentVisualizationResponseBody;
 import 'package:flutter/foundation.dart';
 
 import 'preview_document_cubit.dart';
@@ -12,7 +13,8 @@ sealed class PreviewDocumentState {
     return const PreviewDocumentLoadingState();
   }
 
-  PreviewDocumentSuccessState toSuccess(VisualizationResponse visualization) {
+  PreviewDocumentSuccessState toSuccess(
+      DocumentVisualizationResponseBody visualization) {
     return PreviewDocumentSuccessState(visualization);
   }
 
@@ -46,7 +48,7 @@ class PreviewDocumentErrorState extends PreviewDocumentState {
 }
 
 class PreviewDocumentSuccessState extends PreviewDocumentState {
-  final VisualizationResponse visualization;
+  final DocumentVisualizationResponseBody visualization;
 
   const PreviewDocumentSuccessState(this.visualization);
 

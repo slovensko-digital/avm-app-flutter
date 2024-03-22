@@ -1,6 +1,6 @@
 import 'dart:io' show File, OSError, PathAccessException;
 
-import 'package:autogram_sign/autogram_sign.dart';
+import 'package:autogram_sign/autogram_sign.dart' show SignDocumentResponseBody;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +20,7 @@ import '../widgets/result_view.dart';
 ///
 /// Uses [PresentSignedDocumentCubit].
 class PresentSignedDocumentScreen extends StatelessWidget {
-  final SignDocumentResponse signedDocument;
+  final SignDocumentResponseBody signedDocument;
 
   const PresentSignedDocumentScreen({
     super.key,

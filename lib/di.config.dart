@@ -48,8 +48,8 @@ extension GetItInjectableX on _i1.GetIt {
           file: file,
           pdfSigningOption: pdfSigningOption,
         ));
-    gh.factoryParam<_i9.PresentSignedDocumentCubit, _i8.SignDocumentResponse,
-        dynamic>((
+    gh.factoryParam<_i9.PresentSignedDocumentCubit,
+        _i8.SignDocumentResponseBody, dynamic>((
       signedDocument,
       _,
     ) =>

@@ -43,7 +43,7 @@ class TestPage extends HookWidget {
     final certificates = useState<CertificatesInfo?>(null);
     final dataToSign = useState<String?>(null);
     final signedData = useState<String?>(null);
-    final signedDocumentInfo = useState<GetDocumentResponse?>(null);
+    final signedDocumentInfo = useState<GetDocumentResponseBody?>(null);
 
     useEffect(() {
       if (localStorageReady.data == true) {
@@ -189,7 +189,7 @@ class TestPage extends HookWidget {
                 }
                 final result = await autogram.setDataToSign(
                     documentId.value!,
-                    DocumentsGuidDatatosignPost$RequestBody(
+                    DataToSignRequestBody(
                       signingCertificate:
                           certificates.value!.certificates.first.certData,
                     ));

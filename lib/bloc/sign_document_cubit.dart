@@ -41,7 +41,7 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
     try {
       emit(state.toLoading());
 
-      final dataToSignRequest = DocumentsGuidDatatosignPost$RequestBody(
+      final dataToSignRequest = DataToSignRequestBody(
         signingCertificate: signingCertificate,
         addTimestamp: addTimestamp,
       );

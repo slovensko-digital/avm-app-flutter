@@ -1,4 +1,4 @@
-import 'package:autogram_sign/autogram_sign.dart';
+import 'package:autogram_sign/autogram_sign.dart' show SignDocumentResponseBody;
 import 'package:flutter/foundation.dart';
 
 import 'sign_document_cubit.dart';
@@ -20,7 +20,7 @@ sealed class SignDocumentState {
     return SignDocumentErrorState(error);
   }
 
-  SignDocumentSuccessState toSuccess(SignDocumentResponse signedDocument) {
+  SignDocumentSuccessState toSuccess(SignDocumentResponseBody signedDocument) {
     return SignDocumentSuccessState(signedDocument);
   }
 
@@ -54,7 +54,7 @@ class SignDocumentErrorState extends SignDocumentState {
 }
 
 class SignDocumentSuccessState extends SignDocumentState {
-  final SignDocumentResponse signedDocument;
+  final SignDocumentResponseBody signedDocument;
 
   const SignDocumentSuccessState(this.signedDocument);
 

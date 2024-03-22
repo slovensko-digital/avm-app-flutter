@@ -1,6 +1,7 @@
 import 'dart:io' show File;
 
-import 'package:autogram_sign/autogram_sign.dart' show VisualizationResponse;
+import 'package:autogram_sign/autogram_sign.dart'
+    show DocumentVisualizationResponseBody;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -121,7 +122,7 @@ class _Body extends StatelessWidget {
 }
 
 class _SuccessContent extends StatelessWidget {
-  final VisualizationResponse visualization;
+  final DocumentVisualizationResponseBody visualization;
   final VoidCallback? onSignRequested;
 
   const _SuccessContent({
@@ -196,7 +197,7 @@ Widget previewErrorOpenDocumentScreen(BuildContext context) {
 Widget previewSuccessOpenDocumentScreen(BuildContext context) {
   return const _Body(
     state: PreviewDocumentSuccessState(
-      VisualizationResponse(
+      DocumentVisualizationResponseBody(
         mimeType: "text/plain;base64",
         filename: "sample.txt",
         content: "",
