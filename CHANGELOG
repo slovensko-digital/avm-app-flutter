@@ -1,14 +1,19 @@
 # Changelog
 
-## 2024-03-25 - v1.0.0(12)
+## 2024-03-25 - v1.0.0(14)
 
-- First iOS release; where saving to Downloads and opening by Autogram is not yet implemented!
+- iOS: Add missing NSPhotoLibraryUsageDescription for App Store Connect
+
+## 2024-03-25 - v1.0.0(13)
+
 - Add some horizontal padding to Autogram logo
+- iOS: First iOS release; where saving to Downloads and opening by Autogram is not yet implemented!
 - Sync API client with v0.3.0
 
 ## 2024-03-22 - v1.0.0(12)
 
-- Change Application Id / Bundle ID to "digital.slovensko.avm"
+- Android: Change Application Id to "digital.slovensko.avm"
+- iOS: Change Bundle ID to "digital.slovensko.avm"
 - Tweak displaying licenses in Settings -> About
 - Signature type selection screen - don't displaying app bar when it's loading
 
@@ -29,7 +34,7 @@
 ## 2024-03-14 - v1.0.0(9)
 
 - Increase font size to scale 110%
-- Using custom Android app icon and logo
+- Android: Using custom Android app icon and logo
 
 ## 2024-03-11 - v1.0.0(8)
 
@@ -61,7 +66,7 @@
 
 ## 2024-03-07 - v1.0.0(3)
 
-- Custom Android icon and name
+- Android: Custom Android icon and name
 - Implement document signing flow with success state where able to share generated file
 
 ## 2024-03-06 - v1.0.0(2)

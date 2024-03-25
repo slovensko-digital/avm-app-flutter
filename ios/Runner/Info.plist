@@ -28,6 +28,8 @@
 	<true/>
 	<key>NFCReaderUsageDescription</key>
 	<string>Čítanie eID preukazu s NFC čipom</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Otvorenie fotografií z galérie</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
