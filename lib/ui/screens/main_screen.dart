@@ -132,9 +132,11 @@ class MainBody extends StatelessWidget {
       padding: kScreenMargin,
       child: Column(
         children: [
-          const SizedBox(height: 140),
-          const AutogramLogo(),
-          const SizedBox(height: 32),
+          const SizedBox(height: 96),
+          const Padding(
+            padding: EdgeInsets.all(48),
+            child: AutogramLogo(),
+          ),
           const Text(
             "Nový, lepší a krajší podpisovač v\u{00A0}mobile",
             textAlign: TextAlign.center,
