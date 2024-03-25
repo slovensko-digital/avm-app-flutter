@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-03-25 - v1.0.0(12)
+
+- First iOS release; where saving to Downloads and opening by Autogram is not yet implemented!
+
 ## 2024-03-22 - v1.0.0(12)
 
 - Change Application Id / Bundle ID to "digital.slovensko.avm"

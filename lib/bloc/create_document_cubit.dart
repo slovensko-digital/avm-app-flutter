@@ -64,7 +64,9 @@ class CreateDocumentCubit extends Cubit<CreateDocumentState> {
       _log.info("New Document created: '$documentId'.");
 
       emit(state.toSuccess(file, documentId));
-    } catch (error) {
+    } catch (error, stackTrace) {
+      _log.severe("Error creating Document.", error, stackTrace);
+
       emit(state.toError(error));
     }
   }

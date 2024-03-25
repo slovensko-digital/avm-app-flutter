@@ -1,5 +1,7 @@
 # Autogram Mobile App (AVM)
 
+Flutter app for Android and iOS.
+
 ## Entry points
 
 - [main](lib/main.dart) - main app
@@ -28,7 +30,7 @@ User onboarding - starts with one [`OnboardingScreen`](lib/ui/screens/onboarding
 
 ### Sign single document
 
-Signing of single (PDF, TXT, XML, ...) document using
+Signing of single (PDF, TXT, image, eForms XML, ...) document using
 [`Eidmsdk`](../eidmsdk_flutter/lib/eidmsdk.dart) and
 [`AutogramService`](../autogram_sign/lib/src/iautogram_service.dart).
 
@@ -81,3 +83,10 @@ Build WEB:
 ```shell
 fvm flutter build web --target=lib/preview.dart
 ```
+
+## Identifiers and links
+
+- Android Application ID, [Apple Bundle/App ID](https://developer.apple.com/account/resources/identifiers/bundleId/edit/832594XXZD): `digital.slovensko.avm`
+- Apple Team ID: `44U4JSRX4Z` (Služby Slovensko.Digital, s.r.o.)
+- Apple App Store ID: [`6479985251`](https://appstoreconnect.apple.com/apps/6479985251/distribution/info), SKU: `avm`
+- Firebase: [`digital-slovensko-avm`](https://console.firebase.google.com/project/digital-slovensko-avm/overview)
