@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-03-26 - v1.0.0(15)
+
+- iOS: Saving signed documents into app specific directory with file access enabled
+
 ## 2024-03-25 - v1.0.0(14)
 
 - iOS: Add missing NSPhotoLibraryUsageDescription for App Store Connect

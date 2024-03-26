@@ -86,7 +86,7 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   /// See also:
   ///  - [getTargetFileName]
   Future<File> _getTargetFile() async {
-    final directory = await _appService.getDownloadsDirectory();
+    final directory = await _appService.getDocumentsDirectory();
     final name = getTargetFileName(signedDocument.filename);
     final path = p.join(directory.path, name);
 

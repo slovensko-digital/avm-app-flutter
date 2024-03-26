@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
+import 'package:path_provider/path_provider.dart' as provider;
 
 @injectable
 @singleton
 class AppService {
-  // TODO Implement missing functions also in iOS
-  static const _platform = MethodChannel('digital.slovensko.autogram');
+  static const _platform = MethodChannel('digital.slovensko.avm');
 
   const AppService();
 
@@ -17,7 +17,8 @@ class AppService {
       return _platform.invokeMethod<String?>('getSharedFileName');
     }
 
-    // Return null so it won't crash on iOS
+    // TODO Implement getSharedFileName also in iOS
+    // Returns null so it won't crash on iOS
     return Future.value(null);
   }
 
@@ -29,19 +30,24 @@ class AppService {
           .then((value) => (value != null ? File(value) : null));
     }
 
+    // TODO Implement getSharedFile also in iOS
     throw UnimplementedError(
         "Method 'getSharedFileName' is not implemented in iOS.");
   }
 
-  /// Returns [Directory] with path to the public "Downloads" directory.
-  Future<Directory> getDownloadsDirectory() {
+  /// Returns [Directory] with path where to store Documents.
+  Future<Directory> getDocumentsDirectory() {
     if (Platform.isAndroid) {
       return _platform
           .invokeMethod<String>('getDownloadsDirectory')
           .then((path) => Directory(path!));
     }
 
-    throw UnimplementedError(
-        "Method 'getDownloadsDirectory' is not implemented in iOS.");
+    if (Platform.isIOS) {
+      return provider.getApplicationDocumentsDirectory();
+    }
+
+    // On Android, this returns app specific path
+    return provider.getDownloadsDirectory().then((value) => value!);
   }
 }

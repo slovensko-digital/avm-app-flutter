@@ -123,6 +123,6 @@ internal class AppService(
 
     companion object {
         private const val TAG = "AppService"
-        private const val CHANNEL = "digital.slovensko.autogram"
+        private const val CHANNEL = "digital.slovensko.avm"
     }
 }
