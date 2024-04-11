@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-04-11 - v1.0.0(17)
+
+- iOS: Set "App Uses Non-Exempt Encryption"=NO flag for App Store Connect
+
 ## 2024-04-11 - v1.0.0(16)
 
 - iOS: Supporting opening file via "Share to" also in iOS (works in Files and Mail, not Safari)
