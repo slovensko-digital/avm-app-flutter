@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "207744645288",
+    "project_id": "digital-slovensko-avm",
+    "storage_bucket": "digital-slovensko-avm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207744645288:android:250418da0630b468b56a9d",
+        "android_client_info": {
+          "package_name": "digital.slovensko.avm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbIoyG7eCUGZQC4eEjU3i0KGOsdGCD-1Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

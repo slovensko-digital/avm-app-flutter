@@ -1,5 +1,6 @@
 import 'dart:developer' as developer;
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart' show WidgetsFlutterBinding, runApp;
 import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart' show Level, LogRecord, Logger;
@@ -9,6 +10,7 @@ import 'app.dart';
 import 'app_service.dart';
 import 'data/settings.dart';
 import 'di.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +18,11 @@ void main() async {
   // Setup Logger
   Logger.root.level = Level.ALL; // defaults to Level.INFO
   Logger.root.onRecord.listen(_onRecord);
+
+  // Setup Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   // Setup DI
   configureDependencies();

@@ -1,7 +1,7 @@
 name: autogram
 description: "Autogram v mobile"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.0+17
+version: 1.0.0+18
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -36,6 +36,8 @@ dependencies:
   notified_preferences: any
   widgetbook_annotation: ^3.1.0
   widgetbook: ^3.7.0
+  firebase_core:
+  firebase_crashlytics:
 
 dev_dependencies:
   flutter_test:
