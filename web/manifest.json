@@ -1,10 +1,10 @@
 {
-    "name": "Autogram",
+    "name": "Autogram v mobile",
     "short_name": "Autogram",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
-    "theme_color": "#0175C2",
+    "theme_color": "#126DFF",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

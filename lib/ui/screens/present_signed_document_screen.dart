@@ -93,7 +93,7 @@ class PresentSignedDocumentScreen extends StatelessWidget {
       await Share.shareXFiles(
         [XFile(file.path)],
         subject: "Elektronicky podpísaný dokument",
-        text: "\n\nPodpísané aplikáciou Autogram v Mobile",
+        text: "\n\nPodpísané aplikáciou Autogram v mobile",
       );
     } catch (error) {
       if (context.mounted) {

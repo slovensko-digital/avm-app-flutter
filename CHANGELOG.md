@@ -1,5 +1,11 @@
 # Changelog
 
+## 2024-04-11 - v1.0.0(16)
+
+- iOS: Supporting opening file via "Share to" also in iOS (works in Files and Mail, not Safari)
+- Android: When opening file via "Share to", it's handled by single process Activity so that the UX
+  is identical with iOS
+
 ## 2024-03-26 - v1.0.0(15)
 
 - iOS: Saving signed documents into app specific directory with file access enabled

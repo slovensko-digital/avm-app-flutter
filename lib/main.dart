@@ -1,22 +1,24 @@
 import 'dart:developer' as developer;
 
 import 'package:flutter/widgets.dart' show WidgetsFlutterBinding, runApp;
+import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart' show Level, LogRecord, Logger;
-import 'package:provider/provider.dart' show Provider;
+import 'package:provider/provider.dart' show MultiProvider, Provider;
 
 import 'app.dart';
+import 'app_service.dart';
 import 'data/settings.dart';
 import 'di.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Setup DI
-  configureDependencies();
-
   // Setup Logger
   Logger.root.level = Level.ALL; // defaults to Level.INFO
   Logger.root.onRecord.listen(_onRecord);
+
+  // Setup DI
+  configureDependencies();
 
   // Init Settings
   final settings = Settings();
@@ -24,8 +26,14 @@ void main() async {
 
   // Run App
   runApp(
-    Provider<ISettings>.value(
-      value: settings,
+    MultiProvider(
+      providers: [
+        // ISettings
+        Provider<ISettings>.value(value: settings),
+
+        // AppService
+        Provider<AppService>.value(value: GetIt.instance.get()),
+      ],
       child: const App(),
     ),
   );

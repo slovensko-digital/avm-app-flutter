@@ -92,7 +92,6 @@ class CreateDocumentCubit extends Cubit<CreateDocumentState> {
   }
 
   /// Gets the payload Mime type for [file].
-  static String getPayloadMimeType(File file) {
-    return Files.getFileMimeType(file);
-  }
+  static String getPayloadMimeType(File file) =>
+      "${Files.getFileMimeType(file)};base64";
 }

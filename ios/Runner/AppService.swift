@@ -7,24 +7,108 @@
 import Foundation
 import Flutter
 
-class AppService {
-    private let methodChannelName = "digital.slovensko.avm"
-    private var methodChannel: FlutterMethodChannel
+/// Provides functionality for Flutter app:
+///  - `getFile(String)` - returns absolute file path from file:// URI
+///  -  "sharedFile" events - emits URIs to file shared to app
+class AppService : NSObject, FlutterStreamHandler {
+    
+    /// `FlutterMethodChannel`  for all methods.
+    private var methods: FlutterMethodChannel
+    
+    /// `FlutterEventChannel` for all events.
+    private var events: FlutterEventChannel
+    
+    /// `FlutterEventSink`  for "sharedFile".
+    private var sharedFileSink: FlutterEventSink?
+    
+    /// Stores the value before `sharedFileSink` was initialized.
+    private var sharedFile: String?
     
     init(binaryMessenger: FlutterBinaryMessenger) {
-        methodChannel = FlutterMethodChannel(name: methodChannelName, binaryMessenger: binaryMessenger)
-        methodChannel.setMethodCallHandler({ [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
-            
+        methods = FlutterMethodChannel(name: "digital.slovensko.avm", binaryMessenger: binaryMessenger)
+        events = FlutterEventChannel(name: "digital.slovensko.avm/events", binaryMessenger: binaryMessenger)
+        
+        super.init(); // NSObject
+        
+        // TODO Also make self implement FlutterMethodCallHandler
+        methods.setMethodCallHandler({ [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
             self?.handleMethodCall(call, result: result)
         })
+        
+        events.setStreamHandler(self);
+    }
+    
+    func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        if ((arguments as? String) == "sharedFile") {
+            sharedFileSink = events
+            
+            if (sharedFile != nil) {
+                sharedFileSink?(sharedFile)
+                sharedFile = nil
+            }
+        }
+        
+        return nil
+    }
+    
+    func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        if ((arguments as? String) == "sharedFile") {
+            // TODO Call sharedFileSink.endOfStream
+            sharedFileSink = nil
+        }
+        
+        return nil
+    }
+    
+    func onNewUri(url: URL) -> Bool {
+        if (url.isFileURL) {
+            if (sharedFileSink != nil) {
+                sharedFileSink!(url.absoluteString)
+            } else {
+                sharedFile = url.absoluteString
+            }
+            
+            return true
+        }
+        
+        return false
     }
     
     private func handleMethodCall(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
-        // TODO Impl. getSharedFileName
-        // TODO Impl. getSharedFile
-        default:
-            result(FlutterMethodNotImplemented)
+        case "getFile": onGetFile(value: call.arguments as! String, result: result);
+        default: result(FlutterMethodNotImplemented)
+        }
+    }
+    
+    private func onGetFile(value: String, result: @escaping FlutterResult) {
+        do {
+            guard let sourceFile: URL = URL(string: value) else {
+                preconditionFailure("Unable to parse path as URL.")
+            }
+ 
+            precondition(sourceFile.isFileURL, "Path is not 'file://' scheme.")
+            sourceFile.startAccessingSecurityScopedResource() // this might return false when it' not needed, so dont' check it!
+            
+            let fileManager = FileManager.default
+            
+            // Cache directory
+            let outputDirectory: URL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first!
+                .appendingPathComponent(UUID().uuidString, isDirectory: true)
+            try fileManager.createDirectory(at: outputDirectory, withIntermediateDirectories: true)
+            
+            // New file
+            let fileName: String = sourceFile.lastPathComponent
+            let outputFile: URL = outputDirectory.appendingPathComponent(fileName)
+            try fileManager.copyItem(at: sourceFile, to: outputFile)
+            
+            // TODO Put to finally block
+            sourceFile.stopAccessingSecurityScopedResource()
+            
+            // Return new file path without leading "file://"
+            result(outputFile.path)
+        } catch let error {
+            result(FlutterError(code: "GET_FILE_ERROR", message: error.localizedDescription, details: nil))
         }
     }
 }

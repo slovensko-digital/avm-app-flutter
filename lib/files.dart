@@ -5,15 +5,16 @@ import 'file_extensions.dart';
 abstract class Files {
   /// Mapping of extension => MIME type.
   static const Map<String, String> _types = {
-    "pdf": "application/pdf;base64",
-    "jpg": "image/jpeg;base64",
-    "jpeg": "image/jpeg;base64",
-    "png": "image/png;base64",
-    "txt": "text/plain;base64",
-    "xml": "text/xml;base64",
-    "sce": "application/vnd.etsi.asic-e+zip;base64",
-    "asice": "application/vnd.etsi.asic-e+zip;base64",
-    "asics": "application/vnd.etsi.asic-s+zip;base64",
+    "pdf": "application/pdf",
+    "jpg": "image/jpeg",
+    "jpeg": "image/jpeg",
+    "png": "image/png",
+    "txt": "text/plain",
+    "xml": "text/xml",
+    "sce": "application/vnd.etsi.asic-e+zip",
+    "scs": "application/vnd.etsi.asic-s+zip",
+    "asice": "application/vnd.etsi.asic-e+zip",
+    "asics": "application/vnd.etsi.asic-s+zip",
     "p7m": "application/pkcs7-mime",
   };
 
@@ -32,8 +33,8 @@ abstract class Files {
       throw ArgumentError.value(file.basename, "file",
           "Cannot determine file type from file name without extension.");
 
-      // https://pub.dev/packages/mime
       // https://github.com/dart-lang/mime/blob/master/lib/src/default_extension_map.dart
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
     }
 
     final type = _types[extension];

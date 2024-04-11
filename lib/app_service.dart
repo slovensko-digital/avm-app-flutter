@@ -1,44 +1,80 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show ValueListenable, ValueNotifier;
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logging/logging.dart' show Logger;
 import 'package:path_provider/path_provider.dart' as provider;
 
-@injectable
+import 'file_extensions.dart';
+
+/// Provides platform (iOS and Android) specific app functions:
+///  - [sharedFile]
+///  - [getFileName]
+///  - [getFile]
+///  - [getDocumentsDirectory]
 @singleton
 class AppService {
-  static const _platform = MethodChannel('digital.slovensko.avm');
+  static final AppService _instance = AppService._();
+  static final _logger = Logger('AppService');
 
-  const AppService();
+  /// [MethodChannel] for all methods.
+  static const _methods = MethodChannel('digital.slovensko.avm');
 
-  /// Returns only file name that was shared to this app.
-  Future<String?> getSharedFileName() {
-    if (Platform.isAndroid) {
-      return _platform.invokeMethod<String?>('getSharedFileName');
-    }
+  /// [EventChannel] for all events.
+  static const _events = EventChannel('digital.slovensko.avm/events');
 
-    // TODO Implement getSharedFileName also in iOS
-    // Returns null so it won't crash on iOS
-    return Future.value(null);
+  /// Holds URI to last shared file to app.
+  static final _sharedFile = ValueNotifier<Uri?>(null);
+
+  /// Last shared file to app.
+  ///
+  /// Note that:
+  ///  - on **iOS**, it's file:// URI that can be directly used
+  ///  - on **Android**, it will be content:// URI, therefore you need to call
+  ///    [getFileName] and [getFile]
+  ValueListenable<Uri?> get sharedFile => _sharedFile;
+
+  AppService._() {
+    _events.receiveBroadcastStream("sharedFile").forEach(_collectSharedFile);
   }
 
-  /// Returns absolute accessible path to file that was shared to this app.
-  Future<File?> getSharedFile() {
+  /// Returns singleton [AppService].
+  @factoryMethod
+  factory AppService() {
+    return _instance;
+  }
+
+  /// Gets the file name from [Uri].
+  Future<String> getFileName(Uri uri) async {
     if (Platform.isAndroid) {
-      return _platform
-          .invokeMethod<String?>('getSharedFile')
-          .then((value) => (value != null ? File(value) : null));
+      // In Android need to read the file name from content:// scheme
+      return _methods
+          .invokeMethod<String?>('getFileName', uri.toString())
+          .then((value) => value!);
     }
 
-    // TODO Implement getSharedFile also in iOS
-    throw UnimplementedError(
-        "Method 'getSharedFileName' is not implemented in iOS.");
+    // On iOS it's already file://
+    return File.fromUri(uri).basename;
+  }
+
+  /// Gets the [File] from [Uri] that you can read.
+  Future<File> getFile(Uri uri) async {
+    if (Platform.isAndroid || Platform.isIOS) {
+      // In Android need to read the file from content:// scheme by saving it
+      // In iOS, the file:// might be accessible only by using SecurityScopedResource
+      return _methods
+          .invokeMethod<String?>('getFile', uri.toString())
+          .then((value) => File(value!));
+    }
+
+    return File.fromUri(uri);
   }
 
   /// Returns [Directory] with path where to store Documents.
   Future<Directory> getDocumentsDirectory() {
     if (Platform.isAndroid) {
-      return _platform
+      return _methods
           .invokeMethod<String>('getDownloadsDirectory')
           .then((path) => Directory(path!));
     }
@@ -49,5 +85,20 @@ class AppService {
 
     // On Android, this returns app specific path
     return provider.getDownloadsDirectory().then((value) => value!);
+  }
+
+  static _collectSharedFile(dynamic value) {
+    if (value is String && value.isNotEmpty) {
+      // Expecting content:// or file:// scheme
+      final uri = Uri.tryParse(value);
+
+      if (uri != null) {
+        _logger.info("Received shared file: $uri");
+
+        // TODO Fix case when shared the same file URI 2nd time
+        // it might be an issue on iOS side
+        _sharedFile.value = uri;
+      }
+    }
   }
 }

@@ -37,7 +37,7 @@ extension GetItInjectableX on _i1.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i3.AppService>(() => const _i3.AppService());
+    gh.singleton<_i3.AppService>(() => _i3.AppService());
     gh.factoryParam<_i4.CreateDocumentCubit, _i5.FutureOr<_i6.File>,
         _i7.PdfSigningOption>((
       file,

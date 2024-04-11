@@ -23,7 +23,9 @@ import 'settings_screen.dart';
 ///  - [SettingsScreen]
 ///  - [OpenDocumentScreen]
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final Uri? sharedFile;
+
+  const MainScreen({super.key, required this.sharedFile});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -31,6 +33,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   static final _logger = Logger('_MainScreenState');
+
   late final AppService _appService;
 
   @override
@@ -39,17 +42,16 @@ class _MainScreenState extends State<MainScreen> {
 
     _appService = GetIt.instance.get<AppService>();
 
-    Future.microtask(() async {
-      final sharedFileName = await _appService.getSharedFileName();
+    _handleNewSharedFile();
+  }
 
-      if (sharedFileName != null) {
-        // Directly navigate to next screen ignoring any progress indicator
-        // or error handlers
-        final sharedFile = _appService.getSharedFile().then((value) => value!);
+  @override
+  void didUpdateWidget(covariant MainScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
-        _openNewFile(sharedFile);
-      }
-    });
+    if (oldWidget.sharedFile != widget.sharedFile) {
+      _handleNewSharedFile();
+    }
   }
 
   @override
@@ -64,10 +66,37 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  void _handleNewSharedFile() {
+    final sharedFileUri = widget.sharedFile;
+
+    if (sharedFileUri != null && mounted) {
+      // This is only Future that will hopefully return the File
+      final Future<File> sharedFile = _appService.getFile(sharedFileUri);
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Directly navigate to next screen, which have progress and error handling
+        _openNewFile(sharedFile);
+      });
+    }
+  }
+
   Future<void> _onShowSettingsRequested() {
-    return Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => const SettingsScreen(),
-    ));
+    const screen = SettingsScreen();
+    final route = MaterialPageRoute(builder: (_) => screen);
+
+    return Navigator.of(context).push(route);
+  }
+
+  Future<void> _openNewFile(FutureOr<File> file) {
+    final screen = OpenDocumentScreen(file: file);
+    final route = MaterialPageRoute(builder: (_) => screen);
+
+    // Removing other routes because might want to open another file from Files;
+    // in that case we will stop any previous signing flow
+    return Navigator.of(context).pushAndRemoveUntil(
+      route,
+      (final route) => route.settings.name == '/',
+    );
   }
 
   Future<void> _onOpenFileRequested() async {
@@ -91,12 +120,6 @@ class _MainScreenState extends State<MainScreen> {
         _openNewFile(file);
       }
     }
-  }
-
-  Future<void> _openNewFile(FutureOr<File> file) {
-    return Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => OpenDocumentScreen(file: file),
-    ));
   }
 }
 
