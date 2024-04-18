@@ -11,6 +11,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/preview_document_cubit.dart';
 import '../../file_extensions.dart';
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/document_visualization.dart';
 import '../widgets/error_content.dart';
@@ -58,10 +59,10 @@ class PreviewDocumentScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Náhľad dokumentu"),
+        title: Text(context.strings.previewDocumentTitle),
         actions: [
           IconButton(
-            onPressed: _onShareRequested,
+            onPressed: () => _onShareRequested(context),
             icon: const Icon(Icons.share_outlined),
             color: Theme.of(context).colorScheme.primary,
           ),
@@ -73,11 +74,11 @@ class PreviewDocumentScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _onShareRequested() async {
+  Future<void> _onShareRequested(BuildContext context) async {
     await Share.shareXFiles(
       [XFile(file.path)],
       subject: file.basename,
-      text: "\n\nSúbor z aplikácie Autogram v Mobile",
+      text: context.strings.shareDocumentText,
     );
   }
 
@@ -104,7 +105,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final child = switch (state) {
       PreviewDocumentErrorState state => ErrorContent(
-          title: "Chyba pri načítaní vizualizácie dokumentu",
+          title: context.strings.previewDocumentErrorTitle,
           error: state.error,
         ),
       PreviewDocumentSuccessState state => _SuccessContent(
@@ -158,7 +159,7 @@ class _SuccessContent extends StatelessWidget {
             minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: onSignRequested,
-          child: const Text("Podpísať"),
+          child: Text(context.strings.buttonSignLabel),
         ),
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../strings_context.dart';
 import 'result_view.dart';
 
 /// Widget for displaying [text] and "Retry" button
@@ -37,7 +38,7 @@ class RetryView extends StatelessWidget {
           ElevatedButton.icon(
             onPressed: onRetryRequested,
             icon: const Icon(Icons.refresh_outlined),
-            label: const Text("Zopakovať"),
+            label: Text(context.strings.buttonRetryLabel),
           ),
         ],
       ),

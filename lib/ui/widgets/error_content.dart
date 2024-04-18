@@ -5,7 +5,7 @@ import '../../util/errors.dart';
 import 'loading_content.dart';
 import 'result_view.dart';
 
-/// Displays error result.
+/// Displays error result in [ResultView.error].
 ///
 /// See also:
 ///  - [LoadingContent]
@@ -17,9 +17,11 @@ class ErrorContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final message = getErrorMessage(error);
+
     return ResultView.error(
       titleText: title,
-      body: Text(getErrorMessage(error)),
+      body: Text(message),
     );
   }
 }

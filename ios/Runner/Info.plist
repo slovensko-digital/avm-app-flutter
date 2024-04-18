@@ -73,5 +73,9 @@
 		<string>A0000000770108700A1000FE00000400</string>
 		<string>E80704007F00070302</string>
 	</array>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>sk</string>
+	</array>
 </dict>
 </plist>

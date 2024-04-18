@@ -66,6 +66,12 @@ fvm dart pub global activate flutterfire_cli
 fvm flutter pub get
 ```
 
+To generate i18n code, run:
+
+```shell
+fvm flutter gen-l10n
+```
+
 To generate code:
 
 ```shell

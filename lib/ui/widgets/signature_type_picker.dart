@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import 'certificate_picker.dart';
 
@@ -10,13 +11,13 @@ import 'certificate_picker.dart';
 /// See also:
 ///  - [CertificatePicker]
 class SignatureTypePicker extends StatelessWidget {
-  final bool? value;
-  final ValueChanged<bool> onValueChanged;
+  final bool? withTimestamp;
+  final ValueChanged<bool> onWithTimestampChanged;
 
   const SignatureTypePicker({
     super.key,
-    required this.value,
-    required this.onValueChanged,
+    required this.withTimestamp,
+    required this.onWithTimestampChanged,
   });
 
   @override
@@ -32,12 +33,12 @@ class SignatureTypePicker extends StatelessWidget {
     );
   }
 
-  Widget _listItem(bool value) {
+  Widget _listItem(bool withTimestamp) {
     return _ListItem(
-      value: value,
-      selectedValue: this.value,
+      withTimestamp: withTimestamp, // value from param
+      selectedValue: this.withTimestamp, // value from Widget
       onSelected: () {
-        onValueChanged(value);
+        onWithTimestampChanged(withTimestamp);
       },
     );
   }
@@ -45,37 +46,36 @@ class SignatureTypePicker extends StatelessWidget {
 
 /// [SignatureTypePicker] - [ListView] item.
 class _ListItem extends StatelessWidget {
-  final bool value;
+  final bool withTimestamp;
   final bool? selectedValue;
   final VoidCallback onSelected;
 
   const _ListItem({
-    required this.value,
+    required this.withTimestamp,
     required this.selectedValue,
     required this.onSelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    final titleText = switch (value) {
-      true => 'Osvedčený podpis',
-      false => 'Vlastnoručný podpis',
+    final strings = context.strings;
+    final titleText = switch (withTimestamp) {
+      true => strings.signatureTypeWithTimestampTitle,
+      false => strings.signatureTypeWithoutTimestampTitle,
     };
-    final subtitleText = switch (value) {
-      true =>
-        'Ako keby ste podpis overili u\u{00A0}notára.\nObsahuje časovú pečiatku.',
-      false =>
-        'Ako keby ste tento dokument podpísali na\u{00A0}papieri.\nBez časovej pečiatky.',
+    final subtitleText = switch (withTimestamp) {
+      true => strings.signatureTypeWithTimestampSubtitle,
+      false => strings.signatureTypeWithoutTimestampSubtitle,
     };
 
-    // NOT using  RadioListTile because need to scale-up and style Radio
+    // NOT using RadioListTile because need to scale-up and style Radio
 
     return ListTile(
       onTap: onSelected,
       leading: Transform.scale(
         scale: kRadioScale,
         child: Radio<bool>(
-          value: value,
+          value: withTimestamp,
           groupValue: selectedValue,
           onChanged: (final bool? value) {
             if (value != null) {
@@ -107,8 +107,8 @@ Widget previewSignatureTypePicker(BuildContext context) {
   return StatefulBuilder(
     builder: (context, setState) {
       return SignatureTypePicker(
-        value: selectedValue,
-        onValueChanged: (value) {
+        withTimestamp: selectedValue,
+        onWithTimestampChanged: (value) {
           setState(() => selectedValue = value);
         },
       );

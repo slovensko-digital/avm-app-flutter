@@ -1,0 +1,4 @@
+# https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization#configuring-the-l10n-yaml-file
+synthetic-package: false
+template-arb-file: app_sk.arb
+preferred-supported-locales: [ sk ]

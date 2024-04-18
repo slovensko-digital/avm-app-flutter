@@ -10,6 +10,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../app_service.dart';
 import '../../files.dart';
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/autogram_logo.dart';
 import 'open_document_screen.dart';
@@ -32,7 +33,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  static final _logger = Logger('_MainScreenState');
+  static final _logger = Logger((_MainScreenState).toString());
 
   late final AppService _appService;
 
@@ -103,7 +104,7 @@ class _MainScreenState extends State<MainScreen> {
     _logger.fine('Requested to open file.');
 
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      dialogTitle: "Vyberte súbor",
+      dialogTitle: context.strings.buttonOpenDocumentLabel,
       allowMultiple: false,
       type: FileType.custom,
       allowedExtensions: Files.supportedExtensions,
@@ -134,12 +135,14 @@ AppBar _MainAppBar({
       icon: const Icon(Icons.menu_sharp),
       onPressed: onShowSettingsRequested,
     ),
-    title: const Text(
-      "Autogram v mobile",
-      style: TextStyle(
-        color: kMainAppBarForegroundColor,
-      ),
-    ),
+    title: Builder(builder: (context) {
+      return Text(
+        context.strings.appName,
+        style: const TextStyle(
+          color: kMainAppBarForegroundColor,
+        ),
+      );
+    }),
   );
 }
 
@@ -151,6 +154,8 @@ class MainBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.strings;
+
     return Padding(
       padding: kScreenMargin,
       child: Column(
@@ -160,15 +165,13 @@ class MainBody extends StatelessWidget {
             padding: EdgeInsets.all(48),
             child: AutogramLogo(),
           ),
-          const Text(
-            "Nový, lepší a krajší podpisovač v\u{00A0}mobile",
+          Text(
+            strings.introHeading,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 24),
-          const Text(
-            "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie",
-          ),
+          Text(strings.introBody),
           const Spacer(),
 
           // Primary button
@@ -177,7 +180,7 @@ class MainBody extends StatelessWidget {
               minimumSize: kPrimaryButtonMinimumSize,
             ),
             onPressed: onOpenFileRequested,
-            child: const Text("Vybrať dokument"),
+            child: Text(context.strings.buttonOpenDocumentLabel),
           ),
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../strings_context.dart';
 import '../fragment/show_web_page_fragment.dart';
 import 'about_screen.dart';
 
@@ -22,7 +23,7 @@ class ShowTermsOfServiceScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text("Podmienky používania"),
+        title: Text(context.strings.termsOfServiceTitle),
         actions: const [CloseButton()],
       ),
       body: body,

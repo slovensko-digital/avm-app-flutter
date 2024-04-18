@@ -9,31 +9,33 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   eidmsdk:
     path: ../eidmsdk_flutter
   autogram_sign:
     path: ../autogram_sign
   package_info_plus: ^5.0.1
-  chopper: any
+  chopper:
   injectable: ^2.2.0
   get_it: ^7.6.1
   flutter_hooks: ^0.20.5
   localstorage: ^4.0.1+4
   share_plus: ^7.2.2
-  pdf: any
+  pdf:
   printing: ^5.12.0
-  webview_flutter: any
-  webview_flutter_web: any
+  webview_flutter:
+  webview_flutter_web:
   logging:
   path:
   path_provider:
-  file_picker: any
+  file_picker:
   flutter_bloc: ^8.0.0
-  provider: any
-  basic_utils: any
-  intl: any
+  provider:
+  basic_utils:
+  intl:
   dotted_border: ^2.1.0
-  notified_preferences: any
+  notified_preferences:
   widgetbook_annotation: ^3.1.0
   widgetbook: ^3.7.0
   firebase_core:
@@ -43,8 +45,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-  test: any
-  build_runner: any
+  test:
+  build_runner:
   injectable_generator: ^2.2.0
   widgetbook_generator: ^3.7.0
 

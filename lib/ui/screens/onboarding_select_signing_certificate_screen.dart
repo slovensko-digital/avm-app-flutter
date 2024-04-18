@@ -6,6 +6,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/select_signing_certificate_cubit.dart';
 import '../../data/settings.dart';
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../fragment/select_signing_certificate_fragment.dart';
 import '../widgets/certificate_picker.dart';
@@ -37,7 +38,7 @@ class OnboardingSelectSigningCertificateScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: const BackButton(),
-          title: const Text("Podpisový certifikát"),
+          title: Text(context.strings.selectSigningCertificateTitle),
         ),
         body: _buildBody(context),
       ),
@@ -122,10 +123,10 @@ class _OnboardingSelectSigningCertificateBodyState
             state: widget.state,
             onReloadCertificatesRequested: widget.onGetCertificatesRequested,
             initialBuilder: (context) {
-              return const ResultView.info(
-                titleText: "Výber podpisového certifikátu",
+              return ResultView.info(
+                titleText: context.strings.selectSigningCertificateHeading,
                 body: Text(
-                  "Stlačením tlačidla “Vybrať certifikát” sa\u{00A0}vyvolá interakcia na načítanie podpisových certifikátov z\u{00A0}vášho\u{00A0}OP.\n\nAk nemáte OP s\u{00A0}kvalifikovaným podpisovým certifikátom, tento krok preskočte.",
+                  context.strings.selectSigningCertificateBody,
                   textAlign: TextAlign.start,
                 ),
               );
@@ -157,7 +158,7 @@ class _OnboardingSelectSigningCertificateBodyState
           onPressed: _getPrimaryButtonPressedCallback(),
           child: switch (widget.state) {
             SelectSigningCertificateLoadingState _ => const LoadingIndicator(),
-            _ => const Text("Vybrať certifikát"),
+            _ => Text(context.strings.buttonSelectCertificateLabel),
           },
         ),
 
@@ -169,7 +170,7 @@ class _OnboardingSelectSigningCertificateBodyState
             minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: widget.onSkipRequested,
-          child: const Text("Preskočiť"),
+          child: Text(context.strings.buttonSkipLabel),
         ),
       ],
     );

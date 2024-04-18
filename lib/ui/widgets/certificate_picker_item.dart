@@ -4,6 +4,7 @@ import 'package:intl/intl.dart' show DateFormat;
 
 import '../../certificate_extensions.dart';
 import '../../oids.dart';
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import 'certificate_picker.dart';
 
@@ -30,16 +31,18 @@ class CertificatePickerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final cert = certificate.tbsCertificate;
 
-    // NOT using  RadioListTile because need to scale-up and style Radio
+    // NOT using RadioListTile because need to scale-up and style Radio
 
     final title = [
       cert.subject[X500Oids.cn],
       cert.subject[X500Oids.ln],
       cert.subject[X500Oids.c],
     ].whereType<String>().join(", ");
+    final strings = context.strings;
     final identity = "${cert.subject[X500Oids.sn]}";
-    final issuer = "Vydavateľ: ${cert.issuer[X500Oids.cn]}";
-    final validTo = "Platný do: ${_dateFormat.format(cert.validity.notAfter)}";
+    final issuer = strings.certificateIssuer("${cert.issuer[X500Oids.cn]}");
+    final validTo =
+        strings.certificateNotAfter(_dateFormat.format(cert.validity.notAfter));
 
     return ListTile(
       onTap: () {

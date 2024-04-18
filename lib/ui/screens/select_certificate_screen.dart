@@ -8,6 +8,7 @@ import '../../bloc/select_signing_certificate_cubit.dart';
 import '../../certificate_extensions.dart';
 import '../../data/settings.dart';
 import '../../oids.dart';
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
@@ -48,7 +49,9 @@ class SelectCertificateScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: showTitle,
-              title: showTitle ? const Text("Výber typu podpisu") : null,
+              title: showTitle
+                  ? Text(context.strings.selectCertificateTitle)
+                  : null,
             ),
             body: _Body(
               state: state,
@@ -172,8 +175,8 @@ class _SelectSignatureTypeContentState
       children: [
         Expanded(
           child: SignatureTypePicker(
-            value: _addTimeStamp,
-            onValueChanged: (final bool value) {
+            withTimestamp: _addTimeStamp,
+            onWithTimestampChanged: (final bool value) {
               setState(() {
                 _addTimeStamp = value;
               });
@@ -191,7 +194,8 @@ class _SelectSignatureTypeContentState
               : () {
                   widget.onSignDocumentRequested?.call(_addTimeStamp!);
                 }),
-          child: Text("Podpísať ako ${widget.subject}"),
+          child: Text(context.strings
+              .buttonSignWithCertificateLabel("${widget.subject}")),
           // Extract data
         ),
 
@@ -203,7 +207,7 @@ class _SelectSignatureTypeContentState
             minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: widget.onReloadCertificatesRequested,
-          child: const Text("Podpísať iným certifikátom"),
+          child: Text(context.strings.buttonSignWithDifferentCertificateLabel),
         ),
       ],
     );

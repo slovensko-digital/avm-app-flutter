@@ -2,12 +2,12 @@ import 'package:eidmsdk/types.dart' show Certificate;
 import 'package:flutter/material.dart';
 
 import '../../bloc/select_signing_certificate_cubit.dart';
+import '../../strings_context.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
 import '../widgets/retry_view.dart';
 
 /// Fragment that is used in screens working with [SelectSigningCertificateState].
-// TODO Just drop this Fragment when extracted localization strings
 class SelectSigningCertificateFragment extends StatelessWidget {
   final SelectSigningCertificateState state;
   final VoidCallback? onReloadCertificatesRequested;
@@ -32,21 +32,20 @@ class SelectSigningCertificateFragment extends StatelessWidget {
       SelectSigningCertificateInitialState _ => initialBuilder(context),
       SelectSigningCertificateLoadingState _ => const LoadingContent(),
       SelectSigningCertificateCanceledState _ => RetryView(
-          headlineText:
-              "Načítavanie certifikátov z\u{00A0}OP\nbolo zrušené používateľom",
+          headlineText: context.strings.selectSigningCertificateCanceledHeading,
           onRetryRequested: () {
             onReloadCertificatesRequested?.call();
           },
         ),
       SelectSigningCertificateNoCertificateState _ => RetryView(
           headlineText:
-              "Použitý OP neobsahuje “Kvalifikovaný certifikát pre\u{00A0}elektronický podpis”.\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.",
+              context.strings.selectSigningCertificateNoCertificateHeading,
           onRetryRequested: () {
             onReloadCertificatesRequested?.call();
           },
         ),
       SelectSigningCertificateErrorState state => ErrorContent(
-          title: "Chyba pri načítavaní certifikátov z\u{00A0}OP.",
+          title: context.strings.selectSigningCertificateErrorHeading,
           error: state.error,
         ),
       SelectSigningCertificateSuccessState state => successBuilder(

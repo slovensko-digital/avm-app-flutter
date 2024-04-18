@@ -19,12 +19,12 @@ abstract interface class ISettings {
 /// General app settings.
 ///
 /// Uses **Shared Preferences** - need to call [Settings.initialize] before use.
-// TODO Make only "Settings" type and private _SettingsImpl that will be returned by static fun
+// TODO Make only "Settings" type and private _SettingsImpl that will be returned by factory fun
 class Settings with NotifiedPreferences implements ISettings {
   @override
   late final ValueNotifier<int?> acceptedTermsOfServiceVersion =
       createSetting<int?>(
-    key: 'accepted.tos.version',
+    key: 'tos.version.accepted',
     initialValue: null,
   );
 

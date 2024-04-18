@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart'
 import 'package:package_info_plus/package_info_plus.dart' show PackageInfo;
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import 'show_terms_of_service_screen.dart';
 
@@ -19,7 +20,7 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text("O aplikácii"),
+        title: Text(context.strings.aboutTitle),
         actions: const [CloseButton()],
       ),
       body: const _Body(),
@@ -33,21 +34,19 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appName = "Autogram v mobile";
-    const eidLicense =
-        "Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od\u{00A0}Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na\u{00A0}stránke\n„https://github.com/eidmsdk“.";
+    final strings = context.strings;
 
     final child = Column(
       children: [
         Text(
-          appName,
+          strings.appName,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         const SizedBox(height: 16),
         const _AppVersionText(),
         const SizedBox(height: 64),
-        const Text(eidLicense),
+        Text(strings.eidSDKLicenseText),
         const SizedBox(height: 64),
         const Spacer(),
         TextButton(
@@ -55,7 +54,7 @@ class _Body extends StatelessWidget {
             minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: () => _showLicenses(context),
-          child: const Text("Licencie knižníc tretích strán"),
+          child: Text(strings.thirdPartyLicensesLabel),
         ),
       ],
     );
@@ -69,7 +68,7 @@ class _Body extends StatelessWidget {
   void _showLicenses(BuildContext context) {
     showLicensePage(
       context: context,
-      applicationName: "Autogram v mobile",
+      applicationName: context.strings.appName,
     );
   }
 }

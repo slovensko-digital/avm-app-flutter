@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../strings_context.dart';
+
 /// Indicates "`stepNumber` / `totalSteps`".
 class StepIndicator extends StatelessWidget {
   final int stepNumber;
@@ -16,7 +18,7 @@ class StepIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "Krok $stepNumber z $totalSteps",
+      context.strings.stepIndicatorText(stepNumber, totalSteps),
       textAlign: TextAlign.center,
     );
   }

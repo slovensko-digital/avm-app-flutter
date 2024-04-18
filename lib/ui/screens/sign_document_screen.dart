@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/sign_document_cubit.dart';
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
@@ -57,7 +58,7 @@ class SignDocumentScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Podpisovanie dokumentu"),
+        title: Text(context.strings.signDocumentTitle),
       ),
       body: SafeArea(
         child: body,
@@ -103,12 +104,11 @@ class _Body extends StatelessWidget {
       SignDocumentInitialState() => const LoadingContent(),
       SignDocumentLoadingState _ => const LoadingContent(),
       SignDocumentCanceledState _ => RetryView(
-          headlineText:
-              "Podpisovanie pomocou\u{00A0}OP\nbolo zrušené používateľom",
+          headlineText: context.strings.signDocumentCanceledHeading,
           onRetryRequested: onRetryRequested,
         ),
       SignDocumentErrorState state => ErrorContent(
-          title: "Pri podpisovaní sa vyskytla chyba",
+          title: context.strings.signDocumentErrorHeading,
           error: state.error,
         ),
       SignDocumentSuccessState() => const LoadingContent(), // see listener

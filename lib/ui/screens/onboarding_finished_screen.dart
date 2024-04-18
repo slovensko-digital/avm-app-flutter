@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/result_view.dart';
 import 'main_screen.dart';
@@ -39,7 +40,7 @@ class OnboardingFinishedScreen extends StatelessWidget {
             minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: onStartRequested,
-          child: const Text("Vybrať dokument"),
+          child: Text(context.strings.buttonOpenDocumentLabel),
         ),
       ],
     );

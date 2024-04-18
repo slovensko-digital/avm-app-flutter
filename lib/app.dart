@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'app_service.dart';
+import 'l10n/app_localizations.dart';
+import 'strings_context.dart';
 import 'ui/app_theme.dart';
 import 'ui/screens/main_screen.dart';
 
@@ -32,7 +34,9 @@ class App extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, Uri? sharedFile) {
     return MaterialApp(
-      title: 'Autogram',
+      title: context.strings.appTitle,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: appTheme(context, brightness: Brightness.light),
       home: MainScreen(

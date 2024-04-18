@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-/// Wraps [WebViewWidget].
+/// Wraps [WebViewWidget] to display HTML directly from [htmlDataSource].
 class HtmlPreview extends StatefulWidget {
   final FutureOr<String> htmlDataSource;
 
@@ -50,4 +51,15 @@ class _HtmlPreviewState extends State<HtmlPreview> {
       controller: controller,
     );
   }
+}
+
+@widgetbook.UseCase(
+  path: '[Core]',
+  name: 'HtmlPreview',
+  type: HtmlPreview,
+)
+Widget previewHtmlPreview(BuildContext context) {
+  return HtmlPreview(
+    htmlDataSource: Future.value("<html><h1>Hello world!</h1></html>"),
+  );
 }

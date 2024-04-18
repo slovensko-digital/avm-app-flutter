@@ -5,6 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../data/pdf_signing_option.dart';
 import '../../data/settings.dart' show ISettings;
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/option_picker.dart';
 import '../widgets/preference_tile.dart';
@@ -25,7 +26,7 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: const Text("Nastavenia"),
+        title: Text(context.strings.settingsTitle),
       ),
       body: SafeArea(
         child: _Body(
@@ -58,7 +59,7 @@ class _Body extends StatelessWidget {
           onPressed: () {
             _showInDialog(context, const AboutScreen());
           },
-          child: const Text("O aplikácii"),
+          child: Text(context.strings.aboutLabel),
         ),
       ],
     );
@@ -80,7 +81,7 @@ class _Body extends StatelessWidget {
             final setting = settings.signingPdfContainer;
 
             return PreferenceTile(
-              title: "Podpisovanie PDF",
+              title: context.strings.signingPdfContainerTitle,
               summary: setting.value.label,
               onPressed: () async {
                 final edited = await _editSigningPdfContainerSetting(
@@ -99,7 +100,7 @@ class _Body extends StatelessWidget {
 
         // Terms of Service
         PreferenceTile(
-          title: "Podmienky používania",
+          title: context.strings.termsOfServiceTitle,
           onPressed: () {
             _showInDialog(context, const ShowTermsOfServiceScreen());
           },
@@ -118,7 +119,7 @@ class _Body extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Podpisovanie PDF"),
+          title: Text(context.strings.signingPdfContainerTitle),
           content: _pdfSigningOptionSelection(
             selectedValue: setting.value,
             onValueSet: (PdfSigningOption value) {

@@ -16,8 +16,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Setup Logger
-  Logger.root.level = Level.ALL; // defaults to Level.INFO
-  Logger.root.onRecord.listen(_onRecord);
+  Logger.root
+    ..level = Level.ALL
+    ..onRecord.listen(_onRecord);
 
   // Setup Firebase
   await Firebase.initializeApp(

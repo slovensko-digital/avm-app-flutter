@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../data/settings.dart';
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../fragment/show_web_page_fragment.dart';
 import '../widgets/step_indicator.dart';
@@ -38,15 +39,15 @@ class _OnboardingAcceptTermsOfServiceScreenState
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text("Podmienky používania"),
+        title: Text(context.strings.termsOfServiceTitle),
       ),
       body: SafeArea(
-        child: _getBody(),
+        child: _getBody(context),
       ),
     );
   }
 
-  Widget _getBody() {
+  Widget _getBody(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -77,7 +78,7 @@ class _OnboardingAcceptTermsOfServiceScreenState
               minimumSize: kPrimaryButtonMinimumSize,
             ),
             onPressed: documentLoaded ? _onAccept : null,
-            child: const Text("Súhlasím"),
+            child: Text(context.strings.buttonAgreeLabel),
           ),
         ),
       ],

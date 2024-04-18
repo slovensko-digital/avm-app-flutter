@@ -8,6 +8,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/create_document_cubit.dart';
 import '../../data/settings.dart';
+import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
@@ -50,7 +51,7 @@ class OpenDocumentScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Otváranie dokumentu"),
+        title: Text(context.strings.openDocumentTitle),
       ),
       body: SafeArea(
         child: body,
@@ -81,7 +82,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final child = switch (state) {
       CreateDocumentErrorState state => ErrorContent(
-          title: "Chyba pri vytváraní dokumentu",
+          title: context.strings.openDocumentErrorTitle,
           error: state.error,
         ),
       _ => const LoadingContent(),

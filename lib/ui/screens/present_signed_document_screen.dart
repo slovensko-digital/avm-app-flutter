@@ -11,6 +11,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/present_signed_document_cubit.dart';
 import '../../file_extensions.dart';
+import '../../strings_context.dart';
 import '../../util/errors.dart';
 import '../app_theme.dart';
 import '../widgets/loading_content.dart';
@@ -47,8 +48,8 @@ class PresentSignedDocumentScreen extends StatelessWidget {
               listener: (context, state) {
                 if (state is PresentSignedDocumentErrorState) {
                   final error = state.error;
-                  final message =
-                      "Pri ukladaní súboru sa vyskytla chyba:\n${getErrorMessage(error)}";
+                  final message = context.strings
+                      .saveSignedDocumentErrorMessage(getErrorMessage(error));
 
                   _showError(context, message);
                 }
@@ -76,7 +77,7 @@ class PresentSignedDocumentScreen extends StatelessWidget {
         onPressed: () {
           // Hides automatically
         },
-        label: "OK",
+        label: context.strings.buttonOKLabel,
       ),
     );
 
@@ -86,19 +87,20 @@ class PresentSignedDocumentScreen extends StatelessWidget {
   /// Handles share file request.
   Future<void> _handleShareFile(BuildContext context) async {
     final cubit = context.read<PresentSignedDocumentCubit>();
+    final strings = context.strings;
 
     try {
       final file = await cubit.getShareableFile();
 
       await Share.shareXFiles(
         [XFile(file.path)],
-        subject: "Elektronicky podpísaný dokument",
-        text: "\n\nPodpísané aplikáciou Autogram v mobile",
+        subject: strings.shareSignedDocumentSubject,
+        text: strings.shareSignedDocumentText,
       );
     } catch (error) {
       if (context.mounted) {
         final message =
-            "Pri zdieľaní súboru sa vyskytla chyba:\n${getErrorMessage(error)}";
+            strings.shareSignedDocumentErrorMessage(getErrorMessage(error));
         _showError(context, message);
       }
     }
@@ -164,6 +166,7 @@ class _SuccessContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.strings;
     final file = this.file;
     Widget body = const SizedBox(height: 58);
 
@@ -175,7 +178,7 @@ class _SuccessContent extends StatelessWidget {
       );
       body = RichText(
         text: TextSpan(
-          text: "Dokument bol uložený do Downloads pod\u{00A0}názvom ",
+          text: strings.saveSignedDocumentSuccessMessage,
           style: Theme.of(context).textTheme.bodyLarge,
           //style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
           children: [
@@ -195,7 +198,7 @@ class _SuccessContent extends StatelessWidget {
       children: [
         Expanded(
           child: ResultView.success(
-            titleText: "Dokument bol úspešne podpísaný",
+            titleText: strings.documentSigningSuccessTitle,
             body: body,
           ),
         ),
@@ -206,7 +209,7 @@ class _SuccessContent extends StatelessWidget {
             minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: onShareFileRequested,
-          child: const Text("Zdieľať podpísaný dokument"),
+          child: Text(strings.shareSignedDocumentLabel),
         ),
 
         const SizedBox(height: kButtonSpace),
@@ -217,7 +220,7 @@ class _SuccessContent extends StatelessWidget {
             minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: onCloseRequested,
-          child: const Text("Zavrieť"),
+          child: Text(strings.buttonCancelLabel),
         ),
       ],
     );

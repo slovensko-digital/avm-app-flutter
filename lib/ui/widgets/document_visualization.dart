@@ -9,7 +9,9 @@ import 'package:printing/printing.dart' show PdfPreview;
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../strings_context.dart';
 import 'html_preview.dart';
+import 'loading_content.dart';
 
 /// Widget to preview document from [visualization].
 class DocumentVisualization extends StatelessWidget {
@@ -23,7 +25,8 @@ class DocumentVisualization extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mimeType = visualization.mimeType;
-    final child = switch (mimeType) {
+
+    return switch (mimeType) {
       "application/pdf;base64" => _pdfPreview(
           compute(base64Decode, visualization.content),
         ),
@@ -37,10 +40,11 @@ class DocumentVisualization extends StatelessWidget {
             return utf8.decode(base64Decode(content));
           }, visualization.content),
         ),
-      _ => _error(context, "Neviem vizualizovať '$mimeType' typ."),
+      _ => _error(
+          context,
+          context.strings
+              .documentVisualizationCannotVisualizeTypeError(mimeType)),
     };
-
-    return child;
   }
 
   Widget _error(BuildContext context, String text) {
@@ -96,6 +100,7 @@ class DocumentVisualization extends StatelessWidget {
       allowPrinting: false,
       allowSharing: false,
       build: (format) => source,
+      loadingWidget: const LoadingContent(),
     );
   }
 
