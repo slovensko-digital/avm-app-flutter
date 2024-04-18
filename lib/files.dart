@@ -23,10 +23,8 @@ abstract class Files {
     return List.unmodifiable(_types.keys);
   }
 
-  /// Gets the [file] Mime type.
-  ///
-  /// Throws [ArgumentError].
-  static String getFileMimeType(File file) {
+  /// Gets the [file] Mime type or `null` when not known.
+  static String? getFileMimeType(File file) {
     final extension = file.extension.replaceFirst('.', '').toLowerCase();
 
     if (extension.isEmpty) {
@@ -37,13 +35,6 @@ abstract class Files {
       // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
     }
 
-    final type = _types[extension];
-
-    if (type == null) {
-      throw ArgumentError.value(file.basename, "file",
-          "File type '${extension.toUpperCase()}' is not supported.");
-    }
-
-    return type;
+    return _types[extension];
   }
 }
