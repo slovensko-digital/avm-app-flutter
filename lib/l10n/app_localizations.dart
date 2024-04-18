@@ -292,19 +292,19 @@ abstract class AppLocalizations {
   /// No description provided for @selectSigningCertificateBody.
   ///
   /// In sk, this message translates to:
-  /// **'Stlačením tlačidla “Vybrať certifikát” sa vyvolá interakcia na načítanie podpisových certifikátov z vášho OP.\\n\\nAk nemáte OP s kvalifikovaným podpisovým certifikátom, tento krok preskočte.'**
+  /// **'Stlačením tlačidla “Vybrať certifikát” sa vyvolá interakcia na načítanie podpisových certifikátov z vášho OP.\n\nAk nemáte OP s kvalifikovaným podpisovým certifikátom, tento krok preskočte.'**
   String get selectSigningCertificateBody;
 
   /// No description provided for @selectSigningCertificateCanceledHeading.
   ///
   /// In sk, this message translates to:
-  /// **'Načítavanie certifikátov z OP\\nbolo zrušené používateľom'**
+  /// **'Načítavanie certifikátov z OP\nbolo zrušené používateľom'**
   String get selectSigningCertificateCanceledHeading;
 
   /// No description provided for @selectSigningCertificateNoCertificateHeading.
   ///
   /// In sk, this message translates to:
-  /// **'Použitý OP neobsahuje “Kvalifikovaný certifikát pre elektronický podpis”.\\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.'**
+  /// **'Použitý OP neobsahuje “Kvalifikovaný certifikát pre elektronický podpis”.\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.'**
   String get selectSigningCertificateNoCertificateHeading;
 
   /// No description provided for @selectSigningCertificateErrorHeading.

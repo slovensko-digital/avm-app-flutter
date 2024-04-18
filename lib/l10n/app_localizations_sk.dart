@@ -106,13 +106,13 @@ class AppLocalizationsSk extends AppLocalizations {
   String get selectSigningCertificateHeading => 'Výber podpisového certifikátu';
 
   @override
-  String get selectSigningCertificateBody => 'Stlačením tlačidla “Vybrať certifikát” sa vyvolá interakcia na načítanie podpisových certifikátov z vášho OP.\\n\\nAk nemáte OP s kvalifikovaným podpisovým certifikátom, tento krok preskočte.';
+  String get selectSigningCertificateBody => 'Stlačením tlačidla “Vybrať certifikát” sa vyvolá interakcia na načítanie podpisových certifikátov z vášho OP.\n\nAk nemáte OP s kvalifikovaným podpisovým certifikátom, tento krok preskočte.';
 
   @override
-  String get selectSigningCertificateCanceledHeading => 'Načítavanie certifikátov z OP\\nbolo zrušené používateľom';
+  String get selectSigningCertificateCanceledHeading => 'Načítavanie certifikátov z OP\nbolo zrušené používateľom';
 
   @override
-  String get selectSigningCertificateNoCertificateHeading => 'Použitý OP neobsahuje “Kvalifikovaný certifikát pre elektronický podpis”.\\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.';
+  String get selectSigningCertificateNoCertificateHeading => 'Použitý OP neobsahuje “Kvalifikovaný certifikát pre elektronický podpis”.\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.';
 
   @override
   String get selectSigningCertificateErrorHeading => 'Chyba pri načítavaní certifikátov z OP.';

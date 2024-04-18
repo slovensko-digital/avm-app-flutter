@@ -40,9 +40,9 @@
   "selectCertificateTitle": "Výber typu podpisu",
   "selectSigningCertificateTitle": "Podpisový certifikát",
   "selectSigningCertificateHeading": "Výber podpisového certifikátu",
-  "selectSigningCertificateBody": "Stlačením tlačidla “Vybrať certifikát” sa\u00A0vyvolá interakcia na načítanie podpisových certifikátov z\u00A0vášho\u00A0OP.\\n\\nAk nemáte OP s\u00A0kvalifikovaným podpisovým certifikátom, tento krok preskočte.",
-  "selectSigningCertificateCanceledHeading": "Načítavanie certifikátov z\u00A0OP\\nbolo zrušené používateľom",
-  "selectSigningCertificateNoCertificateHeading": "Použitý OP neobsahuje “Kvalifikovaný certifikát pre\u00A0elektronický podpis”.\\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.",
+  "selectSigningCertificateBody": "Stlačením tlačidla “Vybrať certifikát” sa\u00A0vyvolá interakcia na načítanie podpisových certifikátov z\u00A0vášho\u00A0OP.\n\nAk nemáte OP s\u00A0kvalifikovaným podpisovým certifikátom, tento krok preskočte.",
+  "selectSigningCertificateCanceledHeading": "Načítavanie certifikátov z\u00A0OP\nbolo zrušené používateľom",
+  "selectSigningCertificateNoCertificateHeading": "Použitý OP neobsahuje “Kvalifikovaný certifikát pre\u00A0elektronický podpis”.\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.",
   "selectSigningCertificateErrorHeading": "Chyba pri načítavaní certifikátov z\u00A0OP.",
 
   "certificateIssuer": "Vydavateľ: {text}",
