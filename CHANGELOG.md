@@ -1,5 +1,10 @@
 # Changelog
 
+## 2024-04-22 - v1.0.0(19)
+
+- Extract SK strings into .arb file
+- When creating new Document, payloadMimeType is optional
+
 ## 2024-04-11 - v1.0.0(18)
 
 - Integrate Firebase Analytics and Crashlytics
