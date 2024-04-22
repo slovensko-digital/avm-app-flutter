@@ -19,9 +19,11 @@ class ErrorContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final message = getErrorMessage(error);
 
-    return ResultView.error(
-      titleText: title,
-      body: Text(message),
+    return Center(
+      child: ResultView.error(
+        titleText: title,
+        body: Text(message),
+      ),
     );
   }
 }

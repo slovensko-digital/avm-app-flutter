@@ -10,6 +10,8 @@
   "buttonYesLabel": "Áno",
   "buttonNoLabel": "Nie",
   "buttonAgreeLabel": "Súhlasím",
+  "buttonAcknowledgeAndAgreeLabel": "Rozumiem a súhlasím",
+  "buttonDisagreeLabel": "Nesúhlasím",
   "buttonRetryLabel": "Zopakovať",
   "buttonOpenDocumentLabel": "Vybrať dokument",
   "buttonSignLabel": "Podpísať",
@@ -17,6 +19,9 @@
   "buttonSelectCertificateLabel": "Vybrať certifikát",
   "buttonSignWithCertificateLabel": "Podpísať ako {subject}",
   "buttonSignWithDifferentCertificateLabel": "Podpísať iným certifikátom",
+
+  "notificationPermissionRationaleTitle": "Povoliť upozornenia",
+  "notificationPermissionRationaleMessage": "Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.",
 
   "settingsTitle": "Nastavenia",
   "aboutLabel": "O aplikácii",

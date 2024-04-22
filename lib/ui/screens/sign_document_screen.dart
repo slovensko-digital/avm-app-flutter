@@ -101,7 +101,7 @@ class _Body extends StatelessWidget {
 
   Widget _getChild(BuildContext context, SignDocumentState state) {
     return switch (state) {
-      SignDocumentInitialState() => const LoadingContent(),
+      SignDocumentInitialState _ => const LoadingContent(),
       SignDocumentLoadingState _ => const LoadingContent(),
       SignDocumentCanceledState _ => RetryView(
           headlineText: context.strings.signDocumentCanceledHeading,
@@ -111,7 +111,7 @@ class _Body extends StatelessWidget {
           title: context.strings.signDocumentErrorHeading,
           error: state.error,
         ),
-      SignDocumentSuccessState() => const LoadingContent(), // see listener
+      SignDocumentSuccessState _ => const LoadingContent(), // see listener
     };
   }
 }

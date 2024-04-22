@@ -32,6 +32,12 @@ class AppLocalizationsSk extends AppLocalizations {
   String get buttonAgreeLabel => 'Súhlasím';
 
   @override
+  String get buttonAcknowledgeAndAgreeLabel => 'Rozumiem a súhlasím';
+
+  @override
+  String get buttonDisagreeLabel => 'Nesúhlasím';
+
+  @override
   String get buttonRetryLabel => 'Zopakovať';
 
   @override
@@ -53,6 +59,12 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get buttonSignWithDifferentCertificateLabel => 'Podpísať iným certifikátom';
+
+  @override
+  String get notificationPermissionRationaleTitle => 'Povoliť upozornenia';
+
+  @override
+  String get notificationPermissionRationaleMessage => 'Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.';
 
   @override
   String get settingsTitle => 'Nastavenia';

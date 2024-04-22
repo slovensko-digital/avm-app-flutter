@@ -145,6 +145,18 @@ abstract class AppLocalizations {
   /// **'Súhlasím'**
   String get buttonAgreeLabel;
 
+  /// No description provided for @buttonAcknowledgeAndAgreeLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Rozumiem a súhlasím'**
+  String get buttonAcknowledgeAndAgreeLabel;
+
+  /// No description provided for @buttonDisagreeLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nesúhlasím'**
+  String get buttonDisagreeLabel;
+
   /// No description provided for @buttonRetryLabel.
   ///
   /// In sk, this message translates to:
@@ -186,6 +198,18 @@ abstract class AppLocalizations {
   /// In sk, this message translates to:
   /// **'Podpísať iným certifikátom'**
   String get buttonSignWithDifferentCertificateLabel;
+
+  /// No description provided for @notificationPermissionRationaleTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Povoliť upozornenia'**
+  String get notificationPermissionRationaleTitle;
+
+  /// No description provided for @notificationPermissionRationaleMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.'**
+  String get notificationPermissionRationaleMessage;
 
   /// No description provided for @settingsTitle.
   ///

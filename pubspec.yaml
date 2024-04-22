@@ -54,7 +54,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/
+    # TODO Use svg.vec https://pub.dev/packages/flutter_svg#precompiling-and-optimizing-svgs
+    - assets/images/autogram_logo.png
+    - assets/images/notification.png
+    - assets/images/result_error.png
+    - assets/images/result_info.png
+    - assets/images/result_success.png
   fonts:
     - family: Source Sans 3
       fonts:

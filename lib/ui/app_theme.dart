@@ -5,10 +5,10 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import 'widgets/loading_indicator.dart';
 
 /// Screen margin.
-const EdgeInsets kScreenMargin = EdgeInsets.all(16);
+const EdgeInsets kScreenMargin = EdgeInsets.all(20);
 
-/// Space between wo buttons.
-const double kButtonSpace = 16;
+/// Space between two buttons.
+const double kButtonSpace = 10;
 
 /// Primary button minimum size.
 const Size kPrimaryButtonMinimumSize = Size.fromHeight(60);
@@ -48,7 +48,13 @@ ThemeData appTheme(
   final dialogTheme = DialogTheme(
     surfaceTintColor: colorScheme.background,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(4)),
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+    ),
+  );
+  const bottomSheetTheme = BottomSheetThemeData(
+    //surfaceTintColor: colorScheme.background,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
   );
   const buttonShape = RoundedRectangleBorder(
@@ -68,6 +74,7 @@ ThemeData appTheme(
     textTheme: textTheme,
     appBarTheme: appBarTheme,
     dialogTheme: dialogTheme,
+    bottomSheetTheme: bottomSheetTheme,
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         shape: buttonShape,

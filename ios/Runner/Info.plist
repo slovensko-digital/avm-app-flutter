@@ -30,6 +30,8 @@
 	<string>Čítanie eID preukazu s NFC čipom</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Otvorenie fotografií z galérie</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Upozornenia o dokumentoch na podpis</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>

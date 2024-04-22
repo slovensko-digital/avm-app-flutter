@@ -69,15 +69,13 @@ class ResultView extends StatelessWidget {
       ),
     );
 
-    return SizedBox.expand(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          icon,
-          headline,
-          if (body != null) body!,
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        icon,
+        headline,
+        if (body != null) body!,
+      ],
     );
   }
 }

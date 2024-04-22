@@ -244,6 +244,7 @@ Widget previewLoadingPresentSignedDocumentBody(BuildContext context) {
   type: PresentSignedDocumentBody,
 )
 Widget previewErrorPresentSignedDocumentBody(BuildContext context) {
+  // TODO Should preview shole Screen class also with BlocConsumer.listener
   const error = PathAccessException(
     "/storage/emulated/0/Download/container-signed-xades-baseline-b.sce",
     OSError("Permission denied", 13),
