@@ -1,5 +1,11 @@
 # Changelog
 
+## 2024-04-23 - v1.0.0(20)
+
+- Refactor and enable Onboarding flow
+- Refactor result (info, error, etc.) views 
+- Update strings
+
 ## 2024-04-22 - v1.0.0(19)
 
 - Extract SK strings into .arb file
