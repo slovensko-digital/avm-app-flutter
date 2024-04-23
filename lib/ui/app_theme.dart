@@ -41,8 +41,9 @@ ThemeData appTheme(
   final appBarTheme = AppBarTheme(
     titleTextStyle: TextStyle(
       color: colorScheme.onBackground,
-      fontSize: 22,
-      fontWeight: FontWeight.bold,
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.15,
     ),
   );
   final dialogTheme = DialogTheme(

@@ -17,10 +17,12 @@ import 'onboarding_screen.dart';
 ///
 /// Consumes [ISettings].
 class OnboardingAcceptTermsOfServiceScreen extends StatefulWidget {
+  final VoidCallback onCanceled;
   final VoidCallback onTermsOfServiceAccepted;
 
   const OnboardingAcceptTermsOfServiceScreen({
     super.key,
+    required this.onCanceled,
     required this.onTermsOfServiceAccepted,
   });
 
@@ -32,13 +34,17 @@ class OnboardingAcceptTermsOfServiceScreen extends StatefulWidget {
 class _OnboardingAcceptTermsOfServiceScreenState
     extends State<OnboardingAcceptTermsOfServiceScreen> {
   final url = Uri.parse("https://slovensko.digital/o-nas/stanovy/");
+
   bool documentLoaded = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(),
+        // Need to add BackButton explicitly because it's indie nested Navigator
+        leading: BackButton(
+          onPressed: widget.onCanceled,
+        ),
         title: Text(context.strings.termsOfServiceTitle),
       ),
       body: SafeArea(
@@ -90,7 +96,7 @@ class _OnboardingAcceptTermsOfServiceScreenState
     const version = 1;
 
     context.read<ISettings?>()?.acceptedTermsOfServiceVersion.value = version;
-    widget.onTermsOfServiceAccepted.call();
+    widget.onTermsOfServiceAccepted();
   }
 }
 
@@ -101,6 +107,9 @@ class _OnboardingAcceptTermsOfServiceScreenState
 )
 Widget previewOnboardingAcceptTermsOfServiceScreen(BuildContext context) {
   return OnboardingAcceptTermsOfServiceScreen(
+    onCanceled: () {
+      developer.log("onTermsOfServiceAccepted");
+    },
     onTermsOfServiceAccepted: () {
       developer.log("onTermsOfServiceAccepted");
     },

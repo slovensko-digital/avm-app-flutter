@@ -1,4 +1,5 @@
 import 'package:eidmsdk/types.dart' show Certificate;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -61,6 +62,20 @@ class _Body extends StatelessWidget {
           },
           child: Text(context.strings.aboutLabel),
         ),
+        if (kDebugMode) const SizedBox(height: kButtonSpace),
+        if (kDebugMode)
+          TextButton(
+            style: TextButton.styleFrom(
+              minimumSize: kPrimaryButtonMinimumSize,
+            ),
+            onPressed: () async {
+              await settings.clear();
+              if (context.mounted) {
+                await Navigator.of(context).maybePop();
+              }
+            },
+            child: const Text("RESET"),
+          ),
       ],
     );
 
@@ -189,4 +204,19 @@ class _MockSettings implements ISettings {
   @override
   late final ValueNotifier<Certificate?> signingCertificate =
       ValueNotifier(null);
+
+  @override
+  Future<bool> clear() {
+    final props = <ValueNotifier>[
+      acceptedTermsOfServiceVersion,
+      signingPdfContainer,
+      signingCertificate,
+    ];
+
+    for (final prop in props) {
+      prop.value = null;
+    }
+
+    return Future.value(true);
+  }
 }

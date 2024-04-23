@@ -10,7 +10,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:autogram/ui/app_theme.dart' as _i3;
-import 'package:autogram/ui/dialogs.dart' as _i16;
 import 'package:autogram/ui/fragment/show_web_page_fragment.dart' as _i17;
 import 'package:autogram/ui/screens/about_screen.dart' as _i20;
 import 'package:autogram/ui/screens/main_screen.dart' as _i2;
@@ -30,6 +29,7 @@ import 'package:autogram/ui/screens/sign_document_screen.dart' as _i30;
 import 'package:autogram/ui/widgets/autogram_logo.dart' as _i4;
 import 'package:autogram/ui/widgets/certificate_picker.dart' as _i18;
 import 'package:autogram/ui/widgets/close_button.dart' as _i5;
+import 'package:autogram/ui/widgets/dialogs.dart' as _i16;
 import 'package:autogram/ui/widgets/document_visualization.dart' as _i7;
 import 'package:autogram/ui/widgets/error_content.dart' as _i8;
 import 'package:autogram/ui/widgets/html_preview.dart' as _i9;
@@ -172,6 +172,10 @@ final directories = <_i1.WidgetbookNode>[
       _i1.WidgetbookComponent(
         name: 'ResultView',
         useCases: [
+          _i1.WidgetbookUseCase(
+            name: 'custom',
+            builder: _i13.previewCustomResultView,
+          ),
           _i1.WidgetbookUseCase(
             name: 'error',
             builder: _i13.previewErrorResultView,

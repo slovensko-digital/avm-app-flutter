@@ -37,6 +37,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final Widget child = switch (step) {
       _OnboardingStep.acceptTermsOfService =>
         OnboardingAcceptTermsOfServiceScreen(
+          onCanceled: () {
+            Navigator.of(context).maybePop();
+          },
           onTermsOfServiceAccepted: _handleTermsOfServiceAccepted,
         ),
       _OnboardingStep.selectSigningCertificate =>
@@ -59,7 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _handleTermsOfServiceAccepted() {
-    // TODO Onboarding - handle case when signing cert. was selected but need to accept only new ToS
+    // TODO Onboarding - handle case when signing cert. was already selected but need to accept only new ToS
     _navigateToStep(_OnboardingStep.selectSigningCertificate);
   }
 
@@ -74,7 +77,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _handleStartRequested() {
     Navigator.of(context).popUntil((route) {
       // Remove until MainScreen
-      return route.settings.name == '/';
+      if (route.settings.name == '/') {
+        // This "result" will be read
+        (route.settings.arguments as Map)["result"] = true;
+        return true;
+      }
+
+      return false;
     });
   }
 }

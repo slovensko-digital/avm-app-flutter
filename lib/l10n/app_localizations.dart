@@ -163,6 +163,18 @@ abstract class AppLocalizations {
   /// **'Zopakovať'**
   String get buttonRetryLabel;
 
+  /// No description provided for @buttonTryAgainLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Skúsiť znova'**
+  String get buttonTryAgainLabel;
+
+  /// No description provided for @buttonInitialSetupLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nastaviť Autogram'**
+  String get buttonInitialSetupLabel;
+
   /// No description provided for @buttonOpenDocumentLabel.
   ///
   /// In sk, this message translates to:
@@ -265,6 +277,18 @@ abstract class AppLocalizations {
   /// **'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie'**
   String get introBody;
 
+  /// No description provided for @onboardingFinishedHeading.
+  ///
+  /// In sk, this message translates to:
+  /// **'Autogram je pripravený'**
+  String get onboardingFinishedHeading;
+
+  /// No description provided for @onboardingFinishedBody.
+  ///
+  /// In sk, this message translates to:
+  /// **'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie'**
+  String get onboardingFinishedBody;
+
   /// No description provided for @openDocumentTitle.
   ///
   /// In sk, this message translates to:
@@ -322,19 +346,37 @@ abstract class AppLocalizations {
   /// No description provided for @selectSigningCertificateCanceledHeading.
   ///
   /// In sk, this message translates to:
-  /// **'Načítavanie certifikátov z OP\nbolo zrušené používateľom'**
+  /// **'Čítanie certifikátu bolo prerušené'**
   String get selectSigningCertificateCanceledHeading;
+
+  /// No description provided for @selectSigningCertificateCanceledBody.
+  ///
+  /// In sk, this message translates to:
+  /// **'Skúste prosím znovu načítať certifikát z vášho občianskeho preukazu.'**
+  String get selectSigningCertificateCanceledBody;
 
   /// No description provided for @selectSigningCertificateNoCertificateHeading.
   ///
   /// In sk, this message translates to:
-  /// **'Použitý OP neobsahuje “Kvalifikovaný certifikát pre elektronický podpis”.\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.'**
+  /// **'Certifikát nebol nájdený'**
   String get selectSigningCertificateNoCertificateHeading;
+
+  /// No description provided for @selectSigningCertificateNoCertificateBody.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na '**
+  String get selectSigningCertificateNoCertificateBody;
+
+  /// No description provided for @selectSigningCertificateNoCertificateGuideUrl.
+  ///
+  /// In sk, this message translates to:
+  /// **'https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty'**
+  String get selectSigningCertificateNoCertificateGuideUrl;
 
   /// No description provided for @selectSigningCertificateErrorHeading.
   ///
   /// In sk, this message translates to:
-  /// **'Chyba pri načítavaní certifikátov z OP.'**
+  /// **'Chyba pri načítavaní certifikátov z občianskeho preukazu.'**
   String get selectSigningCertificateErrorHeading;
 
   /// No description provided for @certificateIssuer.

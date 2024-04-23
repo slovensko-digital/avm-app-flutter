@@ -1,6 +1,6 @@
-import 'dart:io';
+import 'dart:io' show File, Directory, Platform;
 
-import 'package:flutter/foundation.dart' show ValueListenable, ValueNotifier;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart' show Logger;
@@ -25,7 +25,7 @@ class AppService {
   static const _events = EventChannel('digital.slovensko.avm/events');
 
   /// Holds URI to last shared file to app.
-  static final _sharedFile = ValueNotifier<Uri?>(null);
+  static final _sharedFile = _CustomValueNotifier<Uri?>(null);
 
   /// Last shared file to app.
   ///
@@ -94,11 +94,30 @@ class AppService {
 
       if (uri != null) {
         _logger.info("Received shared file: $uri");
-
-        // TODO Fix case when shared the same file URI 2nd time
-        // it might be an issue on iOS side
         _sharedFile.value = uri;
       }
     }
   }
+}
+
+class _CustomValueNotifier<T> extends ChangeNotifier
+    implements ValueListenable<T> {
+  _CustomValueNotifier(this._value) {
+    if (kFlutterMemoryAllocationsEnabled) {
+      ChangeNotifier.maybeDispatchObjectCreation(this);
+    }
+  }
+
+  @override
+  T get value => _value;
+  T _value;
+
+  set value(T newValue) {
+    // DON'T compare and always notify listeners
+    _value = newValue;
+    notifyListeners();
+  }
+
+  @override
+  String toString() => '${describeIdentity(this)}($value)';
 }

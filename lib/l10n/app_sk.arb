@@ -13,6 +13,8 @@
   "buttonAcknowledgeAndAgreeLabel": "Rozumiem a súhlasím",
   "buttonDisagreeLabel": "Nesúhlasím",
   "buttonRetryLabel": "Zopakovať",
+  "buttonTryAgainLabel": "Skúsiť znova",
+  "buttonInitialSetupLabel": "Nastaviť Autogram",
   "buttonOpenDocumentLabel": "Vybrať dokument",
   "buttonSignLabel": "Podpísať",
   "buttonSkipLabel": "Preskočiť",
@@ -35,6 +37,9 @@
   "introHeading": "Nový, lepší a krajší podpisovač v\u00A0mobile",
   "introBody": "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie",
 
+  "onboardingFinishedHeading": "Autogram je pripravený",
+  "onboardingFinishedBody": "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie",
+
   "openDocumentTitle": "Otváranie dokumentu",
   "openDocumentErrorTitle": "Chyba pri vytváraní dokumentu",
 
@@ -46,9 +51,13 @@
   "selectSigningCertificateTitle": "Podpisový certifikát",
   "selectSigningCertificateHeading": "Výber podpisového certifikátu",
   "selectSigningCertificateBody": "Stlačením tlačidla “Vybrať certifikát” sa\u00A0vyvolá interakcia na načítanie podpisových certifikátov z\u00A0vášho\u00A0OP.\n\nAk nemáte OP s\u00A0kvalifikovaným podpisovým certifikátom, tento krok preskočte.",
-  "selectSigningCertificateCanceledHeading": "Načítavanie certifikátov z\u00A0OP\nbolo zrušené používateľom",
-  "selectSigningCertificateNoCertificateHeading": "Použitý OP neobsahuje “Kvalifikovaný certifikát pre\u00A0elektronický podpis”.\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.",
-  "selectSigningCertificateErrorHeading": "Chyba pri načítavaní certifikátov z\u00A0OP.",
+  "selectSigningCertificateCanceledHeading": "Čítanie certifikátu bolo prerušené",
+  "selectSigningCertificateCanceledBody": "Skúste prosím znovu načítať certifikát z vášho občianskeho preukazu.",
+  "selectSigningCertificateNoCertificateHeading": "Certifikát nebol nájdený",
+  "selectSigningCertificateNoCertificateBody": "Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na ",
+  "selectSigningCertificateNoCertificateGuideUrl": "https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty",
+
+  "selectSigningCertificateErrorHeading": "Chyba pri načítavaní certifikátov z\u00A0občianskeho preukazu.",
 
   "certificateIssuer": "Vydavateľ: {text}",
   "certificateNotAfter": "Platný do: {text}",

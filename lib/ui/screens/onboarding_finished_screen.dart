@@ -23,14 +23,13 @@ class OnboardingFinishedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.strings;
     final child = Column(
       children: [
-        const Expanded(
+        Expanded(
           child: ResultView.success(
-            titleText: "Autogram je pripravený",
-            body: Text(
-              "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie",
-            ),
+            titleText: strings.onboardingFinishedHeading,
+            body: Text(strings.onboardingFinishedBody),
           ),
         ),
 

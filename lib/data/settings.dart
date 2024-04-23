@@ -14,6 +14,9 @@ abstract interface class ISettings {
 
   /// The signing [Certificate] value.
   ValueNotifier<Certificate?> get signingCertificate;
+
+  /// Clear all setting.
+  Future<bool> clear();
 }
 
 /// General app settings.

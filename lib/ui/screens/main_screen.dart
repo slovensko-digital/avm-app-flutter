@@ -6,23 +6,25 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../app_service.dart';
+import '../../data/settings.dart';
 import '../../files.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/autogram_logo.dart';
+import 'onboarding_screen.dart';
 import 'open_document_screen.dart';
 import 'settings_screen.dart';
 
 /// Main app screen that presents app features.
 ///
-/// Has ability to open new file or navigate to Settings.
-///
-/// Navigates to other screens:
-///  - [SettingsScreen]
-///  - [OpenDocumentScreen]
+/// Has ability to:
+/// - open new file and navigate next to [OpenDocumentScreen]
+/// - navigate to [SettingsScreen]
+/// - start Onboarding by navigating to [OnboardingScreen]
 class MainScreen extends StatefulWidget {
   final Uri? sharedFile;
 
@@ -50,7 +52,8 @@ class _MainScreenState extends State<MainScreen> {
   void didUpdateWidget(covariant MainScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.sharedFile != widget.sharedFile) {
+    // Using !identical istead of "!=" for case when sharing same file URI
+    if (!identical(oldWidget.sharedFile, widget.sharedFile)) {
       _handleNewSharedFile();
     }
   }
@@ -62,17 +65,18 @@ class _MainScreenState extends State<MainScreen> {
         onShowSettingsRequested: _onShowSettingsRequested,
       ),
       body: MainBody(
+        onStartOnboardingRequested: _onStartOnboardingRequested,
         onOpenFileRequested: _onOpenFileRequested,
       ),
     );
   }
 
   void _handleNewSharedFile() {
-    final sharedFileUri = widget.sharedFile;
+    final fileUri = widget.sharedFile;
 
-    if (sharedFileUri != null && mounted) {
-      // This is only Future that will hopefully return the File
-      final Future<File> sharedFile = _appService.getFile(sharedFileUri);
+    if (fileUri != null && mounted) {
+      // This is only Future that will (hopefully) return the File
+      final Future<File> sharedFile = _appService.getFile(fileUri);
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         // Directly navigate to next screen, which have progress and error handling
@@ -98,6 +102,24 @@ class _MainScreenState extends State<MainScreen> {
       route,
       (final route) => route.settings.name == '/',
     );
+  }
+
+  Future<void> _onStartOnboardingRequested() {
+    _logger.fine('Requested to strt Onboarding.');
+
+    const screen = OnboardingScreen();
+    final route = MaterialPageRoute(builder: (_) => screen);
+
+    return Navigator.of(context).push(route).then((_) {
+      final arguments = ModalRoute.of(context)?.settings.arguments as Map;
+      final result = arguments['result'];
+
+      if (result == true) {
+        // TODO Call this function right when it was pressed on that screen
+        // Pass via Provider and drop this "arguments" usage
+        _onOpenFileRequested();
+      }
+    });
   }
 
   Future<void> _onOpenFileRequested() async {
@@ -148,9 +170,14 @@ AppBar _MainAppBar({
 
 /// [MainScreen] body.
 class MainBody extends StatelessWidget {
+  final VoidCallback? onStartOnboardingRequested;
   final VoidCallback? onOpenFileRequested;
 
-  const MainBody({super.key, required this.onOpenFileRequested});
+  const MainBody({
+    super.key,
+    required this.onStartOnboardingRequested,
+    required this.onOpenFileRequested,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -175,16 +202,40 @@ class MainBody extends StatelessWidget {
           const Spacer(),
 
           // Primary button
-          FilledButton(
-            style: FilledButton.styleFrom(
-              minimumSize: kPrimaryButtonMinimumSize,
-            ),
-            onPressed: onOpenFileRequested,
-            child: Text(context.strings.buttonOpenDocumentLabel),
-          ),
+          _buildPrimaryButton(context),
         ],
       ),
     );
+  }
+
+  Widget _buildPrimaryButton(BuildContext context) {
+    final listenable = context.read<ISettings>().acceptedTermsOfServiceVersion;
+
+    return ListenableBuilder(
+        listenable: listenable,
+        builder: (context, _) {
+          final version = listenable.value;
+          final termsOfServiceAreAccepted = (version != null);
+
+          VoidCallback? onPressed;
+          String label;
+
+          if (termsOfServiceAreAccepted) {
+            onPressed = onOpenFileRequested;
+            label = context.strings.buttonOpenDocumentLabel;
+          } else {
+            onPressed = onStartOnboardingRequested;
+            label = context.strings.buttonInitialSetupLabel;
+          }
+
+          return FilledButton(
+            style: FilledButton.styleFrom(
+              minimumSize: kPrimaryButtonMinimumSize,
+            ),
+            onPressed: onPressed,
+            child: Text(label),
+          );
+        });
   }
 }
 
@@ -211,6 +262,11 @@ Widget previewMainAppBar(BuildContext context) {
 )
 Widget previewMainBody(BuildContext context) {
   return MainBody(
-    onOpenFileRequested: () {},
+    onStartOnboardingRequested: () {
+      developer.log("onStartOnboardingRequested");
+    },
+    onOpenFileRequested: () {
+      developer.log("onOpenFileRequested");
+    },
   );
 }

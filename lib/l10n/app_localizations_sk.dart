@@ -41,6 +41,12 @@ class AppLocalizationsSk extends AppLocalizations {
   String get buttonRetryLabel => 'Zopakovať';
 
   @override
+  String get buttonTryAgainLabel => 'Skúsiť znova';
+
+  @override
+  String get buttonInitialSetupLabel => 'Nastaviť Autogram';
+
+  @override
   String get buttonOpenDocumentLabel => 'Vybrať dokument';
 
   @override
@@ -94,6 +100,12 @@ class AppLocalizationsSk extends AppLocalizations {
   String get introBody => 'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie';
 
   @override
+  String get onboardingFinishedHeading => 'Autogram je pripravený';
+
+  @override
+  String get onboardingFinishedBody => 'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie';
+
+  @override
   String get openDocumentTitle => 'Otváranie dokumentu';
 
   @override
@@ -121,13 +133,22 @@ class AppLocalizationsSk extends AppLocalizations {
   String get selectSigningCertificateBody => 'Stlačením tlačidla “Vybrať certifikát” sa vyvolá interakcia na načítanie podpisových certifikátov z vášho OP.\n\nAk nemáte OP s kvalifikovaným podpisovým certifikátom, tento krok preskočte.';
 
   @override
-  String get selectSigningCertificateCanceledHeading => 'Načítavanie certifikátov z OP\nbolo zrušené používateľom';
+  String get selectSigningCertificateCanceledHeading => 'Čítanie certifikátu bolo prerušené';
 
   @override
-  String get selectSigningCertificateNoCertificateHeading => 'Použitý OP neobsahuje “Kvalifikovaný certifikát pre elektronický podpis”.\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.';
+  String get selectSigningCertificateCanceledBody => 'Skúste prosím znovu načítať certifikát z vášho občianskeho preukazu.';
 
   @override
-  String get selectSigningCertificateErrorHeading => 'Chyba pri načítavaní certifikátov z OP.';
+  String get selectSigningCertificateNoCertificateHeading => 'Certifikát nebol nájdený';
+
+  @override
+  String get selectSigningCertificateNoCertificateBody => 'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na ';
+
+  @override
+  String get selectSigningCertificateNoCertificateGuideUrl => 'https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty';
+
+  @override
+  String get selectSigningCertificateErrorHeading => 'Chyba pri načítavaní certifikátov z občianskeho preukazu.';
 
   @override
   String certificateIssuer(Object text) {

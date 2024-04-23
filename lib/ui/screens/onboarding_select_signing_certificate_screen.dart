@@ -66,7 +66,7 @@ class OnboardingSelectSigningCertificateScreen extends StatelessWidget {
     BuildContext context,
     SelectSigningCertificateState state,
   ) {
-    return OnboardingSelectSigningCertificateBody(
+    return _Body(
       state: state,
       onGetCertificatesRequested: () {
         context
@@ -90,14 +90,13 @@ class OnboardingSelectSigningCertificateScreen extends StatelessWidget {
 }
 
 /// [OnboardingSelectSigningCertificateScreen] body.
-class OnboardingSelectSigningCertificateBody extends StatefulWidget {
+class _Body extends StatefulWidget {
   final SelectSigningCertificateState state;
   final VoidCallback? onGetCertificatesRequested;
   final ValueSetter? onCertificateSelected;
   final VoidCallback? onSkipRequested;
 
-  const OnboardingSelectSigningCertificateBody({
-    super.key,
+  const _Body({
     required this.state,
     this.onGetCertificatesRequested,
     this.onCertificateSelected,
@@ -105,12 +104,10 @@ class OnboardingSelectSigningCertificateBody extends StatefulWidget {
   });
 
   @override
-  State<OnboardingSelectSigningCertificateBody> createState() =>
-      _OnboardingSelectSigningCertificateBodyState();
+  State<_Body> createState() => _BodyState();
 }
 
-class _OnboardingSelectSigningCertificateBodyState
-    extends State<OnboardingSelectSigningCertificateBody> {
+class _BodyState extends State<_Body> {
   Certificate? selectedCertificate;
 
   @override
@@ -121,7 +118,6 @@ class _OnboardingSelectSigningCertificateBodyState
         Expanded(
           child: SelectSigningCertificateFragment(
             state: widget.state,
-            onReloadCertificatesRequested: widget.onGetCertificatesRequested,
             initialBuilder: (context) {
               return ResultView.info(
                 titleText: context.strings.selectSigningCertificateHeading,
@@ -158,6 +154,9 @@ class _OnboardingSelectSigningCertificateBodyState
           onPressed: _getPrimaryButtonPressedCallback(),
           child: switch (widget.state) {
             SelectSigningCertificateLoadingState _ => const LoadingIndicator(),
+            SelectSigningCertificateNoCertificateState _ ||
+            SelectSigningCertificateErrorState _ =>
+              Text(context.strings.buttonTryAgainLabel),
             _ => Text(context.strings.buttonSelectCertificateLabel),
           },
         ),
@@ -251,7 +250,7 @@ class _SelectCertificateState extends State<_SelectCertificate> {
 )
 Widget previewInitialOnboardingSelectSigningCertificateBody(
     BuildContext context) {
-  return const OnboardingSelectSigningCertificateBody(
+  return const _Body(
     state: SelectSigningCertificateInitialState(),
   );
 }
@@ -263,7 +262,7 @@ Widget previewInitialOnboardingSelectSigningCertificateBody(
 )
 Widget previewCanceledOnboardingSelectSigningCertificateBody(
     BuildContext context) {
-  return const OnboardingSelectSigningCertificateBody(
+  return const _Body(
     state: SelectSigningCertificateCanceledState(),
   );
 }
@@ -275,7 +274,7 @@ Widget previewCanceledOnboardingSelectSigningCertificateBody(
 )
 Widget previewNoCertificateOnboardingSelectSigningCertificateBody(
     BuildContext context) {
-  return const OnboardingSelectSigningCertificateBody(
+  return const _Body(
     state: SelectSigningCertificateNoCertificateState(),
   );
 }
@@ -331,7 +330,7 @@ DiH5uEqBXExjrj0FslxcVKdVj5glVcSmkLwZKbEU1OKwleT/iXFhvooWhQ==
     certData: aliceCert,
   );
 
-  return const OnboardingSelectSigningCertificateBody(
+  return const _Body(
     state: SelectSigningCertificateSuccessState(certificate),
   );
 }

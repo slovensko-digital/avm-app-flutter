@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-import '../strings_context.dart';
-import 'app_theme.dart';
-import 'widgets/close_button.dart' as avm;
-import 'widgets/result_view.dart';
+import '../../strings_context.dart';
+import '../app_theme.dart';
+import 'close_button.dart' as avm;
+import 'result_view.dart';
 
 /// Shows bottom sheet with rationale text for notifications permission.
 Future<bool?> showNotificationsPermissionRationaleModal(BuildContext context) {
@@ -15,11 +15,7 @@ Future<bool?> showNotificationsPermissionRationaleModal(BuildContext context) {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: ResultView(
-          icon: const Image(
-            image: AssetImage('assets/images/notification.png'),
-            width: 96,
-            height: 96,
-          ),
+          icon: const AssetImage('assets/images/notification.png'),
           titleText: strings.notificationPermissionRationaleTitle,
           body: Text(strings.notificationPermissionRationaleMessage),
         ),
