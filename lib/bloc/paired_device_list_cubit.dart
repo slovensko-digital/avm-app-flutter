@@ -15,6 +15,7 @@ export 'paired_device_list_state.dart';
 class PairedDeviceListCubit extends Cubit<PairedDeviceListState> {
   static final _log = Logger("PairedDeviceListScreen");
 
+  // ignore: unused_field
   final IAutogramService _service;
 
   PairedDeviceListCubit({

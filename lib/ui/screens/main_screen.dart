@@ -4,6 +4,7 @@ import 'dart:io' show File;
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
@@ -18,13 +19,14 @@ import '../widgets/autogram_logo.dart';
 import 'main_menu_screen.dart';
 import 'onboarding_screen.dart';
 import 'open_document_screen.dart';
-import 'settings_screen.dart';
+import 'start_remote_document_signing_screen.dart';
 
 /// Main app screen that presents app features.
 ///
 /// Has ability to:
 /// - open new file and navigate next to [OpenDocumentScreen]
-/// - navigate to [SettingsScreen]
+/// - show [MainMenuScreen]
+/// - navigate to [StartRemoteDocumentSigningScreen]
 /// - start Onboarding by navigating to [OnboardingScreen]
 class MainScreen extends StatefulWidget {
   final Uri? sharedFile;
@@ -63,7 +65,9 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _MainAppBar(
+        context: context,
         onMenuPressed: _showMenu,
+        onQrCodeScannerPressed: _showQrCodeScanner,
       ),
       body: MainBody(
         onStartOnboardingRequested: _onStartOnboardingRequested,
@@ -94,6 +98,13 @@ class _MainScreenState extends State<MainScreen> {
         pageBuilder: (context, _, __) {
           return screen;
         });
+  }
+
+  Future<void> _showQrCodeScanner() {
+    const screen = StartRemoteDocumentSigningScreen();
+    final route = MaterialPageRoute(builder: (_) => screen);
+
+    return Navigator.of(context).push(route);
   }
 
   Future<void> _openNewFile(FutureOr<File> file) {
@@ -152,15 +163,31 @@ class _MainScreenState extends State<MainScreen> {
 
 // ignore: non_constant_identifier_names
 AppBar _MainAppBar({
+  required BuildContext context,
   VoidCallback? onMenuPressed,
+  VoidCallback? onQrCodeScannerPressed,
 }) {
+  final iconColor = Theme.of(context).colorScheme.onSecondary;
+
   return AppBar(
     foregroundColor: kMainAppBarForegroundColor,
     backgroundColor: kMainAppBarBackgroundColor,
     leading: IconButton(
-      icon: const Icon(Icons.menu_sharp),
+      icon: SvgPicture.asset(
+        'assets/icons/menu.svg',
+        color: iconColor,
+      ),
       onPressed: onMenuPressed,
     ),
+    actions: [
+      IconButton(
+        icon: SvgPicture.asset(
+          'assets/icons/qr_code_scanner.svg',
+          color: iconColor,
+        ),
+        onPressed: onQrCodeScannerPressed,
+      ),
+    ],
     title: Builder(builder: (context) {
       return Text(
         context.strings.appName,
@@ -251,6 +278,7 @@ Widget previewMainAppBar(BuildContext context) {
   return SizedBox(
     height: kToolbarHeight,
     child: _MainAppBar(
+      context: context,
       onMenuPressed: () {
         developer.log("onMenuPressed");
       },

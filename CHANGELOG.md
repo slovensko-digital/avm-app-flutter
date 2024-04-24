@@ -1,5 +1,11 @@
 # Changelog
 
+## 2024-04-24 - v1.0.0(21)
+
+- Add main menu and custom menu and QR code scanner icons
+- Prepare some screens accessible from main menu
+- Rewrite setting screen
+
 ## 2024-04-23 - v1.0.0(20)
 
 - Refactor and enable Onboarding flow

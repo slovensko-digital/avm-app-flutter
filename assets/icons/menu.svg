@@ -1,0 +1,7 @@
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(-10,-10)" fill="#000">
+  <rect id="Rectangle" x="12" y="13" width="20" height="4" rx="2"/>
+  <rect x="12" y="20" width="14" height="4" rx="2"/>
+  <rect x="12" y="27" width="20" height="4" rx="2"/>
+ </g>
+</svg>

@@ -193,6 +193,12 @@ abstract class AppLocalizations {
   /// **'Preskočiť'**
   String get buttonSkipLabel;
 
+  /// No description provided for @buttonScanQrCodeLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Skenovať QR kód'**
+  String get buttonScanQrCodeLabel;
+
   /// No description provided for @buttonSelectCertificateLabel.
   ///
   /// In sk, this message translates to:
@@ -223,11 +229,23 @@ abstract class AppLocalizations {
   /// **'Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.'**
   String get notificationPermissionRationaleMessage;
 
+  /// No description provided for @menuTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Menu'**
+  String get menuTitle;
+
   /// No description provided for @settingsTitle.
   ///
   /// In sk, this message translates to:
   /// **'Nastavenia'**
   String get settingsTitle;
+
+  /// No description provided for @signRemoteDocumentTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Podpísať vzdialený dokument'**
+  String get signRemoteDocumentTitle;
 
   /// No description provided for @aboutLabel.
   ///

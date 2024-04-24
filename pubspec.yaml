@@ -1,7 +1,7 @@
 name: autogram
 description: "Autogram v mobile"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.0+20
+version: 1.0.0+21
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -15,6 +15,7 @@ dependencies:
     path: ../eidmsdk_flutter
   autogram_sign:
     path: ../autogram_sign
+  flutter_svg:
   package_info_plus: ^5.0.1
   chopper:
   injectable: ^2.2.0
@@ -56,6 +57,8 @@ flutter:
   uses-material-design: true
   assets:
     # TODO Use svg.vec https://pub.dev/packages/flutter_svg#precompiling-and-optimizing-svgs
+    - assets/icons/menu.svg
+    - assets/icons/qr_code_scanner.svg
     - assets/images/autogram_logo.png
     - assets/images/close.png
     - assets/images/lock.png

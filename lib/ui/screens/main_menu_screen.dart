@@ -6,6 +6,7 @@ import '../widgets/app_version_text.dart';
 import 'about_screen.dart';
 import 'settings_screen.dart';
 import 'show_terms_of_service_screen.dart';
+import 'start_remote_document_signing_screen.dart';
 
 /// Screen that displays "main menu" with items:
 ///  - link to show [SettingsScreen]
@@ -24,11 +25,11 @@ class MainMenuScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Spacer(flex: 1),
-          const Padding(
-            padding: EdgeInsets.only(bottom: 20),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
             child: Text(
-              "Menu",
-              style: TextStyle(
+              strings.menuTitle,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.15,
@@ -41,10 +42,12 @@ class MainMenuScreen extends StatelessWidget {
               _showSettings(context);
             },
           ),
-          // const _MenuItem(
-          //   title: "Podpísať vzdialený dokument",
-          //   onPressed: null,
-          // ),
+          _MenuItem(
+            title: strings.signRemoteDocumentTitle,
+            onPressed: () {
+              _showSignRemoteDocument(context);
+            },
+          ),
           _MenuItem(
             title: strings.termsOfServiceTitle,
             onPressed: () {
@@ -80,6 +83,12 @@ class MainMenuScreen extends StatelessWidget {
 
   static Future<void> _showSettings(BuildContext context) {
     const screen = SettingsScreen();
+
+    return _openScreen(context, screen);
+  }
+
+  static Future<void> _showSignRemoteDocument(BuildContext context) {
+    const screen = StartRemoteDocumentSigningScreen();
 
     return _openScreen(context, screen);
   }

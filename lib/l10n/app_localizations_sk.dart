@@ -58,6 +58,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get buttonSkipLabel => 'Preskočiť';
 
   @override
+  String get buttonScanQrCodeLabel => 'Skenovať QR kód';
+
+  @override
   String get buttonSelectCertificateLabel => 'Vybrať certifikát';
 
   @override
@@ -75,7 +78,13 @@ class AppLocalizationsSk extends AppLocalizations {
   String get notificationPermissionRationaleMessage => 'Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.';
 
   @override
+  String get menuTitle => 'Menu';
+
+  @override
   String get settingsTitle => 'Nastavenia';
+
+  @override
+  String get signRemoteDocumentTitle => 'Podpísať vzdialený dokument';
 
   @override
   String get aboutLabel => 'O aplikácii';
