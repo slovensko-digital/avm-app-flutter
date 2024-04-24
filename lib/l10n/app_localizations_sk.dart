@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 /// The translations for Slovak (`sk`).
@@ -80,6 +82,41 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get signingPdfContainerTitle => 'Podpisovanie PDF';
+
+  @override
+  String get signatureTypeTitle => 'Predvolený typ podpisu';
+
+  @override
+  String signatureTypeSummary(String name) {
+    String _temp0 = intl.Intl.selectLogic(
+      name,
+      {
+        'withoutTimestamp': 'Vlastnoručný podpis',
+        'withTimestamp': 'Osvedčený podpis',
+        'other': 'Spýtať sa pri podpisovaní',
+      },
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get signingCertificateTitle => 'Predvolený podpisový certifikát';
+
+  @override
+  String get pairedDevicesTitle => 'Spárované zariadenia';
+
+  @override
+  String pairedDevicesSummary(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count zariadení',
+      few: '$count zariadenia',
+      one: '1 zariadenie',
+      zero: 'žiadne',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get termsOfServiceTitle => 'Podmienky používania';

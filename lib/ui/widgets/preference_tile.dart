@@ -18,13 +18,16 @@ class PreferenceTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const titleTextStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
+    final subtitle = summary != null ? Text(summary ?? '') : null;
+    final trailing =
+        onPressed != null ? const Icon(Icons.arrow_forward_ios_outlined) : null;
 
     return Material(
       child: ListTile(
         onTap: onPressed,
         title: Text(title, style: titleTextStyle),
-        subtitle: summary != null ? Text(summary ?? '') : null,
-        trailing: const Icon(Icons.arrow_forward_ios_outlined),
+        subtitle: subtitle,
+        trailing: trailing,
       ),
     );
   }

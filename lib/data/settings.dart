@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:notified_preferences/notified_preferences.dart';
 
 import 'pdf_signing_option.dart';
+import 'signature_type.dart';
 
 /// Interface for general app settings.
 abstract interface class ISettings {
@@ -14,6 +15,9 @@ abstract interface class ISettings {
 
   /// The signing [Certificate] value.
   ValueNotifier<Certificate?> get signingCertificate;
+
+  /// The signing [SignatureType] value.
+  ValueNotifier<SignatureType?> get signatureType;
 
   /// Clear all setting.
   Future<bool> clear();
@@ -37,6 +41,21 @@ class Settings with NotifiedPreferences implements ISettings {
     key: 'signing.pdf.container',
     initialValue: PdfSigningOption.pades,
     values: PdfSigningOption.values,
+  );
+
+  @override
+  late final ValueNotifier<SignatureType?> signatureType = createSetting(
+    // createEnumSetting is NOT nullable
+    key: 'signing.signatureType',
+    initialValue: null,
+    read: (prefs, key) {
+      final value = prefs.getString(key);
+
+      return (value == null ? null : SignatureType.values.asNameMap()[value]);
+    },
+    write: (prefs, key, value) {
+      prefs.setStringOrNull(key, value?.name);
+    },
   );
 
   @override

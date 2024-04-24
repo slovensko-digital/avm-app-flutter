@@ -241,6 +241,36 @@ abstract class AppLocalizations {
   /// **'Podpisovanie PDF'**
   String get signingPdfContainerTitle;
 
+  /// No description provided for @signatureTypeTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Predvolený typ podpisu'**
+  String get signatureTypeTitle;
+
+  /// No description provided for @signatureTypeSummary.
+  ///
+  /// In sk, this message translates to:
+  /// **'{name, select, withoutTimestamp {Vlastnoručný podpis} withTimestamp {Osvedčený podpis} other {Spýtať sa pri podpisovaní}}'**
+  String signatureTypeSummary(String name);
+
+  /// No description provided for @signingCertificateTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Predvolený podpisový certifikát'**
+  String get signingCertificateTitle;
+
+  /// No description provided for @pairedDevicesTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Spárované zariadenia'**
+  String get pairedDevicesTitle;
+
+  /// No description provided for @pairedDevicesSummary.
+  ///
+  /// In sk, this message translates to:
+  /// **'{count, plural, zero{žiadne} one{1 zariadenie} few{{count} zariadenia} other{{count} zariadení}}'**
+  String pairedDevicesSummary(num count);
+
   /// No description provided for @termsOfServiceTitle.
   ///
   /// In sk, this message translates to:

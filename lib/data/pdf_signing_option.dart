@@ -1,6 +1,11 @@
 import 'package:autogram_sign/autogram_sign.dart' show SigningParametersLevel;
 
+import 'signature_type.dart';
+
 /// Represents options how to sign PDF.
+///
+/// See also:
+///  - [SignatureType]
 enum PdfSigningOption {
   /// PAdES
   pades("PAdES", SigningParametersLevel.padesBaselineB),

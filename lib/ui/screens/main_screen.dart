@@ -15,6 +15,7 @@ import '../../files.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/autogram_logo.dart';
+import 'main_menu_screen.dart';
 import 'onboarding_screen.dart';
 import 'open_document_screen.dart';
 import 'settings_screen.dart';
@@ -52,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
   void didUpdateWidget(covariant MainScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // Using !identical istead of "!=" for case when sharing same file URI
+    // Using !identical instead of "!=" for case when sharing same file URI
     if (!identical(oldWidget.sharedFile, widget.sharedFile)) {
       _handleNewSharedFile();
     }
@@ -62,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _MainAppBar(
-        onShowSettingsRequested: _onShowSettingsRequested,
+        onMenuPressed: _showMenu,
       ),
       body: MainBody(
         onStartOnboardingRequested: _onStartOnboardingRequested,
@@ -85,11 +86,14 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  Future<void> _onShowSettingsRequested() {
-    const screen = SettingsScreen();
-    final route = MaterialPageRoute(builder: (_) => screen);
+  Future<void> _showMenu() {
+    const screen = MainMenuScreen();
 
-    return Navigator.of(context).push(route);
+    return showGeneralDialog(
+        context: context,
+        pageBuilder: (context, _, __) {
+          return screen;
+        });
   }
 
   Future<void> _openNewFile(FutureOr<File> file) {
@@ -148,14 +152,14 @@ class _MainScreenState extends State<MainScreen> {
 
 // ignore: non_constant_identifier_names
 AppBar _MainAppBar({
-  VoidCallback? onShowSettingsRequested,
+  VoidCallback? onMenuPressed,
 }) {
   return AppBar(
     foregroundColor: kMainAppBarForegroundColor,
     backgroundColor: kMainAppBarBackgroundColor,
     leading: IconButton(
       icon: const Icon(Icons.menu_sharp),
-      onPressed: onShowSettingsRequested,
+      onPressed: onMenuPressed,
     ),
     title: Builder(builder: (context) {
       return Text(
@@ -211,10 +215,9 @@ class MainBody extends StatelessWidget {
   Widget _buildPrimaryButton(BuildContext context) {
     final listenable = context.read<ISettings>().acceptedTermsOfServiceVersion;
 
-    return ListenableBuilder(
-        listenable: listenable,
-        builder: (context, _) {
-          final version = listenable.value;
+    return ValueListenableBuilder(
+        valueListenable: listenable,
+        builder: (context, version, _) {
           final termsOfServiceAreAccepted = (version != null);
 
           VoidCallback? onPressed;
@@ -248,8 +251,8 @@ Widget previewMainAppBar(BuildContext context) {
   return SizedBox(
     height: kToolbarHeight,
     child: _MainAppBar(
-      onShowSettingsRequested: () {
-        developer.log("onShowSettingsRequested");
+      onMenuPressed: () {
+        developer.log("onMenuPressed");
       },
     ),
   );

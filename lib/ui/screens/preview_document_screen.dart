@@ -104,15 +104,16 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final child = switch (state) {
-      PreviewDocumentErrorState state => ErrorContent(
-          title: context.strings.previewDocumentErrorTitle,
-          error: state.error,
-        ),
+      PreviewDocumentInitialState _ => const LoadingContent(),
+      PreviewDocumentLoadingState _ => const LoadingContent(),
       PreviewDocumentSuccessState state => _SuccessContent(
           visualization: state.visualization,
           onSignRequested: onSignRequested,
         ),
-      _ => const LoadingContent(),
+      PreviewDocumentErrorState state => ErrorContent(
+          title: context.strings.previewDocumentErrorTitle,
+          error: state.error,
+        ),
     };
 
     return Padding(
@@ -145,7 +146,7 @@ class _SuccessContent extends StatelessWidget {
               color: dashColor,
               strokeWidth: 4,
               dashPattern: const [16, 16],
-              padding: EdgeInsets.zero,
+              padding: const EdgeInsets.all(2),
               child: DocumentVisualization(
                 visualization: visualization,
               ),
@@ -183,7 +184,7 @@ Widget previewLoadingPreviewDocumentScreen(BuildContext context) {
   name: 'error',
   type: PreviewDocumentScreen,
 )
-Widget previewErrorOpenDocumentScreen(BuildContext context) {
+Widget previewErrorPreviewDocumentScreen(BuildContext context) {
   return const _Body(
     state: PreviewDocumentErrorState("Error message!"),
     onSignRequested: null,
@@ -195,7 +196,7 @@ Widget previewErrorOpenDocumentScreen(BuildContext context) {
   name: 'success',
   type: PreviewDocumentScreen,
 )
-Widget previewSuccessOpenDocumentScreen(BuildContext context) {
+Widget previewSuccessPreviewDocumentScreen(BuildContext context) {
   return const _Body(
     state: PreviewDocumentSuccessState(
       DocumentVisualizationResponseBody(

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart'
-    show HookWidget, useFuture, useMemoized;
-import 'package:package_info_plus/package_info_plus.dart' show PackageInfo;
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../strings_context.dart';
 import '../app_theme.dart';
+import '../widgets/app_version_text.dart';
 import 'show_terms_of_service_screen.dart';
 
 /// Displays About.
@@ -44,7 +42,7 @@ class _Body extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         const SizedBox(height: 16),
-        const _AppVersionText(),
+        const AppVersionText(),
         const SizedBox(height: 64),
         Text(strings.eidSDKLicenseText),
         const SizedBox(height: 64),
@@ -69,24 +67,6 @@ class _Body extends StatelessWidget {
     showLicensePage(
       context: context,
       applicationName: context.strings.appName,
-    );
-  }
-}
-
-/// Displays app version: "1.0.0(1)".
-class _AppVersionText extends HookWidget {
-  const _AppVersionText();
-
-  @override
-  Widget build(BuildContext context) {
-    final future = useMemoized(() => PackageInfo.fromPlatform());
-    final pi = useFuture(future).data;
-    final appVersion = (pi != null ? "${pi.version}(${pi.buildNumber})" : null);
-
-    return Text(
-      appVersion ?? '',
-      textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.bodyLarge,
     );
   }
 }

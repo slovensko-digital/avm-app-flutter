@@ -28,6 +28,11 @@
   "settingsTitle": "Nastavenia",
   "aboutLabel": "O aplikácii",
   "signingPdfContainerTitle": "Podpisovanie PDF",
+  "signatureTypeTitle": "Predvolený typ podpisu",
+  "signatureTypeSummary": "{name, select, withoutTimestamp {Vlastnoručný podpis} withTimestamp {Osvedčený podpis} other {Spýtať sa pri podpisovaní}}",
+  "signingCertificateTitle": "Predvolený podpisový certifikát",
+  "pairedDevicesTitle": "Spárované zariadenia",
+  "pairedDevicesSummary": "{count, plural, zero{žiadne} one{1 zariadenie} few{{count} zariadenia} other{{count} zariadení}}",
   "termsOfServiceTitle": "Podmienky používania",
 
   "aboutTitle": "O aplikácii",

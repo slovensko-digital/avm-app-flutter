@@ -121,6 +121,7 @@ class _Body extends StatelessWidget {
       SelectSigningCertificateInitialState _ => const LoadingContent(),
       SelectSigningCertificateLoadingState _ => const LoadingContent(),
       SelectSigningCertificateCanceledState _ => RetryView(
+          // TODO Reuse Strings / select_signing_certificate_fragment.dart
           headlineText:
               "Načítavanie certifikátov z\u{00A0}OP\nbolo zrušené používateľom",
           onRetryRequested: () {
