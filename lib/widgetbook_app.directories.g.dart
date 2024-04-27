@@ -29,6 +29,8 @@ import 'package:autogram/ui/screens/select_certificate_screen.dart' as _i31;
 import 'package:autogram/ui/screens/settings_screen.dart' as _i32;
 import 'package:autogram/ui/screens/show_terms_of_service_screen.dart' as _i33;
 import 'package:autogram/ui/screens/sign_document_screen.dart' as _i34;
+import 'package:autogram/ui/screens/start_remote_document_signing_screen.dart'
+    as _i35;
 import 'package:autogram/ui/widgets/app_version_text.dart' as _i8;
 import 'package:autogram/ui/widgets/autogram_logo.dart' as _i4;
 import 'package:autogram/ui/widgets/certificate_picker.dart' as _i20;
@@ -278,17 +280,17 @@ final directories = <_i1.WidgetbookNode>[
         ),
       ),
       _i1.WidgetbookLeafComponent(
-        name: 'MainBody',
-        useCase: _i1.WidgetbookUseCase(
-          name: 'MainBody',
-          builder: _i2.previewMainBody,
-        ),
-      ),
-      _i1.WidgetbookLeafComponent(
         name: 'MainMenuScreen',
         useCase: _i1.WidgetbookUseCase(
           name: '',
           builder: _i23.previewMainMenuScreen,
+        ),
+      ),
+      _i1.WidgetbookLeafComponent(
+        name: 'MainScreen',
+        useCase: _i1.WidgetbookUseCase(
+          name: '',
+          builder: _i2.previewMainScreen,
         ),
       ),
       _i1.WidgetbookLeafComponent(
@@ -436,6 +438,13 @@ final directories = <_i1.WidgetbookNode>[
             builder: _i34.previewSuccessSignDocumentScreen,
           ),
         ],
+      ),
+      _i1.WidgetbookLeafComponent(
+        name: 'StartRemoteDocumentSigningScreen',
+        useCase: _i1.WidgetbookUseCase(
+          name: '',
+          builder: _i35.previewStartRemoteDocumentSigningScreen,
+        ),
       ),
     ],
   ),

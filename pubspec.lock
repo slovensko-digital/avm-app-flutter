@@ -37,10 +37,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: "22600aa1e926be775fa5fe7e6894e7fb3df9efda8891c73f70fb3262399a432d"
+      sha256: "0763b45fa9294197a2885c8567927e2830ade852e5c896fd4ab7e0e348d0f373"
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.10"
+    version: "3.5.0"
   args:
     dependency: transitive
     description:
@@ -63,7 +63,7 @@ packages:
       path: "../autogram_sign"
       relative: true
     source: path
-    version: "0.3.0"
+    version: "0.4.0"
   barcode:
     dependency: transitive
     description:
@@ -551,10 +551,10 @@ packages:
     dependency: transitive
     description:
       name: json_annotation
-      sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
+      sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
       url: "https://pub.dev"
     source: hosted
-    version: "4.8.1"
+    version: "4.9.0"
   lints:
     dependency: transitive
     description:
@@ -831,10 +831,10 @@ packages:
     dependency: transitive
     description:
       name: qs_dart
-      sha256: "53eb3e489be555a60e83b2e2104638cb57d305d9cf4698e7245b7e75fb5fd1be"
+      sha256: "42e599db40b993dd00b643026f4bebc7404c94a097e787c0ab156c0c9447b30e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.8"
+    version: "1.0.8+1"
   recase:
     dependency: transitive
     description:

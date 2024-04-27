@@ -1,5 +1,13 @@
 # Changelog
 
+## 2024-04-27 - v1.0.0(22)
+
+- Android: Handling Deep link action to sign document
+  To enable opening app from URL, need go to App info → Set as default → Supported web addresses:
+  enable "autogram.slovensko.digital"
+- Update some strings
+- Fix Android compilation warnings regarding incompatible Kotlin version
+
 ## 2024-04-24 - v1.0.0(21)
 
 - Add main menu and custom menu and QR code scanner icons

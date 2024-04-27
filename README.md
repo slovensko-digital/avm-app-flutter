@@ -66,6 +66,12 @@ fvm dart pub global activate flutterfire_cli
 fvm flutter pub get
 ```
 
+To run all Flutter tests:
+
+```shell
+fvm flutter test
+```
+
 To generate i18n code, run:
 
 ```shell

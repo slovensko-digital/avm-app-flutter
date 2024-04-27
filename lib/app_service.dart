@@ -9,7 +9,12 @@ import 'package:path_provider/path_provider.dart' as provider;
 import 'file_extensions.dart';
 
 /// Provides platform (iOS and Android) specific app functions:
-///  - [sharedFile]
+///
+/// Events:
+///  - [incomingUri]
+///
+/// Methods:
+///  - [startQrCodeScanner]
 ///  - [getFileName]
 ///  - [getFile]
 ///  - [getDocumentsDirectory]
@@ -24,25 +29,42 @@ class AppService {
   /// [EventChannel] for all events.
   static const _events = EventChannel('digital.slovensko.avm/events');
 
-  /// Holds URI to last shared file to app.
-  static final _sharedFile = _CustomValueNotifier<Uri?>(null);
+  /// Holds latest incoming URI - e.g.: shared file or open URL.
+  static final _incomingUri = _CustomValueNotifier<Uri?>(null);
 
-  /// Last shared file to app.
+  /// Latest incoming URI.
   ///
-  /// Note that:
-  ///  - on **iOS**, it's file:// URI that can be directly used
-  ///  - on **Android**, it will be content:// URI, therefore you need to call
-  ///    [getFileName] and [getFile]
-  ValueListenable<Uri?> get sharedFile => _sharedFile;
+  /// It can be either:
+  ///  1. shared file:
+  ///     - on **iOS**, it's "file://" URI that can be directly used
+  ///     - on **Android**, it will be "content://" URI
+  ///
+  ///     therefore you need to call [getFileName] and [getFile]
+  ///  2. open URL from deep link
+  ValueListenable<Uri?> get incomingUri => _incomingUri;
 
   AppService._() {
-    _events.receiveBroadcastStream("sharedFile").forEach(_collectSharedFile);
+    _events.receiveBroadcastStream("incomingUri").forEach(_collectIncomingUri);
   }
 
   /// Returns singleton [AppService].
   @factoryMethod
   factory AppService() {
     return _instance;
+  }
+
+  /// Starts platform camera / QR code scanner.
+  Future<void> startQrCodeScanner() {
+    if (Platform.isAndroid) {
+      return _methods.invokeMethod<void>('startQrCodeScanner');
+    }
+
+    if (Platform.isIOS) {
+      // TODO Impl. startQrCodeScanner on iOS
+      throw UnimplementedError("Not implemented on iOS.");
+    }
+
+    throw UnsupportedError("Not supported on this platform.");
   }
 
   /// Gets the file name from [Uri].
@@ -87,14 +109,18 @@ class AppService {
     return provider.getDownloadsDirectory().then((value) => value!);
   }
 
-  static _collectSharedFile(dynamic value) {
+  static _collectIncomingUri(dynamic value) {
     if (value is String && value.isNotEmpty) {
-      // Expecting content:// or file:// scheme
       final uri = Uri.tryParse(value);
 
       if (uri != null) {
-        _logger.info("Received shared file: $uri");
-        _sharedFile.value = uri;
+        // Expected schemes:
+        // content:
+        // file://
+        // https:
+        // avm:
+        _logger.info("Received URI: $uri");
+        _incomingUri.value = uri;
       }
     }
   }

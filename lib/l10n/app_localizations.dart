@@ -217,6 +217,18 @@ abstract class AppLocalizations {
   /// **'Podpísať iným certifikátom'**
   String get buttonSignWithDifferentCertificateLabel;
 
+  /// No description provided for @deepLinkParseErrorMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nepodporovaný alebo nesprávny odkaz:\n{error}'**
+  String deepLinkParseErrorMessage(Object error);
+
+  /// No description provided for @stepIndicatorText.
+  ///
+  /// In sk, this message translates to:
+  /// **'Krok {stepNumber} z {totalSteps}'**
+  String stepIndicatorText(Object stepNumber, Object totalSteps);
+
   /// No description provided for @notificationPermissionRationaleTitle.
   ///
   /// In sk, this message translates to:
@@ -337,6 +349,18 @@ abstract class AppLocalizations {
   /// **'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie'**
   String get onboardingFinishedBody;
 
+  /// No description provided for @signRemoteDocumentBody1.
+  ///
+  /// In sk, this message translates to:
+  /// **'Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia Autogramu vo vašom internetovom prehladávači.'**
+  String get signRemoteDocumentBody1;
+
+  /// No description provided for @signRemoteDocumentBody2.
+  ///
+  /// In sk, this message translates to:
+  /// **'1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “podísať v mobile”.\n2. Telefónom naskenujte QR kód z vášho počítača.'**
+  String get signRemoteDocumentBody2;
+
   /// No description provided for @openDocumentTitle.
   ///
   /// In sk, this message translates to:
@@ -366,6 +390,12 @@ abstract class AppLocalizations {
   /// In sk, this message translates to:
   /// **'\n\nSúbor z aplikácie Autogram v mobile'**
   String get shareDocumentText;
+
+  /// No description provided for @documentVisualizationCannotVisualizeTypeError.
+  ///
+  /// In sk, this message translates to:
+  /// **'Neviem vizualizovať {type} typ.'**
+  String documentVisualizationCannotVisualizeTypeError(Object type);
 
   /// No description provided for @selectCertificateTitle.
   ///
@@ -448,7 +478,7 @@ abstract class AppLocalizations {
   /// No description provided for @signDocumentCanceledHeading.
   ///
   /// In sk, this message translates to:
-  /// **'Podpisovanie pomocou OP\nbolo zrušené používateľom'**
+  /// **'Podpisovanie pomocou občianskeho preukazu\nbolo zrušené používateľom'**
   String get signDocumentCanceledHeading;
 
   /// No description provided for @signDocumentErrorHeading.
@@ -499,12 +529,6 @@ abstract class AppLocalizations {
   /// **'Pri zdieľaní súboru sa vyskytla chyba:\n{error}'**
   String shareSignedDocumentErrorMessage(Object error);
 
-  /// No description provided for @documentVisualizationCannotVisualizeTypeError.
-  ///
-  /// In sk, this message translates to:
-  /// **'Neviem vizualizovať {type} typ.'**
-  String documentVisualizationCannotVisualizeTypeError(Object type);
-
   /// No description provided for @signatureTypeWithTimestampTitle.
   ///
   /// In sk, this message translates to:
@@ -528,12 +552,6 @@ abstract class AppLocalizations {
   /// In sk, this message translates to:
   /// **'Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.'**
   String get signatureTypeWithoutTimestampSubtitle;
-
-  /// No description provided for @stepIndicatorText.
-  ///
-  /// In sk, this message translates to:
-  /// **'Krok {stepNumber} z {totalSteps}'**
-  String stepIndicatorText(Object stepNumber, Object totalSteps);
 
   /// No description provided for @empty.
   ///

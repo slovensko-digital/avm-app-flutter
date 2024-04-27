@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import 'di.config.dart';
-import 'utils.dart' as utils;
+import 'services/encryption_key_registry.dart';
 
 final getIt = GetIt.instance;
 
@@ -15,11 +15,10 @@ void configureDependencies() {
   // Manually register external types
   getIt.registerLazySingleton<IAutogramService>(
     () {
-      final serviceUrl = Uri.parse("https://autogram.slovensko.digital/api/v1");
+      final encryptionKeyRegistry = getIt.get<EncryptionKeyRegistry>();
 
       return AutogramService(
-        baseUrl: serviceUrl,
-        encryptionKey: utils.createCryptoRandomString(),
+        encryptionKeySource: () => encryptionKeyRegistry.value,
       );
     },
   );

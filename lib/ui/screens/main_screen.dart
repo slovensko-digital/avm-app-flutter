@@ -5,20 +5,23 @@ import 'dart:io' show File;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
-import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../app_service.dart';
 import '../../data/settings.dart';
+import '../../deep_links.dart';
+import '../../di.dart';
 import '../../files.dart';
+import '../../services/encryption_key_registry.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/autogram_logo.dart';
 import 'main_menu_screen.dart';
 import 'onboarding_screen.dart';
 import 'open_document_screen.dart';
+import 'preview_document_screen.dart';
 import 'start_remote_document_signing_screen.dart';
 
 /// Main app screen that presents app features.
@@ -29,9 +32,9 @@ import 'start_remote_document_signing_screen.dart';
 /// - navigate to [StartRemoteDocumentSigningScreen]
 /// - start Onboarding by navigating to [OnboardingScreen]
 class MainScreen extends StatefulWidget {
-  final Uri? sharedFile;
+  final Uri? incomingUri;
 
-  const MainScreen({super.key, required this.sharedFile});
+  const MainScreen({super.key, required this.incomingUri});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -46,9 +49,9 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
 
-    _appService = GetIt.instance.get<AppService>();
+    _appService = getIt.get<AppService>();
 
-    _handleNewSharedFile();
+    _handleNewIncomingUri();
   }
 
   @override
@@ -56,8 +59,8 @@ class _MainScreenState extends State<MainScreen> {
     super.didUpdateWidget(oldWidget);
 
     // Using !identical instead of "!=" for case when sharing same file URI
-    if (!identical(oldWidget.sharedFile, widget.sharedFile)) {
-      _handleNewSharedFile();
+    if (!identical(oldWidget.incomingUri, widget.incomingUri)) {
+      _handleNewIncomingUri();
     }
   }
 
@@ -69,24 +72,34 @@ class _MainScreenState extends State<MainScreen> {
         onMenuPressed: _showMenu,
         onQrCodeScannerPressed: _showQrCodeScanner,
       ),
-      body: MainBody(
+      body: _Body(
         onStartOnboardingRequested: _onStartOnboardingRequested,
         onOpenFileRequested: _onOpenFileRequested,
       ),
     );
   }
 
-  void _handleNewSharedFile() {
-    final fileUri = widget.sharedFile;
+  void _handleNewIncomingUri() {
+    final uri = widget.incomingUri;
 
-    if (fileUri != null && mounted) {
-      // This is only Future that will (hopefully) return the File
-      final Future<File> sharedFile = _appService.getFile(fileUri);
+    if (uri != null && mounted) {
+      switch (uri.scheme) {
+        case "file" || "content":
+          // This is only Future that will (hopefully) return the File
+          final Future<File> sharedFile = _appService.getFile(uri);
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        // Directly navigate to next screen, which have progress and error handling
-        _openNewFile(sharedFile);
-      });
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            // Directly navigate to next screen, which have progress and error handling
+            _openNewFile(sharedFile);
+          });
+          break;
+
+        case "https" || "avm":
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _handleDeepLink(uri);
+          });
+          break;
+      }
     }
   }
 
@@ -108,6 +121,8 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _openNewFile(FutureOr<File> file) {
+    getIt.get<EncryptionKeyRegistry>().newValue();
+
     final screen = OpenDocumentScreen(file: file);
     final route = MaterialPageRoute(builder: (_) => screen);
 
@@ -119,8 +134,43 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  void _handleDeepLink(Uri uri) {
+    DeepLinkAction action;
+
+    try {
+      action = parseDeepLinkAction(uri);
+    } catch (error) {
+      final message = context.strings.deepLinkParseErrorMessage(error);
+      final snackBar = SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 5),
+        behavior: SnackBarBehavior.floating,
+      );
+
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(snackBar);
+
+      return;
+    }
+
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    if (action is SignRemoteDocumentAction) {
+      getIt.get<EncryptionKeyRegistry>().value = action.key;
+
+      final screen = PreviewDocumentScreen(
+        documentId: action.guid,
+        file: null,
+      );
+      final route = MaterialPageRoute(builder: (_) => screen);
+
+      Navigator.of(context).push(route);
+    }
+  }
+
   Future<void> _onStartOnboardingRequested() {
-    _logger.fine('Requested to strt Onboarding.');
+    _logger.fine('Requested to start Onboarding.');
 
     const screen = OnboardingScreen();
     final route = MaterialPageRoute(builder: (_) => screen);
@@ -175,7 +225,7 @@ AppBar _MainAppBar({
     leading: IconButton(
       icon: SvgPicture.asset(
         'assets/icons/menu.svg',
-        color: iconColor,
+        colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
       ),
       onPressed: onMenuPressed,
     ),
@@ -183,7 +233,7 @@ AppBar _MainAppBar({
       IconButton(
         icon: SvgPicture.asset(
           'assets/icons/qr_code_scanner.svg',
-          color: iconColor,
+          colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
         ),
         onPressed: onQrCodeScannerPressed,
       ),
@@ -200,12 +250,11 @@ AppBar _MainAppBar({
 }
 
 /// [MainScreen] body.
-class MainBody extends StatelessWidget {
+class _Body extends StatelessWidget {
   final VoidCallback? onStartOnboardingRequested;
   final VoidCallback? onOpenFileRequested;
 
-  const MainBody({
-    super.key,
+  const _Body({
     required this.onStartOnboardingRequested,
     required this.onOpenFileRequested,
   });
@@ -240,7 +289,10 @@ class MainBody extends StatelessWidget {
   }
 
   Widget _buildPrimaryButton(BuildContext context) {
-    final listenable = context.read<ISettings>().acceptedTermsOfServiceVersion;
+    // Workaround for preview without ISettings
+    final listenable =
+        (context.read<ISettings?>()?.acceptedTermsOfServiceVersion ??
+            ValueNotifier(1));
 
     return ValueListenableBuilder(
         valueListenable: listenable,
@@ -288,11 +340,11 @@ Widget previewMainAppBar(BuildContext context) {
 
 @widgetbook.UseCase(
   path: '[Screens]',
-  name: 'MainBody',
-  type: MainBody,
+  name: '',
+  type: MainScreen,
 )
-Widget previewMainBody(BuildContext context) {
-  return MainBody(
+Widget previewMainScreen(BuildContext context) {
+  return _Body(
     onStartOnboardingRequested: () {
       developer.log("onStartOnboardingRequested");
     },

@@ -9,7 +9,7 @@ import 'ui/screens/main_screen.dart';
 
 /// Main Material app.
 ///
-/// Consumes [AppService] to read its [AppService.sharedFile].
+/// Consumes [AppService] to read its [AppService.incomingUri].
 ///
 /// Home is [MainScreen].
 class App extends StatelessWidget {
@@ -20,12 +20,12 @@ class App extends StatelessWidget {
     final home = Consumer<AppService>(
       builder: (context, appService, _) {
         return ValueListenableBuilder(
-          valueListenable: appService.sharedFile,
-          builder: (context, sharedFile, _) {
+          valueListenable: appService.incomingUri,
+          builder: (context, incomingUri, _) {
             // TODO Convert to stateful and show modal dialog with question whether to start over with different input file
 
             return MainScreen(
-              sharedFile: sharedFile,
+              incomingUri: incomingUri,
             );
           },
         );

@@ -23,6 +23,9 @@
   "buttonSignWithCertificateLabel": "Podpísať ako {subject}",
   "buttonSignWithDifferentCertificateLabel": "Podpísať iným certifikátom",
 
+  "deepLinkParseErrorMessage": "Nepodporovaný alebo nesprávny odkaz:\n{error}",
+  "stepIndicatorText": "Krok {stepNumber} z {totalSteps}",
+
   "notificationPermissionRationaleTitle": "Povoliť upozornenia",
   "notificationPermissionRationaleMessage": "Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.",
 
@@ -39,14 +42,17 @@
   "termsOfServiceTitle": "Podmienky používania",
 
   "aboutTitle": "O aplikácii",
-  "eidSDKLicenseText": "Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od\u00A0Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na\u00A0stránke\n„https://github.com/eidmsdk“.",
+  "eidSDKLicenseText": "Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na\u00A0stránke\n„https://github.com/eidmsdk“.",
   "thirdPartyLicensesLabel": "Licencie knižníc tretích strán",
 
-  "introHeading": "Nový, lepší a krajší podpisovač v\u00A0mobile",
+  "introHeading": "Nový, lepší a krajší podpisovač v mobile",
   "introBody": "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie",
 
   "onboardingFinishedHeading": "Autogram je pripravený",
   "onboardingFinishedBody": "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie",
+
+  "signRemoteDocumentBody1": "Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia Autogramu vo vašom internetovom prehladávači.",
+  "signRemoteDocumentBody2": "1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “podísať v mobile”.\n2. Telefónom naskenujte QR kód z vášho počítača.",
 
   "openDocumentTitle": "Otváranie dokumentu",
   "openDocumentErrorTitle": "Chyba pri vytváraní dokumentu",
@@ -55,27 +61,29 @@
   "previewDocumentErrorTitle": "Chyba pri načítaní vizualizácie dokumentu",
   "shareDocumentText": "\n\nSúbor z aplikácie Autogram v mobile",
 
+  "documentVisualizationCannotVisualizeTypeError": "Neviem vizualizovať {type} typ.",
+
   "selectCertificateTitle": "Výber typu podpisu",
   "selectSigningCertificateTitle": "Podpisový certifikát",
   "selectSigningCertificateHeading": "Výber podpisového certifikátu",
-  "selectSigningCertificateBody": "Stlačením tlačidla “Vybrať certifikát” sa\u00A0vyvolá interakcia na načítanie podpisových certifikátov z\u00A0vášho\u00A0OP.\n\nAk nemáte OP s\u00A0kvalifikovaným podpisovým certifikátom, tento krok preskočte.",
+  "selectSigningCertificateBody": "Stlačením tlačidla “Vybrať certifikát” sa vyvolá interakcia na načítanie podpisových certifikátov z\u00A0vášho\u00A0OP.\n\nAk nemáte OP s\u00A0kvalifikovaným podpisovým certifikátom, tento krok preskočte.",
   "selectSigningCertificateCanceledHeading": "Čítanie certifikátu bolo prerušené",
   "selectSigningCertificateCanceledBody": "Skúste prosím znovu načítať certifikát z vášho občianskeho preukazu.",
   "selectSigningCertificateNoCertificateHeading": "Certifikát nebol nájdený",
   "selectSigningCertificateNoCertificateBody": "Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na ",
   "selectSigningCertificateNoCertificateGuideUrl": "https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty",
 
-  "selectSigningCertificateErrorHeading": "Chyba pri načítavaní certifikátov z\u00A0občianskeho preukazu.",
+  "selectSigningCertificateErrorHeading": "Chyba pri načítavaní certifikátov z občianskeho preukazu.",
 
   "certificateIssuer": "Vydavateľ: {text}",
   "certificateNotAfter": "Platný do: {text}",
 
   "signDocumentTitle": "Podpisovanie dokumentu",
-  "signDocumentCanceledHeading": "Podpisovanie pomocou\u00A0OP\nbolo zrušené používateľom",
+  "signDocumentCanceledHeading": "Podpisovanie pomocou občianskeho preukazu\nbolo zrušené používateľom",
   "signDocumentErrorHeading": "Pri podpisovaní sa vyskytla chyba",
 
   "documentSigningSuccessTitle": "Dokument bol úspešne podpísaný",
-  "saveSignedDocumentSuccessMessage": "Dokument bol uložený do Downloads pod\u00A0názvom ",
+  "saveSignedDocumentSuccessMessage": "Dokument bol uložený do Downloads pod názvom ",
   "saveSignedDocumentErrorMessage": "Pri ukladaní súboru sa vyskytla chyba:\n{error}",
 
   "shareSignedDocumentLabel": "Zdieľať podpísaný dokument",
@@ -83,14 +91,10 @@
   "shareSignedDocumentText": "\n\nPodpísané aplikáciou Autogram v mobile",
   "shareSignedDocumentErrorMessage": "Pri zdieľaní súboru sa vyskytla chyba:\n{error}",
 
-  "documentVisualizationCannotVisualizeTypeError": "Neviem vizualizovať {type} typ.",
-
   "signatureTypeWithTimestampTitle": "Osvedčený podpis",
-  "signatureTypeWithTimestampSubtitle": "Ako keby ste podpis overili u\u00A0notára.\nObsahuje časovú pečiatku.",
+  "signatureTypeWithTimestampSubtitle": "Ako keby ste podpis overili u notára.\nObsahuje časovú pečiatku.",
   "signatureTypeWithoutTimestampTitle": "Vlastnoručný podpis",
-  "signatureTypeWithoutTimestampSubtitle": "Ako keby ste tento dokument podpísali na\u00A0papieri.\nBez časovej pečiatky.",
-
-  "stepIndicatorText": "Krok {stepNumber} z {totalSteps}",
+  "signatureTypeWithoutTimestampSubtitle": "Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.",
 
   "empty": ""
 }

@@ -1,0 +1,11 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "digital.slovensko.avm",
+    "sha256_cert_fingerprints":
+    [
+      "03:99:7D:73:E6:24:13:18:39:73:B7:93:9C:63:9B:2D:3A:2C:85:8B:F4:E7:51:24:00:98:64:04:38:94:5F:E7"
+    ]
+  }
+}]

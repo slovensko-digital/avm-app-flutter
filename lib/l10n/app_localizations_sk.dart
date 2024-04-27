@@ -72,6 +72,16 @@ class AppLocalizationsSk extends AppLocalizations {
   String get buttonSignWithDifferentCertificateLabel => 'Podpísať iným certifikátom';
 
   @override
+  String deepLinkParseErrorMessage(Object error) {
+    return 'Nepodporovaný alebo nesprávny odkaz:\n$error';
+  }
+
+  @override
+  String stepIndicatorText(Object stepNumber, Object totalSteps) {
+    return 'Krok $stepNumber z $totalSteps';
+  }
+
+  @override
   String get notificationPermissionRationaleTitle => 'Povoliť upozornenia';
 
   @override
@@ -152,6 +162,12 @@ class AppLocalizationsSk extends AppLocalizations {
   String get onboardingFinishedBody => 'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie';
 
   @override
+  String get signRemoteDocumentBody1 => 'Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia Autogramu vo vašom internetovom prehladávači.';
+
+  @override
+  String get signRemoteDocumentBody2 => '1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “podísať v mobile”.\n2. Telefónom naskenujte QR kód z vášho počítača.';
+
+  @override
   String get openDocumentTitle => 'Otváranie dokumentu';
 
   @override
@@ -165,6 +181,11 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get shareDocumentText => '\n\nSúbor z aplikácie Autogram v mobile';
+
+  @override
+  String documentVisualizationCannotVisualizeTypeError(Object type) {
+    return 'Neviem vizualizovať $type typ.';
+  }
 
   @override
   String get selectCertificateTitle => 'Výber typu podpisu';
@@ -210,7 +231,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get signDocumentTitle => 'Podpisovanie dokumentu';
 
   @override
-  String get signDocumentCanceledHeading => 'Podpisovanie pomocou OP\nbolo zrušené používateľom';
+  String get signDocumentCanceledHeading => 'Podpisovanie pomocou občianskeho preukazu\nbolo zrušené používateľom';
 
   @override
   String get signDocumentErrorHeading => 'Pri podpisovaní sa vyskytla chyba';
@@ -241,11 +262,6 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
-  String documentVisualizationCannotVisualizeTypeError(Object type) {
-    return 'Neviem vizualizovať $type typ.';
-  }
-
-  @override
   String get signatureTypeWithTimestampTitle => 'Osvedčený podpis';
 
   @override
@@ -256,11 +272,6 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get signatureTypeWithoutTimestampSubtitle => 'Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.';
-
-  @override
-  String stepIndicatorText(Object stepNumber, Object totalSteps) {
-    return 'Krok $stepNumber z $totalSteps';
-  }
 
   @override
   String get empty => '';

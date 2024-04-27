@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../app_service.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart' show kPrimaryButtonMinimumSize, kScreenMargin;
 
@@ -24,8 +26,19 @@ class StartRemoteDocumentSigningScreen extends StatelessWidget {
     final strings = context.strings;
     final child = Column(
       children: [
-        const Expanded(
-          child: Text("...."),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(strings.signRemoteDocumentBody1),
+                const SizedBox(height: 30),
+                Text(strings.signRemoteDocumentBody2),
+                const Spacer(flex: 1),
+              ],
+            ),
+          ),
         ),
 
         // Primary button
@@ -33,7 +46,9 @@ class StartRemoteDocumentSigningScreen extends StatelessWidget {
           style: FilledButton.styleFrom(
             minimumSize: kPrimaryButtonMinimumSize,
           ),
-          onPressed: null,
+          onPressed: () {
+            _startQrCodeScanner(context);
+          },
           child: Text(strings.buttonScanQrCodeLabel),
         ),
       ],
@@ -46,7 +61,9 @@ class StartRemoteDocumentSigningScreen extends StatelessWidget {
   }
 
   Future<void> _startQrCodeScanner(BuildContext context) {
-    return Future.value(null);
+    final service = GetIt.instance.get<AppService>();
+
+    return service.startQrCodeScanner();
   }
 }
 

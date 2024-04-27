@@ -7,7 +7,6 @@ import 'package:basic_utils/basic_utils.dart'
 final Random _random = Random.secure();
 
 /// Creates cryptographic random data encoded as base64.
-
 String createCryptoRandomString([int length = 32]) {
   final values = List<int>.generate(length, (i) => _random.nextInt(256));
 

@@ -9,7 +9,7 @@ import Flutter
 
 /// Provides functionality for Flutter app:
 ///  - `getFile(String)` - returns absolute file path from file:// URI
-///  -  "sharedFile" events - emits URIs to file shared to app
+///  -  "incomingUri" events - emits URIs to file shared to app
 class AppService : NSObject, FlutterStreamHandler {
     
     /// `FlutterMethodChannel`  for all methods.
@@ -18,11 +18,11 @@ class AppService : NSObject, FlutterStreamHandler {
     /// `FlutterEventChannel` for all events.
     private var events: FlutterEventChannel
     
-    /// `FlutterEventSink`  for "sharedFile".
-    private var sharedFileSink: FlutterEventSink?
+    /// `FlutterEventSink`  for "incomingUri".
+    private var incomingUriSink: FlutterEventSink?
     
-    /// Stores the value before `sharedFileSink` was initialized.
-    private var sharedFile: String?
+    /// Stores the value before `incomingUriSink` was initialized.
+    private var incomingUri: String?
     
     init(binaryMessenger: FlutterBinaryMessenger) {
         methods = FlutterMethodChannel(name: "digital.slovensko.avm", binaryMessenger: binaryMessenger)
@@ -39,12 +39,12 @@ class AppService : NSObject, FlutterStreamHandler {
     }
     
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
-        if ((arguments as? String) == "sharedFile") {
-            sharedFileSink = events
+        if ((arguments as? String) == "incomingUri") {
+            incomingUriSink = events
             
-            if (sharedFile != nil) {
-                sharedFileSink?(sharedFile)
-                sharedFile = nil
+            if (incomingUri != nil) {
+                incomingUriSink?(incomingUri)
+                incomingUri = nil
             }
         }
         
@@ -52,9 +52,9 @@ class AppService : NSObject, FlutterStreamHandler {
     }
     
     func onCancel(withArguments arguments: Any?) -> FlutterError? {
-        if ((arguments as? String) == "sharedFile") {
+        if ((arguments as? String) == "incomingUri") {
             // TODO Call sharedFileSink.endOfStream
-            sharedFileSink = nil
+            incomingUriSink = nil
         }
         
         return nil
@@ -62,10 +62,10 @@ class AppService : NSObject, FlutterStreamHandler {
     
     func onNewUri(url: URL) -> Bool {
         if (url.isFileURL) {
-            if (sharedFileSink != nil) {
-                sharedFileSink!(url.absoluteString)
+            if (incomingUriSink != nil) {
+                incomingUriSink!(url.absoluteString)
             } else {
-                sharedFile = url.absoluteString
+                incomingUri = url.absoluteString
             }
             
             return true

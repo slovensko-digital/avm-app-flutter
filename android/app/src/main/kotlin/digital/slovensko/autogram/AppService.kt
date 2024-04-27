@@ -1,15 +1,14 @@
 package digital.slovensko.autogram
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.os.Environment.DIRECTORY_DOWNLOADS
 import android.os.Environment.getExternalStoragePublicDirectory
 import android.util.Log
 import androidx.core.net.toFile
 import androidx.core.net.toUri
-import androidx.core.os.BundleCompat
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
@@ -20,10 +19,11 @@ import java.io.InputStream
 
 /**
  * Provides functionality for Flutter app:
+ *  - `startQrCodeScanner()` - starts built-in QR code scanner app
  *  - `getFileName(String)` - returns only file name from content:// or file:// URI
  *  - `getFile(String)` - returns absolute file path from content:// or file:// URI
  *  - `getDownloadsDirectory()` - returns path to "Download" directory
- *  -  "sharedFile" events - emits URIs to file shared to app
+ *  -  "incomingUri" events - emits URIs to file shared to app or open URLs
  */
 internal class AppService(
     private val context: Context,
@@ -42,39 +42,37 @@ internal class AppService(
         "digital.slovensko.avm/events"
     )
 
-    /** [EventChannel.EventSink] for "sharedFile". */
-    private var sharedFileSink: EventChannel.EventSink? = null
+    /** [EventChannel.EventSink] for "incomingUri". */
+    private var incomingUriSink: EventChannel.EventSink? = null
 
-    /** Stores the value before [sharedFileSink] was initialized. */
-    private var sharedFile: String? = null
+    /** Stores the value before [incomingUriSink] was initialized. */
+    private var incomingUri: String? = null
 
     init {
         methods.setMethodCallHandler(this)
         events.setStreamHandler(this)
     }
 
+    /**
+     * Process [intent] from [Activity.onCreate] or [Activity.onNewIntent].
+     *
+     * Emits value into [incomingUriSink].
+     */
     fun processIntent(intent: Intent) = with(intent) {
         Log.d(TAG, "processIntent: intent=$intent")
 
-        val sharedFile = when (action) {
+        val uri = when (action) {
             Intent.ACTION_VIEW -> data // + it.type
-            Intent.ACTION_SEND -> BundleCompat.getParcelable(
-                extras ?: Bundle.EMPTY,
-                Intent.EXTRA_STREAM,
-                Uri::class.java
-            )
-
+            Intent.ACTION_SEND -> extras?.stream
             else -> null
-        }
+        } ?: return
 
-        if (sharedFile != null) {
-            val sink = sharedFileSink
+        val sink = incomingUriSink
 
-            if (sink == null) {
-                this@AppService.sharedFile = sharedFile.toString()
-            } else {
-                sink.success(sharedFile.toString())
-            }
+        if (sink == null) {
+            this@AppService.incomingUri = uri.toString()
+        } else {
+            sink.success(uri.toString())
         }
     }
 
@@ -82,6 +80,7 @@ internal class AppService(
         Log.d(TAG, "onMethodCall: call.method=${call.method}")
 
         when (call.method) {
+            "startQrCodeScanner" -> result.onStartQrCodeScanner()
             "getFileName" -> result.onGetFileName(call.arguments as String)
             "getFile" -> result.onGetFile(call.arguments as String)
             "getDownloadsDirectory" -> result.onGetDownloadsDirectory()
@@ -91,11 +90,11 @@ internal class AppService(
     override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
         Log.d(TAG, "onListen")
 
-        if (arguments == "sharedFile") {
-            sharedFileSink = events
-            sharedFile?.let {
+        if (arguments == "incomingUri") {
+            incomingUriSink = events
+            incomingUri?.let {
                 events.success(it)
-                sharedFile = null
+                incomingUri = null
             }
         }
     }
@@ -103,10 +102,28 @@ internal class AppService(
     override fun onCancel(arguments: Any?) {
         Log.d(TAG, "onCancel")
 
-        if (arguments == "sharedFile") {
-            sharedFileSink?.endOfStream()
-            sharedFileSink = null
+        if (arguments == "incomingUri") {
+            incomingUriSink?.endOfStream()
+            incomingUriSink = null
         }
+    }
+
+    private fun MethodChannel.Result.onStartQrCodeScanner() {
+        val intent = Intent()
+            .setClassName("com.sec.android.app.camera", "com.sec.android.app.camera.QrScannerActivity")
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        // val component = intent.resolveActivity(context.packageManager)
+        val result = runCatching { context.startActivity(intent) }
+
+        result.fold(
+            onSuccess = {
+                success(true)
+            },
+            onFailure = { error ->
+                error("START_QR_CODE_SCANNER_ERROR", error.message, null)
+            }
+        )
     }
 
     private fun MethodChannel.Result.onGetFileName(value: String) {

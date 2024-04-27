@@ -35,8 +35,8 @@ class TestPage extends HookWidget {
     final encryptionKey = useState<String?>(utils.createCryptoRandomString());
     final autogram = useMemoized(
         () => AutogramService(
-            baseUrl: Uri.parse("https://autogram.slovensko.digital/api/v1"),
-            encryptionKey: encryptionKey.value ?? ''),
+              encryptionKeySource: () => encryptionKey.value ?? '',
+            ),
         [encryptionKey.value]);
     final documentId = useState<String?>(null);
     final signingTime = useState<int?>(null);

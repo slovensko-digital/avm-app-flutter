@@ -28,12 +28,12 @@ import 'select_certificate_screen.dart';
 /// See also:
 ///  - [OpenDocumentScreen]
 class PreviewDocumentScreen extends StatelessWidget {
-  final File file;
+  final File? file;
   final String documentId;
 
   const PreviewDocumentScreen({
     super.key,
-    required this.file,
+    this.file,
     required this.documentId,
   });
 
@@ -61,11 +61,12 @@ class PreviewDocumentScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.strings.previewDocumentTitle),
         actions: [
-          IconButton(
-            onPressed: () => _onShareRequested(context),
-            icon: const Icon(Icons.share_outlined),
-            color: Theme.of(context).colorScheme.primary,
-          ),
+          if (file != null)
+            IconButton(
+              onPressed: () => _onShareRequested(context),
+              icon: const Icon(Icons.share_outlined),
+              color: Theme.of(context).colorScheme.primary,
+            ),
         ],
       ),
       body: SafeArea(
@@ -75,11 +76,15 @@ class PreviewDocumentScreen extends StatelessWidget {
   }
 
   Future<void> _onShareRequested(BuildContext context) async {
-    await Share.shareXFiles(
-      [XFile(file.path)],
-      subject: file.basename,
-      text: context.strings.shareDocumentText,
-    );
+    final file = this.file;
+
+    if (file != null) {
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        subject: file.basename,
+        text: context.strings.shareDocumentText,
+      );
+    }
   }
 
   Future<void> _onSignRequested(BuildContext context) {
