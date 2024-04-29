@@ -10,7 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:autogram/ui/app_theme.dart' as _i3;
-import 'package:autogram/ui/assets.dart' as _i6;
+import 'package:autogram/ui/assets.dart' as _i4;
 import 'package:autogram/ui/fragment/show_web_page_fragment.dart' as _i19;
 import 'package:autogram/ui/screens/about_screen.dart' as _i22;
 import 'package:autogram/ui/screens/main_menu_screen.dart' as _i23;
@@ -32,9 +32,9 @@ import 'package:autogram/ui/screens/sign_document_screen.dart' as _i34;
 import 'package:autogram/ui/screens/start_remote_document_signing_screen.dart'
     as _i35;
 import 'package:autogram/ui/widgets/app_version_text.dart' as _i8;
-import 'package:autogram/ui/widgets/autogram_logo.dart' as _i4;
+import 'package:autogram/ui/widgets/autogram_logo.dart' as _i5;
 import 'package:autogram/ui/widgets/certificate_picker.dart' as _i20;
-import 'package:autogram/ui/widgets/close_button.dart' as _i5;
+import 'package:autogram/ui/widgets/close_button.dart' as _i6;
 import 'package:autogram/ui/widgets/dialogs.dart' as _i18;
 import 'package:autogram/ui/widgets/document_visualization.dart' as _i9;
 import 'package:autogram/ui/widgets/error_content.dart' as _i10;
@@ -66,11 +66,24 @@ final directories = <_i1.WidgetbookNode>[
           ),
         ],
       ),
+      _i1.WidgetbookComponent(
+        name: 'Asset',
+        useCases: [
+          _i1.WidgetbookUseCase(
+            name: 'icons',
+            builder: _i4.previewIcons,
+          ),
+          _i1.WidgetbookUseCase(
+            name: 'images',
+            builder: _i4.previewImages,
+          ),
+        ],
+      ),
       _i1.WidgetbookLeafComponent(
         name: 'AutogramLogo',
         useCase: _i1.WidgetbookUseCase(
           name: 'AutogramLogo',
-          builder: _i4.previewAutogramLogo,
+          builder: _i5.previewAutogramLogo,
         ),
       ),
       _i1.WidgetbookComponent(
@@ -90,7 +103,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'CloseButton',
         useCase: _i1.WidgetbookUseCase(
           name: 'CloseButton',
-          builder: _i5.previewCloseButton,
+          builder: _i6.previewCloseButton,
         ),
       ),
       _i1.WidgetbookLeafComponent(
@@ -98,13 +111,6 @@ final directories = <_i1.WidgetbookNode>[
         useCase: _i1.WidgetbookUseCase(
           name: 'Dialog',
           builder: _i3.previewDialog,
-        ),
-      ),
-      _i1.WidgetbookLeafComponent(
-        name: 'Icon',
-        useCase: _i1.WidgetbookUseCase(
-          name: '',
-          builder: _i6.previewIcons,
         ),
       ),
       _i1.WidgetbookLeafComponent(

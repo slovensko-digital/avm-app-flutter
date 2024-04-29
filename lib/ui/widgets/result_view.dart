@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import 'retry_view.dart';
@@ -11,10 +13,15 @@ import 'retry_view.dart';
 /// See also:
 ///  - [RetryView]
 class ResultView extends StatelessWidget {
-  static const double _iconSize = 96;
+  static const double _iconSize = 120;
 
-  final ImageProvider icon;
+  /// SVG asset
+  final String icon;
+
+  /// Title text.
   final String titleText;
+
+  /// Body widget.
   final Widget? body;
 
   const ResultView({
@@ -28,24 +35,24 @@ class ResultView extends StatelessWidget {
     super.key,
     required this.titleText,
     this.body,
-  }) : icon = const AssetImage('assets/images/result_success.png');
+  }) : icon = 'assets/images/tick.svg';
 
   const ResultView.error({
     super.key,
     required this.titleText,
     this.body,
-  }) : icon = const AssetImage('assets/images/result_error.png');
+  }) : icon = 'assets/images/danger.svg';
 
   const ResultView.info({
     super.key,
     required this.titleText,
     this.body,
-  }) : icon = const AssetImage('assets/images/result_info.png');
+  }) : icon = 'assets/images/info.svg';
 
   @override
   Widget build(BuildContext context) {
-    final icon = Image(
-      image: this.icon,
+    final icon = SvgPicture.asset(
+      this.icon,
       width: _iconSize,
       height: _iconSize,
     );
@@ -80,10 +87,21 @@ class ResultView extends StatelessWidget {
   type: ResultView,
 )
 Widget previewInfoResultView(BuildContext context) {
-  return const Center(
+  final title = context.knobs.string(
+    label: "Title",
+    maxLines: 2,
+    initialValue: "Operation failed successfully 😉",
+  );
+  final body = context.knobs.string(
+    label: "Body",
+    maxLines: 5,
+    initialValue: "Body text",
+  );
+
+  return Center(
     child: ResultView.info(
-      titleText: "Operation failed successfully 😉",
-      body: Text("Body text"),
+      titleText: title,
+      body: Text(body),
     ),
   );
 }
@@ -94,10 +112,21 @@ Widget previewInfoResultView(BuildContext context) {
   type: ResultView,
 )
 Widget previewSuccessResultView(BuildContext context) {
-  return const Center(
+  final title = context.knobs.string(
+    label: "Title",
+    maxLines: 2,
+    initialValue: "Operation was successful!",
+  );
+  final body = context.knobs.string(
+    label: "Body",
+    maxLines: 5,
+    initialValue: "Body text",
+  );
+
+  return Center(
     child: ResultView.success(
-      titleText: "Operation was successful!",
-      body: Text("Body text"),
+      titleText: title,
+      body: Text(body),
     ),
   );
 }
@@ -108,10 +137,21 @@ Widget previewSuccessResultView(BuildContext context) {
   type: ResultView,
 )
 Widget previewErrorResultView(BuildContext context) {
-  return const Center(
+  final title = context.knobs.string(
+    label: "Title",
+    maxLines: 2,
+    initialValue: "Operation was successful!",
+  );
+  final body = context.knobs.string(
+    label: "Body",
+    maxLines: 5,
+    initialValue: "Body text",
+  );
+
+  return Center(
     child: ResultView.error(
-      titleText: "Operation failed!",
-      body: Text("Body text"),
+      titleText: title,
+      body: Text(body),
     ),
   );
 }
@@ -122,14 +162,24 @@ Widget previewErrorResultView(BuildContext context) {
   type: ResultView,
 )
 Widget previewCustomResultView(BuildContext context) {
-  return const Center(
+  final title = context.knobs.string(
+    label: "Title",
+    maxLines: 2,
+    initialValue: "Operation was successful!",
+  );
+  final body = context.knobs.string(
+    label: "Body",
+    maxLines: 5,
+    initialValue: "Body text 1\nBody text 2.\nBody text 3.",
+  );
+
+  return Center(
     child: ResultView(
-      icon: AssetImage('assets/images/notification.png'),
-      titleText: "Title text here",
+      icon: 'assets/images/notification.svg',
+      titleText: title,
       body: Column(
         children: [
-          Text("Body text 1"),
-          Text("Body text 2"),
+          Text(body),
         ],
       ),
     ),

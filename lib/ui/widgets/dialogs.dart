@@ -15,7 +15,7 @@ Future<bool?> showNotificationsPermissionRationaleModal(BuildContext context) {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: ResultView(
-          icon: const AssetImage('assets/images/notification.png'),
+          icon: 'assets/images/notification.svg',
           titleText: strings.notificationPermissionRationaleTitle,
           body: Text(strings.notificationPermissionRationaleMessage),
         ),

@@ -51,7 +51,7 @@ class SelectSigningCertificateFragment extends StatelessWidget {
     final strings = context.strings;
 
     return ResultView(
-      icon: const AssetImage('assets/images/close.png'),
+      icon: 'assets/images/close.svg',
       titleText: strings.selectSigningCertificateCanceledHeading,
       body: Text(strings.selectSigningCertificateCanceledBody),
     );
@@ -91,7 +91,7 @@ class SelectSigningCertificateFragment extends StatelessWidget {
     );
 
     return ResultView(
-      icon: const AssetImage('assets/images/lock.png'),
+      icon: 'assets/images/lock.svg',
       titleText: strings.selectSigningCertificateNoCertificateHeading,
       body: body,
     );
