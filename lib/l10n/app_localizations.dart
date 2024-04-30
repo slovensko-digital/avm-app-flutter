@@ -283,6 +283,18 @@ abstract class AppLocalizations {
   /// **'{name, select, withoutTimestamp {Vlastnoručný podpis} withTimestamp {Osvedčený podpis} other {Spýtať sa pri podpisovaní}}'**
   String signatureTypeSummary(String name);
 
+  /// No description provided for @signatureTypeValueTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'{name, select, withoutTimestamp {Vlastnoručný podpis} withTimestamp {Osvedčený podpis} other {-}}'**
+  String signatureTypeValueTitle(String name);
+
+  /// No description provided for @signatureTypeValueSubtitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'{name, select, withoutTimestamp {Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.} withTimestamp {Ako keby ste podpis overili u notára.\nObsahuje časovú pečiatku.}  other {-}}'**
+  String signatureTypeValueSubtitle(String name);
+
   /// No description provided for @signingCertificateTitle.
   ///
   /// In sk, this message translates to:
@@ -478,7 +490,7 @@ abstract class AppLocalizations {
   /// No description provided for @signDocumentCanceledHeading.
   ///
   /// In sk, this message translates to:
-  /// **'Podpisovanie pomocou občianskeho preukazu\nbolo zrušené používateľom'**
+  /// **'Podpisovanie pomocou občianskeho preukazu bolo prerušené'**
   String get signDocumentCanceledHeading;
 
   /// No description provided for @signDocumentErrorHeading.
@@ -528,30 +540,6 @@ abstract class AppLocalizations {
   /// In sk, this message translates to:
   /// **'Pri zdieľaní súboru sa vyskytla chyba:\n{error}'**
   String shareSignedDocumentErrorMessage(Object error);
-
-  /// No description provided for @signatureTypeWithTimestampTitle.
-  ///
-  /// In sk, this message translates to:
-  /// **'Osvedčený podpis'**
-  String get signatureTypeWithTimestampTitle;
-
-  /// No description provided for @signatureTypeWithTimestampSubtitle.
-  ///
-  /// In sk, this message translates to:
-  /// **'Ako keby ste podpis overili u notára.\nObsahuje časovú pečiatku.'**
-  String get signatureTypeWithTimestampSubtitle;
-
-  /// No description provided for @signatureTypeWithoutTimestampTitle.
-  ///
-  /// In sk, this message translates to:
-  /// **'Vlastnoručný podpis'**
-  String get signatureTypeWithoutTimestampTitle;
-
-  /// No description provided for @signatureTypeWithoutTimestampSubtitle.
-  ///
-  /// In sk, this message translates to:
-  /// **'Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.'**
-  String get signatureTypeWithoutTimestampSubtitle;
 
   /// No description provided for @empty.
   ///

@@ -84,13 +84,12 @@ class _Body extends StatelessWidget {
     final strings = context.strings;
 
     // ISettings.signingPdfContainer
-    final signingPdfContainerSetting = _ValueListenableBoundTile(
+    final signingPdfContainerSetting =
+        _ValueListenableBoundTile<PdfSigningOption>(
       setting: settings.signingPdfContainer,
+      values: PdfSigningOption.values,
       title: strings.signingPdfContainerTitle,
       summaryGetter: (value) => value.label,
-      onEditItemRequested: (context, setting) {
-        return _editSigningPdfContainerSetting(context, setting);
-      },
     );
 
     // ISettings.signingCertificate
@@ -111,10 +110,11 @@ class _Body extends StatelessWidget {
       onPressed: null,
     );
 
-    final signatureType = PreferenceTile(
+    final signatureType = _ValueListenableBoundTile<SignatureType>(
+      setting: settings.signatureType,
+      values: SignatureType.values,
       title: strings.signatureTypeTitle,
-      summary: strings.signatureTypeSummary(""),
-      onPressed: null,
+      summaryGetter: (value) => strings.signatureTypeSummary(value.name),
     );
 
     final pairedDevices = PreferenceTile(
@@ -142,47 +142,7 @@ class _Body extends StatelessWidget {
     );
   }
 
-  /// Opens the editor for this [setting].
-  Future<bool> _editSigningPdfContainerSetting(
-    BuildContext context,
-    ValueNotifier<PdfSigningOption> setting,
-  ) async {
-    final result = await showDialog<PdfSigningOption>(
-      context: context,
-      builder: (context) {
-        var selectedValue = setting.value;
-
-        return AlertDialog(
-          title: Text(context.strings.signingPdfContainerTitle),
-          content: StatefulBuilder(
-            builder: (context, setState) {
-              return _pdfSigningOptionSelection(
-                selectedValue: selectedValue,
-                onValueSet: (PdfSigningOption value) {
-                  setState(() {
-                    selectedValue = value;
-                  });
-
-                  // Delay closing this modal so user have chance to see
-                  // newly selected option
-                  Future.delayed(const Duration(milliseconds: 150), () {
-                    Navigator.of(context).pop(value);
-                  });
-                },
-              );
-            },
-          ),
-        );
-      },
-    );
-
-    if (result != null) {
-      setting.value = result;
-    }
-
-    return (result != null);
-  }
-
+  // ignore: unused_element
   Future<bool> _editSigningCertificateSetting(
     BuildContext context,
     ValueNotifier<Certificate?> setting,
@@ -201,19 +161,19 @@ class _Body extends StatelessWidget {
 }
 
 /// [PreferenceTile] with [title] and `summary` from [summaryGetter].
+/// Displays [OptionPicker] in [AlertDialog] on pressed.
 class _ValueListenableBoundTile<T> extends StatelessWidget {
   final ValueNotifier<T> setting;
+  final List<T> values;
   final String title;
   final String? Function(T value) summaryGetter;
-  final Future<void> Function(BuildContext context, ValueNotifier<T> setting)
-      onEditItemRequested;
 
   const _ValueListenableBoundTile({
     super.key,
     required this.setting,
+    required this.values,
     required this.title,
     required this.summaryGetter,
-    required this.onEditItemRequested,
   });
 
   @override
@@ -227,28 +187,58 @@ class _ValueListenableBoundTile<T> extends StatelessWidget {
           title: title,
           summary: summary,
           onPressed: () {
-            onEditItemRequested(context, setting);
+            _onEditItemRequested(context, value);
           },
         );
       },
     );
   }
-}
 
-Widget _pdfSigningOptionSelection({
-  required PdfSigningOption? selectedValue,
-  required ValueSetter<PdfSigningOption> onValueSet,
-}) {
-  return SizedBox(
-    width: 280,
-    height: 200,
-    child: OptionPicker(
-      values: PdfSigningOption.values,
-      selectedValue: selectedValue,
-      onValueChanged: onValueSet,
-      labelBuilder: (PdfSigningOption value) => Text(value.label),
-    ),
-  );
+  Future<void> _onEditItemRequested(BuildContext context, T value) async {
+    final result = await showDialog<T>(
+      context: context,
+      builder: (context) {
+        var selectedValue = setting.value;
+
+        final content = StatefulBuilder(
+          builder: (context, setState) {
+            return SizedBox(
+              width: 280,
+              height: 200,
+              child: OptionPicker<T>(
+                values: values,
+                selectedValue: selectedValue,
+                onValueChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      selectedValue = value;
+                    });
+
+                    // Delay closing this modal so user have chance to see
+                    // newly selected option
+                    Future.delayed(const Duration(milliseconds: 150), () {
+                      Navigator.of(context).pop(value);
+                    });
+                  }
+                },
+                labelBuilder: (T value) => Text(summaryGetter(value) ?? ''),
+              ),
+            );
+          },
+        );
+
+        return AlertDialog(
+          title: Text(title),
+          content: content,
+        );
+      },
+    );
+
+    // Null value means that dialog was canceled
+    if (result != null) {
+      setting.value = result;
+    }
+  }
 }
 
 @widgetbook.UseCase(
@@ -275,7 +265,8 @@ class _MockSettings implements ISettings {
       ValueNotifier(PdfSigningOption.pades);
 
   @override
-  late final ValueNotifier<SignatureType?> signatureType = ValueNotifier(null);
+  late final ValueNotifier<SignatureType> signatureType =
+      ValueNotifier(SignatureType.unset);
 
   @override
   late final ValueNotifier<Certificate?> signingCertificate =

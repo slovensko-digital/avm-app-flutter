@@ -7,6 +7,8 @@ import 'package:get_it/get_it.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/sign_document_cubit.dart';
+import '../../data/document_signing_type.dart';
+import '../../data/signature_type.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/error_content.dart';
@@ -21,13 +23,15 @@ import 'present_signed_document_screen.dart';
 class SignDocumentScreen extends StatelessWidget {
   final String documentId;
   final Certificate certificate;
-  final bool addTimeStamp;
+  final SignatureType signatureType;
+  final DocumentSigningType signingType;
 
   const SignDocumentScreen({
     super.key,
     required this.documentId,
     required this.certificate,
-    required this.addTimeStamp,
+    required this.signatureType,
+    required this.signingType,
   });
 
   @override
@@ -37,7 +41,7 @@ class SignDocumentScreen extends StatelessWidget {
         return GetIt.instance.get<SignDocumentCubit>(
           param1: documentId,
           param2: certificate,
-        )..signDocument(addTimeStamp);
+        )..signDocument(signatureType);
       },
       child: BlocConsumer<SignDocumentCubit, SignDocumentState>(
         listener: (context, state) {
@@ -49,7 +53,7 @@ class SignDocumentScreen extends StatelessWidget {
           return _Body(
             state: state,
             onRetryRequested: () {
-              context.read<SignDocumentCubit>().signDocument(addTimeStamp);
+              context.read<SignDocumentCubit>().signDocument(signatureType);
             },
           );
         },
@@ -69,10 +73,9 @@ class SignDocumentScreen extends StatelessWidget {
   void _onSuccess(BuildContext context, SignDocumentSuccessState state) {
     final screen = PresentSignedDocumentScreen(
       signedDocument: state.signedDocument,
+      signingType: signingType,
     );
-    final route = MaterialPageRoute(
-      builder: (context) => screen,
-    );
+    final route = MaterialPageRoute(builder: (_) => screen);
 
     Navigator.of(context).pushAndRemoveUntil(
       route,
@@ -96,6 +99,8 @@ class _Body extends StatelessWidget {
     return Padding(
       padding: kScreenMargin,
       child: _getChild(context, state),
+
+      // TODO Add primary and secondary buttons
     );
   }
 
@@ -105,6 +110,9 @@ class _Body extends StatelessWidget {
       SignDocumentLoadingState _ => const LoadingContent(),
       SignDocumentCanceledState _ => RetryView(
           headlineText: context.strings.signDocumentCanceledHeading,
+          // TODO Use selectSigningCertificateCanceledBody
+          // + add Primary Button: Skúsiť znovu
+          // + add secondary button: Zrušiť podpisovanie
           onRetryRequested: onRetryRequested,
         ),
       SignDocumentErrorState state => ErrorContent(

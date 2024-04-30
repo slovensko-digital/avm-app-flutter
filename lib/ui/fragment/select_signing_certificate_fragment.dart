@@ -33,9 +33,9 @@ class SelectSigningCertificateFragment extends StatelessWidget {
     return switch (state) {
       SelectSigningCertificateInitialState _ => initialBuilder(context),
       SelectSigningCertificateLoadingState _ => const LoadingContent(),
-      SelectSigningCertificateCanceledState _ => _buildCanceledCotnent(context),
+      SelectSigningCertificateCanceledState _ => canceledContent(context),
       SelectSigningCertificateNoCertificateState _ =>
-        _buildNoCertificatesContent(context),
+        noCertificatesContent(context),
       SelectSigningCertificateErrorState state => ErrorContent(
           title: strings.selectSigningCertificateErrorHeading,
           error: state.error,
@@ -47,7 +47,8 @@ class SelectSigningCertificateFragment extends StatelessWidget {
     };
   }
 
-  Widget _buildCanceledCotnent(BuildContext context) {
+  /// Partial content for "canceled" state.
+  static Widget canceledContent(BuildContext context) {
     final strings = context.strings;
 
     return ResultView(
@@ -57,7 +58,8 @@ class SelectSigningCertificateFragment extends StatelessWidget {
     );
   }
 
-  Widget _buildNoCertificatesContent(BuildContext context) {
+  /// Partial content for "no certificates" state.
+  static Widget noCertificatesContent(BuildContext context) {
     final strings = context.strings;
     final address =
         Uri.parse(strings.selectSigningCertificateNoCertificateGuideUrl);

@@ -17,7 +17,7 @@ abstract interface class ISettings {
   ValueNotifier<Certificate?> get signingCertificate;
 
   /// The signing [SignatureType] value.
-  ValueNotifier<SignatureType?> get signatureType;
+  ValueNotifier<SignatureType> get signatureType;
 
   /// Clear all setting.
   Future<bool> clear();
@@ -44,18 +44,10 @@ class Settings with NotifiedPreferences implements ISettings {
   );
 
   @override
-  late final ValueNotifier<SignatureType?> signatureType = createSetting(
-    // createEnumSetting is NOT nullable
+  late final ValueNotifier<SignatureType> signatureType = createEnumSetting(
     key: 'signing.signatureType',
-    initialValue: null,
-    read: (prefs, key) {
-      final value = prefs.getString(key);
-
-      return (value == null ? null : SignatureType.values.asNameMap()[value]);
-    },
-    write: (prefs, key, value) {
-      prefs.setStringOrNull(key, value?.name);
-    },
+    initialValue: SignatureType.unset,
+    values: SignatureType.values,
   );
 
   @override

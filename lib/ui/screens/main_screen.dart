@@ -107,10 +107,9 @@ class _MainScreenState extends State<MainScreen> {
     const screen = MainMenuScreen();
 
     return showGeneralDialog(
-        context: context,
-        pageBuilder: (context, _, __) {
-          return screen;
-        });
+      context: context,
+      pageBuilder: (context, _, __) => screen,
+    );
   }
 
   Future<void> _showQrCodeScanner() {
@@ -144,7 +143,6 @@ class _MainScreenState extends State<MainScreen> {
       final snackBar = SnackBar(
         content: Text(message),
         duration: const Duration(seconds: 5),
-        behavior: SnackBarBehavior.floating,
       );
 
       ScaffoldMessenger.of(context)
@@ -165,7 +163,12 @@ class _MainScreenState extends State<MainScreen> {
       );
       final route = MaterialPageRoute(builder: (_) => screen);
 
-      Navigator.of(context).push(route);
+      // Removing other routes because might want to open another file from URL;
+      // in that case we will stop any previous signing flow
+      Navigator.of(context).pushAndRemoveUntil(
+        route,
+        (final route) => route.settings.name == '/',
+      );
     }
   }
 

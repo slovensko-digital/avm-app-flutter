@@ -36,6 +36,8 @@
   "signingPdfContainerTitle": "Podpisovanie PDF",
   "signatureTypeTitle": "Predvolený typ podpisu",
   "signatureTypeSummary": "{name, select, withoutTimestamp {Vlastnoručný podpis} withTimestamp {Osvedčený podpis} other {Spýtať sa pri podpisovaní}}",
+  "signatureTypeValueTitle": "{name, select, withoutTimestamp {Vlastnoručný podpis} withTimestamp {Osvedčený podpis} other {-}}",
+  "signatureTypeValueSubtitle": "{name, select, withoutTimestamp {Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.} withTimestamp {Ako keby ste podpis overili u notára.\nObsahuje časovú pečiatku.}  other {-}}",
   "signingCertificateTitle": "Predvolený podpisový certifikát",
   "pairedDevicesTitle": "Spárované zariadenia",
   "pairedDevicesSummary": "{count, plural, zero{žiadne} one{1 zariadenie} few{{count} zariadenia} other{{count} zariadení}}",
@@ -79,7 +81,7 @@
   "certificateNotAfter": "Platný do: {text}",
 
   "signDocumentTitle": "Podpisovanie dokumentu",
-  "signDocumentCanceledHeading": "Podpisovanie pomocou občianskeho preukazu\nbolo zrušené používateľom",
+  "signDocumentCanceledHeading": "Podpisovanie pomocou občianskeho preukazu bolo prerušené",
   "signDocumentErrorHeading": "Pri podpisovaní sa vyskytla chyba",
 
   "documentSigningSuccessTitle": "Dokument bol úspešne podpísaný",
@@ -90,11 +92,6 @@
   "shareSignedDocumentSubject": "Elektronicky podpísaný dokument",
   "shareSignedDocumentText": "\n\nPodpísané aplikáciou Autogram v mobile",
   "shareSignedDocumentErrorMessage": "Pri zdieľaní súboru sa vyskytla chyba:\n{error}",
-
-  "signatureTypeWithTimestampTitle": "Osvedčený podpis",
-  "signatureTypeWithTimestampSubtitle": "Ako keby ste podpis overili u notára.\nObsahuje časovú pečiatku.",
-  "signatureTypeWithoutTimestampTitle": "Vlastnoručný podpis",
-  "signatureTypeWithoutTimestampSubtitle": "Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.",
 
   "empty": ""
 }

@@ -5,6 +5,10 @@ import 'pdf_signing_option.dart';
 /// See also:
 ///  - [PdfSigningOption]
 enum SignatureType {
+  /// Unset / no value.
+  /// Needed for picker with navigator, where cannot work with `null`.
+  unset(null),
+
   /// Without timestamp.
   withoutTimestamp(false),
 
@@ -12,7 +16,7 @@ enum SignatureType {
   withTimestamp(true);
 
   /// Whether to add the timestamp.
-  final bool addTimestamp;
+  final bool? addTimestamp;
 
   const SignatureType(this.addTimestamp);
 }

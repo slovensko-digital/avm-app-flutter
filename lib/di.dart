@@ -11,19 +11,19 @@ final getIt = GetIt.instance;
 @InjectableInit(preferRelativeImports: true)
 void configureDependencies() {
   getIt.init();
+}
 
-  // Manually register external types
-  getIt.registerLazySingleton<IAutogramService>(
-    () {
-      final encryptionKeyRegistry = getIt.get<EncryptionKeyRegistry>();
+/// Injectable module for external 3rd party types, that are not annotated
+/// by [injectable].
+@module
+abstract class ExtrernalModule {
+  @lazySingleton
+  Eidmsdk get eidmsdk;
 
-      return AutogramService(
-        encryptionKeySource: () => encryptionKeyRegistry.value,
-      );
-    },
-  );
-
-  getIt.registerLazySingleton<Eidmsdk>(
-    () => Eidmsdk(),
-  );
+  @lazySingleton
+  IAutogramService create(EncryptionKeyRegistry encryptionKeyRegistry) {
+    return AutogramService(
+      encryptionKeySource: () => encryptionKeyRegistry.value,
+    );
+  }
 }

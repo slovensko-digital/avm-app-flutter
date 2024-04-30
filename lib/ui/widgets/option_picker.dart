@@ -15,7 +15,7 @@ import 'signature_type_picker.dart';
 class OptionPicker<T> extends StatelessWidget {
   final List<T> values;
   final T? selectedValue;
-  final ValueChanged<T> onValueChanged;
+  final ValueChanged<T?> onValueChanged;
   final Widget Function(T item)? labelBuilder;
 
   const OptionPicker({
@@ -50,11 +50,7 @@ class OptionPicker<T> extends StatelessWidget {
       child: Radio<T>(
         value: value,
         groupValue: selectedValue,
-        onChanged: (value) {
-          if (value != null) {
-            onValueChanged(value);
-          }
-        },
+        onChanged: onValueChanged,
         activeColor: kRadioActiveColor,
       ),
     );

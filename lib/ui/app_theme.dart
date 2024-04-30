@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-import 'widgets/loading_indicator.dart';
-
 /// Screen margin.
 const EdgeInsets kScreenMargin = EdgeInsets.all(20);
 
@@ -47,6 +45,12 @@ ThemeData appTheme(
     ),
   );
   final dialogTheme = DialogTheme(
+    titleTextStyle: TextStyle(
+      color: colorScheme.onBackground,
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.15,
+    ),
     surfaceTintColor: colorScheme.background,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -75,6 +79,9 @@ ThemeData appTheme(
     textTheme: textTheme,
     appBarTheme: appBarTheme,
     dialogTheme: dialogTheme,
+    snackBarTheme: const SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+    ),
     bottomSheetTheme: bottomSheetTheme,
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
@@ -89,45 +96,6 @@ ThemeData appTheme(
       ),
     ),
     // radioTheme: not set
-  );
-}
-
-/// Just placeholder class for widgetbook preview.
-abstract class Button {}
-
-@widgetbook.UseCase(
-  path: '[AVM]',
-  name: 'text',
-  type: Button,
-)
-Widget previewTextButton(BuildContext context) {
-  return Padding(
-    padding: kScreenMargin,
-    child: TextButton(
-      onPressed: () {},
-      child: const Text("Button text"),
-    ),
-  );
-}
-
-@widgetbook.UseCase(
-  path: '[AVM]',
-  name: 'filled',
-  type: Button,
-)
-Widget previewFilledButton(BuildContext context) {
-  final isLoading = context.knobs.boolean(label: "Loading?");
-  final child = switch (isLoading) {
-    false => const Text("Button text"),
-    true => const LoadingIndicator(),
-  };
-
-  return Padding(
-    padding: kScreenMargin,
-    child: FilledButton(
-      onPressed: () {},
-      child: child,
-    ),
   );
 }
 

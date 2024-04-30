@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart' show Cubit;
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 
+import '../data/signature_type.dart';
 import '../ui/screens/sign_document_screen.dart';
 import 'sign_document_state.dart';
 
@@ -32,7 +33,7 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
         super(const SignDocumentInitialState());
 
   /// Signs the document using given [certificate].
-  Future<void> signDocument(bool addTimestamp) async {
+  Future<void> signDocument(SignatureType signatureType) async {
     DataToSignStructure data;
     final signingCertificate = certificate.certData;
 
@@ -43,7 +44,7 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
 
       final dataToSignRequest = DataToSignRequestBody(
         signingCertificate: signingCertificate,
-        addTimestamp: addTimestamp,
+        addTimestamp: signatureType.addTimestamp,
       );
 
       data = await _service.setDataToSign(documentId, dataToSignRequest);

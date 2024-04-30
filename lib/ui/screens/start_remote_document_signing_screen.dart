@@ -6,7 +6,7 @@ import '../../app_service.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart' show kPrimaryButtonMinimumSize, kScreenMargin;
 
-/// Start screen to start remote document signing.
+/// Screen to start remote document signing.
 class StartRemoteDocumentSigningScreen extends StatelessWidget {
   const StartRemoteDocumentSigningScreen({super.key});
 

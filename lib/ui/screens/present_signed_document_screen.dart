@@ -4,12 +4,13 @@ import 'package:autogram_sign/autogram_sign.dart' show SignDocumentResponseBody;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/present_signed_document_cubit.dart';
+import '../../data/document_signing_type.dart';
+import '../../di.dart';
 import '../../file_extensions.dart';
 import '../../strings_context.dart';
 import '../../util/errors.dart';
@@ -22,19 +23,27 @@ import '../widgets/result_view.dart';
 /// Uses [PresentSignedDocumentCubit].
 class PresentSignedDocumentScreen extends StatelessWidget {
   final SignDocumentResponseBody signedDocument;
+  final DocumentSigningType signingType;
 
   const PresentSignedDocumentScreen({
     super.key,
     required this.signedDocument,
+    required this.signingType,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PresentSignedDocumentCubit>(
       create: (context) {
-        return GetIt.instance.get<PresentSignedDocumentCubit>(
+        final cubit = getIt.get<PresentSignedDocumentCubit>(
           param1: signedDocument,
-        )..saveDocument();
+        );
+
+        if (signingType == DocumentSigningType.local) {
+          cubit.saveDocument();
+        }
+
+        return cubit;
       },
       child: Scaffold(
         appBar: AppBar(
@@ -55,8 +64,9 @@ class PresentSignedDocumentScreen extends StatelessWidget {
                 }
               },
               builder: (context, state) {
-                return PresentSignedDocumentBody(
+                return _Body(
                   state: state,
+                  signingType: signingType,
                   onShareFileRequested: () => _handleShareFile(context),
                   onCloseRequested: () => _handleClose(context),
                 );
@@ -70,7 +80,6 @@ class PresentSignedDocumentScreen extends StatelessWidget {
 
   void _showError(BuildContext context, String message) {
     final snackBar = SnackBar(
-      behavior: SnackBarBehavior.floating,
       duration: const Duration(seconds: 10),
       content: Text(message),
       action: SnackBarAction(
@@ -113,14 +122,15 @@ class PresentSignedDocumentScreen extends StatelessWidget {
 }
 
 /// [PresentSignedDocumentScreen] body.
-class PresentSignedDocumentBody extends StatelessWidget {
+class _Body extends StatelessWidget {
   final PresentSignedDocumentState state;
+  final DocumentSigningType signingType;
   final VoidCallback? onShareFileRequested;
   final VoidCallback? onCloseRequested;
 
-  const PresentSignedDocumentBody({
-    super.key,
+  const _Body({
     required this.state,
+    required this.signingType,
     this.onShareFileRequested,
     this.onCloseRequested,
   });
@@ -135,11 +145,15 @@ class PresentSignedDocumentBody extends StatelessWidget {
 
   Widget _getChild(BuildContext context) {
     return switch (state) {
-      PresentSignedDocumentInitialState _ => const LoadingContent(),
+      PresentSignedDocumentInitialState _ => _SuccessContent(
+          file: null,
+          onShareFileRequested: null,
+          onCloseRequested: onCloseRequested,
+        ),
       PresentSignedDocumentLoadingState _ => const LoadingContent(),
       PresentSignedDocumentErrorState _ => _SuccessContent(
           file: null,
-          onShareFileRequested: onShareFileRequested,
+          onShareFileRequested: null,
           onCloseRequested: onCloseRequested,
         ),
       PresentSignedDocumentSuccessState state => _SuccessContent(
@@ -203,14 +217,15 @@ class _SuccessContent extends StatelessWidget {
           ),
         ),
 
-        // Primary button
-        FilledButton(
-          style: FilledButton.styleFrom(
-            minimumSize: kPrimaryButtonMinimumSize,
+        if (onShareFileRequested != null)
+          // Primary button
+          FilledButton(
+            style: FilledButton.styleFrom(
+              minimumSize: kPrimaryButtonMinimumSize,
+            ),
+            onPressed: onShareFileRequested,
+            child: Text(strings.shareSignedDocumentLabel),
           ),
-          onPressed: onShareFileRequested,
-          child: Text(strings.shareSignedDocumentLabel),
-        ),
 
         const SizedBox(height: kButtonSpace),
 
@@ -220,7 +235,7 @@ class _SuccessContent extends StatelessWidget {
             minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: onCloseRequested,
-          child: Text(strings.buttonCancelLabel),
+          child: Text(strings.buttonCloseLabel),
         ),
       ],
     );
@@ -229,21 +244,53 @@ class _SuccessContent extends StatelessWidget {
 
 @widgetbook.UseCase(
   path: '[Screens]',
-  name: 'loading',
-  type: PresentSignedDocumentBody,
+  name: 'initial',
+  type: PresentSignedDocumentScreen,
 )
-Widget previewLoadingPresentSignedDocumentBody(BuildContext context) {
-  return const PresentSignedDocumentBody(
-    state: PresentSignedDocumentLoadingState(),
+Widget previewInitialPresentSignedDocumentScreen(BuildContext context) {
+  final signingType = context.knobs.list(
+    label: "Signing type",
+    options: DocumentSigningType.values,
+    initialOption: DocumentSigningType.local,
+  );
+
+  return _Body(
+    state: const PresentSignedDocumentInitialState(),
+    signingType: signingType,
+    onCloseRequested: () {},
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[Screens]',
+  name: 'loading',
+  type: PresentSignedDocumentScreen,
+)
+Widget previewLoadingPresentSignedDocumentScreen(BuildContext context) {
+  final signingType = context.knobs.list(
+    label: "Signing type",
+    options: DocumentSigningType.values,
+    initialOption: DocumentSigningType.local,
+  );
+
+  return _Body(
+    state: const PresentSignedDocumentLoadingState(),
+    signingType: signingType,
   );
 }
 
 @widgetbook.UseCase(
   path: '[Screens]',
   name: 'error',
-  type: PresentSignedDocumentBody,
+  type: PresentSignedDocumentScreen,
 )
-Widget previewErrorPresentSignedDocumentBody(BuildContext context) {
+Widget previewErrorPresentSignedDocumentScreen(BuildContext context) {
+  final signingType = context.knobs.list(
+    label: "Signing type",
+    options: DocumentSigningType.values,
+    initialOption: DocumentSigningType.local,
+  );
+
   // TODO Should preview whole Screen class also with BlocConsumer.listener
   const error = PathAccessException(
     "/storage/emulated/0/Download/container-signed-xades-baseline-b.sce",
@@ -251,8 +298,9 @@ Widget previewErrorPresentSignedDocumentBody(BuildContext context) {
     "Cannot open file",
   );
 
-  return PresentSignedDocumentBody(
+  return _Body(
     state: const PresentSignedDocumentErrorState(error),
+    signingType: signingType,
     onShareFileRequested: () {},
     onCloseRequested: () {},
   );
@@ -261,18 +309,25 @@ Widget previewErrorPresentSignedDocumentBody(BuildContext context) {
 @widgetbook.UseCase(
   path: '[Screens]',
   name: 'success',
-  type: PresentSignedDocumentBody,
+  type: PresentSignedDocumentScreen,
 )
-Widget previewSuccessPresentSignedDocumentBody(BuildContext context) {
+Widget previewSuccessPresentSignedDocumentScreen(BuildContext context) {
+  final signingType = context.knobs.list(
+    label: "Signing type",
+    options: DocumentSigningType.values,
+    initialOption: DocumentSigningType.local,
+  );
   final fileName = context.knobs.string(
     label: "File name",
     initialValue: "document_signed.pdf",
   );
   final file = File(fileName);
 
-  return PresentSignedDocumentBody(
+  return _Body(
     state: PresentSignedDocumentSuccessState(file),
-    onShareFileRequested: () {},
+    signingType: signingType,
+    onShareFileRequested:
+        signingType == DocumentSigningType.local ? () {} : null,
     onCloseRequested: () {},
   );
 }

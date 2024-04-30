@@ -119,6 +119,32 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String signatureTypeValueTitle(String name) {
+    String _temp0 = intl.Intl.selectLogic(
+      name,
+      {
+        'withoutTimestamp': 'Vlastnoručný podpis',
+        'withTimestamp': 'Osvedčený podpis',
+        'other': '-',
+      },
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String signatureTypeValueSubtitle(String name) {
+    String _temp0 = intl.Intl.selectLogic(
+      name,
+      {
+        'withoutTimestamp': 'Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.',
+        'withTimestamp': 'Ako keby ste podpis overili u notára.\nObsahuje časovú pečiatku.',
+        'other': '-',
+      },
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get signingCertificateTitle => 'Predvolený podpisový certifikát';
 
   @override
@@ -231,7 +257,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get signDocumentTitle => 'Podpisovanie dokumentu';
 
   @override
-  String get signDocumentCanceledHeading => 'Podpisovanie pomocou občianskeho preukazu\nbolo zrušené používateľom';
+  String get signDocumentCanceledHeading => 'Podpisovanie pomocou občianskeho preukazu bolo prerušené';
 
   @override
   String get signDocumentErrorHeading => 'Pri podpisovaní sa vyskytla chyba';
@@ -260,18 +286,6 @@ class AppLocalizationsSk extends AppLocalizations {
   String shareSignedDocumentErrorMessage(Object error) {
     return 'Pri zdieľaní súboru sa vyskytla chyba:\n$error';
   }
-
-  @override
-  String get signatureTypeWithTimestampTitle => 'Osvedčený podpis';
-
-  @override
-  String get signatureTypeWithTimestampSubtitle => 'Ako keby ste podpis overili u notára.\nObsahuje časovú pečiatku.';
-
-  @override
-  String get signatureTypeWithoutTimestampTitle => 'Vlastnoručný podpis';
-
-  @override
-  String get signatureTypeWithoutTimestampSubtitle => 'Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.';
 
   @override
   String get empty => '';

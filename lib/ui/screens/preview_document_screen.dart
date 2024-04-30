@@ -10,6 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/preview_document_cubit.dart';
+import '../../data/document_signing_type.dart';
 import '../../file_extensions.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
@@ -90,6 +91,8 @@ class PreviewDocumentScreen extends StatelessWidget {
   Future<void> _onSignRequested(BuildContext context) {
     final screen = SelectCertificateScreen(
       documentId: documentId,
+      signingType:
+          file != null ? DocumentSigningType.local : DocumentSigningType.remote,
     );
     final route = MaterialPageRoute(
       builder: (context) => screen,

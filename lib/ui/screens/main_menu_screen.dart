@@ -10,6 +10,7 @@ import 'start_remote_document_signing_screen.dart';
 
 /// Screen that displays "main menu" with items:
 ///  - link to show [SettingsScreen]
+///  - link to show [StartRemoteDocumentSigningScreen]
 ///  - link to show [ShowTermsOfServiceScreen]
 ///  - link to show [AboutScreen]
 class MainMenuScreen extends StatelessWidget {

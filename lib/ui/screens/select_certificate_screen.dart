@@ -6,13 +6,13 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/select_signing_certificate_cubit.dart';
 import '../../certificate_extensions.dart';
+import '../../data/document_signing_type.dart';
 import '../../data/settings.dart';
+import '../../data/signature_type.dart';
 import '../../oids.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
-import '../widgets/error_content.dart';
-import '../widgets/loading_content.dart';
-import '../widgets/retry_view.dart';
+import '../fragment/select_signing_certificate_fragment.dart';
 import '../widgets/signature_type_picker.dart';
 import 'sign_document_screen.dart';
 
@@ -24,10 +24,12 @@ import 'sign_document_screen.dart';
 /// Navigates next to [SignDocumentScreen].
 class SelectCertificateScreen extends StatelessWidget {
   final String documentId;
+  final DocumentSigningType signingType;
 
   const SelectCertificateScreen({
     super.key,
     required this.documentId,
+    required this.signingType,
   });
 
   @override
@@ -55,11 +57,11 @@ class SelectCertificateScreen extends StatelessWidget {
             ),
             body: _Body(
               state: state,
-              onSignDocumentRequested: (certificate, addTimeStamp) {
+              onSignDocumentRequested: (certificate, signatureType) {
                 _onSignDocumentRequested(
                   context: context,
                   certificate: certificate,
-                  addTimeStamp: addTimeStamp,
+                  signatureType: signatureType,
                 );
               },
               onReloadCertificatesRequested: () {
@@ -75,17 +77,19 @@ class SelectCertificateScreen extends StatelessWidget {
   Future<void> _onSignDocumentRequested({
     required BuildContext context,
     required Certificate certificate,
-    required bool addTimeStamp,
+    required SignatureType signatureType,
   }) {
     context.read<ISettings>().signingCertificate.value = certificate;
 
-    return Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => SignDocumentScreen(
-        documentId: documentId,
-        certificate: certificate,
-        addTimeStamp: addTimeStamp,
-      ),
-    ));
+    final screen = SignDocumentScreen(
+      documentId: documentId,
+      certificate: certificate,
+      signatureType: signatureType,
+      signingType: signingType,
+    );
+    final route = MaterialPageRoute(builder: (_) => screen);
+
+    return Navigator.of(context).push(route);
   }
 
   Future<void> _onReloadCertificatesRequested(BuildContext context) {
@@ -98,7 +102,7 @@ class SelectCertificateScreen extends StatelessWidget {
 /// [SelectCertificateScreen] body.
 class _Body extends StatelessWidget {
   final SelectSigningCertificateState state;
-  final void Function(Certificate certificate, bool addTimeStamp)?
+  final void Function(Certificate certificate, SignatureType signatureType)?
       onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
 
@@ -117,42 +121,24 @@ class _Body extends StatelessWidget {
   }
 
   Widget _getChild(BuildContext context) {
-    return switch (state) {
-      SelectSigningCertificateInitialState _ => const LoadingContent(),
-      SelectSigningCertificateLoadingState _ => const LoadingContent(),
-      SelectSigningCertificateCanceledState _ => RetryView(
-          // TODO Reuse Strings / select_signing_certificate_fragment.dart
-          headlineText:
-              "Načítavanie certifikátov z\u{00A0}OP\nbolo zrušené používateľom",
-          onRetryRequested: () {
-            onReloadCertificatesRequested?.call();
-          },
-        ),
-      SelectSigningCertificateNoCertificateState _ => RetryView(
-          headlineText:
-              "Použitý OP neobsahuje “Kvalifikovaný certifikát pre\u{00A0}elektronický podpis”.\nJe potrebné ho vydať v aplikácii eID Klient, prípadne použiť iný OP.",
-          onRetryRequested: () {
-            onReloadCertificatesRequested?.call();
-          },
-        ),
-      SelectSigningCertificateErrorState state => ErrorContent(
-          title: "Chyba pri načítavaní certifikátov z\u{00A0}OP.",
-          error: state.error,
-        ),
-      SelectSigningCertificateSuccessState state => _SelectSignatureTypeContent(
-          certificate: state.certificate,
-          onSignDocumentRequested: (final bool addTimeStamp) {
-            onSignDocumentRequested?.call(state.certificate, addTimeStamp);
+    return SelectSigningCertificateFragment(
+      state: state,
+      successBuilder: (context, certificate) {
+        return _SelectSignatureTypeContent(
+          certificate: certificate,
+          onSignDocumentRequested: (final SignatureType signatureType) {
+            onSignDocumentRequested?.call(certificate, signatureType);
           },
           onReloadCertificatesRequested: onReloadCertificatesRequested,
-        ),
-    };
+        );
+      },
+    );
   }
 }
 
 class _SelectSignatureTypeContent extends StatefulWidget {
   final String? subject;
-  final ValueSetter<bool>? onSignDocumentRequested;
+  final ValueSetter<SignatureType>? onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
 
   _SelectSignatureTypeContent({
@@ -168,18 +154,27 @@ class _SelectSignatureTypeContent extends StatefulWidget {
 
 class _SelectSignatureTypeContentState
     extends State<_SelectSignatureTypeContent> {
-  bool? _addTimeStamp;
+  SignatureType? _signatureType;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _signatureType = context.read<ISettings>().signatureType.value;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.strings;
+
     return Column(
       children: [
         Expanded(
           child: SignatureTypePicker(
-            withTimestamp: _addTimeStamp,
-            onWithTimestampChanged: (final bool value) {
+            value: _signatureType,
+            onValueChanged: (final SignatureType value) {
               setState(() {
-                _addTimeStamp = value;
+                _signatureType = value;
               });
             },
           ),
@@ -190,13 +185,14 @@ class _SelectSignatureTypeContentState
           style: FilledButton.styleFrom(
             minimumSize: kPrimaryButtonMinimumSize,
           ),
-          onPressed: (_addTimeStamp == null
-              ? null
-              : () {
-                  widget.onSignDocumentRequested?.call(_addTimeStamp!);
-                }),
-          child: Text(context.strings
-              .buttonSignWithCertificateLabel("${widget.subject}")),
+          onPressed:
+              (_signatureType == null || _signatureType == SignatureType.unset
+                  ? null
+                  : () {
+                      widget.onSignDocumentRequested?.call(_signatureType!);
+                    }),
+          child:
+              Text(strings.buttonSignWithCertificateLabel("${widget.subject}")),
           // Extract data
         ),
 
@@ -208,7 +204,7 @@ class _SelectSignatureTypeContentState
             minimumSize: kPrimaryButtonMinimumSize,
           ),
           onPressed: widget.onReloadCertificatesRequested,
-          child: Text(context.strings.buttonSignWithDifferentCertificateLabel),
+          child: Text(strings.buttonSignWithDifferentCertificateLabel),
         ),
       ],
     );

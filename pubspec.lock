@@ -68,10 +68,10 @@ packages:
     dependency: transitive
     description:
       name: barcode
-      sha256: "1fe4a55344505850517ce72d4a3a7b9ccf51b0dc1631ee7e552f6eacc4947f96"
+      sha256: ab180ce22c6555d77d45f0178a523669db67f95856e3378259ef2ffeb43e6003
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.7"
+    version: "2.2.8"
   basic_utils:
     dependency: "direct main"
     description:
@@ -831,10 +831,10 @@ packages:
     dependency: transitive
     description:
       name: qs_dart
-      sha256: "42e599db40b993dd00b643026f4bebc7404c94a097e787c0ab156c0c9447b30e"
+      sha256: "9f0cea1c666d6447a7689e44efbb24b0c27245b0e52106b607330cfe99337684"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.8+1"
+    version: "1.0.9"
   recase:
     dependency: transitive
     description:
@@ -843,6 +843,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  recursive_regex:
+    dependency: transitive
+    description:
+      name: recursive_regex
+      sha256: f7252e3d3dfd1665e594d9fe035eca6bc54139b1f2fee38256fa427ea41adc60
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   resizable_widget:
     dependency: transitive
     description:
