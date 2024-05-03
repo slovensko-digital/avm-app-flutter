@@ -8,6 +8,7 @@ String getErrorMessage(Object error) {
   return switch (error) {
     String _ => error,
     ServiceException error => error.message,
+    // TODO Handle ServiceException(statusCode: 404, message: "")
     // TODO Extract error message from Object from other types; add tests
     // IOException - file not found, cannot be saved
     // SocketException - timeout

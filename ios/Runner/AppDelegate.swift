@@ -5,7 +5,8 @@ import Flutter
 @objc class AppDelegate: FlutterAppDelegate {
     var appService: AppService?
     
-    // https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application
+    /// Handles app startup.
+    /// https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application
     override func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
@@ -18,14 +19,33 @@ import Flutter
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
-    // https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623112-application
+    /// Handles Open with / Share actions and also custom URI scheme.
+    /// https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623112-application
     override func application(
         _ app: UIApplication,
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey : Any] = [:]
     ) -> Bool {
-        // https://www.kodeco.com/813044-uiactivityviewcontroller-tutorial-sharing-data
+        
+        // let sourceApplication = options[.sourceApplication]
+        // let openInPlace = options[.openInPlace]
+        // TODO Check source and fix URL encoding "%3D"
         
         return appService?.onNewUri(url: url) ?? false
+    }
+    
+    /// iOS "Universal link" handler.
+    /// https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623072-application
+    override func application(
+        _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+    ) -> Bool {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL {
+            // Handle the incoming universal link URL
+            return appService?.onNewUri(url: url) ?? false
+        }
+
+        return false
     }
 }

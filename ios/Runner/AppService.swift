@@ -61,7 +61,7 @@ class AppService : NSObject, FlutterStreamHandler {
     }
     
     func onNewUri(url: URL) -> Bool {
-        if (url.isFileURL) {
+        if (url.isFileURL || ["https", "avm"].contains(url.scheme)) {
             if (incomingUriSink != nil) {
                 incomingUriSink!(url.absoluteString)
             } else {

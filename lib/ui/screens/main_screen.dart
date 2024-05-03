@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../app_service.dart';
@@ -217,10 +218,12 @@ class _MainScreenState extends State<MainScreen> {
 // ignore: non_constant_identifier_names
 AppBar _MainAppBar({
   required BuildContext context,
+  bool showQrCodeScannerIcon = true,
   VoidCallback? onMenuPressed,
   VoidCallback? onQrCodeScannerPressed,
 }) {
   final iconColor = Theme.of(context).colorScheme.onSecondary;
+  final colorFilter = ColorFilter.mode(iconColor, BlendMode.srcIn);
 
   return AppBar(
     foregroundColor: kMainAppBarForegroundColor,
@@ -228,18 +231,19 @@ AppBar _MainAppBar({
     leading: IconButton(
       icon: SvgPicture.asset(
         'assets/icons/menu.svg',
-        colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+        colorFilter: colorFilter,
       ),
       onPressed: onMenuPressed,
     ),
     actions: [
-      IconButton(
-        icon: SvgPicture.asset(
-          'assets/icons/qr_code_scanner.svg',
-          colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+      if (showQrCodeScannerIcon)
+        IconButton(
+          icon: SvgPicture.asset(
+            'assets/icons/qr_code_scanner.svg',
+            colorFilter: colorFilter,
+          ),
+          onPressed: onQrCodeScannerPressed,
         ),
-        onPressed: onQrCodeScannerPressed,
-      ),
     ],
     title: Builder(builder: (context) {
       return Text(
@@ -330,10 +334,16 @@ class _Body extends StatelessWidget {
   type: AppBar,
 )
 Widget previewMainAppBar(BuildContext context) {
+  final showQrCodeScannerIcon = context.knobs.boolean(
+    label: "Show QR code scanner",
+    initialValue: true,
+  );
+
   return SizedBox(
     height: kToolbarHeight,
     child: _MainAppBar(
       context: context,
+      showQrCodeScannerIcon: showQrCodeScannerIcon,
       onMenuPressed: () {
         developer.log("onMenuPressed");
       },

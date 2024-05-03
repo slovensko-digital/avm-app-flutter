@@ -53,6 +53,9 @@
   "onboardingFinishedHeading": "Autogram je pripravený",
   "onboardingFinishedBody": "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie",
 
+  "qrCodeScannerInfoBody": "Prosím nasmerujte kameru\nna QR kód na obrazovke",
+  "qrCodeScannerUnsupportedContentErrorMessage": "Naskenovali ste nepodporovaný alebo neznámy obsah QR kódu.",
+
   "signRemoteDocumentBody1": "Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia Autogramu vo vašom internetovom prehladávači.",
   "signRemoteDocumentBody2": "1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “podísať v mobile”.\n2. Telefónom naskenujte QR kód z vášho počítača.",
 
@@ -66,9 +69,8 @@
   "documentVisualizationCannotVisualizeTypeError": "Neviem vizualizovať {type} typ.",
 
   "selectCertificateTitle": "Výber typu podpisu",
-  "selectSigningCertificateTitle": "Podpisový certifikát",
-  "selectSigningCertificateHeading": "Výber podpisového certifikátu",
-  "selectSigningCertificateBody": "Stlačením tlačidla “Vybrať certifikát” sa vyvolá interakcia na načítanie podpisových certifikátov z\u00A0vášho\u00A0OP.\n\nAk nemáte OP s\u00A0kvalifikovaným podpisovým certifikátom, tento krok preskočte.",
+  "selectSigningCertificateTitle": "Nastavenie certifikátu",
+  "selectSigningCertificateBody": "Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Ak si prajete iba overiť podpisy v dokumentoch, tento krok je nepovinný a môžete ho preskočiť. Podpisový certifikát si môžete nastaviť neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát, pripravte si prosím občiansky preukaz a nasledujte inštrukcie na obrazovke.",
   "selectSigningCertificateCanceledHeading": "Čítanie certifikátu bolo prerušené",
   "selectSigningCertificateCanceledBody": "Skúste prosím znovu načítať certifikát z vášho občianskeho preukazu.",
   "selectSigningCertificateNoCertificateHeading": "Certifikát nebol nájdený",

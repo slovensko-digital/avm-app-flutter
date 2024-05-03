@@ -14,7 +14,6 @@ import 'file_extensions.dart';
 ///  - [incomingUri]
 ///
 /// Methods:
-///  - [startQrCodeScanner]
 ///  - [getFileName]
 ///  - [getFile]
 ///  - [getDocumentsDirectory]
@@ -51,20 +50,6 @@ class AppService {
   @factoryMethod
   factory AppService() {
     return _instance;
-  }
-
-  /// Starts platform camera / QR code scanner.
-  Future<void> startQrCodeScanner() {
-    if (Platform.isAndroid) {
-      return _methods.invokeMethod<void>('startQrCodeScanner');
-    }
-
-    if (Platform.isIOS) {
-      // TODO Impl. startQrCodeScanner on iOS
-      throw UnimplementedError("Not implemented on iOS.");
-    }
-
-    throw UnsupportedError("Not supported on this platform.");
   }
 
   /// Gets the file name from [Uri].
@@ -107,6 +92,11 @@ class AppService {
 
     // On Android, this returns app specific path
     return provider.getDownloadsDirectory().then((value) => value!);
+  }
+
+  /// Emit new [incomingUri] value.
+  void newIncomingUri(String uri) {
+    _collectIncomingUri(uri);
   }
 
   static _collectIncomingUri(dynamic value) {

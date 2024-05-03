@@ -188,6 +188,12 @@ class AppLocalizationsSk extends AppLocalizations {
   String get onboardingFinishedBody => 'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie';
 
   @override
+  String get qrCodeScannerInfoBody => 'Prosím nasmerujte kameru\nna QR kód na obrazovke';
+
+  @override
+  String get qrCodeScannerUnsupportedContentErrorMessage => 'Naskenovali ste nepodporovaný alebo neznámy obsah QR kódu.';
+
+  @override
   String get signRemoteDocumentBody1 => 'Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia Autogramu vo vašom internetovom prehladávači.';
 
   @override
@@ -217,13 +223,10 @@ class AppLocalizationsSk extends AppLocalizations {
   String get selectCertificateTitle => 'Výber typu podpisu';
 
   @override
-  String get selectSigningCertificateTitle => 'Podpisový certifikát';
+  String get selectSigningCertificateTitle => 'Nastavenie certifikátu';
 
   @override
-  String get selectSigningCertificateHeading => 'Výber podpisového certifikátu';
-
-  @override
-  String get selectSigningCertificateBody => 'Stlačením tlačidla “Vybrať certifikát” sa vyvolá interakcia na načítanie podpisových certifikátov z vášho OP.\n\nAk nemáte OP s kvalifikovaným podpisovým certifikátom, tento krok preskočte.';
+  String get selectSigningCertificateBody => 'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Ak si prajete iba overiť podpisy v dokumentoch, tento krok je nepovinný a môžete ho preskočiť. Podpisový certifikát si môžete nastaviť neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát, pripravte si prosím občiansky preukaz a nasledujte inštrukcie na obrazovke.';
 
   @override
   String get selectSigningCertificateCanceledHeading => 'Čítanie certifikátu bolo prerušené';

@@ -11,7 +11,6 @@ import '../app_theme.dart';
 import '../fragment/select_signing_certificate_fragment.dart';
 import '../widgets/certificate_picker.dart';
 import '../widgets/loading_indicator.dart';
-import '../widgets/result_view.dart';
 import '../widgets/step_indicator.dart';
 import 'onboarding_screen.dart';
 
@@ -119,12 +118,9 @@ class _BodyState extends State<_Body> {
           child: SelectSigningCertificateFragment(
             state: widget.state,
             initialBuilder: (context) {
-              return ResultView.info(
-                titleText: context.strings.selectSigningCertificateHeading,
-                body: Text(
-                  context.strings.selectSigningCertificateBody,
-                  textAlign: TextAlign.start,
-                ),
+              return Text(
+                context.strings.selectSigningCertificateBody,
+                textAlign: TextAlign.start,
               );
             },
             successBuilder: (_, certificate) {

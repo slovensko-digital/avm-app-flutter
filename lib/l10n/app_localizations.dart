@@ -361,6 +361,18 @@ abstract class AppLocalizations {
   /// **'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie'**
   String get onboardingFinishedBody;
 
+  /// No description provided for @qrCodeScannerInfoBody.
+  ///
+  /// In sk, this message translates to:
+  /// **'Prosím nasmerujte kameru\nna QR kód na obrazovke'**
+  String get qrCodeScannerInfoBody;
+
+  /// No description provided for @qrCodeScannerUnsupportedContentErrorMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Naskenovali ste nepodporovaný alebo neznámy obsah QR kódu.'**
+  String get qrCodeScannerUnsupportedContentErrorMessage;
+
   /// No description provided for @signRemoteDocumentBody1.
   ///
   /// In sk, this message translates to:
@@ -418,19 +430,13 @@ abstract class AppLocalizations {
   /// No description provided for @selectSigningCertificateTitle.
   ///
   /// In sk, this message translates to:
-  /// **'Podpisový certifikát'**
+  /// **'Nastavenie certifikátu'**
   String get selectSigningCertificateTitle;
-
-  /// No description provided for @selectSigningCertificateHeading.
-  ///
-  /// In sk, this message translates to:
-  /// **'Výber podpisového certifikátu'**
-  String get selectSigningCertificateHeading;
 
   /// No description provided for @selectSigningCertificateBody.
   ///
   /// In sk, this message translates to:
-  /// **'Stlačením tlačidla “Vybrať certifikát” sa vyvolá interakcia na načítanie podpisových certifikátov z vášho OP.\n\nAk nemáte OP s kvalifikovaným podpisovým certifikátom, tento krok preskočte.'**
+  /// **'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Ak si prajete iba overiť podpisy v dokumentoch, tento krok je nepovinný a môžete ho preskočiť. Podpisový certifikát si môžete nastaviť neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát, pripravte si prosím občiansky preukaz a nasledujte inštrukcie na obrazovke.'**
   String get selectSigningCertificateBody;
 
   /// No description provided for @selectSigningCertificateCanceledHeading.

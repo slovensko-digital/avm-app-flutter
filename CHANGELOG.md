@@ -1,5 +1,11 @@
 # Changelog
 
+## 2024-05-03 - v1.0.0(23)
+
+- UX changes for document remote signing 
+- Impl. QR code scanner
+- Register custom "avm" scheme handler in iOS
+
 ## 2024-04-27 - v1.0.0(22)
 
 - Android: Handling Deep link action to sign document

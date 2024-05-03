@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/settings.dart';
 import 'onboarding_accept_terms_of_service_screen.dart';
 import 'onboarding_finished_screen.dart';
 import 'onboarding_select_signing_certificate_screen.dart';
@@ -62,8 +64,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _handleTermsOfServiceAccepted() {
-    // TODO Onboarding - handle case when signing cert. was already selected but need to accept only new ToS
-    _navigateToStep(_OnboardingStep.selectSigningCertificate);
+    final settings = context.read<ISettings>();
+    final hasSigningCertificate = settings.signingCertificate.value != null;
+    final nextStep = hasSigningCertificate
+        ? _OnboardingStep.showSummary
+        : _OnboardingStep.selectSigningCertificate;
+
+    _navigateToStep(nextStep);
   }
 
   void _handleCertificateSelectionSkipped() {
