@@ -14,7 +14,6 @@ import '../../app_service.dart';
 import '../../data/settings.dart';
 import '../../deep_links.dart';
 import '../../di.dart';
-import '../../files.dart';
 import '../../services/encryption_key_registry.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
@@ -196,15 +195,12 @@ class _MainScreenState extends State<MainScreen> {
 
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       dialogTitle: context.strings.buttonOpenDocumentLabel,
-      allowMultiple: false,
-      type: FileType.custom,
-      allowedExtensions: Files.supportedExtensions,
     );
 
     final selectedFile = result?.files.singleOrNull;
 
     if (selectedFile != null) {
-      File file = File(selectedFile.path!);
+      final File file = File(selectedFile.path!);
 
       _logger.fine('File selected: $file');
 
