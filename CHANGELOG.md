@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-05-07 - v1.0.0(25)
+
+-  Android: Fix auto verify Deep links - no need to manually enable domain association
+
 ## 2024-05-07 - v1.0.0(24)
 
 - Fix issue that no document was open when QR code was scanned
