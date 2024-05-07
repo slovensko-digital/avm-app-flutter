@@ -66,37 +66,37 @@ fvm dart pub global activate flutterfire_cli
 fvm flutter pub get
 ```
 
-To run all Flutter tests:
+Run all Flutter tests:
 
 ```shell
 fvm flutter test
 ```
 
-To generate i18n code, run:
+Generate i18n code:
 
 ```shell
 fvm flutter gen-l10n
 ```
 
-To generate code:
+Generate code:
 
 ```shell
 fvm dart run build_runner build --delete-conflicting-outputs
 ```
 
-Build Android APK:
+Build **Android** APK:
 
 ```shell
 fvm flutter build apk
 ```
 
-Build iOS IPA:
+Build **iOS** IPA:
 
 ```shell
 fvm flutter build ipa
 ```
 
-Build WEB:
+Build **WEB**:
 
 ```shell
 fvm flutter build web --target=lib/preview.dart

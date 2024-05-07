@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'app_navigator_observer.dart';
 import 'app_service.dart';
 import 'l10n/app_localizations.dart';
 import 'strings_context.dart';
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO Move "Consumer<AppService>" and additional code into MainScreen
     final home = Consumer<AppService>(
       builder: (context, appService, _) {
         return ValueListenableBuilder(
@@ -37,6 +39,7 @@ class App extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
+      navigatorObservers: [AppNavigatorObserver()],
       theme: appTheme(context, brightness: Brightness.light),
 
       // Normally, setting home Widget would be sufficient

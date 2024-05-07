@@ -41,15 +41,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  static final _logger = Logger((_MainScreenState).toString());
-
-  late final AppService _appService;
+  static final _logger = Logger((MainScreen).toString());
 
   @override
   void initState() {
     super.initState();
-
-    _appService = getIt.get<AppService>();
 
     _handleNewIncomingUri();
   }
@@ -66,16 +62,27 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _MainAppBar(
-        context: context,
-        onMenuPressed: _showMenu,
-        onQrCodeScannerPressed: _showQrCodeScanner,
-      ),
-      body: _Body(
-        onStartOnboardingRequested: _onStartOnboardingRequested,
-        onOpenFileRequested: _onOpenFileRequested,
-      ),
+    final acceptedTermsOfServiceVersion =
+        context.read<ISettings>().acceptedTermsOfServiceVersion;
+
+    return ValueListenableBuilder(
+      valueListenable: acceptedTermsOfServiceVersion,
+      builder: (context, version, _) {
+        final showQrCodeScannerIcon = version != null;
+
+        return Scaffold(
+          appBar: _MainAppBar(
+            context: context,
+            showQrCodeScannerIcon: showQrCodeScannerIcon,
+            onMenuPressed: _showMenu,
+            onQrCodeScannerPressed: _showQrCodeScanner,
+          ),
+          body: _Body(
+            onStartOnboardingRequested: _onStartOnboardingRequested,
+            onOpenFileRequested: _onOpenFileRequested,
+          ),
+        );
+      },
     );
   }
 
@@ -86,7 +93,7 @@ class _MainScreenState extends State<MainScreen> {
       switch (uri.scheme) {
         case "file" || "content":
           // This is only Future that will (hopefully) return the File
-          final Future<File> sharedFile = _appService.getFile(uri);
+          final Future<File> sharedFile = getIt.get<AppService>().getFile(uri);
 
           WidgetsBinding.instance.addPostFrameCallback((_) {
             // Directly navigate to next screen, which have progress and error handling
@@ -153,6 +160,8 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    _logger.info("Handling Deep Link action: $action");
 
     if (action is SignRemoteDocumentAction) {
       getIt.get<EncryptionKeyRegistry>().value = action.key;

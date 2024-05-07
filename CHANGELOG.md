@@ -1,5 +1,10 @@
 # Changelog
 
+## 2024-05-07 - v1.0.0(24)
+
+- Fix issue that no document was open when QR code was scanned
+- QR code scanner icon is displayed only when terms are accepted
+
 ## 2024-05-03 - v1.0.0(23)
 
 - UX changes for document remote signing 

@@ -157,6 +157,9 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
       return;
     }
 
+    // Stop camera and code scanner
+    _controller.dispose();
+
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     Navigator.of(context).maybePop(barcode.rawValue);
   }

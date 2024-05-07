@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart' show Logger;
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../app_service.dart';
@@ -8,7 +9,11 @@ import '../app_theme.dart' show kPrimaryButtonMinimumSize, kScreenMargin;
 import 'qr_code_scanner_screen.dart';
 
 /// Screen to start remote document signing.
+///
+/// Navigates to [QRCodeScannerScreen].
 class StartRemoteDocumentSigningScreen extends StatelessWidget {
+  static final _logger = Logger((StartRemoteDocumentSigningScreen).toString());
+
   const StartRemoteDocumentSigningScreen({super.key});
 
   @override
@@ -65,6 +70,8 @@ class StartRemoteDocumentSigningScreen extends StatelessWidget {
     const screen = QRCodeScannerScreen();
     final route = MaterialPageRoute(builder: (_) => screen);
     final result = await Navigator.of(context).push(route);
+
+    _logger.info('QR code scanner result: "$result".');
 
     if (result is String) {
       getIt.get<AppService>().newIncomingUri(result);
