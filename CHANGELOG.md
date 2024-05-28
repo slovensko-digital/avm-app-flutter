@@ -1,8 +1,13 @@
 # Changelog
 
+## 2024-05-28 - v1.0.0(26)
+
+- Displaying Privacy Policy and Terms of Service documents in Onboarding and Main menu
+- Storing "version" value from loaded documents above
+
 ## 2024-05-07 - v1.0.0(25)
 
--  Android: Fix auto verify Deep links - no need to manually enable domain association
+- Android: Fix auto verify Deep links - no need to manually enable domain association
 
 ## 2024-05-07 - v1.0.0(24)
 
