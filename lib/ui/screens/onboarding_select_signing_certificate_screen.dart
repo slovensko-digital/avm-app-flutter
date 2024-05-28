@@ -9,12 +9,12 @@ import '../../data/settings.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../fragment/select_signing_certificate_fragment.dart';
+import '../onboarding.dart';
 import '../widgets/certificate_picker.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/step_indicator.dart';
-import 'onboarding_screen.dart';
 
-/// [OnboardingScreen] to select and save signing certificate into
+/// [Onboarding] screen to select and save signing certificate into
 /// [ISettings.signingCertificate].
 /// This screen can be skipped.
 ///
@@ -22,8 +22,8 @@ import 'onboarding_screen.dart';
 ///
 /// Consumes [ISettings].
 class OnboardingSelectSigningCertificateScreen extends StatelessWidget {
-  final VoidCallback onCertificateSelected;
-  final VoidCallback? onSkipRequested;
+  final ValueSetter<BuildContext> onCertificateSelected;
+  final ValueSetter<BuildContext>? onSkipRequested;
 
   const OnboardingSelectSigningCertificateScreen({
     super.key,
@@ -33,13 +33,12 @@ class OnboardingSelectSigningCertificateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: const BackButton(),
-          title: Text(context.strings.selectSigningCertificateTitle),
-        ),
-        body: _buildBody(context),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(context.strings.selectSigningCertificateTitle),
+      ),
+      body: SafeArea(
+        child: _buildBody(context),
       ),
     );
   }
@@ -75,7 +74,11 @@ class OnboardingSelectSigningCertificateScreen extends StatelessWidget {
       onCertificateSelected: (certificate) {
         _handleCertificateSelected(context, certificate);
       },
-      onSkipRequested: onSkipRequested,
+      onSkipRequested: onSkipRequested != null
+          ? () {
+              onSkipRequested?.call(context);
+            }
+          : null,
     );
   }
 
@@ -84,7 +87,7 @@ class OnboardingSelectSigningCertificateScreen extends StatelessWidget {
     Certificate certificate,
   ) {
     context.read<ISettings>().signingCertificate.value = certificate;
-    onCertificateSelected.call();
+    onCertificateSelected.call(context);
   }
 }
 
@@ -139,7 +142,7 @@ class _BodyState extends State<_Body> {
         // Steps
         const Padding(
           padding: EdgeInsets.only(top: 8, bottom: 16),
-          child: StepIndicator(stepNumber: 2, totalSteps: 3),
+          child: StepIndicator(stepNumber: 3, totalSteps: 3),
         ),
 
         // Primary button

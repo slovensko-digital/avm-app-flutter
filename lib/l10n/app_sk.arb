@@ -41,7 +41,10 @@
   "signingCertificateTitle": "Predvolený podpisový certifikát",
   "pairedDevicesTitle": "Spárované zariadenia",
   "pairedDevicesSummary": "{count, plural, zero{žiadne} one{1 zariadenie} few{{count} zariadenia} other{{count} zariadení}}",
+  "privacyPolicyTitle": "Ochrana osobných údajov",
+  "privacyPolicyUrl": "https://sluzby.slovensko.digital/autogram-v-mobile/ochrana-osobnych-udajov",
   "termsOfServiceTitle": "Podmienky používania",
+  "termsOfServiceUrl": "https://sluzby.slovensko.digital/autogram-v-mobile/vseobecne-obchodne-podmienky",
 
   "aboutTitle": "O aplikácii",
   "eidSDKLicenseText": "Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na\u00A0stránke\n„https://github.com/eidmsdk“.",

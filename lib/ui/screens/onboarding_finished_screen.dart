@@ -5,16 +5,15 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../strings_context.dart';
 import '../app_theme.dart';
+import '../onboarding.dart';
 import '../widgets/result_view.dart';
-import 'main_screen.dart';
-import 'onboarding_screen.dart';
 
-/// [OnboardingScreen] to display some information when finished.
+/// [Onboarding] screen to display some information when finished.
 ///
 /// See also:
 ///  - [MainScreen]
 class OnboardingFinishedScreen extends StatelessWidget {
-  final VoidCallback? onStartRequested;
+  final ValueSetter<BuildContext>? onStartRequested;
 
   const OnboardingFinishedScreen({
     super.key,
@@ -38,7 +37,11 @@ class OnboardingFinishedScreen extends StatelessWidget {
           style: FilledButton.styleFrom(
             minimumSize: kPrimaryButtonMinimumSize,
           ),
-          onPressed: onStartRequested,
+          onPressed: onStartRequested != null
+              ? () {
+                  onStartRequested?.call(context);
+                }
+              : null,
           child: Text(context.strings.buttonOpenDocumentLabel),
         ),
       ],
@@ -60,12 +63,12 @@ class OnboardingFinishedScreen extends StatelessWidget {
 
 @widgetbook.UseCase(
   path: '[Screens]',
-  name: 'OnboardingFinishedScreen',
+  name: '',
   type: OnboardingFinishedScreen,
 )
 Widget previewOnboardingFinishedScreen(BuildContext context) {
   return OnboardingFinishedScreen(
-    onStartRequested: () {
+    onStartRequested: (_) {
       developer.log("onStartRequested");
     },
   );

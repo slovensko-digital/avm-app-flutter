@@ -22,11 +22,12 @@ Flutter app for Android and iOS.
 
 ### Onboarding
 
-User onboarding - starts with one [`OnboardingScreen`](lib/ui/screens/onboarding_screen.dart):
+User onboarding - starts with one [`Onboarding`](lib/ui/onboarding.dart):
 
-1. [`OnboardingAcceptTermsOfServiceScreen`](lib/ui/screens/onboarding_accept_terms_of_service_screen.dart) 
-2. [`OnboardingSelectSigningCertificateScreen`](lib/ui/screens/onboarding_select_signing_certificate_screen.dart)
-3. [`OnboardingFinishedScreen`](lib/ui/screens/onboarding_finished_screen.dart)
+1. Accept Privacy Policy using [`OnboardingAcceptDocumentScreen`](lib/ui/screens/onboarding_accept_document_screen.dart)
+2. Accept Terms of Service using same [`OnboardingAcceptDocumentScreen`](lib/ui/screens/onboarding_accept_document_screen.dart)  
+3. optionally [`OnboardingSelectSigningCertificateScreen`](lib/ui/screens/onboarding_select_signing_certificate_screen.dart)
+4. Presenting finish - [`OnboardingFinishedScreen`](lib/ui/screens/onboarding_finished_screen.dart)
 
 ### Sign single document
 
@@ -47,6 +48,13 @@ Signing of single (PDF, TXT, image, eForms XML, ...) document using
    using `Eidmsdk` and `AutogramService`.
 6. [`PresentSignedDocumentScreen`](lib/ui/screens/present_signed_document_screen.dart) - here, the
    (success / error) result is presented and signed document is saved into "Downloads".
+
+### Remote document signing
+
+Similar to [Sign single document](#sign-single-document), but starts with:
+
+- [`StartRemoteDocumentSigningScreen`](lib/ui/screens/start_remote_document_signing_screen.dart)
+- [`QRCodeScannerScreen`](lib/ui/screens/qr_code_scanner_screen.dart)
 
 ## Scripts
 

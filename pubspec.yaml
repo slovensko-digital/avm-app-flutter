@@ -17,7 +17,8 @@ dependencies:
     path: ../autogram_sign
   flutter_svg:
   package_info_plus: ^5.0.1
-  chopper:
+  http:
+  chopper: '>=7.4.0 <8.0.0'
   injectable: ^2.2.0
   get_it: ^7.6.1
   flutter_hooks: ^0.20.5
@@ -44,6 +45,7 @@ dependencies:
   firebase_crashlytics:
   url_launcher:
   mobile_scanner:
+  html:
 
 dev_dependencies:
   flutter_test:

@@ -5,13 +5,13 @@ import '../../strings_context.dart';
 import '../widgets/app_version_text.dart';
 import 'about_screen.dart';
 import 'settings_screen.dart';
-import 'show_terms_of_service_screen.dart';
+import 'show_document_screen.dart';
 import 'start_remote_document_signing_screen.dart';
 
 /// Screen that displays "main menu" with items:
 ///  - link to show [SettingsScreen]
 ///  - link to show [StartRemoteDocumentSigningScreen]
-///  - link to show [ShowTermsOfServiceScreen]
+///  - link to show Privacy Policy or Terms of Service in [ShowDocumentScreen]
 ///  - link to show [AboutScreen]
 class MainMenuScreen extends StatelessWidget {
   const MainMenuScreen({super.key});
@@ -47,6 +47,12 @@ class MainMenuScreen extends StatelessWidget {
             title: strings.signRemoteDocumentTitle,
             onPressed: () {
               _showSignRemoteDocument(context);
+            },
+          ),
+          _MenuItem(
+            title: strings.privacyPolicyTitle,
+            onPressed: () {
+              _showPrivacyPolicy(context);
             },
           ),
           _MenuItem(
@@ -94,8 +100,22 @@ class MainMenuScreen extends StatelessWidget {
     return _openScreen(context, screen);
   }
 
+  static Future<void> _showPrivacyPolicy(BuildContext context) {
+    final strings = context.strings;
+    final screen = ShowDocumentScreen(
+      title: strings.privacyPolicyTitle,
+      url: Uri.parse(strings.privacyPolicyUrl),
+    );
+
+    return _openScreen(context, screen);
+  }
+
   static Future<void> _showTermsOfService(BuildContext context) {
-    const screen = ShowTermsOfServiceScreen();
+    final strings = context.strings;
+    final screen = ShowDocumentScreen(
+      title: strings.termsOfServiceTitle,
+      url: Uri.parse(strings.termsOfServiceUrl),
+    );
 
     return _openScreen(context, screen);
   }
