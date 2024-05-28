@@ -164,7 +164,16 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String get privacyPolicyTitle => 'Ochrana osobných údajov';
+
+  @override
+  String get privacyPolicyUrl => 'https://sluzby.slovensko.digital/autogram-v-mobile/ochrana-osobnych-udajov';
+
+  @override
   String get termsOfServiceTitle => 'Podmienky používania';
+
+  @override
+  String get termsOfServiceUrl => 'https://sluzby.slovensko.digital/autogram-v-mobile/vseobecne-obchodne-podmienky';
 
   @override
   String get aboutTitle => 'O aplikácii';

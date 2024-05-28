@@ -4,22 +4,22 @@ import 'dart:io' show File;
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../app_service.dart';
-import '../../data/settings.dart';
+import '../../bloc/app_bloc.dart';
 import '../../deep_links.dart';
 import '../../di.dart';
 import '../../services/encryption_key_registry.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
+import '../onboarding.dart';
 import '../widgets/autogram_logo.dart';
 import 'main_menu_screen.dart';
-import 'onboarding_screen.dart';
 import 'open_document_screen.dart';
 import 'preview_document_screen.dart';
 import 'start_remote_document_signing_screen.dart';
@@ -51,6 +51,13 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    Onboarding.refreshOnboardingRequired(context);
+  }
+
+  @override
   void didUpdateWidget(covariant MainScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
 
@@ -62,24 +69,27 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final acceptedTermsOfServiceVersion =
-        context.read<ISettings>().acceptedTermsOfServiceVersion;
-
-    return ValueListenableBuilder(
-      valueListenable: acceptedTermsOfServiceVersion,
-      builder: (context, version, _) {
-        final showQrCodeScannerIcon = version != null;
-
-        return Scaffold(
-          appBar: _MainAppBar(
-            context: context,
-            showQrCodeScannerIcon: showQrCodeScannerIcon,
-            onMenuPressed: _showMenu,
-            onQrCodeScannerPressed: _showQrCodeScanner,
-          ),
-          body: _Body(
-            onStartOnboardingRequested: _onStartOnboardingRequested,
-            onOpenFileRequested: _onOpenFileRequested,
+    return ValueListenableBuilder<bool?>(
+      valueListenable: Onboarding.onboardingRequired,
+      builder: (context, onboardingRequired, _) {
+        return BlocListener<AppBloc, AppEvent?>(
+          listener: (_, state) {
+            if (state is RequestOpenFileEvent) {
+              _onOpenFileRequested();
+            }
+          },
+          child: Scaffold(
+            appBar: _MainAppBar(
+              context: context,
+              showQrCodeScannerIcon: (onboardingRequired == false),
+              onMenuPressed: _showMenu,
+              onQrCodeScannerPressed: _showQrCodeScanner,
+            ),
+            body: _Body(
+              onboardingRequired: onboardingRequired,
+              onStartOnboardingRequested: _onStartOnboardingRequested,
+              onOpenFileRequested: _onOpenFileRequested,
+            ),
           ),
         );
       },
@@ -184,19 +194,7 @@ class _MainScreenState extends State<MainScreen> {
   Future<void> _onStartOnboardingRequested() {
     _logger.fine('Requested to start Onboarding.');
 
-    const screen = OnboardingScreen();
-    final route = MaterialPageRoute(builder: (_) => screen);
-
-    return Navigator.of(context).push(route).then((_) {
-      final arguments = ModalRoute.of(context)?.settings.arguments as Map;
-      final result = arguments['result'];
-
-      if (result == true) {
-        // TODO Call this function right when it was pressed on that screen
-        // Pass via Provider and drop this "arguments" usage
-        _onOpenFileRequested();
-      }
-    });
+    return Onboarding.startOnboarding(context);
   }
 
   Future<void> _onOpenFileRequested() async {
@@ -263,10 +261,12 @@ AppBar _MainAppBar({
 
 /// [MainScreen] body.
 class _Body extends StatelessWidget {
+  final bool? onboardingRequired;
   final VoidCallback? onStartOnboardingRequested;
   final VoidCallback? onOpenFileRequested;
 
   const _Body({
+    required this.onboardingRequired,
     required this.onStartOnboardingRequested,
     required this.onOpenFileRequested,
   });
@@ -301,35 +301,24 @@ class _Body extends StatelessWidget {
   }
 
   Widget _buildPrimaryButton(BuildContext context) {
-    // Workaround for preview without ISettings
-    final listenable =
-        (context.read<ISettings?>()?.acceptedTermsOfServiceVersion ??
-            ValueNotifier(1));
+    VoidCallback? onPressed;
+    String label;
 
-    return ValueListenableBuilder(
-        valueListenable: listenable,
-        builder: (context, version, _) {
-          final termsOfServiceAreAccepted = (version != null);
+    if (onboardingRequired == false) {
+      onPressed = onOpenFileRequested;
+      label = context.strings.buttonOpenDocumentLabel;
+    } else {
+      onPressed = onStartOnboardingRequested;
+      label = context.strings.buttonInitialSetupLabel;
+    }
 
-          VoidCallback? onPressed;
-          String label;
-
-          if (termsOfServiceAreAccepted) {
-            onPressed = onOpenFileRequested;
-            label = context.strings.buttonOpenDocumentLabel;
-          } else {
-            onPressed = onStartOnboardingRequested;
-            label = context.strings.buttonInitialSetupLabel;
-          }
-
-          return FilledButton(
-            style: FilledButton.styleFrom(
-              minimumSize: kPrimaryButtonMinimumSize,
-            ),
-            onPressed: onPressed,
-            child: Text(label),
-          );
-        });
+    return FilledButton(
+      style: FilledButton.styleFrom(
+        minimumSize: kPrimaryButtonMinimumSize,
+      ),
+      onPressed: onPressed,
+      child: Text(label),
+    );
   }
 }
 
@@ -362,7 +351,13 @@ Widget previewMainAppBar(BuildContext context) {
   type: MainScreen,
 )
 Widget previewMainScreen(BuildContext context) {
+  final onboardingRequired = context.knobs.booleanOrNull(
+    label: "Onboarding is required",
+    initialValue: false,
+  );
+
   return _Body(
+    onboardingRequired: onboardingRequired,
     onStartOnboardingRequested: () {
       developer.log("onStartOnboardingRequested");
     },

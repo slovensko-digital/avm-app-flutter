@@ -313,11 +313,29 @@ abstract class AppLocalizations {
   /// **'{count, plural, zero{žiadne} one{1 zariadenie} few{{count} zariadenia} other{{count} zariadení}}'**
   String pairedDevicesSummary(num count);
 
+  /// No description provided for @privacyPolicyTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Ochrana osobných údajov'**
+  String get privacyPolicyTitle;
+
+  /// No description provided for @privacyPolicyUrl.
+  ///
+  /// In sk, this message translates to:
+  /// **'https://sluzby.slovensko.digital/autogram-v-mobile/ochrana-osobnych-udajov'**
+  String get privacyPolicyUrl;
+
   /// No description provided for @termsOfServiceTitle.
   ///
   /// In sk, this message translates to:
   /// **'Podmienky používania'**
   String get termsOfServiceTitle;
+
+  /// No description provided for @termsOfServiceUrl.
+  ///
+  /// In sk, this message translates to:
+  /// **'https://sluzby.slovensko.digital/autogram-v-mobile/vseobecne-obchodne-podmienky'**
+  String get termsOfServiceUrl;
 
   /// No description provided for @aboutTitle.
   ///

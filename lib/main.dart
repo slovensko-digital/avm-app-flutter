@@ -2,12 +2,10 @@ import 'dart:developer' as developer;
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart' show WidgetsFlutterBinding, runApp;
-import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart' show Level, LogRecord, Logger;
 import 'package:provider/provider.dart' show MultiProvider, Provider;
 
 import 'app.dart';
-import 'app_service.dart';
 import 'data/settings.dart';
 import 'di.dart';
 import 'firebase_options.dart';
@@ -38,9 +36,6 @@ void main() async {
       providers: [
         // ISettings
         Provider<ISettings>.value(value: settings),
-
-        // AppService
-        Provider<AppService>.value(value: GetIt.instance.get()),
       ],
       child: const App(),
     ),

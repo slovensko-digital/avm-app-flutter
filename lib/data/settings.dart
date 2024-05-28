@@ -7,8 +7,11 @@ import 'signature_type.dart';
 
 /// Interface for general app settings.
 abstract interface class ISettings {
-  /// Accepted Terms of Service (ToS) document version value.
-  ValueNotifier<int?> get acceptedTermsOfServiceVersion;
+  /// Accepted Privacy Policy document version value.
+  ValueNotifier<String?> get acceptedPrivacyPolicyVersion;
+
+  /// Accepted Terms of Service document version value.
+  ValueNotifier<String?> get acceptedTermsOfServiceVersion;
 
   /// The signing container value.
   ValueNotifier<PdfSigningOption> get signingPdfContainer;
@@ -27,11 +30,19 @@ abstract interface class ISettings {
 ///
 /// Uses **Shared Preferences** - need to call [Settings.initialize] before use.
 // TODO Make only "Settings" type and private _SettingsImpl that will be returned by factory fun
+// TODO Also register it using Injectable
 class Settings with NotifiedPreferences implements ISettings {
   @override
-  late final ValueNotifier<int?> acceptedTermsOfServiceVersion =
-      createSetting<int?>(
-    key: 'tos.version.accepted',
+  late final ValueNotifier<String?> acceptedPrivacyPolicyVersion =
+      createSetting<String?>(
+    key: 'doc.pp.version.accepted',
+    initialValue: null,
+  );
+
+  @override
+  late final ValueNotifier<String?> acceptedTermsOfServiceVersion =
+      createSetting<String?>(
+    key: 'doc.tos.version.accepted',
     initialValue: null,
   );
 

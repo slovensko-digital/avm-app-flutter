@@ -15,7 +15,7 @@ import 'package:autogram/ui/fragment/show_web_page_fragment.dart' as _i21;
 import 'package:autogram/ui/screens/about_screen.dart' as _i24;
 import 'package:autogram/ui/screens/main_menu_screen.dart' as _i25;
 import 'package:autogram/ui/screens/main_screen.dart' as _i2;
-import 'package:autogram/ui/screens/onboarding_accept_terms_of_service_screen.dart'
+import 'package:autogram/ui/screens/onboarding_accept_document_screen.dart'
     as _i26;
 import 'package:autogram/ui/screens/onboarding_finished_screen.dart' as _i27;
 import 'package:autogram/ui/screens/onboarding_select_signing_certificate_screen.dart'
@@ -28,7 +28,7 @@ import 'package:autogram/ui/screens/preview_document_screen.dart' as _i32;
 import 'package:autogram/ui/screens/qr_code_scanner_screen.dart' as _i19;
 import 'package:autogram/ui/screens/select_certificate_screen.dart' as _i33;
 import 'package:autogram/ui/screens/settings_screen.dart' as _i34;
-import 'package:autogram/ui/screens/show_terms_of_service_screen.dart' as _i35;
+import 'package:autogram/ui/screens/show_document_screen.dart' as _i35;
 import 'package:autogram/ui/screens/sign_document_screen.dart' as _i36;
 import 'package:autogram/ui/screens/start_remote_document_signing_screen.dart'
     as _i37;
@@ -309,16 +309,16 @@ final directories = <_i1.WidgetbookNode>[
         ),
       ),
       _i1.WidgetbookLeafComponent(
-        name: 'OnboardingAcceptTermsOfServiceScreen',
+        name: 'OnboardingAcceptDocumentScreen',
         useCase: _i1.WidgetbookUseCase(
-          name: 'OnboardingAcceptTermsOfServiceScreen',
-          builder: _i26.previewOnboardingAcceptTermsOfServiceScreen,
+          name: '',
+          builder: _i26.previewOnboardingAcceptDocumentScreen,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'OnboardingFinishedScreen',
         useCase: _i1.WidgetbookUseCase(
-          name: 'OnboardingFinishedScreen',
+          name: '',
           builder: _i27.previewOnboardingFinishedScreen,
         ),
       ),
@@ -442,10 +442,10 @@ final directories = <_i1.WidgetbookNode>[
         ),
       ),
       _i1.WidgetbookLeafComponent(
-        name: 'ShowTermsOfServiceScreen',
+        name: 'ShowDocumentScreen',
         useCase: _i1.WidgetbookUseCase(
-          name: 'ShowTermsOfServiceScreen',
-          builder: _i35.previewShowTermsOfServiceScreen,
+          name: '',
+          builder: _i35.previewShowDocumentScreen,
         ),
       ),
       _i1.WidgetbookComponent(

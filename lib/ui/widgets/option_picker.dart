@@ -44,7 +44,7 @@ class OptionPicker<T> extends StatelessWidget {
 
   Widget _listItem(T value) {
     final labelBuilder = this.labelBuilder ?? _defaultLabelBuilder;
-    final label = labelBuilder(value);
+    final label = Expanded(child: labelBuilder(value));
     final radio = Transform.scale(
       scale: kRadioScale,
       child: Radio<T>(
@@ -64,7 +64,7 @@ class OptionPicker<T> extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             radio,
-            const SizedBox(width: 16),
+            const SizedBox(width: 8),
             label,
           ],
         ),
@@ -75,12 +75,10 @@ class OptionPicker<T> extends StatelessWidget {
   Widget _defaultLabelBuilder(T value) {
     final text = (value is Enum ? value.name : value.toString());
 
-    return Expanded(
-      child: Text(
-        text,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
+    return Text(
+      text,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }

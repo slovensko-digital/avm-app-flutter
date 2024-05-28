@@ -4,12 +4,12 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/app_version_text.dart';
-import 'show_terms_of_service_screen.dart';
+import 'show_document_screen.dart';
 
 /// Displays About.
 ///
 /// See also:
-///  - [ShowTermsOfServiceScreen]
+///  - [ShowDocumentScreen]
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 

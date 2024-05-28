@@ -11,6 +11,7 @@ import '../../data/signature_type.dart';
 import '../../oids.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
+import '../onboarding.dart';
 import '../widgets/option_picker.dart';
 import '../widgets/preference_tile.dart';
 import 'paired_device_list_screen.dart';
@@ -19,7 +20,9 @@ import 'paired_device_list_screen.dart';
 ///
 /// Contains:
 ///  - editor for [ISettings.signingPdfContainer]
-///  - editor for [ISettings.signingCertificate]
+///  - display for [ISettings.signingCertificate]
+///  - editor for [ISettings.signatureType]
+///  - navigate to [PairedDeviceListScreen]
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -64,6 +67,7 @@ class _Body extends StatelessWidget {
             onPressed: () async {
               await settings.clear();
               if (context.mounted) {
+                Onboarding.refreshOnboardingRequired(context);
                 await Navigator.of(context).maybePop();
               }
             },
@@ -221,7 +225,10 @@ class _ValueListenableBoundTile<T> extends StatelessWidget {
                     });
                   }
                 },
-                labelBuilder: (T value) => Text(summaryGetter(value) ?? ''),
+                labelBuilder: (T value) => Text(
+                  summaryGetter(value) ?? '',
+                  maxLines: 2,
+                ),
               ),
             );
           },
@@ -257,7 +264,11 @@ Widget previewSettingsScreen(BuildContext context) {
 /// Mock [ISettings] impl. for preview.
 class _MockSettings implements ISettings {
   @override
-  late final ValueNotifier<int?> acceptedTermsOfServiceVersion =
+  late final ValueNotifier<String?> acceptedPrivacyPolicyVersion =
+      ValueNotifier(null);
+
+  @override
+  late final ValueNotifier<String?> acceptedTermsOfServiceVersion =
       ValueNotifier(null);
 
   @override
@@ -275,6 +286,7 @@ class _MockSettings implements ISettings {
   @override
   Future<bool> clear() {
     final props = <ValueNotifier>[
+      acceptedPrivacyPolicyVersion,
       acceptedTermsOfServiceVersion,
       signingPdfContainer,
       signatureType,
