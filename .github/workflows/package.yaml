@@ -52,7 +52,7 @@ jobs:
 
       - name: Test
         working-directory: ./app
-        run: fvm flutter test
+        run: flutter test
 
       - name: Decode Keystore
         env:
