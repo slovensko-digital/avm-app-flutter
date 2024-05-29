@@ -41,6 +41,10 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           path: autogram_sign
 
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '17.x'
+
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.16.5'
