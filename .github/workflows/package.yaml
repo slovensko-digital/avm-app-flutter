@@ -1,0 +1,92 @@
+name: Build and sign application
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+      - "v[0-9]+.[0-9]+.[0-9]+([0-9]+)"
+
+  # workflow_dispatch:
+  #   inputs:
+  #     name:
+  #       description: "Release-Build"
+  #       default: "Generate release build"
+
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    environment: packaging
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: app
+
+      - name: Checkout "eidmsdk_flutter"
+        uses: actions/checkout@v4
+        with:
+          repository: slovensko-digital/eidmsdk-flutter
+          token: ${{ secrets.GH_PAT }}
+          path: eidmsdk_flutter
+
+      - name: Checkout "autogram_sign"
+        uses: actions/checkout@v4
+        with:
+          repository: slovensko-digital/avm-client-dart
+          token: ${{ secrets.GH_PAT }}
+          path: autogram_sign
+
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.16.5'
+          channel: 'stable'
+
+      - name: Install dependencies
+        working-directory: ./app
+        run: flutter pub get
+
+      - name: Test
+        working-directory: ./app
+        run: fvm flutter test
+
+      - name: Decode Keystore
+        env:
+          ENCODED_STRING: ${{ secrets.GOOGLE_KEYSTORE_BASE_64 }}
+        working-directory: ./app
+        run: echo $ENCODED_STRING | base64 -d > release_keystore.jks
+
+      - name: Build
+        env:
+          AVM_KEYSTORE_FILE: release_keystore.jks
+          AVM_KEYSTORE_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_PASSWORD }}
+          AVM_KEY_ALIAS: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_ALIAS }}
+          AVM_KEY_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEY_PASSWORD }}
+        working-directory: ./app
+        run: flutter build apk
+
+      - name: Get release file apk path
+        id: releaseApk
+        run: echo "apkfile=$(find ./app/build/outputs/apk/release/*.apk)" >> $GITHUB_OUTPUT
+
+      - name: Upload Release Build to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+           name: release-artifacts
+           path: ${{ steps.releaseApk.outputs.apkfile }}
+
+      # - name: Create release if tag pushed
+      #   uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     draft: true
+      #     prerelease: true
+      #     files: |
+      #       ./app/build/app/outputs/apk/release/app-release.apk
+
