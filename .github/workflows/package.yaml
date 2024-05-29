@@ -72,14 +72,12 @@ jobs:
           AVM_KEY_ALIAS: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_ALIAS }}
           AVM_KEY_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEY_PASSWORD }}
         working-directory: ./app
-        run: |
-          pwd
-          ls ../..
-          flutter build apk
+        run: flutter build apk
 
       - name: Get release file apk path
         id: releaseApk
-        run: echo "apkfile=$(find ./app/build/outputs/apk/release/*.apk)" >> $GITHUB_OUTPUT
+        working-directory: ./app
+        run: echo "apkfile=$(find build/outputs/apk/release/*.apk)" >> $GITHUB_OUTPUT
 
       - name: Upload Release Build to Artifacts
         uses: actions/upload-artifact@v3
