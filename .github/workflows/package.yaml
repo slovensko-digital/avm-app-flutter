@@ -71,15 +71,13 @@ jobs:
           AVM_KEY_ALIAS: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_ALIAS }}
           AVM_KEY_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEY_PASSWORD }}
         working-directory: ./app
-        run: |
-          flutter build appbundle --release
-          ls build/app/outputs/apk/release/
+        run: flutter build appbundle --release
 
       - name: Upload Release Build to Artifacts
         uses: actions/upload-artifact@v3
         with:
            name: release-artifacts
-           path: ./app/build/app/outputs/apk/release/app-release.aab
+           path: ./app/build/app/outputs/bundle/release/app-release.aab
 
       - name: Create release if tag pushed
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
@@ -90,4 +88,4 @@ jobs:
           draft: true
           prerelease: true
           files: |
-            ./app/build/app/outputs/apk/release/app-release.apk
+            ./app/build/app/outputs/bundle/release/app-release.aab
