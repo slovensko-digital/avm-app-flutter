@@ -77,7 +77,7 @@ jobs:
       - name: Get release file apk path
         id: releaseApk
         working-directory: ./app
-        run: echo "apkfile=$(find build/outputs/apk/release/*.apk)" >> $GITHUB_OUTPUT
+        run: echo "apkfile=$(find build/app/outputs/apk/release/*.apk)" >> $GITHUB_OUTPUT
 
       - name: Upload Release Build to Artifacts
         uses: actions/upload-artifact@v3
