@@ -2,9 +2,10 @@ name: Build and sign application
 
 on:
   push:
-    tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
-      - "v[0-9]+.[0-9]+.[0-9]+([0-9]+)"
+    branches: ['feature/signing_key']
+    # tags:
+    #   - "v[0-9]+.[0-9]+.[0-9]+"
+    #   - "v[0-9]+.[0-9]+.[0-9]+([0-9]+)"
 
   # workflow_dispatch:
   #   inputs:
@@ -62,7 +63,10 @@ jobs:
         env:
           ENCODED_STRING: ${{ secrets.GOOGLE_KEYSTORE_BASE_64 }}
         working-directory: ./app
-        run: echo $ENCODED_STRING | base64 -d > release_keystore.jks
+        run: |
+          echo $ENCODED_STRING | base64 -d > release_keystore.jks
+          pwd
+          ls
 
       - name: Build
         env:
@@ -71,7 +75,9 @@ jobs:
           AVM_KEY_ALIAS: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_ALIAS }}
           AVM_KEY_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEY_PASSWORD }}
         working-directory: ./app
-        run: flutter build apk
+        run: |
+          pwd
+          flutter build apk
 
       - name: Get release file apk path
         id: releaseApk
