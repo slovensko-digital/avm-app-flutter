@@ -1,5 +1,9 @@
 # Changelog
 
+## LATEST - v1.0.0(27)
+
+- Android: Setup release build signing key for Google Play
+
 ## 2024-05-28 - v1.0.0(26)
 
 - Displaying Privacy Policy and Terms of Service documents in Onboarding and Main menu
