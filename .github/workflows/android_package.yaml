@@ -1,4 +1,4 @@
-name: Build and sign application
+name: Build and sign application for Android
 
 on:
   push:
@@ -9,8 +9,8 @@ on:
   workflow_dispatch:
     inputs:
       name:
-        description: "Release-Build"
-        default: "Generate release build"
+        description: "Release-Build-Android"
+        default: "Generate release build for Android"
 
 
 permissions:
