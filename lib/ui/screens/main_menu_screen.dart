@@ -96,7 +96,7 @@ class MainMenuScreen extends StatelessWidget {
   }
 
   static Future<void> _showSignRemoteDocument(BuildContext context) {
-    // forcePush=true so it's same as in _openScreen
+    // forceReplace=true so it's same as in _openScreen
     return RemoteDocumentSigning.startRemoteDocumentSigning(context, true);
   }
 

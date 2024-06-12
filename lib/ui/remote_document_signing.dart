@@ -10,7 +10,7 @@ import 'screens/start_remote_document_signing_screen.dart';
 
 /// Helper for "Remote Document Signing" flow.
 ///
-/// Reads [ISettings.remoteDocumentSigningOnboardingPassed].
+/// Reads and sets [ISettings.remoteDocumentSigningOnboardingPassed].
 ///
 /// And then displays:
 ///  1. When `false` - [StartRemoteDocumentSigningScreen]
