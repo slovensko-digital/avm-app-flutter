@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../strings_context.dart';
+import '../remote_document_signing.dart';
 import '../widgets/app_version_text.dart';
 import 'about_screen.dart';
 import 'settings_screen.dart';
@@ -95,9 +96,8 @@ class MainMenuScreen extends StatelessWidget {
   }
 
   static Future<void> _showSignRemoteDocument(BuildContext context) {
-    const screen = StartRemoteDocumentSigningScreen();
-
-    return _openScreen(context, screen);
+    // forceReplace=true so it's same as in _openScreen
+    return RemoteDocumentSigning.startRemoteDocumentSigning(context, true);
   }
 
   static Future<void> _showPrivacyPolicy(BuildContext context) {

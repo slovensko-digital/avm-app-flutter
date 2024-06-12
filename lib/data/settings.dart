@@ -22,6 +22,9 @@ abstract interface class ISettings {
   /// The signing [SignatureType] value.
   ValueNotifier<SignatureType> get signatureType;
 
+  /// Whether passed onboarding screen for "Remote Document Signing" feature.
+  ValueNotifier<bool> get remoteDocumentSigningOnboardingPassed;
+
   /// Clear all setting.
   Future<bool> clear();
 }
@@ -30,7 +33,7 @@ abstract interface class ISettings {
 ///
 /// Uses **Shared Preferences** - need to call [Settings.initialize] before use.
 // TODO Make only "Settings" type and private _SettingsImpl that will be returned by factory fun
-// TODO Also register it using Injectable
+// TODO Register Settings using Injectable as singleton - would need to pass instance into DI so no need to use "async"
 class Settings with NotifiedPreferences implements ISettings {
   @override
   late final ValueNotifier<String?> acceptedPrivacyPolicyVersion =
@@ -67,5 +70,12 @@ class Settings with NotifiedPreferences implements ISettings {
     key: 'signing.certificate',
     initialValue: null,
     fromJson: (json) => Certificate.fromJson(json),
+  );
+
+  @override
+  late final ValueNotifier<bool> remoteDocumentSigningOnboardingPassed =
+      createSetting(
+    key: "onboarding.remoteDocumentSigning.passed",
+    initialValue: false,
   );
 }

@@ -284,6 +284,10 @@ class _MockSettings implements ISettings {
       ValueNotifier(null);
 
   @override
+  late final ValueNotifier<bool> remoteDocumentSigningOnboardingPassed =
+      ValueNotifier(false);
+
+  @override
   Future<bool> clear() {
     final props = <ValueNotifier>[
       acceptedPrivacyPolicyVersion,
@@ -291,6 +295,7 @@ class _MockSettings implements ISettings {
       signingPdfContainer,
       signatureType,
       signingCertificate,
+      remoteDocumentSigningOnboardingPassed
     ];
 
     for (final prop in props) {
