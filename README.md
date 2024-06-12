@@ -22,7 +22,7 @@ Flutter app for Android and iOS.
 
 ### Onboarding
 
-User onboarding - starts with one [`Onboarding`](lib/ui/onboarding.dart):
+User onboarding - started with [`Onboarding`](lib/ui/onboarding.dart):
 
 1. Accept Privacy Policy using [`OnboardingAcceptDocumentScreen`](lib/ui/screens/onboarding_accept_document_screen.dart)
 2. Accept Terms of Service using same [`OnboardingAcceptDocumentScreen`](lib/ui/screens/onboarding_accept_document_screen.dart)  
@@ -51,7 +51,8 @@ Signing of single (PDF, TXT, image, eForms XML, ...) document using
 
 ### Remote document signing
 
-Similar to [Sign single document](#sign-single-document), but starts with:
+Started with [`RemoteDocumentSigning`](lib/ui/remote_document_signing.dart).
+It's similar to [Sign single document](#sign-single-document), but starts with:
 
 - [`StartRemoteDocumentSigningScreen`](lib/ui/screens/start_remote_document_signing_screen.dart)
 - [`QRCodeScannerScreen`](lib/ui/screens/qr_code_scanner_screen.dart)
