@@ -22,6 +22,9 @@ abstract interface class ISettings {
   /// The signing [SignatureType] value.
   ValueNotifier<SignatureType> get signatureType;
 
+  /// Whether passed onboarding screen for "Remote Document Signing" feature.
+  ValueNotifier<bool> get remoteDocumentSigningOnboardingPassed;
+
   /// Clear all setting.
   Future<bool> clear();
 }
@@ -67,5 +70,12 @@ class Settings with NotifiedPreferences implements ISettings {
     key: 'signing.certificate',
     initialValue: null,
     fromJson: (json) => Certificate.fromJson(json),
+  );
+
+  @override
+  late final ValueNotifier<bool> remoteDocumentSigningOnboardingPassed =
+      createSetting(
+    key: "onboarding.remoteDocumentSigning.passed",
+    initialValue: false,
   );
 }
