@@ -33,7 +33,7 @@ abstract interface class ISettings {
 ///
 /// Uses **Shared Preferences** - need to call [Settings.initialize] before use.
 // TODO Make only "Settings" type and private _SettingsImpl that will be returned by factory fun
-// TODO Also register it using Injectable
+// TODO Register Settings using Injectable as singleton - would need to pass instance into DI so no need to use "async"
 class Settings with NotifiedPreferences implements ISettings {
   @override
   late final ValueNotifier<String?> acceptedPrivacyPolicyVersion =
