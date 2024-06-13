@@ -1,7 +1,6 @@
 import 'package:eidmsdk/types.dart';
 import 'package:flutter/foundation.dart';
 
-import '../data/signature_type.dart';
 import 'select_signing_certificate_cubit.dart';
 
 /// State for [SelectSigningCertificateCubit].
@@ -15,11 +14,8 @@ sealed class SelectSigningCertificateState {
   SelectSigningCertificateErrorState toError(Object error) =>
       SelectSigningCertificateErrorState(error);
 
-  SelectSigningCertificateSuccessState toSuccess(
-    Certificate certificate,
-    SignatureType? signatureType,
-  ) =>
-      SelectSigningCertificateSuccessState(certificate, signatureType);
+  SelectSigningCertificateSuccessState toSuccess(Certificate certificate) =>
+      SelectSigningCertificateSuccessState(certificate);
 
   SelectSigningCertificateCanceledState toCanceled() =>
       const SelectSigningCertificateCanceledState();
@@ -67,15 +63,11 @@ class SelectSigningCertificateNoCertificateState
 class SelectSigningCertificateSuccessState
     extends SelectSigningCertificateState {
   final Certificate certificate;
-  final SignatureType? signatureType;
 
-  const SelectSigningCertificateSuccessState(
-    this.certificate, [
-    this.signatureType,
-  ]);
+  const SelectSigningCertificateSuccessState(this.certificate);
 
   @override
   String toString() {
-    return "$runtimeType(certificate: $certificate, signatureType: $signatureType)";
+    return "$runtimeType(certificate: $certificate)";
   }
 }
