@@ -5,7 +5,8 @@ import 'package:html/parser.dart' as html show parse;
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 
-/// Gets the document version by readiing value from "version" HTML `meta` tag.
+/// Gets the document version by reading value from "version" HTML `meta` tag.
+// TODO Rename to distinguish bweteeh "HTML document" and Autogram Document
 @lazySingleton
 class GetDocumentVersionUseCase {
   static final http.Client _client = http.Client();

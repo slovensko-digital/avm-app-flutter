@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-import '../../bloc/get_document_parameters_cubit.dart';
+import '../../bloc/get_document_signature_type_cubit.dart';
 import '../../bloc/select_signing_certificate_cubit.dart';
 import '../../certificate_extensions.dart';
 import '../../data/document_signing_type.dart';
@@ -181,9 +181,9 @@ class _SelectSignatureTypeContentState
   @override
   Widget build(BuildContext context) {
     final strings = context.strings;
-    final body = BlocProvider<GetDocumentParametersCubit>(
+    final body = BlocProvider<GetDocumentSignatureTypeCubit>(
       create: (context) {
-        final cubit = getIt.get<GetDocumentParametersCubit>();
+        final cubit = getIt.get<GetDocumentSignatureTypeCubit>();
 
         if (widget.signingType == DocumentSigningType.remote) {
           cubit.loadDocumentParameters(widget.documentId);
@@ -191,8 +191,8 @@ class _SelectSignatureTypeContentState
 
         return cubit;
       },
-      child:
-          BlocBuilder<GetDocumentParametersCubit, GetDocumentParametersState>(
+      child: BlocBuilder<GetDocumentSignatureTypeCubit,
+          GetDocumentSignatureTypeState>(
         builder: (context, state) {
           return Text("$state");
         },

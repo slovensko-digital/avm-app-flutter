@@ -20,15 +20,16 @@ import 'package:injectable/injectable.dart' as _i2;
 
 import 'app_service.dart' as _i3;
 import 'bloc/create_document_cubit.dart' as _i15;
-import 'bloc/get_document_parameters_cubit.dart' as _i19;
+import 'bloc/get_document_signature_type_cubit.dart' as _i20;
 import 'bloc/paired_device_list_cubit.dart' as _i8;
 import 'bloc/present_signed_document_cubit.dart' as _i9;
 import 'bloc/preview_document_cubit.dart' as _i10;
 import 'bloc/select_signing_certificate_cubit.dart' as _i11;
 import 'bloc/sign_document_cubit.dart' as _i14;
 import 'data/pdf_signing_option.dart' as _i18;
-import 'di.dart' as _i20;
+import 'di.dart' as _i21;
 import 'services/encryption_key_registry.dart' as _i5;
+import 'use_case/get_document_signature_type_use_case.dart' as _i19;
 import 'use_case/get_document_version_use_case.dart' as _i6;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -98,14 +99,17 @@ extension GetItInjectableX on _i1.GetIt {
           file: file,
           pdfSigningOption: pdfSigningOption,
         ));
-    gh.factory<_i19.GetDocumentParametersCubit>(() =>
-        _i19.GetDocumentParametersCubit(
-            autogramService: gh<_i7.IAutogramService>()));
+    gh.lazySingleton<_i19.GetDocumentSignatureTypeUseCase>(
+        () => _i19.GetDocumentSignatureTypeUseCase(gh<_i7.IAutogramService>()));
+    gh.factory<_i20.GetDocumentSignatureTypeCubit>(() =>
+        _i20.GetDocumentSignatureTypeCubit(
+            getDocumentSignatureType:
+                gh<_i19.GetDocumentSignatureTypeUseCase>()));
     return this;
   }
 }
 
-class _$ExtrernalModule extends _i20.ExtrernalModule {
+class _$ExtrernalModule extends _i21.ExtrernalModule {
   @override
   _i4.Eidmsdk get eidmsdk => _i4.Eidmsdk();
 }
