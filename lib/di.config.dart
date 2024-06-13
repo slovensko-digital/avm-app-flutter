@@ -75,6 +75,7 @@ extension GetItInjectableX on _i1.GetIt {
     ) =>
         _i11.SelectSigningCertificateCubit(
           eidmsdk: gh<_i4.Eidmsdk>(),
+          autogramService: gh<_i7.IAutogramService>(),
           signingCertificate: signingCertificate,
         ));
     gh.factoryParam<_i14.SignDocumentCubit, String, _i13.Certificate>((

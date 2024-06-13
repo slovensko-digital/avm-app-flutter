@@ -127,6 +127,7 @@ class _Body extends StatelessWidget {
     return SelectSigningCertificateFragment(
       state: state,
       successBuilder: (context, certificate) {
+        // TODO Use bloc listener to invoke loading of Document Properties
         return _SelectSignatureTypeContent(
           certificate: certificate,
           signingType: signingType,

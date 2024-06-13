@@ -1,6 +1,7 @@
 import 'package:eidmsdk/types.dart';
 import 'package:flutter/foundation.dart';
 
+import '../data/signature_type.dart';
 import 'select_signing_certificate_cubit.dart';
 
 /// State for [SelectSigningCertificateCubit].
@@ -8,25 +9,23 @@ import 'select_signing_certificate_cubit.dart';
 sealed class SelectSigningCertificateState {
   const SelectSigningCertificateState();
 
-  SelectSigningCertificateLoadingState toLoading() {
-    return const SelectSigningCertificateLoadingState();
-  }
+  SelectSigningCertificateLoadingState toLoading() =>
+      const SelectSigningCertificateLoadingState();
 
-  SelectSigningCertificateErrorState toError(Object error) {
-    return SelectSigningCertificateErrorState(error);
-  }
+  SelectSigningCertificateErrorState toError(Object error) =>
+      SelectSigningCertificateErrorState(error);
 
-  SelectSigningCertificateSuccessState toSuccess(Certificate certificate) {
-    return SelectSigningCertificateSuccessState(certificate);
-  }
+  SelectSigningCertificateSuccessState toSuccess(
+    Certificate certificate,
+    SignatureType? signatureType,
+  ) =>
+      SelectSigningCertificateSuccessState(certificate, signatureType);
 
-  SelectSigningCertificateCanceledState toCanceled() {
-    return const SelectSigningCertificateCanceledState();
-  }
+  SelectSigningCertificateCanceledState toCanceled() =>
+      const SelectSigningCertificateCanceledState();
 
-  SelectSigningCertificateNoCertificateState toNoCertificate() {
-    return const SelectSigningCertificateNoCertificateState();
-  }
+  SelectSigningCertificateNoCertificateState toNoCertificate() =>
+      const SelectSigningCertificateNoCertificateState();
 
   @override
   String toString() {
@@ -68,11 +67,15 @@ class SelectSigningCertificateNoCertificateState
 class SelectSigningCertificateSuccessState
     extends SelectSigningCertificateState {
   final Certificate certificate;
+  final SignatureType? signatureType;
 
-  const SelectSigningCertificateSuccessState(this.certificate);
+  const SelectSigningCertificateSuccessState(
+    this.certificate, [
+    this.signatureType,
+  ]);
 
   @override
   String toString() {
-    return "$runtimeType(certificate: $certificate)";
+    return "$runtimeType(certificate: $certificate, signatureType: $signatureType)";
   }
 }
