@@ -47,8 +47,8 @@ extension GetItInjectableX on _i1.GetIt {
     gh.singleton<_i3.AppService>(() => _i3.AppService());
     gh.lazySingleton<_i4.Eidmsdk>(() => extrernalModule.eidmsdk);
     gh.singleton<_i5.EncryptionKeyRegistry>(() => _i5.EncryptionKeyRegistry());
-    gh.lazySingleton<_i6.GetDocumentVersionUseCase>(
-        () => _i6.GetDocumentVersionUseCase());
+    gh.lazySingleton<_i6.GetHtmlDocumentVersionUseCase>(
+        () => _i6.GetHtmlDocumentVersionUseCase());
     gh.lazySingleton<_i7.IAutogramService>(
         () => extrernalModule.create(gh<_i5.EncryptionKeyRegistry>()));
     gh.factory<_i8.PairedDeviceListCubit>(

@@ -32,7 +32,7 @@ class GetDocumentSignatureTypeCubit
 
       emit(GetDocumentSignatureTypeSuccessState(signatureType));
     } catch (error, stackTrace) {
-      _log.severe("Error getting Document Parameters.", error, stackTrace);
+      _log.severe("Error getting Document Signature Type.", error, stackTrace);
 
       emit(GetDocumentSignatureTypeErrorState(error));
     }
