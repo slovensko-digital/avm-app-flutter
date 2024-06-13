@@ -1,7 +1,7 @@
 name: autogram
 description: "Autogram v mobile"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.0+27
+version: 1.0.0+28
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -15,16 +15,16 @@ dependencies:
     path: ../eidmsdk_flutter
   autogram_sign:
     path: ../autogram_sign
+  package_info_plus:
+  share_plus:
+  wakelock_plus:
   flutter_svg:
-  package_info_plus: ^5.0.1
   http:
   chopper: '>=7.4.0 <8.0.0'
   injectable: ^2.2.0
   get_it: ^7.6.1
   flutter_hooks: ^0.20.5
   localstorage: ^4.0.1+4
-  share_plus: ^7.2.2
-  wakelock_plus:
   pdf:
   printing: ^5.12.0
   webview_flutter:

@@ -5,9 +5,7 @@ import 'package:html/parser.dart' as html show parse;
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 
-/// Gets the document - Privacy Policy or Terms of Service - version.
-///
-/// Impl. reads value from "version" `meta` tag.
+/// Gets the document version by readiing value from "version" HTML `meta` tag.
 @lazySingleton
 class GetDocumentVersionUseCase {
   static final http.Client _client = http.Client();
@@ -21,17 +19,7 @@ class GetDocumentVersionUseCase {
           url, "url", "GET on URL yields no text content.");
     }
 
-    final document = html.parse(text);
-    final meta =
-        document.querySelector('html > head > meta[name="version"][content]');
-    final version = (meta?.attributes["content"]?.trim() ?? '');
-
-    if (version.isEmpty) {
-      throw ArgumentError.value(
-          url, "url", "Required meta tag is not present.");
-    }
-
-    return version;
+    return parseVersion(text);
   }
 
   /// Gets the HTML content from given [url].

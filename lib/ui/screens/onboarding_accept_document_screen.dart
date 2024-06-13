@@ -143,10 +143,6 @@ class _OnboardingAcceptDocumentScreenState
   type: OnboardingAcceptDocumentScreen,
 )
 Widget previewOnboardingAcceptDocumentScreen(BuildContext context) {
-  getIt.registerLazySingleton<GetDocumentVersionUseCase>(
-    () => GetDocumentVersionUseCase(),
-  );
-
   final strings = context.strings;
   final title = context.knobs.string(
     label: "Title",
