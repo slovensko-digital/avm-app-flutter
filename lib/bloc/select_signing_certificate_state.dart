@@ -8,25 +8,20 @@ import 'select_signing_certificate_cubit.dart';
 sealed class SelectSigningCertificateState {
   const SelectSigningCertificateState();
 
-  SelectSigningCertificateLoadingState toLoading() {
-    return const SelectSigningCertificateLoadingState();
-  }
+  SelectSigningCertificateLoadingState toLoading() =>
+      const SelectSigningCertificateLoadingState();
 
-  SelectSigningCertificateErrorState toError(Object error) {
-    return SelectSigningCertificateErrorState(error);
-  }
+  SelectSigningCertificateErrorState toError(Object error) =>
+      SelectSigningCertificateErrorState(error);
 
-  SelectSigningCertificateSuccessState toSuccess(Certificate certificate) {
-    return SelectSigningCertificateSuccessState(certificate);
-  }
+  SelectSigningCertificateSuccessState toSuccess(Certificate certificate) =>
+      SelectSigningCertificateSuccessState(certificate);
 
-  SelectSigningCertificateCanceledState toCanceled() {
-    return const SelectSigningCertificateCanceledState();
-  }
+  SelectSigningCertificateCanceledState toCanceled() =>
+      const SelectSigningCertificateCanceledState();
 
-  SelectSigningCertificateNoCertificateState toNoCertificate() {
-    return const SelectSigningCertificateNoCertificateState();
-  }
+  SelectSigningCertificateNoCertificateState toNoCertificate() =>
+      const SelectSigningCertificateNoCertificateState();
 
   @override
   String toString() {

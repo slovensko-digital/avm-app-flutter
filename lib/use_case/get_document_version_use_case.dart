@@ -5,9 +5,10 @@ import 'package:html/parser.dart' as html show parse;
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 
-/// Gets the document version by readiing value from "version" HTML `meta` tag.
+/// Gets the HTML document version by reading value
+/// from "version" HTML `meta` tag.
 @lazySingleton
-class GetDocumentVersionUseCase {
+class GetHtmlDocumentVersionUseCase {
   static final http.Client _client = http.Client();
 
   /// Gets the document version on this [url].

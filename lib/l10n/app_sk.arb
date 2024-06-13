@@ -34,6 +34,7 @@
   "signRemoteDocumentTitle": "Podpísať vzdialený dokument",
   "aboutLabel": "O aplikácii",
   "signingPdfContainerTitle": "Podpisovanie PDF",
+  "signatureTypeErrorHeading": "Chyba pri načítaní parametrov podpisu",
   "signatureTypeTitle": "Predvolený typ podpisu",
   "signatureTypeSummary": "{name, select, withoutTimestamp {Vlastnoručný podpis} withTimestamp {Osvedčený podpis} other {Spýtať sa pri podpisovaní}}",
   "signatureTypeValueTitle": "{name, select, withoutTimestamp {Vlastnoručný podpis} withTimestamp {Osvedčený podpis} other {-}}",
@@ -66,7 +67,7 @@
   "openDocumentErrorTitle": "Chyba pri vytváraní dokumentu",
 
   "previewDocumentTitle": "Náhľad dokumentu",
-  "previewDocumentErrorTitle": "Chyba pri načítaní vizualizácie dokumentu",
+  "previewDocumentErrorHeading": "Chyba pri načítaní vizualizácie dokumentu",
   "shareDocumentText": "\n\nSúbor z aplikácie Autogram v mobile",
 
   "documentVisualizationCannotVisualizeTypeError": "Neviem vizualizovať {type} typ.",

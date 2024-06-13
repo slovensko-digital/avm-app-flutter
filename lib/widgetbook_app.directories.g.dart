@@ -278,7 +278,7 @@ final directories = <_i1.WidgetbookNode>[
       _i1.WidgetbookLeafComponent(
         name: 'SignatureTypePicker',
         useCase: _i1.WidgetbookUseCase(
-          name: 'SignatureTypePicker',
+          name: '',
           builder: _i23.previewSignatureTypePicker,
         ),
       ),

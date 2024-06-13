@@ -1,25 +1,31 @@
 import 'package:eidmsdk/types.dart' show Certificate;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../bloc/get_document_signature_type_cubit.dart';
 import '../../bloc/select_signing_certificate_cubit.dart';
 import '../../certificate_extensions.dart';
 import '../../data/document_signing_type.dart';
 import '../../data/settings.dart';
 import '../../data/signature_type.dart';
+import '../../di.dart';
 import '../../oids.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../fragment/select_signing_certificate_fragment.dart';
+import '../widgets/error_content.dart';
+import '../widgets/loading_content.dart';
 import '../widgets/signature_type_picker.dart';
 import 'sign_document_screen.dart';
 
-/// Screen for selecting the signature type using [SignatureTypePicker].
-/// Expecting to have at most 1 QES [Certificate].
+/// Screen for
+///  - loading and presenting [Certificate]
+///  - and then selecting the [SignatureType] using [SignatureTypePicker].
 ///
-/// Uses [SelectSigningCertificateCubit].
+/// Uses [SelectSigningCertificateCubit] and [GetDocumentSignatureTypeCubit].
+///
+/// Consumes [ISettings].
 ///
 /// Navigates next to [SignDocumentScreen].
 class SelectCertificateScreen extends StatelessWidget {
@@ -39,7 +45,7 @@ class SelectCertificateScreen extends StatelessWidget {
         final settings = context.read<ISettings>();
         final signingCertificate = settings.signingCertificate;
 
-        return GetIt.instance.get<SelectSigningCertificateCubit>(
+        return getIt.get<SelectSigningCertificateCubit>(
           param1: signingCertificate,
         )..getCertificates();
       },
@@ -57,6 +63,8 @@ class SelectCertificateScreen extends StatelessWidget {
             ),
             body: _Body(
               state: state,
+              signingType: signingType,
+              documentId: documentId,
               onSignDocumentRequested: (certificate, signatureType) {
                 _onSignDocumentRequested(
                   context: context,
@@ -102,12 +110,17 @@ class SelectCertificateScreen extends StatelessWidget {
 /// [SelectCertificateScreen] body.
 class _Body extends StatelessWidget {
   final SelectSigningCertificateState state;
+
+  final DocumentSigningType signingType;
+  final String documentId;
   final void Function(Certificate certificate, SignatureType signatureType)?
       onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
 
   const _Body({
     required this.state,
+    this.signingType = DocumentSigningType.local,
+    this.documentId = '',
     this.onSignDocumentRequested,
     this.onReloadCertificatesRequested,
   });
@@ -126,6 +139,8 @@ class _Body extends StatelessWidget {
       successBuilder: (context, certificate) {
         return _SelectSignatureTypeContent(
           certificate: certificate,
+          signingType: signingType,
+          documentId: documentId,
           onSignDocumentRequested: (final SignatureType signatureType) {
             onSignDocumentRequested?.call(certificate, signatureType);
           },
@@ -138,11 +153,15 @@ class _Body extends StatelessWidget {
 
 class _SelectSignatureTypeContent extends StatefulWidget {
   final String? subject;
+  final DocumentSigningType signingType;
+  final String documentId;
   final ValueSetter<SignatureType>? onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
 
   _SelectSignatureTypeContent({
     required Certificate certificate,
+    required this.signingType,
+    required this.documentId,
     required this.onSignDocumentRequested,
     required this.onReloadCertificatesRequested,
   }) : subject = certificate.tbsCertificate.subject[X500Oids.cn];
@@ -157,27 +176,55 @@ class _SelectSignatureTypeContentState
   SignatureType? _signatureType;
 
   @override
-  void initState() {
-    super.initState();
-
-    _signatureType = context.read<ISettings>().signatureType.value;
-  }
-
-  @override
   Widget build(BuildContext context) {
     final strings = context.strings;
+    final body = BlocProvider<GetDocumentSignatureTypeCubit>(
+      create: (context) {
+        final cubit = getIt.get<GetDocumentSignatureTypeCubit>();
+
+        switch (widget.signingType) {
+          case DocumentSigningType.local:
+            cubit.setSignatureType(
+              context.read<ISettings>().signatureType.value,
+            );
+            break;
+
+          case DocumentSigningType.remote:
+            cubit.getDocumentSignatureType(widget.documentId);
+            break;
+        }
+
+        return cubit;
+      },
+      child: BlocBuilder<GetDocumentSignatureTypeCubit,
+          GetDocumentSignatureTypeState>(
+        builder: (context, state) {
+          return switch (state) {
+            GetDocumentSignatureTypeInitialState _ => const LoadingContent(),
+            GetDocumentSignatureTypeLoadingState _ => const LoadingContent(),
+            GetDocumentSignatureTypeErrorState state => ErrorContent(
+                title: strings.signatureTypeErrorHeading,
+                error: state.error,
+              ),
+            GetDocumentSignatureTypeSuccessState state => SignatureTypePicker(
+                value: _signatureType ??
+                    (state.signatureType ?? SignatureType.withoutTimestamp),
+                canChange: (widget.signingType == DocumentSigningType.local),
+                onValueChanged: (final SignatureType value) {
+                  setState(() {
+                    _signatureType = value;
+                  });
+                },
+              ),
+          };
+        },
+      ),
+    );
 
     return Column(
       children: [
         Expanded(
-          child: SignatureTypePicker(
-            value: _signatureType,
-            onValueChanged: (final SignatureType value) {
-              setState(() {
-                _signatureType = value;
-              });
-            },
-          ),
+          child: body,
         ),
 
         // Primary button

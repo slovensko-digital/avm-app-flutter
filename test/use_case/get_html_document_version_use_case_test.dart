@@ -1,17 +1,17 @@
 import 'package:autogram/use_case/get_document_version_use_case.dart';
 import 'package:test/test.dart';
 
-/// Tests for the [GetDocumentVersionUseCase] class.
+/// Tests for the [GetHtmlDocumentVersionUseCase] class.
 void main() {
   group('GetDocumentVersionUseCase', () {
     test('parseVersion throws ArgumentError for empty HTML', () {
       expect(
-        () => GetDocumentVersionUseCase.parseVersion(""),
+        () => GetHtmlDocumentVersionUseCase.parseVersion(""),
         throwsA(predicate((e) => e is ArgumentError && e.name == 'text')),
       );
 
       expect(
-        () => GetDocumentVersionUseCase.parseVersion('<html lang="en" />'),
+        () => GetHtmlDocumentVersionUseCase.parseVersion('<html lang="en" />'),
         throwsA(predicate((e) => e is ArgumentError && e.name == 'text')),
       );
     });
@@ -20,14 +20,14 @@ void main() {
         'parseVersion throws ArgumentError for HTML with missing or invalid meta',
         () {
       expect(
-        () => GetDocumentVersionUseCase.parseVersion(
+        () => GetHtmlDocumentVersionUseCase.parseVersion(
           '<html lang="en"><head><title/></head></html>',
         ),
         throwsA(predicate((e) => e is ArgumentError && e.name == 'text')),
       );
 
       expect(
-        () => GetDocumentVersionUseCase.parseVersion("""
+        () => GetHtmlDocumentVersionUseCase.parseVersion("""
           <html lang="en">
             <head>
               <title />
@@ -38,7 +38,7 @@ void main() {
         throwsA(predicate((e) => e is ArgumentError && e.name == 'text')),
       );
       expect(
-        () => GetDocumentVersionUseCase.parseVersion("""
+        () => GetHtmlDocumentVersionUseCase.parseVersion("""
           <html lang="en">
             <head>
               <title />
@@ -49,7 +49,7 @@ void main() {
         throwsA(predicate((e) => e is ArgumentError && e.name == 'text')),
       );
       expect(
-        () => GetDocumentVersionUseCase.parseVersion("""
+        () => GetHtmlDocumentVersionUseCase.parseVersion("""
           <html lang="en">
             <head>
               <title />
@@ -63,14 +63,14 @@ void main() {
 
     test('parseVersion returns value for valid meta with value', () {
       expect(
-        () => GetDocumentVersionUseCase.parseVersion(
+        () => GetHtmlDocumentVersionUseCase.parseVersion(
           '<html lang="en"><head><title></title></head></html>',
         ),
         throwsA(predicate((e) => e is ArgumentError && e.name == 'text')),
       );
 
       expect(
-        () => GetDocumentVersionUseCase.parseVersion("""
+        () => GetHtmlDocumentVersionUseCase.parseVersion("""
           <html lang="en">
             <head>
               <title></title>
@@ -81,7 +81,7 @@ void main() {
         throwsA(predicate((e) => e is ArgumentError && e.name == 'text')),
       );
       expect(
-        GetDocumentVersionUseCase.parseVersion("""
+        GetHtmlDocumentVersionUseCase.parseVersion("""
           <html lang="en">
             <head>
               <title></title>

@@ -119,7 +119,7 @@ class _Body extends StatelessWidget {
           onSignRequested: onSignRequested,
         ),
       PreviewDocumentErrorState state => ErrorContent(
-          title: context.strings.previewDocumentErrorTitle,
+          title: context.strings.previewDocumentErrorHeading,
           error: state.error,
         ),
     };

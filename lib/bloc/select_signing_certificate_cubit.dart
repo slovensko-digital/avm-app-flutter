@@ -15,7 +15,7 @@ export 'select_signing_certificate_state.dart';
 @injectable
 class SelectSigningCertificateCubit
     extends Cubit<SelectSigningCertificateState> {
-  static final _log = Logger("SelectCertificateCubit");
+  static final _log = Logger((SelectSigningCertificateCubit).toString());
   static const _defaultLanguage = 'sk';
 
   final Eidmsdk _eidmsdk;
