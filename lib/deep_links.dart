@@ -31,12 +31,12 @@ DeepLinkAction parseDeepLinkAction(Uri uri) {
     "/api/v1/qr-code" => () {
         if (!uri.queryParameters.containsKey("guid")) {
           throw ArgumentError.value(
-              uri.toString(), "uri", "'guid' param is missing value.");
+              uri.toString(), "uri", '"guid" param is missing a value.');
         }
 
         if (!uri.queryParameters.containsKey("key")) {
           throw ArgumentError.value(
-              uri.toString(), "uri", "'key' param is missing value.");
+              uri.toString(), "uri", '"key" param is missing a value.');
         }
 
         return SignRemoteDocumentAction(
