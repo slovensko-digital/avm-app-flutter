@@ -20,13 +20,14 @@ import 'package:injectable/injectable.dart' as _i2;
 
 import 'app_service.dart' as _i3;
 import 'bloc/create_document_cubit.dart' as _i15;
+import 'bloc/get_document_parameters_cubit.dart' as _i19;
 import 'bloc/paired_device_list_cubit.dart' as _i8;
 import 'bloc/present_signed_document_cubit.dart' as _i9;
 import 'bloc/preview_document_cubit.dart' as _i10;
 import 'bloc/select_signing_certificate_cubit.dart' as _i11;
 import 'bloc/sign_document_cubit.dart' as _i14;
 import 'data/pdf_signing_option.dart' as _i18;
-import 'di.dart' as _i19;
+import 'di.dart' as _i20;
 import 'services/encryption_key_registry.dart' as _i5;
 import 'use_case/get_document_version_use_case.dart' as _i6;
 
@@ -75,7 +76,6 @@ extension GetItInjectableX on _i1.GetIt {
     ) =>
         _i11.SelectSigningCertificateCubit(
           eidmsdk: gh<_i4.Eidmsdk>(),
-          autogramService: gh<_i7.IAutogramService>(),
           signingCertificate: signingCertificate,
         ));
     gh.factoryParam<_i14.SignDocumentCubit, String, _i13.Certificate>((
@@ -98,11 +98,14 @@ extension GetItInjectableX on _i1.GetIt {
           file: file,
           pdfSigningOption: pdfSigningOption,
         ));
+    gh.factory<_i19.GetDocumentParametersCubit>(() =>
+        _i19.GetDocumentParametersCubit(
+            autogramService: gh<_i7.IAutogramService>()));
     return this;
   }
 }
 
-class _$ExtrernalModule extends _i19.ExtrernalModule {
+class _$ExtrernalModule extends _i20.ExtrernalModule {
   @override
   _i4.Eidmsdk get eidmsdk => _i4.Eidmsdk();
 }
