@@ -57,6 +57,7 @@ class SelectCertificateScreen extends StatelessWidget {
             ),
             body: _Body(
               state: state,
+              signingType: signingType,
               onSignDocumentRequested: (certificate, signatureType) {
                 _onSignDocumentRequested(
                   context: context,
@@ -102,12 +103,14 @@ class SelectCertificateScreen extends StatelessWidget {
 /// [SelectCertificateScreen] body.
 class _Body extends StatelessWidget {
   final SelectSigningCertificateState state;
+  final DocumentSigningType signingType;
   final void Function(Certificate certificate, SignatureType signatureType)?
       onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
 
   const _Body({
     required this.state,
+    this.signingType = DocumentSigningType.local,
     this.onSignDocumentRequested,
     this.onReloadCertificatesRequested,
   });
@@ -126,6 +129,7 @@ class _Body extends StatelessWidget {
       successBuilder: (context, certificate) {
         return _SelectSignatureTypeContent(
           certificate: certificate,
+          signingType: signingType,
           onSignDocumentRequested: (final SignatureType signatureType) {
             onSignDocumentRequested?.call(certificate, signatureType);
           },
@@ -138,11 +142,13 @@ class _Body extends StatelessWidget {
 
 class _SelectSignatureTypeContent extends StatefulWidget {
   final String? subject;
+  final DocumentSigningType signingType;
   final ValueSetter<SignatureType>? onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
 
   _SelectSignatureTypeContent({
     required Certificate certificate,
+    required this.signingType,
     required this.onSignDocumentRequested,
     required this.onReloadCertificatesRequested,
   }) : subject = certificate.tbsCertificate.subject[X500Oids.cn];
@@ -171,7 +177,9 @@ class _SelectSignatureTypeContentState
       children: [
         Expanded(
           child: SignatureTypePicker(
+            // TODO Load SignatureType when signingType is remote
             value: _signatureType,
+            canChange: (widget.signingType == DocumentSigningType.local),
             onValueChanged: (final SignatureType value) {
               setState(() {
                 _signatureType = value;
