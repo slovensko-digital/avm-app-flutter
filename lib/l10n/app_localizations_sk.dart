@@ -103,6 +103,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get signingPdfContainerTitle => 'Podpisovanie PDF';
 
   @override
+  String get signatureTypeErrorHeading => 'Chyba pri načítaní parametrov podpisu';
+
+  @override
   String get signatureTypeTitle => 'Predvolený typ podpisu';
 
   @override
@@ -218,7 +221,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get previewDocumentTitle => 'Náhľad dokumentu';
 
   @override
-  String get previewDocumentErrorTitle => 'Chyba pri načítaní vizualizácie dokumentu';
+  String get previewDocumentErrorHeading => 'Chyba pri načítaní vizualizácie dokumentu';
 
   @override
   String get shareDocumentText => '\n\nSúbor z aplikácie Autogram v mobile';

@@ -271,6 +271,12 @@ abstract class AppLocalizations {
   /// **'Podpisovanie PDF'**
   String get signingPdfContainerTitle;
 
+  /// No description provided for @signatureTypeErrorHeading.
+  ///
+  /// In sk, this message translates to:
+  /// **'Chyba pri načítaní parametrov podpisu'**
+  String get signatureTypeErrorHeading;
+
   /// No description provided for @signatureTypeTitle.
   ///
   /// In sk, this message translates to:
@@ -421,11 +427,11 @@ abstract class AppLocalizations {
   /// **'Náhľad dokumentu'**
   String get previewDocumentTitle;
 
-  /// No description provided for @previewDocumentErrorTitle.
+  /// No description provided for @previewDocumentErrorHeading.
   ///
   /// In sk, this message translates to:
   /// **'Chyba pri načítaní vizualizácie dokumentu'**
-  String get previewDocumentErrorTitle;
+  String get previewDocumentErrorHeading;
 
   /// No description provided for @shareDocumentText.
   ///

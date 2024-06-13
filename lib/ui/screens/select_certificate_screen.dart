@@ -14,13 +14,18 @@ import '../../oids.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../fragment/select_signing_certificate_fragment.dart';
+import '../widgets/error_content.dart';
+import '../widgets/loading_content.dart';
 import '../widgets/signature_type_picker.dart';
 import 'sign_document_screen.dart';
 
-/// Screen for selecting the signature type using [SignatureTypePicker].
-/// Expecting to have at most 1 QES [Certificate].
+/// Screen for
+///  - loading and presenting [Certificate]
+///  - and then selecting the [SignatureType] using [SignatureTypePicker].
 ///
-/// Uses [SelectSigningCertificateCubit].
+/// Uses [SelectSigningCertificateCubit] and [GetDocumentSignatureTypeCubit].
+///
+/// Consumes [ISettings].
 ///
 /// Navigates next to [SignDocumentScreen].
 class SelectCertificateScreen extends StatelessWidget {
@@ -171,22 +176,22 @@ class _SelectSignatureTypeContentState
   SignatureType? _signatureType;
 
   @override
-  void initState() {
-    super.initState();
-
-    // TODO Pass to Cubit
-    _signatureType = context.read<ISettings>().signatureType.value;
-  }
-
-  @override
   Widget build(BuildContext context) {
     final strings = context.strings;
     final body = BlocProvider<GetDocumentSignatureTypeCubit>(
       create: (context) {
         final cubit = getIt.get<GetDocumentSignatureTypeCubit>();
 
-        if (widget.signingType == DocumentSigningType.remote) {
-          cubit.loadDocumentParameters(widget.documentId);
+        switch (widget.signingType) {
+          case DocumentSigningType.local:
+            cubit.setSignatureType(
+              context.read<ISettings>().signatureType.value,
+            );
+            break;
+
+          case DocumentSigningType.remote:
+            cubit.getDocumentSignatureType(widget.documentId);
+            break;
         }
 
         return cubit;
@@ -194,7 +199,24 @@ class _SelectSignatureTypeContentState
       child: BlocBuilder<GetDocumentSignatureTypeCubit,
           GetDocumentSignatureTypeState>(
         builder: (context, state) {
-          return Text("$state");
+          return switch (state) {
+            GetDocumentSignatureTypeInitialState _ => const LoadingContent(),
+            GetDocumentSignatureTypeLoadingState _ => const LoadingContent(),
+            GetDocumentSignatureTypeErrorState state => ErrorContent(
+                title: strings.signatureTypeErrorHeading,
+                error: state.error,
+              ),
+            GetDocumentSignatureTypeSuccessState state => SignatureTypePicker(
+                value: _signatureType ??
+                    (state.signatureType ?? SignatureType.withoutTimestamp),
+                canChange: (widget.signingType == DocumentSigningType.local),
+                onValueChanged: (final SignatureType value) {
+                  setState(() {
+                    _signatureType = value;
+                  });
+                },
+              ),
+          };
         },
       ),
     );
@@ -202,16 +224,7 @@ class _SelectSignatureTypeContentState
     return Column(
       children: [
         Expanded(
-          child: SignatureTypePicker(
-            // TODO Use GetDocumentParametersCubit to set canChange
-            value: _signatureType,
-            canChange: (widget.signingType == DocumentSigningType.local),
-            onValueChanged: (final SignatureType value) {
-              setState(() {
-                _signatureType = value;
-              });
-            },
-          ),
+          child: body,
         ),
 
         // Primary button

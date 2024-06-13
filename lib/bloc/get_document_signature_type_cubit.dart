@@ -21,18 +21,23 @@ class GetDocumentSignatureTypeCubit
   })  : _getDocumentSignatureType = getDocumentSignatureType,
         super(const GetDocumentSignatureTypeInitialState());
 
-  /// Loads the Document parameters needed to preset [SignatureType].
-  Future<void> loadDocumentParameters(String documentId) async {
+  /// Sets the [signatureType] directly.
+  void setSignatureType(SignatureType signatureType) {
+    emit(GetDocumentSignatureTypeSuccessState(signatureType));
+  }
+
+  /// Gets the Document [SignatureType].
+  Future<void> getDocumentSignatureType(String documentId) async {
     emit(const GetDocumentSignatureTypeLoadingState());
 
     try {
       final signatureType = await _getDocumentSignatureType(documentId);
 
-      _log.info("Got Document Signature Type: ${signatureType?.name}.");
+      _log.info("Got Document SignatureType: ${signatureType?.name}.");
 
       emit(GetDocumentSignatureTypeSuccessState(signatureType));
     } catch (error, stackTrace) {
-      _log.severe("Error getting Document Signature Type.", error, stackTrace);
+      _log.severe("Error getting Document SignatureType.", error, stackTrace);
 
       emit(GetDocumentSignatureTypeErrorState(error));
     }
