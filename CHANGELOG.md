@@ -1,6 +1,10 @@
 # Changelog
 
-## LATEST - v1.0.0(27)
+## 2024-06-13 - v1.0.0(28)
+
+- #4 | Displaying Onboarding screen for Remote Document Signing only 1st time
+
+## 2024-05-29 - v1.0.0(27)
 
 - Android: Setup release build signing key for Google Play
 
