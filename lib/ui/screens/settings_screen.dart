@@ -116,7 +116,11 @@ class _Body extends StatelessWidget {
 
     final signatureType = _ValueListenableBoundTile<SignatureType>(
       setting: settings.signatureType,
-      values: SignatureType.values,
+      values: const [
+        SignatureType.unset,
+        SignatureType.withTimestamp,
+        SignatureType.withoutTimestamp,
+      ],
       title: strings.signatureTypeTitle,
       summaryGetter: (value) => strings.signatureTypeSummary(value.name),
     );
