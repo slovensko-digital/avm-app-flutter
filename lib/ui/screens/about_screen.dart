@@ -43,9 +43,12 @@ class _Body extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         const AppVersionText(),
-        const SizedBox(height: 64),
-        Text(strings.eidSDKLicenseText),
-        const SizedBox(height: 64),
+        const SizedBox(height: 16),
+        Text(strings.aboutText),
+        const SizedBox(height: 16),
+        Text(strings.aboutAuthorsText),
+        const SizedBox(height: 16),
+        Text(strings.aboutGithubText),
         const Spacer(),
         TextButton(
           style: TextButton.styleFrom(

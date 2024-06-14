@@ -182,7 +182,16 @@ class AppLocalizationsSk extends AppLocalizations {
   String get aboutTitle => 'O aplikácii';
 
   @override
-  String get eidSDKLicenseText => 'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke\n„https://github.com/eidmsdk“.';
+  String get eidSDKLicenseText => 'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke https://github.com/eidmsdk';
+
+  @override
+  String get aboutText => 'Nový, krajší a lepší podpisovač teraz aj v mobile. Umožňuje elektronické podpisovanie dokumentov slovenským občianskym preukazom s NFC rozhraním podľa európskeho nariadenia eIDAS. Môžete ho používať komerčne aj nekomerčne a zadarmo.';
+
+  @override
+  String get aboutAuthorsText => 'Na tomto projekte spolupracujú freevision s.r.o., Slovensko.Digital a doborovoľníci. Aplikácia ako aj jej ďalšie komponenty sú distribuované pod licenciou EUPL v1.2.';
+
+  @override
+  String get aboutGithubText => 'Zdrojové kódy sú dpstupné na GitHib-e organizácie Slovensko.Digital.';
 
   @override
   String get thirdPartyLicensesLabel => 'Licencie knižníc tretích strán';
@@ -206,10 +215,10 @@ class AppLocalizationsSk extends AppLocalizations {
   String get qrCodeScannerUnsupportedContentErrorMessage => 'Naskenovali ste nepodporovaný alebo neznámy obsah QR kódu.';
 
   @override
-  String get signRemoteDocumentBody1 => 'Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia Autogramu vo vašom internetovom prehladávači.';
+  String get signRemoteDocumentBody1 => 'Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia “Autogram na štátnych weboch“ vo vašom internetovom prehladávači.';
 
   @override
-  String get signRemoteDocumentBody2 => '1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “podísať v mobile”.\n2. Telefónom naskenujte QR kód z vášho počítača.';
+  String get signRemoteDocumentBody2 => '1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “Podpísať mobilom”.\n2. Telefónom naskenujte QR kód z vášho počítača.';
 
   @override
   String get openDocumentTitle => 'Otváranie dokumentu';
