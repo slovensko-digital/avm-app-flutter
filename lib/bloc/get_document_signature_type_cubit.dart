@@ -22,7 +22,7 @@ class GetDocumentSignatureTypeCubit
         super(const GetDocumentSignatureTypeInitialState());
 
   /// Sets the [signatureType] directly.
-  void setSignatureType(SignatureType signatureType) {
+  void setSignatureType(SignatureType? signatureType) {
     emit(GetDocumentSignatureTypeSuccessState(signatureType));
   }
 

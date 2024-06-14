@@ -151,6 +151,14 @@ class _Body extends StatelessWidget {
   }
 }
 
+/// Success content where [Certificate] was loaded.
+/// Only thing is to determine [SignatureType] for given Document, either when:
+///  - [DocumentSigningType.local] - from [ISettings.signatureType]
+///  - [DocumentSigningType.remote] - by calling [GetDocumentSignatureTypeCubit.getDocumentSignatureType]
+///
+/// Uses [GetDocumentSignatureTypeCubit].
+///
+/// Consumes [ISettings].
 class _SelectSignatureTypeContent extends StatefulWidget {
   final String? subject;
   final DocumentSigningType signingType;
@@ -176,6 +184,15 @@ class _SelectSignatureTypeContentState
   SignatureType? _signatureType;
 
   @override
+  void initState() {
+    super.initState();
+
+    if (widget.signingType == DocumentSigningType.local) {
+      _signatureType = context.read<ISettings>().signatureType.value;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final strings = context.strings;
     final body = BlocProvider<GetDocumentSignatureTypeCubit>(
@@ -183,10 +200,10 @@ class _SelectSignatureTypeContentState
         final cubit = getIt.get<GetDocumentSignatureTypeCubit>();
 
         switch (widget.signingType) {
+          // TODO Refactor this flow; Need to work with Settings in cubit ctor
+          // And refactor this widget to be Stateful and work only with Cubit state
           case DocumentSigningType.local:
-            cubit.setSignatureType(
-              context.read<ISettings>().signatureType.value,
-            );
+            cubit.setSignatureType(_signatureType);
             break;
 
           case DocumentSigningType.remote:
@@ -196,8 +213,16 @@ class _SelectSignatureTypeContentState
 
         return cubit;
       },
-      child: BlocBuilder<GetDocumentSignatureTypeCubit,
+      child: BlocConsumer<GetDocumentSignatureTypeCubit,
           GetDocumentSignatureTypeState>(
+        listener: (context, state) {
+          if (state is GetDocumentSignatureTypeSuccessState) {
+            setState(() {
+              _signatureType =
+                  (state.signatureType ?? SignatureType.withoutTimestamp);
+            });
+          }
+        },
         builder: (context, state) {
           return switch (state) {
             GetDocumentSignatureTypeInitialState _ => const LoadingContent(),
@@ -207,8 +232,7 @@ class _SelectSignatureTypeContentState
                 error: state.error,
               ),
             GetDocumentSignatureTypeSuccessState state => SignatureTypePicker(
-                value: _signatureType ??
-                    (state.signatureType ?? SignatureType.withoutTimestamp),
+                value: _signatureType,
                 canChange: (widget.signingType == DocumentSigningType.local),
                 onValueChanged: (final SignatureType value) {
                   setState(() {

@@ -1,4 +1,7 @@
 # Changelog
+## 2024-06-13 - v1.0.0(29)
+
+- Fix Signature Type setting UX
 
 ## 2024-06-13 - v1.0.0(28)
 
