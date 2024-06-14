@@ -50,7 +50,7 @@
   "aboutTitle": "O aplikácii",
   "eidSDKLicenseText": "Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na\u00A0stránke https://github.com/eidmsdk",
   "aboutText": "Nový, krajší a lepší podpisovač teraz aj v mobile. Umožňuje elektronické podpisovanie dokumentov slovenským občianskym preukazom s NFC rozhraním podľa európskeho nariadenia eIDAS. Môžete ho používať komerčne aj nekomerčne a\u00A0zadarmo.",
-  "aboutAuthorsText": "Na tomto projekte spolupracujú freevision s.r.o., Slovensko.Digital a doborovoľníci. Aplikácia ako aj jej ďalšie komponenty sú distribuované pod licenciou EUPL v1.2.",
+  "aboutAuthorsText": "Autormi tohto projektu sú freevision\u00A0s.r.o., Služby\u00A0Slovensko.Digital,\u00A0s.r.o. a ďalší doborovoľníci. Prevádzku zabezpečuje Služby\u00A0Slovensko.Digital,\u00A0s.r.o.",
   "aboutGithubText": "Zdrojové kódy sú dpstupné na GitHib-e organizácie Slovensko.Digital.",
   "thirdPartyLicensesLabel": "Licencie knižníc tretích strán",
 

@@ -188,7 +188,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get aboutText => 'Nový, krajší a lepší podpisovač teraz aj v mobile. Umožňuje elektronické podpisovanie dokumentov slovenským občianskym preukazom s NFC rozhraním podľa európskeho nariadenia eIDAS. Môžete ho používať komerčne aj nekomerčne a zadarmo.';
 
   @override
-  String get aboutAuthorsText => 'Na tomto projekte spolupracujú freevision s.r.o., Slovensko.Digital a doborovoľníci. Aplikácia ako aj jej ďalšie komponenty sú distribuované pod licenciou EUPL v1.2.';
+  String get aboutAuthorsText => 'Autormi tohto projektu sú freevision s.r.o., Služby Slovensko.Digital, s.r.o. a ďalší doborovoľníci. Prevádzku zabezpečuje Služby Slovensko.Digital, s.r.o.';
 
   @override
   String get aboutGithubText => 'Zdrojové kódy sú dpstupné na GitHib-e organizácie Slovensko.Digital.';

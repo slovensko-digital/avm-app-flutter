@@ -364,7 +364,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutAuthorsText.
   ///
   /// In sk, this message translates to:
-  /// **'Na tomto projekte spolupracujú freevision s.r.o., Slovensko.Digital a doborovoľníci. Aplikácia ako aj jej ďalšie komponenty sú distribuované pod licenciou EUPL v1.2.'**
+  /// **'Autormi tohto projektu sú freevision s.r.o., Služby Slovensko.Digital, s.r.o. a ďalší doborovoľníci. Prevádzku zabezpečuje Služby Slovensko.Digital, s.r.o.'**
   String get aboutAuthorsText;
 
   /// No description provided for @aboutGithubText.
