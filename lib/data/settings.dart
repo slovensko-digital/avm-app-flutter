@@ -60,7 +60,7 @@ class Settings with NotifiedPreferences implements ISettings {
   @override
   late final ValueNotifier<SignatureType> signatureType = createEnumSetting(
     key: 'signing.signatureType',
-    initialValue: SignatureType.unset,
+    initialValue: SignatureType.withoutTimestamp,
     values: SignatureType.values,
   );
 
