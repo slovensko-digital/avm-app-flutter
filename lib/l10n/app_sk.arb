@@ -77,11 +77,11 @@
 
   "selectCertificateTitle": "Výber typu podpisu",
   "selectSigningCertificateTitle": "Nastavenie certifikátu",
-  "selectSigningCertificateBody": "Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Ak si prajete iba overiť podpisy v dokumentoch, tento krok je nepovinný a môžete ho preskočiť. Podpisový certifikát si môžete nastaviť neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát, pripravte si prosím občiansky preukaz a nasledujte inštrukcie na obrazovke.",
+  "selectSigningCertificateBody": "Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Podpisový certifikát si môžete nastaviť aj neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát teraz, pripravte si, prosím, občiansky preukaz a nasledujte inštrukcie na obrazovke.",
   "selectSigningCertificateCanceledHeading": "Čítanie certifikátu bolo prerušené",
   "selectSigningCertificateCanceledBody": "Skúste prosím znovu načítať certifikát z vášho občianskeho preukazu.",
   "selectSigningCertificateNoCertificateHeading": "Certifikát nebol nájdený",
-  "selectSigningCertificateNoCertificateBody": "Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na ",
+  "selectSigningCertificateNoCertificateBody": "Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID klient, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na ",
   "selectSigningCertificateNoCertificateGuideUrl": "https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty",
 
   "selectSigningCertificateErrorHeading": "Chyba pri načítavaní certifikátov z občianskeho preukazu.",

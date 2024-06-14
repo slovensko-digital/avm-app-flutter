@@ -478,7 +478,7 @@ abstract class AppLocalizations {
   /// No description provided for @selectSigningCertificateBody.
   ///
   /// In sk, this message translates to:
-  /// **'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Ak si prajete iba overiť podpisy v dokumentoch, tento krok je nepovinný a môžete ho preskočiť. Podpisový certifikát si môžete nastaviť neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát, pripravte si prosím občiansky preukaz a nasledujte inštrukcie na obrazovke.'**
+  /// **'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Podpisový certifikát si môžete nastaviť aj neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát teraz, pripravte si, prosím, občiansky preukaz a nasledujte inštrukcie na obrazovke.'**
   String get selectSigningCertificateBody;
 
   /// No description provided for @selectSigningCertificateCanceledHeading.
@@ -502,7 +502,7 @@ abstract class AppLocalizations {
   /// No description provided for @selectSigningCertificateNoCertificateBody.
   ///
   /// In sk, this message translates to:
-  /// **'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na '**
+  /// **'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID klient, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na '**
   String get selectSigningCertificateNoCertificateBody;
 
   /// No description provided for @selectSigningCertificateNoCertificateGuideUrl.

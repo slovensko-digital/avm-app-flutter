@@ -247,7 +247,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get selectSigningCertificateTitle => 'Nastavenie certifikátu';
 
   @override
-  String get selectSigningCertificateBody => 'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Ak si prajete iba overiť podpisy v dokumentoch, tento krok je nepovinný a môžete ho preskočiť. Podpisový certifikát si môžete nastaviť neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát, pripravte si prosím občiansky preukaz a nasledujte inštrukcie na obrazovke.';
+  String get selectSigningCertificateBody => 'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Podpisový certifikát si môžete nastaviť aj neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát teraz, pripravte si, prosím, občiansky preukaz a nasledujte inštrukcie na obrazovke.';
 
   @override
   String get selectSigningCertificateCanceledHeading => 'Čítanie certifikátu bolo prerušené';
@@ -259,7 +259,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get selectSigningCertificateNoCertificateHeading => 'Certifikát nebol nájdený';
 
   @override
-  String get selectSigningCertificateNoCertificateBody => 'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na ';
+  String get selectSigningCertificateNoCertificateBody => 'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID klient, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na ';
 
   @override
   String get selectSigningCertificateNoCertificateGuideUrl => 'https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty';
