@@ -1,4 +1,10 @@
 # Changelog
+## 2024-06-14 - v1.0.0(30)
+
+- Update Android and iOS icons
+- Update texts
+- Set default signatureType without TimeStamp
+
 ## 2024-06-13 - v1.0.0(29)
 
 - Fix Signature Type setting UX

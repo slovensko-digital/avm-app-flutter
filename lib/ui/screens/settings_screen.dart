@@ -144,8 +144,8 @@ class _Body extends StatelessWidget {
         divider,
         signatureType,
         divider,
-        pairedDevices,
-        divider,
+        // pairedDevices,  TODO: uncomment when pairing works
+        // divider,
       ],
     );
   }
