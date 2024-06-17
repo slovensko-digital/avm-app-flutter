@@ -182,16 +182,10 @@ class AppLocalizationsSk extends AppLocalizations {
   String get aboutTitle => 'O aplikácii';
 
   @override
-  String get eidSDKLicenseText => 'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke https://github.com/eidmsdk';
+  String get eidSDKLicenseText => 'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „https://github.com/eidmsdk“';
 
   @override
-  String get aboutText => 'Nový, krajší a lepší podpisovač teraz aj v mobile. Umožňuje elektronické podpisovanie dokumentov slovenským občianskym preukazom s NFC rozhraním podľa európskeho nariadenia eIDAS. Môžete ho používať komerčne aj nekomerčne a zadarmo.';
-
-  @override
-  String get aboutAuthorsText => 'Autormi tohto projektu sú freevision s.r.o., Služby Slovensko.Digital, s.r.o. a ďalší doborovoľníci. Prevádzku zabezpečuje Služby Slovensko.Digital, s.r.o.';
-
-  @override
-  String get aboutGithubText => 'Zdrojové kódy sú dpstupné na GitHib-e organizácie Slovensko.Digital.';
+  String get aboutAuthorsText => 'Autormi tohto projektu sú freevision s.r.o., Služby Slovensko.Digital, s.r.o. a ďalší dobrovoľníci. Prevádzku zabezpečuje Služby Slovensko.Digital, s.r.o. Zdrojové kódy sú dpstupné na GitHub-e organizácie Slovensko.Digital.';
 
   @override
   String get thirdPartyLicensesLabel => 'Licencie knižníc tretích strán';

@@ -352,26 +352,14 @@ abstract class AppLocalizations {
   /// No description provided for @eidSDKLicenseText.
   ///
   /// In sk, this message translates to:
-  /// **'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke https://github.com/eidmsdk'**
+  /// **'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „https://github.com/eidmsdk“'**
   String get eidSDKLicenseText;
-
-  /// No description provided for @aboutText.
-  ///
-  /// In sk, this message translates to:
-  /// **'Nový, krajší a lepší podpisovač teraz aj v mobile. Umožňuje elektronické podpisovanie dokumentov slovenským občianskym preukazom s NFC rozhraním podľa európskeho nariadenia eIDAS. Môžete ho používať komerčne aj nekomerčne a zadarmo.'**
-  String get aboutText;
 
   /// No description provided for @aboutAuthorsText.
   ///
   /// In sk, this message translates to:
-  /// **'Autormi tohto projektu sú freevision s.r.o., Služby Slovensko.Digital, s.r.o. a ďalší doborovoľníci. Prevádzku zabezpečuje Služby Slovensko.Digital, s.r.o.'**
+  /// **'Autormi tohto projektu sú freevision s.r.o., Služby Slovensko.Digital, s.r.o. a ďalší dobrovoľníci. Prevádzku zabezpečuje Služby Slovensko.Digital, s.r.o. Zdrojové kódy sú dpstupné na GitHub-e organizácie Slovensko.Digital.'**
   String get aboutAuthorsText;
-
-  /// No description provided for @aboutGithubText.
-  ///
-  /// In sk, this message translates to:
-  /// **'Zdrojové kódy sú dpstupné na GitHib-e organizácie Slovensko.Digital.'**
-  String get aboutGithubText;
 
   /// No description provided for @thirdPartyLicensesLabel.
   ///
