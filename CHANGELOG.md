@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-06-17 - v1.0.0(32)
+
+- Update about text
+
 ## 2024-06-15 - v1.0.0(31)
 
 - Remove iPad from target devices as iPads have no NFC
