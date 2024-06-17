@@ -1,4 +1,10 @@
 # Changelog
+
+## 2024-06-15 - v1.0.0(31)
+
+- Remove iPad from target devices as iPads have no NFC
+- set minimum iOS version to 12 as apple required
+
 ## 2024-06-14 - v1.0.0(30)
 
 - Update Android and iOS icons
