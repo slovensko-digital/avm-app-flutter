@@ -1,13 +1,27 @@
-# Autogram Mobile App (AVM)
+# Autogram v mobile (AVM)
 
-Flutter app for Android and iOS.
+Flutter aplikácia pre Android a iOS. Podpisovač Autogram v mobile umožňuje podpisovanie elektronickým občianskym preukazom s NFC rozhraním. Detailnejšie info o arhitektúre projektu sa nachádzajú v repozitári [AVM server](https://github.com/slovensko-digital/avm-server).
 
-## Entry points
+[Autogram v mobile](https://sluzby.slovensko.digital/autogram-v-mobile/) vytvorili freevision s.r.o., Služby Slovensko.Digital s.r.o. s dobrovoľníkmi pod EUPL v1.2 licenciou. Prevádzkovateľom je Služby Slovensko.Digital s.r.o.. Prípadné issues riešime v [GitHub projekte](https://github.com/orgs/slovensko-digital/projects/5) alebo rovno v tomto repozitári.
+
+Celý projekt sa skladá z viacerých častí:
+- **Server**
+  - [AVM server](https://github.com/slovensko-digital/avm-server) - Ruby on Rails API server poskytujúci funkcionalitu zdieľania a podpisovania dokumentov.
+  - [AVM service](https://github.com/slovensko-digital/avm-service) - Java microservice využívajúci Digital Signature Service knižnicu pre elektronické podpisovanie a generovanie vizualizácie dokumentov.
+- **Mobilná aplikácia**
+  - [AVM app Flutter](https://github.com/slovensko-digital/avm-app-flutter) - Flutter aplikácia pre iOS a Android.
+  - [AVM client Dart](https://github.com/slovensko-digital/avm-client-dart) - Dart API klient pre komunikáciu s AVM serverom.
+  - [eID mSDK Flutter](https://github.com/slovensko-digital/eidmsdk-flutter) - Flutter wrapper "štátneho" [eID mSDK](https://github.com/eIDmSDK) pre komunikáciu s občianskym preukazom.
+- [**Autogram extension**](https://github.com/slovensko-digital/autogram-extension) - Rozšírenie do prehliadača, ktoré umožňuje podpisovanie priamo na štátnych portáloch.
+
+
+## Dart aplikácia
+### Entry points
 
 - [main](lib/main.dart) - main app
 - [preview](lib/preview.dart) - [Widgetbook](https://www.widgetbook.io/blog/getting-started) app
 
-## Key concepts
+### Key concepts
 
 - Business logic should be separated in **Bloc** and placed in [lib/bloc/](lib/bloc)
   - `NameCubit`
@@ -18,9 +32,9 @@ Flutter app for Android and iOS.
   - are placed in [`lib/ui`](lib/ui)
   - should have reasonable previews with `@widgetbook.UseCase` without relying on any `Bloc` or `Provider` types
 
-## Implemented app flows
+### Implemented app flows
 
-### Onboarding
+#### Onboarding
 
 User onboarding - started with [`Onboarding`](lib/ui/onboarding.dart):
 
@@ -29,7 +43,7 @@ User onboarding - started with [`Onboarding`](lib/ui/onboarding.dart):
 3. optionally [`OnboardingSelectSigningCertificateScreen`](lib/ui/screens/onboarding_select_signing_certificate_screen.dart)
 4. Presenting finish - [`OnboardingFinishedScreen`](lib/ui/screens/onboarding_finished_screen.dart)
 
-### Sign single document
+#### Sign single document
 
 Signing of single (PDF, TXT, image, eForms XML, ...) document using
 [`Eidmsdk`](../eidmsdk_flutter/lib/eidmsdk.dart) and
@@ -49,7 +63,7 @@ Signing of single (PDF, TXT, image, eForms XML, ...) document using
 6. [`PresentSignedDocumentScreen`](lib/ui/screens/present_signed_document_screen.dart) - here, the
    (success / error) result is presented and signed document is saved into "Downloads".
 
-### Remote document signing
+#### Remote document signing
 
 Started with [`RemoteDocumentSigning`](lib/ui/remote_document_signing.dart).
 It's similar to [Sign single document](#sign-single-document), but starts with:
@@ -57,7 +71,7 @@ It's similar to [Sign single document](#sign-single-document), but starts with:
 - [`StartRemoteDocumentSigningScreen`](lib/ui/screens/start_remote_document_signing_screen.dart)
 - [`QRCodeScannerScreen`](lib/ui/screens/qr_code_scanner_screen.dart)
 
-## Scripts
+### Scripts
 
 FVM init and Pub get:
 
@@ -111,7 +125,7 @@ Build **WEB**:
 fvm flutter build web --target=lib/preview.dart
 ```
 
-## Identifiers and links
+### Identifiers and links
 
 - Android Application ID, [Apple Bundle/App ID](https://developer.apple.com/account/resources/identifiers/bundleId/edit/832594XXZD): `digital.slovensko.avm`
 - Apple Team ID: `44U4JSRX4Z` (Služby Slovensko.Digital, s.r.o.)
