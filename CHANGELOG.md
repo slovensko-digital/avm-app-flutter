@@ -1,7 +1,9 @@
 # Changelog
 
-## 2024-06-17 - v1.0.0(32)
+## 2024-06-17 - v1.0.1(1)
+- Update about text in iOS build
 
+## 2024-06-17 - v1.0.0(32)
 - Update about text
 
 ## 2024-06-15 - v1.0.0(31)
