@@ -10,7 +10,7 @@ import 'screens/start_remote_document_signing_screen.dart';
 
 /// Helper for "Remote Document Signing" flow.
 ///
-/// Reads and sets [ISettings.remoteDocumentSigningOnboardingPassed].
+/// Reads and sets [Settings.remoteDocumentSigningOnboardingPassed].
 ///
 /// And then displays:
 ///  1. When `false` - [StartRemoteDocumentSigningScreen]
@@ -26,7 +26,7 @@ abstract class RemoteDocumentSigning {
     BuildContext context, [
     bool forceReplace = false,
   ]) async {
-    final settings = context.read<ISettings>();
+    final settings = context.read<Settings>();
     final onboardingPassed =
         settings.remoteDocumentSigningOnboardingPassed.value;
     Widget screen = onboardingPassed

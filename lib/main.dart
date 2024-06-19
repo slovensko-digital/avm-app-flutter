@@ -27,15 +27,13 @@ void main() async {
   configureDependencies();
 
   // Init Settings
-  final settings = Settings();
-  await settings.initialize();
+  final settings = await Settings.create();
 
   // Run App
   runApp(
     MultiProvider(
       providers: [
-        // ISettings
-        Provider<ISettings>.value(value: settings),
+        Provider<Settings>.value(value: settings),
       ],
       child: const App(),
     ),

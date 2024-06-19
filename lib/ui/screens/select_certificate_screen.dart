@@ -25,7 +25,7 @@ import 'sign_document_screen.dart';
 ///
 /// Uses [SelectSigningCertificateCubit] and [GetDocumentSignatureTypeCubit].
 ///
-/// Consumes [ISettings].
+/// Consumes [Settings].
 ///
 /// Navigates next to [SignDocumentScreen].
 class SelectCertificateScreen extends StatelessWidget {
@@ -42,7 +42,7 @@ class SelectCertificateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<SelectSigningCertificateCubit>(
       create: (context) {
-        final settings = context.read<ISettings>();
+        final settings = context.read<Settings>();
         final signingCertificate = settings.signingCertificate;
 
         return getIt.get<SelectSigningCertificateCubit>(
@@ -87,7 +87,7 @@ class SelectCertificateScreen extends StatelessWidget {
     required Certificate certificate,
     required SignatureType signatureType,
   }) {
-    context.read<ISettings>().signingCertificate.value = certificate;
+    context.read<Settings>().signingCertificate.value = certificate;
 
     final screen = SignDocumentScreen(
       documentId: documentId,
@@ -153,12 +153,12 @@ class _Body extends StatelessWidget {
 
 /// Success content where [Certificate] was loaded.
 /// Only thing is to determine [SignatureType] for given Document, either when:
-///  - [DocumentSigningType.local] - from [ISettings.signatureType]
+///  - [DocumentSigningType.local] - from [Settings.signatureType]
 ///  - [DocumentSigningType.remote] - by calling [GetDocumentSignatureTypeCubit.getDocumentSignatureType]
 ///
 /// Uses [GetDocumentSignatureTypeCubit].
 ///
-/// Consumes [ISettings].
+/// Consumes [Settings].
 class _SelectSignatureTypeContent extends StatefulWidget {
   final String? subject;
   final DocumentSigningType signingType;
@@ -188,7 +188,7 @@ class _SelectSignatureTypeContentState
     super.initState();
 
     if (widget.signingType == DocumentSigningType.local) {
-      _signatureType = context.read<ISettings>().signatureType.value;
+      _signatureType = context.read<Settings>().signatureType.value;
     }
   }
 

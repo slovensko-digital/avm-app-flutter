@@ -15,12 +15,12 @@ import '../widgets/loading_indicator.dart';
 import '../widgets/step_indicator.dart';
 
 /// [Onboarding] screen to select and save signing certificate into
-/// [ISettings.signingCertificate].
+/// [Settings.signingCertificate].
 /// This screen can be skipped.
 ///
 /// Uses [SelectSigningCertificateCubit].
 ///
-/// Consumes [ISettings].
+/// Consumes [Settings].
 class OnboardingSelectSigningCertificateScreen extends StatelessWidget {
   final ValueSetter<BuildContext> onCertificateSelected;
   final ValueSetter<BuildContext>? onSkipRequested;
@@ -46,7 +46,7 @@ class OnboardingSelectSigningCertificateScreen extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return BlocProvider<SelectSigningCertificateCubit>(
       create: (context) {
-        final settings = context.read<ISettings>();
+        final settings = context.read<Settings>();
         final signingCertificate = settings.signingCertificate;
 
         return GetIt.instance.get<SelectSigningCertificateCubit>(
@@ -86,7 +86,7 @@ class OnboardingSelectSigningCertificateScreen extends StatelessWidget {
     BuildContext context,
     Certificate certificate,
   ) {
-    context.read<ISettings>().signingCertificate.value = certificate;
+    context.read<Settings>().signingCertificate.value = certificate;
     onCertificateSelected.call(context);
   }
 }

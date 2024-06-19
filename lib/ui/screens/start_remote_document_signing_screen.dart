@@ -68,8 +68,7 @@ class StartRemoteDocumentSigningScreen extends StatelessWidget {
 
   Future<void> _startQrCodeScanner(BuildContext context) async {
     // Mark that already seen this screen
-    context.read<ISettings>().remoteDocumentSigningOnboardingPassed.value =
-        true;
+    context.read<Settings>().remoteDocumentSigningOnboardingPassed.value = true;
 
     const screen = QRCodeScannerScreen();
     final route = MaterialPageRoute(builder: (_) => screen);
