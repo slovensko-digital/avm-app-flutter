@@ -11,7 +11,7 @@ import 'screens/onboarding_select_signing_certificate_screen.dart';
 
 /// Helper for Onboarding flow.
 ///
-/// Reads [ISettings].
+/// Reads [Settings].
 ///
 /// Onboarding flow:
 ///  1. Accept Privacy Policy - [OnboardingAcceptDocumentScreen]
@@ -26,7 +26,7 @@ abstract class Onboarding {
 
   /// Refresh [onboardingRequired] value.
   static void refreshOnboardingRequired(BuildContext context) {
-    final settings = context.read<ISettings>();
+    final settings = context.read<Settings>();
     bool flag;
 
     if (settings.acceptedPrivacyPolicyVersion.value == null) {
@@ -42,7 +42,7 @@ abstract class Onboarding {
 
   /// Starts 1st Onboarding screen.
   static Future<dynamic> startOnboarding(BuildContext context) {
-    final settings = context.read<ISettings>();
+    final settings = context.read<Settings>();
     final strings = context.strings;
     final screen = OnboardingAcceptDocumentScreen(
       title: strings.privacyPolicyTitle,
@@ -69,7 +69,7 @@ abstract class Onboarding {
   }
 
   static void _handlePrivacyPolicyAccepted(BuildContext context) {
-    final settings = context.read<ISettings>();
+    final settings = context.read<Settings>();
     final strings = context.strings;
     final screen = OnboardingAcceptDocumentScreen(
       title: strings.termsOfServiceTitle,
@@ -85,7 +85,7 @@ abstract class Onboarding {
   }
 
   static void _handleTermsOfServiceAccepted(BuildContext context) {
-    final settings = context.read<ISettings>();
+    final settings = context.read<Settings>();
     final hasSigningCertificate = settings.signingCertificate.value != null;
     final Widget screen;
 

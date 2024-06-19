@@ -6,7 +6,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../certificate_extensions.dart';
 import '../../data/pdf_signing_option.dart';
-import '../../data/settings.dart' show ISettings;
+import '../../data/settings.dart';
 import '../../data/signature_type.dart';
 import '../../oids.dart';
 import '../../strings_context.dart';
@@ -16,12 +16,12 @@ import '../widgets/option_picker.dart';
 import '../widgets/preference_tile.dart';
 import 'paired_device_list_screen.dart';
 
-/// App setting screen for editing [ISettings].
+/// App setting screen for editing [Settings].
 ///
 /// Contains:
-///  - editor for [ISettings.signingPdfContainer]
-///  - display for [ISettings.signingCertificate]
-///  - editor for [ISettings.signatureType]
+///  - editor for [Settings.signingPdfContainer]
+///  - display for [Settings.signingCertificate]
+///  - editor for [Settings.signatureType]
 ///  - navigate to [PairedDeviceListScreen]
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -45,7 +45,7 @@ class SettingsScreen extends StatelessWidget {
 
 /// [SettingsScreen] body.
 class _Body extends StatelessWidget {
-  final ISettings settings;
+  final Settings settings;
 
   const _Body({required this.settings});
 
@@ -87,7 +87,7 @@ class _Body extends StatelessWidget {
   Widget _buildSettingsList(BuildContext context) {
     final strings = context.strings;
 
-    // ISettings.signingPdfContainer
+    // Settings.signingPdfContainer
     final signingPdfContainerSetting =
         _ValueListenableBoundTile<PdfSigningOption>(
       setting: settings.signingPdfContainer,
@@ -96,7 +96,7 @@ class _Body extends StatelessWidget {
       summaryGetter: (value) => value.label,
     );
 
-    // ISettings.signingCertificate
+    // Settings.signingCertificate
     final signingCertificate = PreferenceTile(
       title: strings.signingCertificateTitle,
       summary: () {
@@ -116,7 +116,11 @@ class _Body extends StatelessWidget {
 
     final signatureType = _ValueListenableBoundTile<SignatureType>(
       setting: settings.signatureType,
-      values: SignatureType.values,
+      values: const [
+        SignatureType.unset,
+        SignatureType.withTimestamp,
+        SignatureType.withoutTimestamp,
+      ],
       title: strings.signatureTypeTitle,
       summaryGetter: (value) => strings.signatureTypeSummary(value.name),
     );
@@ -140,8 +144,8 @@ class _Body extends StatelessWidget {
         divider,
         signatureType,
         divider,
-        pairedDevices,
-        divider,
+        // pairedDevices,  TODO: uncomment when pairing works
+        // divider,
       ],
     );
   }
@@ -261,8 +265,8 @@ Widget previewSettingsScreen(BuildContext context) {
   );
 }
 
-/// Mock [ISettings] impl. for preview.
-class _MockSettings implements ISettings {
+/// Mock [Settings] impl. for preview.
+class _MockSettings implements Settings {
   @override
   late final ValueNotifier<String?> acceptedPrivacyPolicyVersion =
       ValueNotifier(null);
@@ -284,6 +288,10 @@ class _MockSettings implements ISettings {
       ValueNotifier(null);
 
   @override
+  late final ValueNotifier<bool> remoteDocumentSigningOnboardingPassed =
+      ValueNotifier(false);
+
+  @override
   Future<bool> clear() {
     final props = <ValueNotifier>[
       acceptedPrivacyPolicyVersion,
@@ -291,6 +299,7 @@ class _MockSettings implements ISettings {
       signingPdfContainer,
       signatureType,
       signingCertificate,
+      remoteDocumentSigningOnboardingPassed
     ];
 
     for (final prop in props) {

@@ -28,7 +28,7 @@ class OpenDocumentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final body = BlocProvider<CreateDocumentCubit>(
       create: (context) {
-        final settings = context.read<ISettings>();
+        final settings = context.read<Settings>();
         final pdfSigningOption = settings.signingPdfContainer.value;
 
         return GetIt.instance.get<CreateDocumentCubit>(

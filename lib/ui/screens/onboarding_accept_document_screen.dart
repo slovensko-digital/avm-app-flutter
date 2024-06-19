@@ -18,7 +18,7 @@ import 'show_document_screen.dart';
 
 /// [Onboarding] screen to accept document - Privacy Policy or Terms of Service.
 ///
-/// Uses [GetDocumentVersionUseCase].
+/// Uses [GetHtmlDocumentVersionUseCase].
 ///
 /// See also:
 ///  - [ShowDocumentScreen]
@@ -103,7 +103,7 @@ class _OnboardingAcceptDocumentScreenState
   }
 
   void _onAccept() async {
-    final getDocumentVersion = getIt.get<GetDocumentVersionUseCase>();
+    final getDocumentVersion = getIt.get<GetHtmlDocumentVersionUseCase>();
 
     try {
       setState(() {
@@ -143,10 +143,6 @@ class _OnboardingAcceptDocumentScreenState
   type: OnboardingAcceptDocumentScreen,
 )
 Widget previewOnboardingAcceptDocumentScreen(BuildContext context) {
-  getIt.registerLazySingleton<GetDocumentVersionUseCase>(
-    () => GetDocumentVersionUseCase(),
-  );
-
   final strings = context.strings;
   final title = context.knobs.string(
     label: "Title",

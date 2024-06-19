@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:eidmsdk/types.dart';
 import 'package:flutter/foundation.dart';
 import 'package:notified_preferences/notified_preferences.dart';
@@ -5,8 +7,8 @@ import 'package:notified_preferences/notified_preferences.dart';
 import 'pdf_signing_option.dart';
 import 'signature_type.dart';
 
-/// Interface for general app settings.
-abstract interface class ISettings {
+/// General app settings.
+abstract interface class Settings {
   /// Accepted Privacy Policy document version value.
   ValueNotifier<String?> get acceptedPrivacyPolicyVersion;
 
@@ -22,16 +24,27 @@ abstract interface class ISettings {
   /// The signing [SignatureType] value.
   ValueNotifier<SignatureType> get signatureType;
 
+  /// Whether passed onboarding screen for "Remote Document Signing" feature.
+  ValueNotifier<bool> get remoteDocumentSigningOnboardingPassed;
+
   /// Clear all setting.
   Future<bool> clear();
+
+  /// Creates and returns new [Settings].
+  static Future<Settings> create([
+    FutureOr<SharedPreferences>? preferences,
+  ]) async {
+    final settings = _SettingsImpl();
+    await settings.initialize(preferences);
+
+    return settings;
+  }
 }
 
-/// General app settings.
-///
-/// Uses **Shared Preferences** - need to call [Settings.initialize] before use.
-// TODO Make only "Settings" type and private _SettingsImpl that will be returned by factory fun
-// TODO Also register it using Injectable
-class Settings with NotifiedPreferences implements ISettings {
+/// [Settings] implementation that uses [SharedPreferences].
+/// Note, [clear] is from [NotifiedPreferences].
+// TODO Register Settings using Injectable as singleton - would need to pass instance into DI so no need to use "async"
+class _SettingsImpl with NotifiedPreferences implements Settings {
   @override
   late final ValueNotifier<String?> acceptedPrivacyPolicyVersion =
       createSetting<String?>(
@@ -57,7 +70,7 @@ class Settings with NotifiedPreferences implements ISettings {
   @override
   late final ValueNotifier<SignatureType> signatureType = createEnumSetting(
     key: 'signing.signatureType',
-    initialValue: SignatureType.unset,
+    initialValue: SignatureType.withoutTimestamp,
     values: SignatureType.values,
   );
 
@@ -67,5 +80,12 @@ class Settings with NotifiedPreferences implements ISettings {
     key: 'signing.certificate',
     initialValue: null,
     fromJson: (json) => Certificate.fromJson(json),
+  );
+
+  @override
+  late final ValueNotifier<bool> remoteDocumentSigningOnboardingPassed =
+      createSetting(
+    key: "onboarding.remoteDocumentSigning.passed",
+    initialValue: false,
   );
 }

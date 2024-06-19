@@ -103,6 +103,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get signingPdfContainerTitle => 'Podpisovanie PDF';
 
   @override
+  String get signatureTypeErrorHeading => 'Chyba pri načítaní parametrov podpisu';
+
+  @override
   String get signatureTypeTitle => 'Predvolený typ podpisu';
 
   @override
@@ -179,7 +182,10 @@ class AppLocalizationsSk extends AppLocalizations {
   String get aboutTitle => 'O aplikácii';
 
   @override
-  String get eidSDKLicenseText => 'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke\n„https://github.com/eidmsdk“.';
+  String get eidSDKLicenseText => 'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „https://github.com/eidmsdk“';
+
+  @override
+  String get aboutAuthorsText => 'Autormi tohto projektu sú freevision s.r.o., Služby Slovensko.Digital, s.r.o. a ďalší dobrovoľníci. Prevádzku zabezpečuje Služby Slovensko.Digital, s.r.o. Zdrojové kódy sú dpstupné na GitHub-e organizácie Slovensko.Digital.';
 
   @override
   String get thirdPartyLicensesLabel => 'Licencie knižníc tretích strán';
@@ -203,10 +209,10 @@ class AppLocalizationsSk extends AppLocalizations {
   String get qrCodeScannerUnsupportedContentErrorMessage => 'Naskenovali ste nepodporovaný alebo neznámy obsah QR kódu.';
 
   @override
-  String get signRemoteDocumentBody1 => 'Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia Autogramu vo vašom internetovom prehladávači.';
+  String get signRemoteDocumentBody1 => 'Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia “Autogram na štátnych weboch“ vo vašom internetovom prehladávači.';
 
   @override
-  String get signRemoteDocumentBody2 => '1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “podísať v mobile”.\n2. Telefónom naskenujte QR kód z vášho počítača.';
+  String get signRemoteDocumentBody2 => '1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “Podpísať mobilom”.\n2. Telefónom naskenujte QR kód z vášho počítača.';
 
   @override
   String get openDocumentTitle => 'Otváranie dokumentu';
@@ -218,7 +224,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get previewDocumentTitle => 'Náhľad dokumentu';
 
   @override
-  String get previewDocumentErrorTitle => 'Chyba pri načítaní vizualizácie dokumentu';
+  String get previewDocumentErrorHeading => 'Chyba pri načítaní vizualizácie dokumentu';
 
   @override
   String get shareDocumentText => '\n\nSúbor z aplikácie Autogram v mobile';
@@ -235,7 +241,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get selectSigningCertificateTitle => 'Nastavenie certifikátu';
 
   @override
-  String get selectSigningCertificateBody => 'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Ak si prajete iba overiť podpisy v dokumentoch, tento krok je nepovinný a môžete ho preskočiť. Podpisový certifikát si môžete nastaviť neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát, pripravte si prosím občiansky preukaz a nasledujte inštrukcie na obrazovke.';
+  String get selectSigningCertificateBody => 'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Podpisový certifikát si môžete nastaviť aj neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát teraz, pripravte si, prosím, občiansky preukaz a nasledujte inštrukcie na obrazovke.';
 
   @override
   String get selectSigningCertificateCanceledHeading => 'Čítanie certifikátu bolo prerušené';
@@ -247,7 +253,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get selectSigningCertificateNoCertificateHeading => 'Certifikát nebol nájdený';
 
   @override
-  String get selectSigningCertificateNoCertificateBody => 'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na ';
+  String get selectSigningCertificateNoCertificateBody => 'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID klient, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na ';
 
   @override
   String get selectSigningCertificateNoCertificateGuideUrl => 'https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty';

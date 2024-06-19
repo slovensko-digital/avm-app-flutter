@@ -1,25 +1,31 @@
 import 'package:eidmsdk/types.dart' show Certificate;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../bloc/get_document_signature_type_cubit.dart';
 import '../../bloc/select_signing_certificate_cubit.dart';
 import '../../certificate_extensions.dart';
 import '../../data/document_signing_type.dart';
 import '../../data/settings.dart';
 import '../../data/signature_type.dart';
+import '../../di.dart';
 import '../../oids.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../fragment/select_signing_certificate_fragment.dart';
+import '../widgets/error_content.dart';
+import '../widgets/loading_content.dart';
 import '../widgets/signature_type_picker.dart';
 import 'sign_document_screen.dart';
 
-/// Screen for selecting the signature type using [SignatureTypePicker].
-/// Expecting to have at most 1 QES [Certificate].
+/// Screen for
+///  - loading and presenting [Certificate]
+///  - and then selecting the [SignatureType] using [SignatureTypePicker].
 ///
-/// Uses [SelectSigningCertificateCubit].
+/// Uses [SelectSigningCertificateCubit] and [GetDocumentSignatureTypeCubit].
+///
+/// Consumes [Settings].
 ///
 /// Navigates next to [SignDocumentScreen].
 class SelectCertificateScreen extends StatelessWidget {
@@ -36,10 +42,10 @@ class SelectCertificateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<SelectSigningCertificateCubit>(
       create: (context) {
-        final settings = context.read<ISettings>();
+        final settings = context.read<Settings>();
         final signingCertificate = settings.signingCertificate;
 
-        return GetIt.instance.get<SelectSigningCertificateCubit>(
+        return getIt.get<SelectSigningCertificateCubit>(
           param1: signingCertificate,
         )..getCertificates();
       },
@@ -57,6 +63,8 @@ class SelectCertificateScreen extends StatelessWidget {
             ),
             body: _Body(
               state: state,
+              signingType: signingType,
+              documentId: documentId,
               onSignDocumentRequested: (certificate, signatureType) {
                 _onSignDocumentRequested(
                   context: context,
@@ -79,7 +87,7 @@ class SelectCertificateScreen extends StatelessWidget {
     required Certificate certificate,
     required SignatureType signatureType,
   }) {
-    context.read<ISettings>().signingCertificate.value = certificate;
+    context.read<Settings>().signingCertificate.value = certificate;
 
     final screen = SignDocumentScreen(
       documentId: documentId,
@@ -102,12 +110,17 @@ class SelectCertificateScreen extends StatelessWidget {
 /// [SelectCertificateScreen] body.
 class _Body extends StatelessWidget {
   final SelectSigningCertificateState state;
+
+  final DocumentSigningType signingType;
+  final String documentId;
   final void Function(Certificate certificate, SignatureType signatureType)?
       onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
 
   const _Body({
     required this.state,
+    this.signingType = DocumentSigningType.local,
+    this.documentId = '',
     this.onSignDocumentRequested,
     this.onReloadCertificatesRequested,
   });
@@ -126,6 +139,8 @@ class _Body extends StatelessWidget {
       successBuilder: (context, certificate) {
         return _SelectSignatureTypeContent(
           certificate: certificate,
+          signingType: signingType,
+          documentId: documentId,
           onSignDocumentRequested: (final SignatureType signatureType) {
             onSignDocumentRequested?.call(certificate, signatureType);
           },
@@ -136,13 +151,25 @@ class _Body extends StatelessWidget {
   }
 }
 
+/// Success content where [Certificate] was loaded.
+/// Only thing is to determine [SignatureType] for given Document, either when:
+///  - [DocumentSigningType.local] - from [Settings.signatureType]
+///  - [DocumentSigningType.remote] - by calling [GetDocumentSignatureTypeCubit.getDocumentSignatureType]
+///
+/// Uses [GetDocumentSignatureTypeCubit].
+///
+/// Consumes [Settings].
 class _SelectSignatureTypeContent extends StatefulWidget {
   final String? subject;
+  final DocumentSigningType signingType;
+  final String documentId;
   final ValueSetter<SignatureType>? onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
 
   _SelectSignatureTypeContent({
     required Certificate certificate,
+    required this.signingType,
+    required this.documentId,
     required this.onSignDocumentRequested,
     required this.onReloadCertificatesRequested,
   }) : subject = certificate.tbsCertificate.subject[X500Oids.cn];
@@ -160,24 +187,68 @@ class _SelectSignatureTypeContentState
   void initState() {
     super.initState();
 
-    _signatureType = context.read<ISettings>().signatureType.value;
+    if (widget.signingType == DocumentSigningType.local) {
+      _signatureType = context.read<Settings>().signatureType.value;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final strings = context.strings;
+    final body = BlocProvider<GetDocumentSignatureTypeCubit>(
+      create: (context) {
+        final cubit = getIt.get<GetDocumentSignatureTypeCubit>();
+
+        switch (widget.signingType) {
+          // TODO Refactor this flow; Need to work with Settings in cubit ctor
+          // And refactor this widget to be Stateful and work only with Cubit state
+          case DocumentSigningType.local:
+            cubit.setSignatureType(_signatureType);
+            break;
+
+          case DocumentSigningType.remote:
+            cubit.getDocumentSignatureType(widget.documentId);
+            break;
+        }
+
+        return cubit;
+      },
+      child: BlocConsumer<GetDocumentSignatureTypeCubit,
+          GetDocumentSignatureTypeState>(
+        listener: (context, state) {
+          if (state is GetDocumentSignatureTypeSuccessState) {
+            setState(() {
+              _signatureType =
+                  (state.signatureType ?? SignatureType.withoutTimestamp);
+            });
+          }
+        },
+        builder: (context, state) {
+          return switch (state) {
+            GetDocumentSignatureTypeInitialState _ => const LoadingContent(),
+            GetDocumentSignatureTypeLoadingState _ => const LoadingContent(),
+            GetDocumentSignatureTypeErrorState state => ErrorContent(
+                title: strings.signatureTypeErrorHeading,
+                error: state.error,
+              ),
+            GetDocumentSignatureTypeSuccessState state => SignatureTypePicker(
+                value: _signatureType,
+                canChange: (widget.signingType == DocumentSigningType.local),
+                onValueChanged: (final SignatureType value) {
+                  setState(() {
+                    _signatureType = value;
+                  });
+                },
+              ),
+          };
+        },
+      ),
+    );
 
     return Column(
       children: [
         Expanded(
-          child: SignatureTypePicker(
-            value: _signatureType,
-            onValueChanged: (final SignatureType value) {
-              setState(() {
-                _signatureType = value;
-              });
-            },
-          ),
+          child: body,
         ),
 
         // Primary button

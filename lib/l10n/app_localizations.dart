@@ -271,6 +271,12 @@ abstract class AppLocalizations {
   /// **'Podpisovanie PDF'**
   String get signingPdfContainerTitle;
 
+  /// No description provided for @signatureTypeErrorHeading.
+  ///
+  /// In sk, this message translates to:
+  /// **'Chyba pri načítaní parametrov podpisu'**
+  String get signatureTypeErrorHeading;
+
   /// No description provided for @signatureTypeTitle.
   ///
   /// In sk, this message translates to:
@@ -346,8 +352,14 @@ abstract class AppLocalizations {
   /// No description provided for @eidSDKLicenseText.
   ///
   /// In sk, this message translates to:
-  /// **'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke\n„https://github.com/eidmsdk“.'**
+  /// **'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „https://github.com/eidmsdk“'**
   String get eidSDKLicenseText;
+
+  /// No description provided for @aboutAuthorsText.
+  ///
+  /// In sk, this message translates to:
+  /// **'Autormi tohto projektu sú freevision s.r.o., Služby Slovensko.Digital, s.r.o. a ďalší dobrovoľníci. Prevádzku zabezpečuje Služby Slovensko.Digital, s.r.o. Zdrojové kódy sú dpstupné na GitHub-e organizácie Slovensko.Digital.'**
+  String get aboutAuthorsText;
 
   /// No description provided for @thirdPartyLicensesLabel.
   ///
@@ -394,13 +406,13 @@ abstract class AppLocalizations {
   /// No description provided for @signRemoteDocumentBody1.
   ///
   /// In sk, this message translates to:
-  /// **'Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia Autogramu vo vašom internetovom prehladávači.'**
+  /// **'Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia “Autogram na štátnych weboch“ vo vašom internetovom prehladávači.'**
   String get signRemoteDocumentBody1;
 
   /// No description provided for @signRemoteDocumentBody2.
   ///
   /// In sk, this message translates to:
-  /// **'1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “podísať v mobile”.\n2. Telefónom naskenujte QR kód z vášho počítača.'**
+  /// **'1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “Podpísať mobilom”.\n2. Telefónom naskenujte QR kód z vášho počítača.'**
   String get signRemoteDocumentBody2;
 
   /// No description provided for @openDocumentTitle.
@@ -421,11 +433,11 @@ abstract class AppLocalizations {
   /// **'Náhľad dokumentu'**
   String get previewDocumentTitle;
 
-  /// No description provided for @previewDocumentErrorTitle.
+  /// No description provided for @previewDocumentErrorHeading.
   ///
   /// In sk, this message translates to:
   /// **'Chyba pri načítaní vizualizácie dokumentu'**
-  String get previewDocumentErrorTitle;
+  String get previewDocumentErrorHeading;
 
   /// No description provided for @shareDocumentText.
   ///
@@ -454,7 +466,7 @@ abstract class AppLocalizations {
   /// No description provided for @selectSigningCertificateBody.
   ///
   /// In sk, this message translates to:
-  /// **'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Ak si prajete iba overiť podpisy v dokumentoch, tento krok je nepovinný a môžete ho preskočiť. Podpisový certifikát si môžete nastaviť neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát, pripravte si prosím občiansky preukaz a nasledujte inštrukcie na obrazovke.'**
+  /// **'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Podpisový certifikát si môžete nastaviť aj neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát teraz, pripravte si, prosím, občiansky preukaz a nasledujte inštrukcie na obrazovke.'**
   String get selectSigningCertificateBody;
 
   /// No description provided for @selectSigningCertificateCanceledHeading.
@@ -478,7 +490,7 @@ abstract class AppLocalizations {
   /// No description provided for @selectSigningCertificateNoCertificateBody.
   ///
   /// In sk, this message translates to:
-  /// **'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na '**
+  /// **'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID klient, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na '**
   String get selectSigningCertificateNoCertificateBody;
 
   /// No description provided for @selectSigningCertificateNoCertificateGuideUrl.

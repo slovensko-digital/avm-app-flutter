@@ -18,6 +18,7 @@ import '../../services/encryption_key_registry.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../onboarding.dart';
+import '../remote_document_signing.dart';
 import '../widgets/autogram_logo.dart';
 import 'main_menu_screen.dart';
 import 'open_document_screen.dart';
@@ -130,10 +131,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _showQrCodeScanner() {
-    const screen = StartRemoteDocumentSigningScreen();
-    final route = MaterialPageRoute(builder: (_) => screen);
-
-    return Navigator.of(context).push(route);
+    return RemoteDocumentSigning.startRemoteDocumentSigning(context);
   }
 
   Future<void> _openNewFile(FutureOr<File> file) {

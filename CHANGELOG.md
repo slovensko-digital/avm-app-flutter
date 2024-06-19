@@ -1,8 +1,49 @@
 # Changelog
 
+## NEXT - v1.0.2(33)
+ 
+- Refactor Settings model 
+
+## 2024-06-17 - v1.0.1(1)
+ 
+- Update about text in iOS build
+
+## 2024-06-17 - v1.0.0(32)
+
+- Update about text
+
+## 2024-06-15 - v1.0.0(31)
+
+- Remove iPad from target devices as iPads have no NFC
+- set minimum iOS version to 12 as apple required
+
+## 2024-06-14 - v1.0.0(30)
+
+- Update Android and iOS icons
+- Update texts
+- Set default signatureType without TimeStamp
+
+## 2024-06-13 - v1.0.0(29)
+
+- Fix Signature Type setting UX
+
+## 2024-06-13 - v1.0.0(28)
+
+- #4 | Displaying Onboarding screen for Remote Document Signing only 1st time
+- #7 | When signing remote Document (from QR code or URL), then cannot change Signing Type
+
+## 2024-05-29 - v1.0.0(27)
+
+- Android: Setup release build signing key for Google Play
+
+## 2024-05-28 - v1.0.0(26)
+
+- Displaying Privacy Policy and Terms of Service documents in Onboarding and Main menu
+- Storing "version" value from loaded documents above
+
 ## 2024-05-07 - v1.0.0(25)
 
--  Android: Fix auto verify Deep links - no need to manually enable domain association
+- Android: Fix auto verify Deep links - no need to manually enable domain association
 
 ## 2024-05-07 - v1.0.0(24)
 
