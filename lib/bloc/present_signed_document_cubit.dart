@@ -45,6 +45,7 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
       final bytes = await Future.microtask(
         () => base64Decode(signedDocument.content),
       );
+      // TODO Catch and still allow sharing
       await file.writeAsBytes(bytes);
 
       _log.info("Signed Document was saved into $file");
@@ -86,6 +87,7 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   /// See also:
   ///  - [getTargetFileName]
   Future<File> _getTargetFile() async {
+    // TODO Create if NOT exists (Android)
     final directory = await _appService.getDocumentsDirectory();
     final name = getTargetFileName(signedDocument.filename);
     final path = p.join(directory.path, name);

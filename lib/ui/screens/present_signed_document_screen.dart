@@ -153,7 +153,7 @@ class _Body extends StatelessWidget {
       PresentSignedDocumentLoadingState _ => const LoadingContent(),
       PresentSignedDocumentErrorState _ => _SuccessContent(
           file: null,
-          onShareFileRequested: null,
+          onShareFileRequested: onShareFileRequested,
           onCloseRequested: onCloseRequested,
         ),
       PresentSignedDocumentSuccessState state => _SuccessContent(
