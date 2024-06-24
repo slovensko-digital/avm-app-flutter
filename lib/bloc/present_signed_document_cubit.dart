@@ -1,5 +1,5 @@
 import 'dart:convert' show base64Decode;
-import 'dart:io' show File;
+import 'dart:io' show File, Platform;
 
 import 'package:autogram_sign/autogram_sign.dart' show SignDocumentResponseBody;
 import 'package:flutter/foundation.dart';
@@ -46,6 +46,7 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
         () => base64Decode(signedDocument.content),
       );
       // TODO Catch and still allow sharing
+      // Need to change PresentSignedDocumentSuccessState impl. to allow File?
       await file.writeAsBytes(bytes);
 
       _log.info("Signed Document was saved into $file");
@@ -87,8 +88,13 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   /// See also:
   ///  - [getTargetFileName]
   Future<File> _getTargetFile() async {
-    // TODO Create if NOT exists (Android)
     final directory = await _appService.getDocumentsDirectory();
+
+    // Attempt to crete if not exists
+    if (!(await directory.exists()) && Platform.isAndroid) {
+      await directory.create(recursive: true);
+    }
+
     final name = getTargetFileName(signedDocument.filename);
     final path = p.join(directory.path, name);
 
@@ -100,7 +106,7 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   @visibleForTesting
   static String getTargetFileName(
     String name, [
-    // TODO This should get exact DateTime from previous cubit when it was really signed
+    // TODO This should get exact DateTime from previous cubit when it was actually signed
     // SignDocumentCubit signingTime
     ValueGetter<DateTime> clock = DateTime.now,
   ]) {
