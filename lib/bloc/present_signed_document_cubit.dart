@@ -19,8 +19,8 @@ export 'present_signed_document_state.dart';
 
 /// Cubit for [PresentSignedDocumentScreen].
 ///
-/// Allows saving document into public directory or getting [File]
-/// instance so it can be shared.
+/// Allows saving document into public directory or getting [File] instance
+/// which can be shared.
 @injectable
 class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   static final _log = Logger("PresentSignedDocumentCubit");
@@ -45,13 +45,10 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
     File? file;
 
     try {
-      file = await _getTargetFile();
-      final bytes = await Future.microtask(
-        () => base64Decode(signedDocument.content),
-      );
+      file = await _getTargetPath().then((path) => File(path));
       // TODO Catch and still allow sharing
       // Need to change PresentSignedDocumentSuccessState impl. to allow File?
-      await file.writeAsBytes(bytes);
+      await _saveDocumentIntoFile(file!);
 
       _log.info("Signed Document was saved into $file");
 
@@ -76,24 +73,21 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
       }
     }
 
-    // TODO Unify naming of "getShareableFile" and "_getTargetFile" - this returns also File with content while 2nd only File path
-
     final name = signedDocument.filename;
     final directory = await getTemporaryDirectory();
     final path = p.join(directory.path, name);
-    final bytes = await Future.microtask(
-      () => base64Decode(signedDocument.content),
-    );
     final file = File(path);
 
-    return file.writeAsBytes(bytes, flush: true);
+    await _saveDocumentIntoFile(file);
+
+    return file;
   }
 
-  /// Returns [File], where [signedDocument] content should be saved.
+  /// Returns file path, where [signedDocument] content should be saved.
   ///
   /// See also:
   ///  - [getTargetFileName]
-  Future<File> _getTargetFile() async {
+  Future<String> _getTargetPath() async {
     final directory = await _appService.getDocumentsDirectory();
 
     // Attempt to create Directory if not exists
@@ -102,9 +96,14 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
     }
 
     final name = getTargetFileName(signedDocument.filename);
-    final path = p.join(directory.path, name);
 
-    return File(path);
+    return p.join(directory.path, name);
+  }
+
+  /// Saves [signedDocument] content into given [file].
+  Future<void> _saveDocumentIntoFile(File file) {
+    return Future.microtask(() => base64Decode(signedDocument.content))
+        .then((bytes) => file.writeAsBytes(bytes, flush: true));
   }
 
   /// Gets the target file name.
