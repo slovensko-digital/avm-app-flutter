@@ -46,6 +46,7 @@ extension _RouteExtensions<T> on Route<T> {
     if (route is! MaterialPageRoute) {
       return route.settings.name;
     }
+    // TODO Improve route name extraction by using route.settings.name in each navigation and dialogs
 
     final text = (route as MaterialPageRoute).builder.runtimeType.toString();
 
