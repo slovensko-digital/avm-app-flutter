@@ -18,6 +18,9 @@ import 'present_signed_document_state.dart';
 export 'present_signed_document_state.dart';
 
 /// Cubit for [PresentSignedDocumentScreen].
+///
+/// Allows saving document into public directory or getting [File]
+/// instance so it can be shared.
 @injectable
 class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   static final _log = Logger("PresentSignedDocumentCubit");
@@ -33,6 +36,7 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   })  : _appService = appService,
         super(const PresentSignedDocumentInitialState());
 
+  /// Saves [signedDocument] into public directory.
   Future<void> saveDocument() async {
     _log.info("Saving signed document: ${signedDocument.filename}.");
 
@@ -72,6 +76,8 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
       }
     }
 
+    // TODO Unify naming of "getShareableFile" and "_getTargetFile" - this returns also File with content while 2nd only File path
+
     final name = signedDocument.filename;
     final directory = await getTemporaryDirectory();
     final path = p.join(directory.path, name);
@@ -83,14 +89,14 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
     return file.writeAsBytes(bytes, flush: true);
   }
 
-  /// Returns target [File] where to save new file from [signedDocument].
+  /// Returns [File], where [signedDocument] content should be saved.
   ///
   /// See also:
   ///  - [getTargetFileName]
   Future<File> _getTargetFile() async {
     final directory = await _appService.getDocumentsDirectory();
 
-    // Attempt to crete if not exists
+    // Attempt to create Directory if not exists
     if (!(await directory.exists()) && Platform.isAndroid) {
       await directory.create(recursive: true);
     }
