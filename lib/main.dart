@@ -58,6 +58,7 @@ void _onRecord(final LogRecord record) {
     );
   } else {
     // TODO Collect also some Settings (on init and on change)
+    // TODO Redact some log entries: local file paths, Document ID
     FirebaseCrashlytics.instance.log(formatCrashlyticsLog(record));
   }
 }
