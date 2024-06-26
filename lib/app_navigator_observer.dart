@@ -5,6 +5,8 @@ import 'package:logging/logging.dart' show Logger;
 class AppNavigatorObserver extends NavigatorObserver {
   static final _logger = Logger((AppNavigatorObserver).toString());
 
+  // TODO Save last route into Crashlytics
+
   @override
   void didPush(Route route, Route? previousRoute) {
     _log("Did push", {'route': route, 'previousRoute': previousRoute});

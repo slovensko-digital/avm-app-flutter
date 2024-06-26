@@ -3,6 +3,7 @@ import 'dart:math' show Random;
 
 import 'package:basic_utils/basic_utils.dart'
     show X509CertificateData, X509Utils;
+import 'package:logging/logging.dart' show LogRecord;
 
 final Random _random = Random.secure();
 
@@ -25,4 +26,13 @@ X509CertificateData x509CertificateDataFromDer(String data) {
   ].join("\n");
 
   return X509Utils.x509CertificateFromPem(pem);
+}
+
+/// Foramt given [record] as single message.
+String formatCrashlyticsLog(final LogRecord record) {
+  // TODO Format logs + add tests
+  // time: level/tag: message[\nerror]
+  // I/W/E
+
+  return record.toString();
 }
