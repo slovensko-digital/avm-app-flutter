@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'dart:io' show File, OSError, PathAccessException;
 
 import 'package:autogram_sign/autogram_sign.dart' show SignDocumentResponseBody;
@@ -20,7 +21,8 @@ import '../widgets/result_view.dart';
 
 /// Screen for presenting signed document.
 ///
-/// When [signingType] is [DocumentSigningType.local], then document is saved.
+/// When [signingType] is [DocumentSigningType.local], then document is saved
+/// into this device and also "Share" button is visible.
 ///
 /// Uses [PresentSignedDocumentCubit].
 class PresentSignedDocumentScreen extends StatelessWidget {
@@ -146,6 +148,10 @@ class _Body extends StatelessWidget {
   }
 
   Widget _getChild(BuildContext context) {
+    final sharingEnabled = (signingType == DocumentSigningType.local);
+    final onShareFileRequested =
+        sharingEnabled ? this.onShareFileRequested : null;
+
     return switch (state) {
       PresentSignedDocumentInitialState _ => _SuccessContent(
           file: null,
@@ -259,7 +265,12 @@ Widget previewInitialPresentSignedDocumentScreen(BuildContext context) {
   return _Body(
     state: const PresentSignedDocumentInitialState(),
     signingType: signingType,
-    onCloseRequested: () {},
+    onShareFileRequested: () {
+      developer.log('onShareFileRequested');
+    },
+    onCloseRequested: () {
+      developer.log('onCloseRequested');
+    },
   );
 }
 
@@ -278,6 +289,12 @@ Widget previewLoadingPresentSignedDocumentScreen(BuildContext context) {
   return _Body(
     state: const PresentSignedDocumentLoadingState(),
     signingType: signingType,
+    onShareFileRequested: () {
+      developer.log('onShareFileRequested');
+    },
+    onCloseRequested: () {
+      developer.log('onCloseRequested');
+    },
   );
 }
 
@@ -293,7 +310,7 @@ Widget previewErrorPresentSignedDocumentScreen(BuildContext context) {
     initialOption: DocumentSigningType.local,
   );
 
-  // TODO Should preview whole Screen class also with BlocConsumer.listener
+  // TODO Should preview whole Screen class also with BlocConsumer.listener to display error in SnackBar
   const error = PathAccessException(
     "/storage/emulated/0/Download/container-signed-xades-baseline-b.sce",
     OSError("Permission denied", 13),
@@ -303,8 +320,12 @@ Widget previewErrorPresentSignedDocumentScreen(BuildContext context) {
   return _Body(
     state: const PresentSignedDocumentErrorState(error),
     signingType: signingType,
-    onShareFileRequested: () {},
-    onCloseRequested: () {},
+    onShareFileRequested: () {
+      developer.log('onShareFileRequested');
+    },
+    onCloseRequested: () {
+      developer.log('onCloseRequested');
+    },
   );
 }
 
@@ -328,9 +349,11 @@ Widget previewSuccessPresentSignedDocumentScreen(BuildContext context) {
   return _Body(
     state: PresentSignedDocumentSuccessState(file),
     signingType: signingType,
-    // TODO Put logic into _Body itself!
-    onShareFileRequested:
-        signingType == DocumentSigningType.local ? () {} : null,
-    onCloseRequested: () {},
+    onShareFileRequested: () {
+      developer.log('onShareFileRequested');
+    },
+    onCloseRequested: () {
+      developer.log('onCloseRequested');
+    },
   );
 }
