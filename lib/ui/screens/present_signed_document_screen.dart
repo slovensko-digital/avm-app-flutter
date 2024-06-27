@@ -20,6 +20,8 @@ import '../widgets/result_view.dart';
 
 /// Screen for presenting signed document.
 ///
+/// When [signingType] is [DocumentSigningType.local], then document is saved.
+///
 /// Uses [PresentSignedDocumentCubit].
 class PresentSignedDocumentScreen extends StatelessWidget {
   final SignDocumentResponseBody signedDocument;
@@ -326,6 +328,7 @@ Widget previewSuccessPresentSignedDocumentScreen(BuildContext context) {
   return _Body(
     state: PresentSignedDocumentSuccessState(file),
     signingType: signingType,
+    // TODO Put logic into _Body itself!
     onShareFileRequested:
         signingType == DocumentSigningType.local ? () {} : null,
     onCloseRequested: () {},
