@@ -182,10 +182,10 @@ class AppLocalizationsSk extends AppLocalizations {
   String get aboutTitle => 'O aplikácii';
 
   @override
-  String get eidSDKLicenseText => 'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „https://github.com/eidmsdk“.';
+  String get eidSDKLicenseText => 'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „<https://github.com/eidmsdk>“.';
 
   @override
-  String get aboutAuthorsText => 'Autormi tohto projektu sú [freevision s.r.o.](https://freevision.sk), [Služby Slovensko.Digital, s.r.o.](https://sluzby.slovensko.digital) a ďalší dobrovoľníci. Prevádzku zabezpečuje [Služby Slovensko.Digital, s.r.o.](https://sluzby.slovensko.digital/)\n\nZdrojové kódy sú dostupné na [GitHub-e](https://github.com/slovensko-digital/avm-app-flutter) organizácie Slovensko.Digital.';
+  String get aboutAuthorsText => 'Autormi tohto projektu sú [freevision s.r.o.](https://freevision.sk), [Služby Slovensko.Digital, s.r.o.](https://sluzby.slovensko.digital) a ďalší dobrovoľníci. Prevádzku zabezpečuje [Služby Slovensko.Digital, s.r.o.](https://sluzby.slovensko.digital/)\n\nZdrojové kódy sú dostupné na [GitHub-e organizácie Slovensko.Digital](https://github.com/slovensko-digital/avm-app-flutter).';
 
   @override
   String get thirdPartyLicensesLabel => 'Licencie knižníc tretích strán';
