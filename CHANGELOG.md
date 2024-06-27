@@ -2,7 +2,8 @@
 
 ## NEXT - v1.0.2(33)
  
-- Refactor Settings model 
+- Refactor Settings model
+- #18 | Allow sharing signed Document even when failed to save file
 
 ## 2024-06-17 - v1.0.1(1)
  
