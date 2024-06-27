@@ -34,6 +34,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = context.strings;
 
+    // TODO Fix vertical bottom overflow
     final child = Column(
       children: [
         Text(
@@ -44,9 +45,9 @@ class _Body extends StatelessWidget {
         const SizedBox(height: 16),
         const AppVersionText(),
         const SizedBox(height: 16),
-        Text(strings.aboutAuthorsText),
+        Text(strings.aboutAuthorsText), // TODO As Markdowm with links
         const SizedBox(height: 16),
-        Text(strings.eidSDKLicenseText),
+        Text(strings.eidSDKLicenseText), // TODO As Markdowm with links
         const Spacer(),
         TextButton(
           style: TextButton.styleFrom(
