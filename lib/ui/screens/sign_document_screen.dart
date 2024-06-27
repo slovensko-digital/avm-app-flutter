@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:autogram_sign/autogram_sign.dart'
     show SignDocumentResponseBody, SignDocumentResponseBodyMimeType;
 import 'package:eidmsdk/types.dart' show Certificate;
@@ -141,8 +143,11 @@ Widget previewLoadingSignDocumentScreen(BuildContext context) {
   type: SignDocumentScreen,
 )
 Widget previewErrorSignDocumentScreen(BuildContext context) {
-  return const _Body(
-    state: SignDocumentErrorState("Error message!"),
+  return _Body(
+    state: const SignDocumentErrorState("Error message!"),
+    onRetryRequested: () {
+      developer.log('onRetryRequested');
+    },
   );
 }
 
@@ -152,8 +157,8 @@ Widget previewErrorSignDocumentScreen(BuildContext context) {
   type: SignDocumentScreen,
 )
 Widget previewSuccessSignDocumentScreen(BuildContext context) {
-  return const _Body(
-    state: SignDocumentSuccessState(
+  return _Body(
+    state: const SignDocumentSuccessState(
       SignDocumentResponseBody(
         filename: "document.pdf",
         mimeType: SignDocumentResponseBodyMimeType.applicationPdfBase64,
@@ -162,5 +167,8 @@ Widget previewSuccessSignDocumentScreen(BuildContext context) {
         signedBy: "",
       ),
     ),
+    onRetryRequested: () {
+      developer.log('onRetryRequested');
+    },
   );
 }
