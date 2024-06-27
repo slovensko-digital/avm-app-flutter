@@ -6,7 +6,7 @@
 ///  - path: "/api/v1/"
 ///
 /// Throws [ArgumentError] in case of invalid or unknown schema or structure.
-// TODO Move this code + test into autogram_sign module
+// TODO Move this code + test into autogram_sign module; however, it needs to check uri.authority, so it should be function on IAutogramService
 DeepLinkAction parseDeepLinkAction(Uri uri) {
   // Validate schema, authority and path
   switch (uri.scheme) {

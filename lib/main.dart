@@ -57,8 +57,8 @@ void _onRecord(final LogRecord record) {
       stackTrace: record.stackTrace,
     );
   } else {
-    // TODO Collect also some Settings (on init and on change)
-    // TODO Redact some log entries: local file paths, Document ID
+    // TODO Collect also some Settings (acceptedPrivacyPolicyVersion, acceptedTermsOfServiceVersion) on app init and on change
+    // TODO Redact some log entries: local file paths
     FirebaseCrashlytics.instance.log(formatCrashlyticsLog(record));
   }
 }
