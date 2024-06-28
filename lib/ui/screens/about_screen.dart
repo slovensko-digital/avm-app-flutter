@@ -38,7 +38,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = context.strings;
 
-    // TODO Fix vertical bottom overflow
+    // TODO Fix vertical bottom overflow by using SingleChildScrollView; be aware of the Spacer!
     final child = Column(
       children: [
         Text(
