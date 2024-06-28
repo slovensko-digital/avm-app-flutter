@@ -358,7 +358,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutAuthorsText.
   ///
   /// In sk, this message translates to:
-  /// **'Autormi tohto projektu sú [freevision s.r.o.](https://freevision.sk), [Služby Slovensko.Digital, s.r.o.](https://sluzby.slovensko.digital) a ďalší dobrovoľníci. Prevádzku zabezpečuje [Služby Slovensko.Digital, s.r.o.](https://sluzby.slovensko.digital/)\n\nZdrojové kódy sú dostupné na [GitHub-e organizácie Slovensko.Digital](https://github.com/slovensko-digital/avm-app-flutter).'**
+  /// **'Autormi tohto projektu sú [freevision s.r.o.](https://freevision.sk/?utm_source=digital.slovensko.avm), [Služby Slovensko.Digital, s.r.o.](https://sluzby.slovensko.digital/?utm_source=digital.slovensko.avm) a ďalší dobrovoľníci. Prevádzku zabezpečuje [Služby Slovensko.Digital, s.r.o.](https://sluzby.slovensko.digital/?utm_source=digital.slovensko.avm)\n\nZdrojové kódy sú dostupné na [GitHub-e organizácie Slovensko.Digital](https://github.com/slovensko-digital/avm-app-flutter).'**
   String get aboutAuthorsText;
 
   /// No description provided for @thirdPartyLicensesLabel.
