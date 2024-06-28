@@ -4,6 +4,8 @@
  
 - Refactor Settings model
 - #18 | Allow sharing signed Document even when failed to save file
+- About screen - add links into "about" text
+- About screen - fix vertical content overflow on smaller screens
 
 ## 2024-06-17 - v1.0.1(1)
  
