@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/app_version_text.dart';
+import '../widgets/markdown_text.dart';
 import 'show_document_screen.dart';
 
 /// Displays About appliaction:
@@ -38,11 +37,6 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strings = context.strings;
-    void onLinkTap(String text, String? href, String title) {
-      if (href != null) {
-        launchUrlString(href, mode: LaunchMode.externalApplication);
-      }
-    }
 
     // TODO Fix vertical bottom overflow
     final child = Column(
@@ -55,18 +49,9 @@ class _Body extends StatelessWidget {
         const SizedBox(height: 16),
         const AppVersionText(),
         const SizedBox(height: 16),
-        // TODO Extract as MarkdownText(String) with preset params
-        MarkdownBody(
-          data: strings.aboutAuthorsText,
-          // TODO Add stylesheet - link color and bold
-          onTapLink: onLinkTap,
-        ),
+        MarkdownText(strings.aboutAuthorsText),
         const SizedBox(height: 16),
-        MarkdownBody(
-          data: strings.eidSDKLicenseText,
-          // TODO Add stylesheet - link color and bold
-          onTapLink: onLinkTap,
-        ),
+        MarkdownText(strings.eidSDKLicenseText),
         const Spacer(),
         TextButton(
           style: TextButton.styleFrom(
