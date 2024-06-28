@@ -38,7 +38,6 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = context.strings;
 
-    // TODO Fix vertical bottom overflow by using SingleChildScrollView; be aware of the Spacer!
     final child = Column(
       children: [
         Text(
@@ -52,6 +51,7 @@ class _Body extends StatelessWidget {
         MarkdownText(strings.aboutAuthorsText),
         const SizedBox(height: 16),
         MarkdownText(strings.eidSDKLicenseText),
+        const SizedBox(height: kButtonSpace),
         const Spacer(),
         TextButton(
           style: TextButton.styleFrom(
@@ -63,9 +63,23 @@ class _Body extends StatelessWidget {
       ],
     );
 
-    return Padding(
-      padding: kScreenMargin,
-      child: child,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: constraints.maxWidth,
+              minHeight: constraints.maxHeight,
+            ),
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: kScreenMargin,
+                child: child,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
