@@ -18,7 +18,7 @@ allprojects {
             url = "https://maven.pkg.github.com/eIDmSDK/eID-mSDK-Android/"
             credentials {
                 username = "eIDmSDK"
-                password = "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"
+                password = System.getenv("EIDMSDK_ACCESS_TOKEN")
             }
         }
     }
