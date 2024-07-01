@@ -68,7 +68,7 @@ jobs:
           AVM_KEYSTORE_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_PASSWORD }}
           AVM_KEY_ALIAS: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_ALIAS }}
           AVM_KEY_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEY_PASSWORD }}
-          EIDMSDK_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EIDMSDK_ACCESS_TOKEN: ${{ secrets.GH_PAT }}
         working-directory: ./app
         run: flutter build appbundle --release
 
@@ -78,7 +78,7 @@ jobs:
           AVM_KEYSTORE_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_PASSWORD }}
           AVM_KEY_ALIAS: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_ALIAS }}
           AVM_KEY_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEY_PASSWORD }}
-          EIDMSDK_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EIDMSDK_ACCESS_TOKEN: ${{ secrets.GH_PAT }}
         working-directory: ./app
         run: flutter build apk --release
 
