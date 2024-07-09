@@ -4,9 +4,13 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/app_version_text.dart';
+import '../widgets/markdown_text.dart';
 import 'show_document_screen.dart';
 
-/// Displays About.
+/// Displays About appliaction:
+///  - headline, version
+///  - authors, eID mSDK info
+///  - link to [showLicensePage]
 ///
 /// See also:
 ///  - [ShowDocumentScreen]
@@ -44,9 +48,10 @@ class _Body extends StatelessWidget {
         const SizedBox(height: 16),
         const AppVersionText(),
         const SizedBox(height: 16),
-        Text(strings.aboutAuthorsText),
+        MarkdownText(strings.aboutAuthorsText),
         const SizedBox(height: 16),
-        Text(strings.eidSDKLicenseText),
+        MarkdownText(strings.eidSDKLicenseText),
+        const SizedBox(height: kButtonSpace),
         const Spacer(),
         TextButton(
           style: TextButton.styleFrom(
@@ -58,9 +63,23 @@ class _Body extends StatelessWidget {
       ],
     );
 
-    return Padding(
-      padding: kScreenMargin,
-      child: child,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: constraints.maxWidth,
+              minHeight: constraints.maxHeight,
+            ),
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: kScreenMargin,
+                child: child,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

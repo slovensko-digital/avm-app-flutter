@@ -31,14 +31,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: slovensko-digital/eidmsdk-flutter
-          token: ${{ secrets.GH_PAT }}
           path: eidmsdk_flutter
 
       - name: Checkout "autogram_sign"
         uses: actions/checkout@v4
         with:
           repository: slovensko-digital/avm-client-dart
-          token: ${{ secrets.GH_PAT }}
           path: autogram_sign
 
       - uses: actions/setup-java@v1
@@ -64,20 +62,37 @@ jobs:
         working-directory: ./app
         run: echo $ENCODED_STRING | base64 -d > release_keystore.jks
 
-      - name: Build
+      - name: Build Googla Play .aab
         env:
           AVM_KEYSTORE_FILE: ../../release_keystore.jks
           AVM_KEYSTORE_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_PASSWORD }}
           AVM_KEY_ALIAS: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_ALIAS }}
           AVM_KEY_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEY_PASSWORD }}
+          EIDMSDK_ACCESS_TOKEN: ${{ secrets.GH_PAT }}
         working-directory: ./app
         run: flutter build appbundle --release
 
-      - name: Upload Release Build to Artifacts
+      - name: Build Andorid .apk
+        env:
+          AVM_KEYSTORE_FILE: ../../release_keystore.jks
+          AVM_KEYSTORE_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_PASSWORD }}
+          AVM_KEY_ALIAS: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_ALIAS }}
+          AVM_KEY_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEY_PASSWORD }}
+          EIDMSDK_ACCESS_TOKEN: ${{ secrets.GH_PAT }}
+        working-directory: ./app
+        run: flutter build apk --release
+
+      - name: Upload .aab Build to Artifacts
         uses: actions/upload-artifact@v3
         with:
            name: release-artifacts
            path: ./app/build/app/outputs/bundle/release/app-release.aab
+
+      - name: Upload .apk Build to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-artifacts
+          path: ./app/build/app/outputs/apk/release/app-release.apk
 
       - name: Create release if tag pushed
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
@@ -89,3 +104,4 @@ jobs:
           prerelease: true
           files: |
             ./app/build/app/outputs/bundle/release/app-release.aab
+            ./app/build/app/outputs/apk/release/app-release.apk

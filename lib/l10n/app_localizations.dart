@@ -352,13 +352,13 @@ abstract class AppLocalizations {
   /// No description provided for @eidSDKLicenseText.
   ///
   /// In sk, this message translates to:
-  /// **'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „https://github.com/eidmsdk“'**
+  /// **'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „<https://github.com/eidmsdk>“.'**
   String get eidSDKLicenseText;
 
   /// No description provided for @aboutAuthorsText.
   ///
   /// In sk, this message translates to:
-  /// **'Autormi tohto projektu sú freevision s.r.o., Služby Slovensko.Digital, s.r.o. a ďalší dobrovoľníci. Prevádzku zabezpečuje Služby Slovensko.Digital, s.r.o. Zdrojové kódy sú dpstupné na GitHub-e organizácie Slovensko.Digital.'**
+  /// **'Autormi tohto projektu sú [freevision s.r.o.](https://freevision.sk/?utm_source=digital.slovensko.avm), [Služby Slovensko.Digital, s.r.o.](https://ekosystem.slovensko.digital/?utm_source=digital.slovensko.avm) a ďalší dobrovoľníci. Prevádzku zabezpečuje [Služby Slovensko.Digital, s.r.o.](https://ekosystem.slovensko.digital/?utm_source=digital.slovensko.avm)\n\nZdrojové kódy sú dostupné na [GitHub-e organizácie Slovensko.Digital](https://github.com/slovensko-digital/avm-app-flutter).'**
   String get aboutAuthorsText;
 
   /// No description provided for @thirdPartyLicensesLabel.

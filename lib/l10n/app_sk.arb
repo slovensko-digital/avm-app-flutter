@@ -48,8 +48,8 @@
   "termsOfServiceUrl": "https://sluzby.slovensko.digital/autogram-v-mobile/vseobecne-obchodne-podmienky",
 
   "aboutTitle": "O aplikácii",
-  "eidSDKLicenseText": "Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na\u00A0stránke „https://github.com/eidmsdk“",
-  "aboutAuthorsText": "Autormi tohto projektu sú freevision\u00A0s.r.o., Služby\u00A0Slovensko.Digital,\u00A0s.r.o. a ďalší dobrovoľníci. Prevádzku zabezpečuje Služby\u00A0Slovensko.Digital,\u00A0s.r.o. Zdrojové kódy sú dpstupné na GitHub-e organizácie Slovensko.Digital.",
+  "eidSDKLicenseText": "Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na\u00A0stránke „<https://github.com/eidmsdk>“.",
+  "aboutAuthorsText": "Autormi tohto projektu sú [freevision\u00A0s.r.o.](https://freevision.sk/?utm_source=digital.slovensko.avm), [Služby\u00A0Slovensko.Digital,\u00A0s.r.o.](https://ekosystem.slovensko.digital/?utm_source=digital.slovensko.avm) a ďalší dobrovoľníci. Prevádzku zabezpečuje [Služby\u00A0Slovensko.Digital,\u00A0s.r.o.](https://ekosystem.slovensko.digital/?utm_source=digital.slovensko.avm)\n\nZdrojové kódy sú dostupné na [GitHub-e organizácie Slovensko.Digital](https://github.com/slovensko-digital/avm-app-flutter).",
   "thirdPartyLicensesLabel": "Licencie knižníc tretích strán",
 
   "introHeading": "Nový, lepší a krajší podpisovač v mobile",

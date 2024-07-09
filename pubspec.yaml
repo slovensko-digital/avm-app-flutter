@@ -46,6 +46,7 @@ dependencies:
   url_launcher:
   mobile_scanner:
   html:
+  flutter_markdown:
 
 dev_dependencies:
   flutter_test:
