@@ -65,6 +65,7 @@ class SelectSigningCertificateFragment extends StatelessWidget {
         Uri.parse(strings.selectSigningCertificateNoCertificateGuideUrl);
 
     final textStyle = Theme.of(context).textTheme.bodyMedium;
+    // TODO Use MarkdownText instead of RichText
     final body = RichText(
       text: TextSpan(
         children: [
