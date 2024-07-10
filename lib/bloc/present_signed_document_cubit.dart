@@ -38,8 +38,8 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
 
   /// Saves [signedDocument] into public directory.
   Future<void> saveDocument() async {
-    // TODO REDACT
-    _log.info("Saving signed document: ${signedDocument.filename}.");
+    _log.info(
+        "Saving signed document: ${File(signedDocument.filename).redactedInfo}.");
 
     emit(state.toLoading());
 
@@ -51,14 +51,12 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
       // Need to change PresentSignedDocumentSuccessState impl. to allow File?
       await _saveDocumentIntoFile(file!);
 
-      // TODO REDACT
-      _log.info("Signed Document was saved into $file");
+      _log.info("Signed Document was saved into ${file.redactedInfo}");
 
       emit(state.toSuccess(file));
     } catch (error, stackTrace) {
-      // TODO REDACT
-      _log.severe(
-          "Error saving signed Document into $file.", error, stackTrace);
+      _log.severe("Error saving signed Document into ${file?.redactedInfo}.",
+          error, stackTrace);
 
       emit(state.toError(error));
     }

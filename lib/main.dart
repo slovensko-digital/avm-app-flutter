@@ -58,7 +58,6 @@ void _onRecord(final LogRecord record) {
     );
   } else {
     // TODO Collect also some Settings (acceptedPrivacyPolicyVersion, acceptedTermsOfServiceVersion) on app init and on change
-    // TODO Redact some log entries: local file paths - or just log them only in Debug mode
     FirebaseCrashlytics.instance.log(formatCrashlyticsLog(record));
   }
 }
