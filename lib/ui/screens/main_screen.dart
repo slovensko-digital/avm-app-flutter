@@ -207,6 +207,7 @@ class _MainScreenState extends State<MainScreen> {
     if (selectedFile != null) {
       final File file = File(selectedFile.path!);
 
+      // TODO REDACT
       _logger.fine('File selected: $file');
 
       if (context.mounted) {

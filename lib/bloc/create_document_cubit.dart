@@ -22,7 +22,7 @@ export 'create_document_state.dart';
 ///  - [PreviewDocumentCubit]
 @injectable
 class CreateDocumentCubit extends Cubit<CreateDocumentState> {
-  static final _log = Logger("CreateDocumentCubit");
+  static final _log = Logger((CreateDocumentCubit).toString());
 
   final IAutogramService _service;
   final FutureOr<File> _file;

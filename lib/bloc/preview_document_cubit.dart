@@ -15,7 +15,7 @@ export 'preview_document_state.dart';
 ///  - [CreateDocumentCubit]
 @injectable
 class PreviewDocumentCubit extends Cubit<PreviewDocumentState> {
-  static final _log = Logger("PreviewDocumentCubit");
+  static final _log = Logger((PreviewDocumentCubit).toString());
 
   final IAutogramService _service;
   final String documentId;
