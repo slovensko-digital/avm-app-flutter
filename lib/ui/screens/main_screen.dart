@@ -127,6 +127,9 @@ class _MainScreenState extends State<MainScreen> {
 
     return showGeneralDialog(
       context: context,
+      routeSettings: RouteSettings(
+        name: screen.runtimeType.toString(),
+      ),
       pageBuilder: (context, _, __) => screen,
     );
   }

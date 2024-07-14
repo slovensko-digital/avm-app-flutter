@@ -5,8 +5,6 @@ import 'package:logging/logging.dart' show Logger;
 class AppNavigatorObserver extends NavigatorObserver {
   static final _logger = Logger((AppNavigatorObserver).toString());
 
-  // TODO Save last route into Crashlytics
-
   @override
   void didPush(Route route, Route? previousRoute) {
     _log("Did push", {'route': route, 'previousRoute': previousRoute});
@@ -41,16 +39,21 @@ class AppNavigatorObserver extends NavigatorObserver {
 extension _RouteExtensions<T> on Route<T> {
   /// Returns debug string for this [Route].
   String? get debug {
-    final route = this;
+    final name = settings.name;
 
-    if (route is! MaterialPageRoute) {
-      return route.settings.name;
-    }
     // TODO Improve route name extraction by using route.settings.name in each navigation and dialogs
 
-    final text = (route as MaterialPageRoute).builder.runtimeType.toString();
+    if (name != null && name.isNotEmpty) {
+      return name;
+    } else if (this is MaterialPageRoute) {
+      final text = (this as MaterialPageRoute?)?.builder.runtimeType.toString();
 
-    // "(BuildContext) => NameScreen"
-    return text.replaceFirst("(BuildContext) => ", "");
+      // "(BuildContext) => NameScreen"
+      return text?.replaceFirst("(BuildContext) => ", "");
+    }
+
+    // for dialog, it's: DialogRoute
+
+    return null;
   }
 }
