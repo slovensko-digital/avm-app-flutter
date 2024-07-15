@@ -1,12 +1,11 @@
 import 'package:eidmsdk/types.dart' show Certificate;
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart' show launchUrl;
 
 import '../../bloc/select_signing_certificate_cubit.dart';
 import '../../strings_context.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
+import '../widgets/markdown_text.dart';
 import '../widgets/result_view.dart';
 
 /// Fragment that is used in screens working with [SelectSigningCertificateState].
@@ -61,42 +60,13 @@ class SelectSigningCertificateFragment extends StatelessWidget {
   /// Partial content for "no certificates" state.
   static Widget noCertificatesContent(BuildContext context) {
     final strings = context.strings;
-    final address =
-        Uri.parse(strings.selectSigningCertificateNoCertificateGuideUrl);
-
-    final textStyle = Theme.of(context).textTheme.bodyMedium;
-    // TODO Use MarkdownText instead of RichText
-    final body = RichText(
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: strings.selectSigningCertificateNoCertificateBody,
-            style: textStyle,
-          ),
-          TextSpan(
-            text: address.authority,
-            style: textStyle?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              decoration: TextDecoration.underline,
-              fontWeight: FontWeight.bold,
-            ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                launchUrl(address);
-              },
-          ),
-          TextSpan(
-            text: ".",
-            style: textStyle,
-          ),
-        ],
-      ),
-    );
 
     return ResultView(
       icon: 'assets/images/lock.svg',
       titleText: strings.selectSigningCertificateNoCertificateHeading,
-      body: body,
+      body: MarkdownText(
+        strings.selectSigningCertificateNoCertificateBody,
+      ),
     );
   }
 }

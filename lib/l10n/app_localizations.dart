@@ -490,14 +490,8 @@ abstract class AppLocalizations {
   /// No description provided for @selectSigningCertificateNoCertificateBody.
   ///
   /// In sk, this message translates to:
-  /// **'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID klient, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na '**
+  /// **'Nepodarilo sa nájsť certifikát pre **kvalifikovaný elektronický podpis**.\n\nCertifikát je potrebné vydať v aplikácii “eID Klient”, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na [navody.digital](https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty).'**
   String get selectSigningCertificateNoCertificateBody;
-
-  /// No description provided for @selectSigningCertificateNoCertificateGuideUrl.
-  ///
-  /// In sk, this message translates to:
-  /// **'https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty'**
-  String get selectSigningCertificateNoCertificateGuideUrl;
 
   /// No description provided for @selectSigningCertificateErrorHeading.
   ///

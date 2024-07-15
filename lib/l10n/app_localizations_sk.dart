@@ -253,10 +253,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get selectSigningCertificateNoCertificateHeading => 'Certifikát nebol nájdený';
 
   @override
-  String get selectSigningCertificateNoCertificateBody => 'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID klient, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na ';
-
-  @override
-  String get selectSigningCertificateNoCertificateGuideUrl => 'https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty';
+  String get selectSigningCertificateNoCertificateBody => 'Nepodarilo sa nájsť certifikát pre **kvalifikovaný elektronický podpis**.\n\nCertifikát je potrebné vydať v aplikácii “eID Klient”, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na [navody.digital](https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty).';
 
   @override
   String get selectSigningCertificateErrorHeading => 'Chyba pri načítavaní certifikátov z občianskeho preukazu.';
