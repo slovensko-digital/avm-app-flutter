@@ -12,6 +12,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import '../../bloc/present_signed_document_cubit.dart';
 import '../../data/document_signing_type.dart';
 import '../../di.dart';
+import '../../directory_extensions.dart';
 import '../../file_extensions.dart';
 import '../../strings_context.dart';
 import '../../util/errors.dart';
@@ -190,7 +191,7 @@ class _SuccessContent extends StatelessWidget {
     Widget body = const SizedBox(height: 58);
 
     if (file != null) {
-      final directory = getParentDirectoryName(file);
+      final directory = _getParentDirectoryName(file);
       final name = file.basename;
       final text = strings.saveSignedDocumentSuccessMessage(directory, name);
 
@@ -235,11 +236,17 @@ class _SuccessContent extends StatelessWidget {
     );
   }
 
-  static String getParentDirectoryName(File file) {
-    // TODO Add tests
+  static String _getParentDirectoryName(File file) {
     return kIsWeb
-        ? file.uri.resolve('.').path.split('/').where((e) => e.isNotEmpty).last
-        : file.parent.toString();
+        ? file.uri
+                .resolve('.')
+                .path
+                .split('/')
+                .where((e) => e.isNotEmpty)
+                .lastOrNull ??
+            '&nbsp;'
+        // TODO Also check UI on iOS
+        : file.parent.basename;
   }
 }
 
