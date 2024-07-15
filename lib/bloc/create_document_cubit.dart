@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 
 import '../data/pdf_signing_option.dart';
-import '../file_extensions.dart';
+import '../file_system_entity_extensions.dart';
 import '../files.dart';
 import '../ui/screens/open_document_screen.dart';
 import 'create_document_state.dart';

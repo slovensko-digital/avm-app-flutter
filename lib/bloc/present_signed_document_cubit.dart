@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../app_service.dart';
 import '../file_extensions.dart';
+import '../file_system_entity_extensions.dart';
 import '../ui/screens/present_signed_document_screen.dart';
 import 'present_signed_document_state.dart';
 
