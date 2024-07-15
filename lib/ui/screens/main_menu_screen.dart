@@ -127,7 +127,12 @@ class MainMenuScreen extends StatelessWidget {
   }
 
   static Future<void> _openScreen(BuildContext context, Widget screen) {
-    final route = MaterialPageRoute(builder: (_) => screen);
+    final route = MaterialPageRoute(
+      settings: RouteSettings(
+        name: screen.runtimeType.toString(),
+      ),
+      builder: (_) => screen,
+    );
 
     return Navigator.of(context).pushReplacement(route);
   }

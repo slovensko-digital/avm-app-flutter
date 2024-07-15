@@ -1,11 +1,15 @@
 # Changelog
 
-## NEXT - v1.0.2(33)
+## NEXT - v1.0.3(34)
+
+- #30 | Logging into Crashlytics
+
+## 2024-06-30 - v1.0.2(33)
  
 - Refactor Settings model
 - #18 | Allow sharing signed Document even when failed to save file
-- About screen - add links into "about" text
-- About screen - fix vertical content overflow on smaller screens
+- #26 | About screen - add links into "about" text
+- #26 | About screen - fix vertical content overflow on smaller screens
 
 ## 2024-06-17 - v1.0.1(1)
  

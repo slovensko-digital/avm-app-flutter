@@ -232,6 +232,7 @@ class _SelectSignatureTypeContentState
                 error: state.error,
               ),
             GetDocumentSignatureTypeSuccessState state => SignatureTypePicker(
+                // TODO Check why not passing state.signatureType
                 value: _signatureType,
                 canChange: (widget.signingType == DocumentSigningType.local),
                 onValueChanged: (final SignatureType value) {

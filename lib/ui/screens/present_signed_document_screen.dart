@@ -198,6 +198,7 @@ class _SuccessContent extends StatelessWidget {
         decoration: TextDecoration.underline,
         fontWeight: FontWeight.bold,
       );
+      // TODO Use MarkdownText instead of RichText
       body = RichText(
         text: TextSpan(
           text: strings.saveSignedDocumentSuccessMessage,

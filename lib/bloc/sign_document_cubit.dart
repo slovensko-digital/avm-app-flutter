@@ -14,7 +14,7 @@ export 'sign_document_state.dart';
 /// Cubit for the [SignDocumentScreen].
 @injectable
 class SignDocumentCubit extends Cubit<SignDocumentState> {
-  static final _log = Logger("SignDocumentCubit");
+  static final _log = Logger((SignDocumentCubit).toString());
   static const _defaultLanguage = 'sk';
 
   final IAutogramService _service;
