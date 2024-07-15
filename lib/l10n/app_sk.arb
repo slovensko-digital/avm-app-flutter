@@ -91,7 +91,7 @@
   "signDocumentErrorHeading": "Pri podpisovaní sa vyskytla chyba",
 
   "documentSigningSuccessTitle": "Dokument bol úspešne podpísaný",
-  "saveSignedDocumentSuccessMessage": "Dokument bol uložený do Downloads pod názvom ",
+  "saveSignedDocumentSuccessMessage": "Dokument bol uložený do **{directory}** pod názvom [{name}](#).",
   "saveSignedDocumentErrorMessage": "Pri ukladaní súboru sa vyskytla chyba:\n{error}",
 
   "shareSignedDocumentLabel": "Zdieľať podpísaný dokument",

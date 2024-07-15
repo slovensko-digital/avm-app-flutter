@@ -538,8 +538,8 @@ abstract class AppLocalizations {
   /// No description provided for @saveSignedDocumentSuccessMessage.
   ///
   /// In sk, this message translates to:
-  /// **'Dokument bol uložený do Downloads pod názvom '**
-  String get saveSignedDocumentSuccessMessage;
+  /// **'Dokument bol uložený do **{directory}** pod názvom [{name}](#).'**
+  String saveSignedDocumentSuccessMessage(Object directory, Object name);
 
   /// No description provided for @saveSignedDocumentErrorMessage.
   ///

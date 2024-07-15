@@ -281,7 +281,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get documentSigningSuccessTitle => 'Dokument bol úspešne podpísaný';
 
   @override
-  String get saveSignedDocumentSuccessMessage => 'Dokument bol uložený do Downloads pod názvom ';
+  String saveSignedDocumentSuccessMessage(Object directory, Object name) {
+    return 'Dokument bol uložený do **$directory** pod názvom [$name](#).';
+  }
 
   @override
   String saveSignedDocumentErrorMessage(Object error) {
