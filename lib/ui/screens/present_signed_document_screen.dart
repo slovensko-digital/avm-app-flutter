@@ -244,7 +244,6 @@ class _SuccessContent extends StatelessWidget {
                 .where((e) => e.isNotEmpty)
                 .lastOrNull ??
             '&nbsp;'
-        // TODO Also check UI on iOS
         : file.parent.basename;
   }
 }
