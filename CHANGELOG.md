@@ -1,8 +1,9 @@
 # Changelog
 
-## NEXT - v1.0.3(34)
+## 2024-07-16 - v1.0.3(34)
 
 - #30 | Logging into Crashlytics
+- #16 | Fix iOS URL domain association
 
 ## 2024-06-30 - v1.0.2(33)
  
