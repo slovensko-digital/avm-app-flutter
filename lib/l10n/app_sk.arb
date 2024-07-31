@@ -79,8 +79,7 @@
   "selectSigningCertificateCanceledHeading": "Čítanie certifikátu bolo prerušené",
   "selectSigningCertificateCanceledBody": "Skúste prosím znovu načítať certifikát z vášho občianskeho preukazu.",
   "selectSigningCertificateNoCertificateHeading": "Certifikát nebol nájdený",
-  "selectSigningCertificateNoCertificateBody": "Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID klient, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na ",
-  "selectSigningCertificateNoCertificateGuideUrl": "https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty",
+  "selectSigningCertificateNoCertificateBody": "Nepodarilo sa nájsť certifikát pre **kvalifikovaný elektronický podpis**.\n\nCertifikát je potrebné vydať v aplikácii “eID Klient”, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na [navody.digital](https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty).",
 
   "selectSigningCertificateErrorHeading": "Chyba pri načítavaní certifikátov z občianskeho preukazu.",
 
@@ -92,7 +91,7 @@
   "signDocumentErrorHeading": "Pri podpisovaní sa vyskytla chyba",
 
   "documentSigningSuccessTitle": "Dokument bol úspešne podpísaný",
-  "saveSignedDocumentSuccessMessage": "Dokument bol uložený do Downloads pod názvom ",
+  "saveSignedDocumentSuccessMessage": "Dokument bol uložený do **{directory}** pod názvom [{name}](#).",
   "saveSignedDocumentErrorMessage": "Pri ukladaní súboru sa vyskytla chyba:\n{error}",
 
   "shareSignedDocumentLabel": "Zdieľať podpísaný dokument",
