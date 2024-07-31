@@ -13,7 +13,7 @@ export 'paired_device_list_state.dart';
 /// Cubit for the [PairedDeviceListScreen] with only [load] function.
 @injectable
 class PairedDeviceListCubit extends Cubit<PairedDeviceListState> {
-  static final _log = Logger("PairedDeviceListScreen");
+  static final _log = Logger((PairedDeviceListScreen).toString());
 
   // ignore: unused_field
   final IAutogramService _service;

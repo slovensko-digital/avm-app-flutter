@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart' show Logger;
 import 'package:path_provider/path_provider.dart' as provider;
 
-import 'file_extensions.dart';
+import 'file_system_entity_extensions.dart';
 
 /// Provides platform (iOS and Android) specific app functions:
 ///

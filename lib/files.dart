@@ -1,6 +1,6 @@
 import 'dart:io' show File;
 
-import 'file_extensions.dart';
+import 'file_system_entity_extensions.dart';
 
 abstract class Files {
   /// Mapping of extension => MIME type.

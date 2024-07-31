@@ -44,8 +44,13 @@ abstract class RemoteDocumentSigning {
     Widget screen, [
     bool replace = false,
   ]) {
+    final route = MaterialPageRoute(
+      settings: RouteSettings(
+        name: screen.runtimeType.toString(),
+      ),
+      builder: (_) => screen,
+    );
     final navigator = Navigator.of(context);
-    final route = MaterialPageRoute(builder: (_) => screen);
 
     return replace ? navigator.pushReplacement(route) : navigator.push(route);
   }

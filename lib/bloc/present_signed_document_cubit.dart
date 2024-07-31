@@ -1,5 +1,5 @@
 import 'dart:convert' show base64Decode;
-import 'dart:io' show File;
+import 'dart:io' show File, Platform;
 
 import 'package:autogram_sign/autogram_sign.dart' show SignDocumentResponseBody;
 import 'package:flutter/foundation.dart';
@@ -12,15 +12,19 @@ import 'package:path_provider/path_provider.dart';
 
 import '../app_service.dart';
 import '../file_extensions.dart';
+import '../file_system_entity_extensions.dart';
 import '../ui/screens/present_signed_document_screen.dart';
 import 'present_signed_document_state.dart';
 
 export 'present_signed_document_state.dart';
 
 /// Cubit for [PresentSignedDocumentScreen].
+///
+/// Allows saving document into public directory or getting [File] instance
+/// which can be shared.
 @injectable
 class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
-  static final _log = Logger("PresentSignedDocumentCubit");
+  static final _log = Logger((PresentSignedDocumentCubit).toString());
   static final _tsDateFormat = DateFormat('yyyyMMddHHmmss');
 
   final AppService _appService;
@@ -33,26 +37,27 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   })  : _appService = appService,
         super(const PresentSignedDocumentInitialState());
 
+  /// Saves [signedDocument] into public directory.
   Future<void> saveDocument() async {
-    _log.info("Saving signed document: ${signedDocument.filename}.");
+    _log.info(
+        "Saving signed document: ${File(signedDocument.filename).redactedInfo}.");
 
     emit(state.toLoading());
 
     File? file;
 
     try {
-      file = await _getTargetFile();
-      final bytes = await Future.microtask(
-        () => base64Decode(signedDocument.content),
-      );
-      await file.writeAsBytes(bytes);
+      file = await _getTargetPath().then((path) => File(path));
+      // TODO Catch and still allow sharing
+      // Need to change PresentSignedDocumentSuccessState impl. to allow File?
+      await _saveDocumentIntoFile(file!);
 
-      _log.info("Signed Document was saved into $file");
+      _log.info("Signed Document was saved into ${file.redactedInfo}");
 
       emit(state.toSuccess(file));
     } catch (error, stackTrace) {
-      _log.severe(
-          "Error saving signed Document into $file.", error, stackTrace);
+      _log.severe("Error saving signed Document into ${file?.redactedInfo}.",
+          error, stackTrace);
 
       emit(state.toError(error));
     }
@@ -73,24 +78,34 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
     final name = signedDocument.filename;
     final directory = await getTemporaryDirectory();
     final path = p.join(directory.path, name);
-    final bytes = await Future.microtask(
-      () => base64Decode(signedDocument.content),
-    );
     final file = File(path);
 
-    return file.writeAsBytes(bytes, flush: true);
+    await _saveDocumentIntoFile(file);
+
+    return file;
   }
 
-  /// Returns target [File] where to save new file from [signedDocument].
+  /// Returns file path, where [signedDocument] content should be saved.
   ///
   /// See also:
   ///  - [getTargetFileName]
-  Future<File> _getTargetFile() async {
+  Future<String> _getTargetPath() async {
     final directory = await _appService.getDocumentsDirectory();
-    final name = getTargetFileName(signedDocument.filename);
-    final path = p.join(directory.path, name);
 
-    return File(path);
+    // Attempt to create Directory if not exists
+    if (!(await directory.exists()) && Platform.isAndroid) {
+      await directory.create(recursive: true);
+    }
+
+    final name = getTargetFileName(signedDocument.filename);
+
+    return p.join(directory.path, name);
+  }
+
+  /// Saves [signedDocument] content into given [file].
+  Future<void> _saveDocumentIntoFile(File file) {
+    return Future.microtask(() => base64Decode(signedDocument.content))
+        .then((bytes) => file.writeAsBytes(bytes, flush: true));
   }
 
   /// Gets the target file name.
@@ -98,7 +113,7 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   @visibleForTesting
   static String getTargetFileName(
     String name, [
-    // TODO This should get exact DateTime from previous cubit when it was really signed
+    // TODO This should get exact DateTime from previous cubit when it was actually signed
     // SignDocumentCubit signingTime
     ValueGetter<DateTime> clock = DateTime.now,
   ]) {

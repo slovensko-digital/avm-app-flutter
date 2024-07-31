@@ -1,7 +1,7 @@
 name: autogram
 description: "Autogram v mobile"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.2+33
+version: 1.0.3+34
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -46,6 +46,7 @@ dependencies:
   url_launcher:
   mobile_scanner:
   html:
+  flutter_markdown:
 
 dev_dependencies:
   flutter_test:

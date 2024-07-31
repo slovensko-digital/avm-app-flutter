@@ -7,22 +7,22 @@ class AppNavigatorObserver extends NavigatorObserver {
 
   @override
   void didPush(Route route, Route? previousRoute) {
-    _log("Did push", {'route': route, 'previousRoute': previousRoute});
+    _log("didPush", {'route': route, 'previousRoute': previousRoute});
   }
 
   @override
   void didPop(Route route, Route? previousRoute) {
-    _log("Did pop", {'route': route, 'previousRoute': previousRoute});
+    _log("didPop", {'route': route, 'previousRoute': previousRoute});
   }
 
   @override
   void didRemove(Route route, Route? previousRoute) {
-    _log("Did remove", {'route': route, 'previousRoute': previousRoute});
+    _log("didRemove", {'route': route, 'previousRoute': previousRoute});
   }
 
   @override
   void didReplace({Route? newRoute, Route? oldRoute}) {
-    _log("Did replace", {'newRoute': newRoute, 'oldRoute': oldRoute});
+    _log("didReplace", {'newRoute': newRoute, 'oldRoute': oldRoute});
   }
 
   /// Logs navigation event.
@@ -32,22 +32,24 @@ class AppNavigatorObserver extends NavigatorObserver {
         .map((param) => "$param: ${routes[param]?.debug}")
         .join(", ");
 
-    _logger.info("$event - $params");
+    _logger.info("$event($params)");
   }
 }
 
 extension _RouteExtensions<T> on Route<T> {
   /// Returns debug string for this [Route].
   String? get debug {
-    final route = this;
+    final name = settings.name;
 
-    if (route is! MaterialPageRoute) {
-      return route.settings.name;
+    if (name != null && name.isNotEmpty) {
+      return name;
+    } else if (this is MaterialPageRoute) {
+      final text = (this as MaterialPageRoute?)?.builder.runtimeType.toString();
+
+      // "(BuildContext) => NameScreen"
+      return text?.replaceFirst("(BuildContext) => ", "");
     }
 
-    final text = (route as MaterialPageRoute).builder.runtimeType.toString();
-
-    // "(BuildContext) => NameScreen"
-    return text.replaceFirst("(BuildContext) => ", "");
+    return null;
   }
 }

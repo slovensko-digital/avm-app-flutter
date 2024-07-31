@@ -1,7 +1,8 @@
+import 'dart:developer' as developer;
 import 'dart:io' show File, OSError, PathAccessException;
 
 import 'package:autogram_sign/autogram_sign.dart' show SignDocumentResponseBody;
-import 'package:flutter/gestures.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
@@ -11,14 +12,18 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import '../../bloc/present_signed_document_cubit.dart';
 import '../../data/document_signing_type.dart';
 import '../../di.dart';
-import '../../file_extensions.dart';
+import '../../file_system_entity_extensions.dart';
 import '../../strings_context.dart';
 import '../../util/errors.dart';
 import '../app_theme.dart';
 import '../widgets/loading_content.dart';
+import '../widgets/markdown_text.dart';
 import '../widgets/result_view.dart';
 
 /// Screen for presenting signed document.
+///
+/// When [signingType] is [DocumentSigningType.local], then document is saved
+/// into this device and also "Share" button is visible.
 ///
 /// Uses [PresentSignedDocumentCubit].
 class PresentSignedDocumentScreen extends StatelessWidget {
@@ -144,16 +149,16 @@ class _Body extends StatelessWidget {
   }
 
   Widget _getChild(BuildContext context) {
+    final sharingEnabled = (signingType == DocumentSigningType.local);
+    final onShareFileRequested =
+        sharingEnabled ? this.onShareFileRequested : null;
+
     return switch (state) {
-      PresentSignedDocumentInitialState _ => _SuccessContent(
-          file: null,
-          onShareFileRequested: null,
-          onCloseRequested: onCloseRequested,
-        ),
+      PresentSignedDocumentInitialState _ => const LoadingContent(),
       PresentSignedDocumentLoadingState _ => const LoadingContent(),
       PresentSignedDocumentErrorState _ => _SuccessContent(
           file: null,
-          onShareFileRequested: null,
+          onShareFileRequested: onShareFileRequested,
           onCloseRequested: onCloseRequested,
         ),
       PresentSignedDocumentSuccessState state => _SuccessContent(
@@ -185,26 +190,15 @@ class _SuccessContent extends StatelessWidget {
     Widget body = const SizedBox(height: 58);
 
     if (file != null) {
-      final fileNameTextStyle = TextStyle(
-        color: Theme.of(context).colorScheme.primary,
-        decoration: TextDecoration.underline,
-        fontWeight: FontWeight.bold,
-      );
-      body = RichText(
-        text: TextSpan(
-          text: strings.saveSignedDocumentSuccessMessage,
-          style: Theme.of(context).textTheme.bodyLarge,
-          //style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
-          children: [
-            // Emphasize file name
-            TextSpan(
-              text: file.basename,
-              style: fileNameTextStyle,
-              recognizer: TapGestureRecognizer()..onTap = onShareFileRequested,
-            )
-          ],
-        ),
-        textAlign: TextAlign.center,
+      final directory = _getParentDirectoryName(file);
+      final name = file.basename;
+      final text = strings.saveSignedDocumentSuccessMessage(directory, name);
+
+      body = MarkdownText(
+        text,
+        onLinkTap: (_, __, ___) {
+          onShareFileRequested?.call();
+        },
       );
     }
 
@@ -240,6 +234,18 @@ class _SuccessContent extends StatelessWidget {
       ],
     );
   }
+
+  static String _getParentDirectoryName(File file) {
+    return kIsWeb
+        ? file.uri
+                .resolve('.')
+                .path
+                .split('/')
+                .where((e) => e.isNotEmpty)
+                .lastOrNull ??
+            '&nbsp;'
+        : file.parent.basename;
+  }
 }
 
 @widgetbook.UseCase(
@@ -257,7 +263,12 @@ Widget previewInitialPresentSignedDocumentScreen(BuildContext context) {
   return _Body(
     state: const PresentSignedDocumentInitialState(),
     signingType: signingType,
-    onCloseRequested: () {},
+    onShareFileRequested: () {
+      developer.log('onShareFileRequested');
+    },
+    onCloseRequested: () {
+      developer.log('onCloseRequested');
+    },
   );
 }
 
@@ -276,6 +287,12 @@ Widget previewLoadingPresentSignedDocumentScreen(BuildContext context) {
   return _Body(
     state: const PresentSignedDocumentLoadingState(),
     signingType: signingType,
+    onShareFileRequested: () {
+      developer.log('onShareFileRequested');
+    },
+    onCloseRequested: () {
+      developer.log('onCloseRequested');
+    },
   );
 }
 
@@ -291,7 +308,7 @@ Widget previewErrorPresentSignedDocumentScreen(BuildContext context) {
     initialOption: DocumentSigningType.local,
   );
 
-  // TODO Should preview whole Screen class also with BlocConsumer.listener
+  // TODO Should preview whole Screen class also with BlocConsumer.listener to display error in SnackBar
   const error = PathAccessException(
     "/storage/emulated/0/Download/container-signed-xades-baseline-b.sce",
     OSError("Permission denied", 13),
@@ -301,8 +318,12 @@ Widget previewErrorPresentSignedDocumentScreen(BuildContext context) {
   return _Body(
     state: const PresentSignedDocumentErrorState(error),
     signingType: signingType,
-    onShareFileRequested: () {},
-    onCloseRequested: () {},
+    onShareFileRequested: () {
+      developer.log('onShareFileRequested');
+    },
+    onCloseRequested: () {
+      developer.log('onCloseRequested');
+    },
   );
 }
 
@@ -317,17 +338,20 @@ Widget previewSuccessPresentSignedDocumentScreen(BuildContext context) {
     options: DocumentSigningType.values,
     initialOption: DocumentSigningType.local,
   );
-  final fileName = context.knobs.string(
-    label: "File name",
-    initialValue: "document_signed.pdf",
+  final path = context.knobs.string(
+    label: "File path",
+    initialValue: "Downloads/document_signed.pdf",
   );
-  final file = File(fileName);
+  final file = File(path);
 
   return _Body(
     state: PresentSignedDocumentSuccessState(file),
     signingType: signingType,
-    onShareFileRequested:
-        signingType == DocumentSigningType.local ? () {} : null,
-    onCloseRequested: () {},
+    onShareFileRequested: () {
+      developer.log('onShareFileRequested');
+    },
+    onCloseRequested: () {
+      developer.log('onCloseRequested');
+    },
   );
 }

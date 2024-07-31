@@ -109,6 +109,8 @@ fvm dart run build_runner build --delete-conflicting-outputs
 
 Build **Android** APK:
 
+eid-mSDK binaries are hosted on GitHub package registry. To access the package during build process environment variable `EIDMSDK_ACCESS_TOKEN` needs to be set to a GitHub Personal Access Token that has permission to read package registry.
+
 ```shell
 fvm flutter build apk
 ```

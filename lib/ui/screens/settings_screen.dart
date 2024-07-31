@@ -205,6 +205,9 @@ class _ValueListenableBoundTile<T> extends StatelessWidget {
   Future<void> _onEditItemRequested(BuildContext context, T value) async {
     final result = await showDialog<T>(
       context: context,
+      routeSettings: RouteSettings(
+        name: "Edit${T}Dialog",
+      ),
       builder: (context) {
         var selectedValue = setting.value;
 

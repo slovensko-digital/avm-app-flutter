@@ -1,8 +1,16 @@
 # Changelog
 
-## NEXT - v1.0.2(33)
+## 2024-07-16 - v1.0.3(34)
+
+- #30 | Logging into Crashlytics
+- #16 | Fix iOS URL domain association
+
+## 2024-06-30 - v1.0.2(33)
  
-- Refactor Settings model 
+- Refactor Settings model
+- #18 | Allow sharing signed Document even when failed to save file
+- #26 | About screen - add links into "about" text
+- #26 | About screen - fix vertical content overflow on smaller screens
 
 ## 2024-06-17 - v1.0.1(1)
  

@@ -352,13 +352,13 @@ abstract class AppLocalizations {
   /// No description provided for @eidSDKLicenseText.
   ///
   /// In sk, this message translates to:
-  /// **'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „https://github.com/eidmsdk“'**
+  /// **'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „<https://github.com/eidmsdk>“.'**
   String get eidSDKLicenseText;
 
   /// No description provided for @aboutAuthorsText.
   ///
   /// In sk, this message translates to:
-  /// **'Autormi tohto projektu sú freevision s.r.o., Služby Slovensko.Digital, s.r.o. a ďalší dobrovoľníci. Prevádzku zabezpečuje Služby Slovensko.Digital, s.r.o. Zdrojové kódy sú dpstupné na GitHub-e organizácie Slovensko.Digital.'**
+  /// **'Autormi tohto projektu sú [freevision s.r.o.](https://freevision.sk/?utm_source=digital.slovensko.avm), [Služby Slovensko.Digital, s.r.o.](https://ekosystem.slovensko.digital/?utm_source=digital.slovensko.avm) a ďalší dobrovoľníci. Prevádzku zabezpečuje [Služby Slovensko.Digital, s.r.o.](https://ekosystem.slovensko.digital/?utm_source=digital.slovensko.avm)\n\nZdrojové kódy sú dostupné na [GitHub-e organizácie Slovensko.Digital](https://github.com/slovensko-digital/avm-app-flutter).'**
   String get aboutAuthorsText;
 
   /// No description provided for @thirdPartyLicensesLabel.
@@ -490,14 +490,8 @@ abstract class AppLocalizations {
   /// No description provided for @selectSigningCertificateNoCertificateBody.
   ///
   /// In sk, this message translates to:
-  /// **'Nepodarilo sa nájsť certifikát pre kvalifikovaný elektronický podpis.\n\nCertifikát je potrebné vydať v aplikácii eID klient, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na '**
+  /// **'Nepodarilo sa nájsť certifikát pre **kvalifikovaný elektronický podpis**.\n\nCertifikát je potrebné vydať v aplikácii “eID Klient”, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na [navody.digital](https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty).'**
   String get selectSigningCertificateNoCertificateBody;
-
-  /// No description provided for @selectSigningCertificateNoCertificateGuideUrl.
-  ///
-  /// In sk, this message translates to:
-  /// **'https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty'**
-  String get selectSigningCertificateNoCertificateGuideUrl;
 
   /// No description provided for @selectSigningCertificateErrorHeading.
   ///
@@ -544,8 +538,8 @@ abstract class AppLocalizations {
   /// No description provided for @saveSignedDocumentSuccessMessage.
   ///
   /// In sk, this message translates to:
-  /// **'Dokument bol uložený do Downloads pod názvom '**
-  String get saveSignedDocumentSuccessMessage;
+  /// **'Dokument bol uložený do **{directory}** pod názvom [{name}](#).'**
+  String saveSignedDocumentSuccessMessage(Object directory, Object name);
 
   /// No description provided for @saveSignedDocumentErrorMessage.
   ///
