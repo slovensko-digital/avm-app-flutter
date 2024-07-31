@@ -26,11 +26,13 @@ class DocumentVisualization extends StatelessWidget {
   Widget build(BuildContext context) {
     final mimeType = visualization.mimeType;
 
-    return switch (mimeType) {
-      "application/pdf;base64" => _pdfPreview(
-          compute(base64Decode, visualization.content),
-        ),
-      "text/plain;base64" => _htmlPreview(compute((content) {
+    // Drop spaces from Mime-Type
+    return switch (mimeType.replaceAll(' ', '')) {
+      "application/pdf;base64" =>
+        _pdfPreview(compute(base64Decode, visualization.content)),
+      "text/plain;base64" ||
+      "text/plain;charset=UTF-8;base64" =>
+        _htmlPreview(compute((content) {
           final text = utf8.decode(base64Decode(content));
 
           return _htmlDocumentFromText(text);
@@ -40,20 +42,26 @@ class DocumentVisualization extends StatelessWidget {
             return utf8.decode(base64Decode(content));
           }, visualization.content),
         ),
-      _ => _error(
-          context,
-          context.strings
-              .documentVisualizationCannotVisualizeTypeError(mimeType)),
+      "text/plain" ||
+      "text/plain;charset=UTF-8" =>
+        _htmlPreview(_htmlDocumentFromText(visualization.content)),
+      _ => _unsupportedMimeType(context, mimeType),
     };
   }
 
-  Widget _error(BuildContext context, String text) {
+  Widget _unsupportedMimeType(BuildContext context, String mimeType) {
+    final text =
+        context.strings.documentVisualizationCannotVisualizeTypeError(mimeType);
     final theme = Theme.of(context);
 
     return Center(
       child: Text(
         text,
-        style: TextStyle(color: theme.colorScheme.error),
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: theme.colorScheme.error,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

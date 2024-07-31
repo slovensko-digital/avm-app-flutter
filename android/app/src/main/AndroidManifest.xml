@@ -38,19 +38,47 @@
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+      <!-- "Share" action -->
       <intent-filter>
         <action android:name="android.intent.action.SEND" />
+
         <category android:name="android.intent.category.DEFAULT" />
-        <data android:mimeType="*/*" />
+
+        <data android:mimeType="application/pdf" />
+        <data android:mimeType="text/*" />
+        <data android:mimeType="image/*" />
+        <data android:mimeType="application/x-scilab" /> <!-- for .sce -->
+        <data android:mimeType="application/octet-stream" /> <!-- fallback for other ASiC files -->
+        <data android:mimeType="application/xhtml+xml" />
+
+        <data android:pathPattern=".*\\.asice" />
+        <data android:pathPattern=".*\\.sce" />
+        <data android:pathPattern=".*\\.asics" />
+        <data android:pathPattern=".*\\.scs" />
       </intent-filter>
+      <!-- "Open" action -->
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
+
         <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
 
         <data android:scheme="content" />
         <data android:scheme="file" />
-        <data android:mimeType="*/*" />
+
+        <data android:mimeType="application/pdf" />
+        <data android:mimeType="text/*" />
+        <data android:mimeType="image/*" />
+        <data android:mimeType="application/x-scilab" /> <!-- for .sce -->
+        <data android:mimeType="application/octet-stream" /> <!-- fallback for other ASiC files -->
+        <data android:mimeType="application/xhtml+xml" />
+
+        <data android:pathPattern=".*\\.asice" />
+        <data android:pathPattern=".*\\.sce" />
+        <data android:pathPattern=".*\\.asics" />
+        <data android:pathPattern=".*\\.scs" />
       </intent-filter>
+      <!-- https://autogram.slovensko.digital/api/ URL -->
       <intent-filter android:autoVerify="true">
         <action android:name="android.intent.action.VIEW" />
 
@@ -61,6 +89,7 @@
         <data android:host="autogram.slovensko.digital" />
         <data android:pathPrefix="/api/" />
       </intent-filter>
+      <!-- avm://autogram.slovensko.digital/api/ URL -->
       <intent-filter android:autoVerify="true">
         <action android:name="android.intent.action.VIEW" />
 
