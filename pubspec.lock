@@ -60,10 +60,12 @@ packages:
   autogram_sign:
     dependency: "direct main"
     description:
-      path: "../autogram_sign"
-      relative: true
-    source: path
-    version: "0.4.1"
+      path: "."
+      ref: "v0.4.2"
+      resolved-ref: "7de5786a8029f29e4a8d1634f323b20fb7897e7e"
+      url: "https://github.com/slovensko-digital/avm-client-dart"
+    source: git
+    version: "0.4.2"
   barcode:
     dependency: transitive
     description:
@@ -291,9 +293,11 @@ packages:
   eidmsdk:
     dependency: "direct main"
     description:
-      path: "../eidmsdk_flutter"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: e7fbc7d41a9cc861219d685c315904f7a63bdc41
+      url: "https://github.com/slovensko-digital/eidmsdk-flutter"
+    source: git
     version: "0.0.1"
   equatable:
     dependency: transitive
