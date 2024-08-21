@@ -451,6 +451,30 @@ abstract class AppLocalizations {
   /// **'Neviem vizualizovať {type} typ.'**
   String documentVisualizationCannotVisualizeTypeError(Object type);
 
+  /// No description provided for @documentValidationLoadingLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Prebieha overovanie podpisov'**
+  String get documentValidationLoadingLabel;
+
+  /// No description provided for @documentValidationNoSignaturesLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument neobsahuje **žiadny podpis**'**
+  String get documentValidationNoSignaturesLabel;
+
+  /// No description provided for @documentValidationHasInvalidSignaturesLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument obsahuje **neplatné podpisy**'**
+  String get documentValidationHasInvalidSignaturesLabel;
+
+  /// No description provided for @documentValidationHasValidSignaturesLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'{count, plural, one {Dokument obsahuje **1 podpis**} few {Dokument obsahuje **{count} podpisy**} many {Dokument obsahuje {count} podpisov**} other {Dokument obsahuje **{count} podpisov**}}'**
+  String documentValidationHasValidSignaturesLabel(num count);
+
   /// No description provided for @selectCertificateTitle.
   ///
   /// In sk, this message translates to:

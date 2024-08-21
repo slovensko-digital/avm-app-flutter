@@ -11,11 +11,13 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 /// By default, links are open in external application.
 class MarkdownText extends StatelessWidget {
   final String data;
+  final Color? textColor;
   final MarkdownTapLinkCallback onLinkTap;
 
   const MarkdownText(
     this.data, {
     super.key,
+    this.textColor,
     this.onLinkTap = _defaultOnLinkTap,
   });
 
@@ -23,6 +25,7 @@ class MarkdownText extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final styleSheet = MarkdownStyleSheet(
+      p: (textColor != null ? TextStyle(color: textColor) : null),
       a: TextStyle(
         color: colors.primary,
         fontWeight: FontWeight.bold,

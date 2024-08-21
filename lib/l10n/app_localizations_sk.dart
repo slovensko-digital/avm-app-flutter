@@ -235,6 +235,28 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String get documentValidationLoadingLabel => 'Prebieha overovanie podpisov';
+
+  @override
+  String get documentValidationNoSignaturesLabel => 'Dokument neobsahuje **žiadny podpis**';
+
+  @override
+  String get documentValidationHasInvalidSignaturesLabel => 'Dokument obsahuje **neplatné podpisy**';
+
+  @override
+  String documentValidationHasValidSignaturesLabel(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Dokument obsahuje **$count podpisov**',
+      many: 'Dokument obsahuje $count podpisov**',
+      few: 'Dokument obsahuje **$count podpisy**',
+      one: 'Dokument obsahuje **1 podpis**',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get selectCertificateTitle => 'Výber typu podpisu';
 
   @override

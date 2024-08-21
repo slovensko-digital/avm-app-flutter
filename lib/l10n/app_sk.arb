@@ -73,6 +73,11 @@
 
   "documentVisualizationCannotVisualizeTypeError": "Neviem vizualizovať {type} typ.",
 
+  "documentValidationLoadingLabel": "Prebieha overovanie podpisov",
+  "documentValidationNoSignaturesLabel": "Dokument neobsahuje **žiadny podpis**",
+  "documentValidationHasInvalidSignaturesLabel": "Dokument obsahuje **neplatné podpisy**",
+  "documentValidationHasValidSignaturesLabel": "{count, plural, one {Dokument obsahuje **1 podpis**} few {Dokument obsahuje **{count} podpisy**} many {Dokument obsahuje {count} podpisov**} other {Dokument obsahuje **{count} podpisov**}}",
+
   "selectCertificateTitle": "Výber typu podpisu",
   "selectSigningCertificateTitle": "Nastavenie certifikátu",
   "selectSigningCertificateBody": "Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Podpisový certifikát si môžete nastaviť aj neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát teraz, pripravte si, prosím, občiansky preukaz a nasledujte inštrukcie na obrazovke.",
