@@ -1,5 +1,10 @@
 # Changelog
 
+## 2024-07-16 - v1.0.4(35)
+
+- #32 | Cleanup
+- #35 | Limit Android "Share" / "Open" action file types 
+
 ## 2024-07-16 - v1.0.3(34)
 
 - #30 | Logging into Crashlytics
