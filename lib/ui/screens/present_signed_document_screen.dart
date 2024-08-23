@@ -108,7 +108,6 @@ class PresentSignedDocumentScreen extends StatelessWidget {
 
       await Share.shareXFiles(
         [XFile(file.path)],
-        subject: strings.shareSignedDocumentSubject,
         text: strings.shareSignedDocumentText,
       );
     } catch (error) {
