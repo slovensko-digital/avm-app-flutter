@@ -109,6 +109,9 @@ class PresentSignedDocumentScreen extends StatelessWidget {
       await Share.shareXFiles(
         [XFile(file.path)],
         text: strings.shareSignedDocumentText,
+        // It would be better to have something meaningful for email clients,
+        // however this is also used in Google Drive as target file name
+        subject: file.basename,
       );
     } catch (error) {
       if (context.mounted) {

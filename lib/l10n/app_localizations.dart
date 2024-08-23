@@ -553,12 +553,6 @@ abstract class AppLocalizations {
   /// **'Zdieľať podpísaný dokument'**
   String get shareSignedDocumentLabel;
 
-  /// No description provided for @shareSignedDocumentSubject.
-  ///
-  /// In sk, this message translates to:
-  /// **'Elektronicky podpísaný dokument'**
-  String get shareSignedDocumentSubject;
-
   /// No description provided for @shareSignedDocumentText.
   ///
   /// In sk, this message translates to:
