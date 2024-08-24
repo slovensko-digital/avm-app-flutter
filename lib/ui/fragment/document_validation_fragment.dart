@@ -1,3 +1,6 @@
+import 'package:autogram_sign/autogram_sign.dart'
+    show
+        DocumentValidationResponseBody;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,8 +43,8 @@ class DocumentValidationFragment extends StatelessWidget {
         ),
       DocumentValidationSuccessState state => DocumentValidationStrip(
           value: DocumentValidationStripValue.value(
-            validCount: state.response.signatures?.length ?? 0,
-            invalidCount: state.response.signatures?.length ?? 0,
+            validCount: state.response?.validSignaturesCount ?? 0,
+            invalidCount: state.response?.invalidSignaturesCount ?? 0,
           ),
           onTap: () {
             // TODO Handle tap event
@@ -51,4 +54,14 @@ class DocumentValidationFragment extends StatelessWidget {
         const SizedBox.shrink(), // TODO Show error in this panel.
     };
   }
+}
+
+extension _DocumentValidationResponseBodyExtensions
+    on DocumentValidationResponseBody {
+  int? get validSignaturesCount => signatures
+      ?.where((s) => s.validationResult.code == 0 /* TOTAL_PASSED */)
+      .length;
+  int? get invalidSignaturesCount => signatures
+      ?.where((s) => s.validationResult.code != 0 /* NOT TOTAL_PASSED */)
+      .length;
 }
