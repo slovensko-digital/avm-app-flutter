@@ -6,7 +6,7 @@ import '../../strings_context.dart';
 import 'loading_indicator.dart';
 import 'markdown_text.dart';
 
-/// Presents state of document validation - displays text and ptionally
+/// Presents state of document validation - displays text and potentionally
 /// loading indicator on the left or arrow on the right when has any signatures.
 class DocumentValidationStrip extends StatelessWidget {
   final DocumentValidationStripValue value;

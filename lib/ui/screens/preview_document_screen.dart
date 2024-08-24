@@ -14,6 +14,7 @@ import '../../data/document_signing_type.dart';
 import '../../file_system_entity_extensions.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
+import '../fragment/document_validation_fragment.dart';
 import '../widgets/document_visualization.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
@@ -49,6 +50,7 @@ class PreviewDocumentScreen extends StatelessWidget {
       child: BlocBuilder<PreviewDocumentCubit, PreviewDocumentState>(
         builder: (context, state) {
           return _Body(
+            documentId: documentId,
             state: state,
             onSignRequested: () {
               _onSignRequested(context);
@@ -104,14 +106,21 @@ class PreviewDocumentScreen extends StatelessWidget {
 
 /// [PreviewDocumentScreen] body.
 class _Body extends StatelessWidget {
+  final String documentId;
   final PreviewDocumentState state;
   final VoidCallback? onSignRequested;
 
-  const _Body({required this.state, required this.onSignRequested});
+  const _Body({
+    this.documentId = '',
+    required this.state,
+    required this.onSignRequested,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final child = switch (state) {
+    final child1 = DocumentValidationFragment(documentId: documentId);
+    // TODO Extract whole child2 as Fragment, so it can have separate preview
+    final child2 = switch (state) {
       PreviewDocumentInitialState _ => const LoadingContent(),
       PreviewDocumentLoadingState _ => const LoadingContent(),
       PreviewDocumentSuccessState state => _SuccessContent(
@@ -123,6 +132,12 @@ class _Body extends StatelessWidget {
           error: state.error,
         ),
     };
+    final child = Column(
+      children: [
+        child1,
+        Expanded(child: child2),
+      ],
+    );
 
     return Padding(
       padding: kScreenMargin,
