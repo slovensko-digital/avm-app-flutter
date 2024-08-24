@@ -63,7 +63,7 @@ packages:
       path: "../autogram_sign"
       relative: true
     source: path
-    version: "0.4.2"
+    version: "0.4.3"
   barcode:
     dependency: transitive
     description:

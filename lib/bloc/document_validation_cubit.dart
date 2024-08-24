@@ -36,8 +36,6 @@ class DocumentValidationCubit extends Cubit<DocumentValidationState> {
 
       emit(DocumentValidationSuccessState(response));
     } catch (error, stackTrace) {
-      // TODO When not signed document, it returns HTTP 204 and null body - update it in service impl. + add test
-      // _TypeError: type 'Null' is not a subtype of type 'DocumentValidationResponseBody' in type cast
       _log.severe("Error validating Document.", error, stackTrace);
 
       emit(DocumentValidationErrorState(error));
