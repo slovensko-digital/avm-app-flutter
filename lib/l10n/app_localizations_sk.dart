@@ -316,9 +316,6 @@ class AppLocalizationsSk extends AppLocalizations {
   String get shareSignedDocumentLabel => 'Zdieľať podpísaný dokument';
 
   @override
-  String get shareSignedDocumentSubject => 'Elektronicky podpísaný dokument';
-
-  @override
   String get shareSignedDocumentText => '\n\nPodpísané aplikáciou Autogram v mobile';
 
   @override

@@ -100,7 +100,6 @@
   "saveSignedDocumentErrorMessage": "Pri ukladaní súboru sa vyskytla chyba:\n{error}",
 
   "shareSignedDocumentLabel": "Zdieľať podpísaný dokument",
-  "shareSignedDocumentSubject": "Elektronicky podpísaný dokument",
   "shareSignedDocumentText": "\n\nPodpísané aplikáciou Autogram v mobile",
   "shareSignedDocumentErrorMessage": "Pri zdieľaní súboru sa vyskytla chyba:\n{error}",
 

@@ -103,6 +103,7 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   }
 
   /// Saves [signedDocument] content into given [file].
+  // TODO As extension function on SignDocumentResponseBody type
   Future<void> _saveDocumentIntoFile(File file) {
     return Future.microtask(() => base64Decode(signedDocument.content))
         .then((bytes) => file.writeAsBytes(bytes, flush: true));
