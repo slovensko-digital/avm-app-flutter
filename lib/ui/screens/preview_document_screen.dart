@@ -118,7 +118,12 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final child1 = DocumentValidationFragment(documentId: documentId);
+    final child1 = DocumentValidationFragment(
+      documentId: documentId,
+      onShowDocumentValidationInfoRequested: (response) {
+        // TODO Show popup with details
+      },
+    );
     // TODO Extract whole child2 as Fragment, so it can have separate preview
     final child2 = switch (state) {
       PreviewDocumentInitialState _ => const LoadingContent(),

@@ -39,7 +39,7 @@ class DocumentValidationNotSignedState extends DocumentValidationState {
 }
 
 class DocumentValidationSuccessState extends DocumentValidationState {
-  final DocumentValidationResponseBody? response;
+  final DocumentValidationResponseBody response;
 
   const DocumentValidationSuccessState(this.response);
 
