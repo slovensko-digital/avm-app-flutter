@@ -4,6 +4,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../oids.dart';
 import '../../utils.dart';
+import '../widgets/chip.dart' as avm;
 
 /// Displays Document validation info based on [data] provided.
 class DocumentValidationInfo extends StatelessWidget {
@@ -35,12 +36,67 @@ class DocumentValidationInfo extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        ElevatedButton(
-          onPressed: null,
-          // TODO Show various states - with color and custom text - extract as Widget
-          child: Text(data.validationResult.name),
-        ),
+        _buildChip(context),
       ],
+    );
+  }
+
+  Widget _buildChip(BuildContext context) {
+    final icon = switch (data.validationResult) {
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .totalPassed =>
+        Icons.check,
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .indeterminate =>
+        Icons.warning_amber_outlined,
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .totalFailed =>
+        Icons.error_outline,
+      _ => Icons.question_mark_outlined,
+    };
+    final foreground = switch (data.validationResult) {
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .totalPassed =>
+        const Color(0xFF033608),
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .indeterminate =>
+        const Color(0xFF4E2A00),
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .totalFailed =>
+        const Color(0xFF4E0711),
+      _ => Colors.black,
+    };
+    final background = switch (data.validationResult) {
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .totalPassed =>
+        const Color(0xFFEDF5F3),
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .indeterminate =>
+        const Color(0xFFF4F4EC),
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .totalFailed =>
+        const Color(0xFFFBEEF0),
+      _ => Colors.white,
+    };
+    final border = switch (data.validationResult) {
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .totalPassed =>
+        const Color(0xFFA9D9CD),
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .indeterminate =>
+        const Color(0xFFD5D6A2),
+      DocumentValidationResponseBody$Signatures$ItemValidationResult
+            .totalFailed =>
+        const Color(0xFFC3112B),
+      _ => Colors.grey,
+    };
+
+    return avm.Chip(
+      label: 'label',
+      foreground: foreground,
+      background: background,
+      border: border,
+      leading: Icon(icon, color: foreground),
     );
   }
 }
