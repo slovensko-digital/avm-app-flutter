@@ -257,6 +257,9 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String get documentValidationSignaturesHeading => 'Podpisy v dokumente';
+
+  @override
   String get selectCertificateTitle => 'Výber typu podpisu';
 
   @override

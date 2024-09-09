@@ -11,46 +11,49 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:autogram/ui/app_theme.dart' as _i3;
 import 'package:autogram/ui/assets.dart' as _i4;
-import 'package:autogram/ui/fragment/show_web_page_fragment.dart' as _i23;
-import 'package:autogram/ui/screens/about_screen.dart' as _i26;
-import 'package:autogram/ui/screens/main_menu_screen.dart' as _i27;
+import 'package:autogram/ui/fragment/document_validation_info_fragment.dart'
+    as _i24;
+import 'package:autogram/ui/fragment/show_web_page_fragment.dart' as _i25;
+import 'package:autogram/ui/screens/about_screen.dart' as _i28;
+import 'package:autogram/ui/screens/main_menu_screen.dart' as _i29;
 import 'package:autogram/ui/screens/main_screen.dart' as _i2;
 import 'package:autogram/ui/screens/onboarding_accept_document_screen.dart'
-    as _i28;
-import 'package:autogram/ui/screens/onboarding_finished_screen.dart' as _i29;
-import 'package:autogram/ui/screens/onboarding_select_signing_certificate_screen.dart'
     as _i30;
-import 'package:autogram/ui/screens/open_document_screen.dart' as _i31;
-import 'package:autogram/ui/screens/paired_device_list_screen.dart' as _i32;
+import 'package:autogram/ui/screens/onboarding_finished_screen.dart' as _i31;
+import 'package:autogram/ui/screens/onboarding_select_signing_certificate_screen.dart'
+    as _i32;
+import 'package:autogram/ui/screens/open_document_screen.dart' as _i33;
+import 'package:autogram/ui/screens/paired_device_list_screen.dart' as _i34;
 import 'package:autogram/ui/screens/present_signed_document_screen.dart'
-    as _i33;
-import 'package:autogram/ui/screens/preview_document_screen.dart' as _i34;
-import 'package:autogram/ui/screens/qr_code_scanner_screen.dart' as _i21;
-import 'package:autogram/ui/screens/select_certificate_screen.dart' as _i35;
-import 'package:autogram/ui/screens/settings_screen.dart' as _i36;
-import 'package:autogram/ui/screens/show_document_screen.dart' as _i37;
-import 'package:autogram/ui/screens/sign_document_screen.dart' as _i38;
+    as _i35;
+import 'package:autogram/ui/screens/preview_document_screen.dart' as _i36;
+import 'package:autogram/ui/screens/qr_code_scanner_screen.dart' as _i22;
+import 'package:autogram/ui/screens/select_certificate_screen.dart' as _i37;
+import 'package:autogram/ui/screens/settings_screen.dart' as _i38;
+import 'package:autogram/ui/screens/show_document_screen.dart' as _i39;
+import 'package:autogram/ui/screens/sign_document_screen.dart' as _i40;
 import 'package:autogram/ui/screens/start_remote_document_signing_screen.dart'
-    as _i39;
+    as _i41;
 import 'package:autogram/ui/widgets/app_version_text.dart' as _i9;
 import 'package:autogram/ui/widgets/autogram_logo.dart' as _i5;
 import 'package:autogram/ui/widgets/buttons.dart' as _i6;
-import 'package:autogram/ui/widgets/certificate_picker.dart' as _i24;
+import 'package:autogram/ui/widgets/certificate_picker.dart' as _i26;
 import 'package:autogram/ui/widgets/close_button.dart' as _i7;
-import 'package:autogram/ui/widgets/dialogs.dart' as _i22;
-import 'package:autogram/ui/widgets/document_validation_strip.dart' as _i10;
-import 'package:autogram/ui/widgets/document_visualization.dart' as _i11;
-import 'package:autogram/ui/widgets/error_content.dart' as _i12;
-import 'package:autogram/ui/widgets/html_preview.dart' as _i13;
-import 'package:autogram/ui/widgets/loading_content.dart' as _i14;
+import 'package:autogram/ui/widgets/dialogs.dart' as _i23;
+import 'package:autogram/ui/widgets/document_validation_info.dart' as _i10;
+import 'package:autogram/ui/widgets/document_validation_strip.dart' as _i11;
+import 'package:autogram/ui/widgets/document_visualization.dart' as _i12;
+import 'package:autogram/ui/widgets/error_content.dart' as _i13;
+import 'package:autogram/ui/widgets/html_preview.dart' as _i14;
+import 'package:autogram/ui/widgets/loading_content.dart' as _i15;
 import 'package:autogram/ui/widgets/loading_indicator.dart' as _i8;
-import 'package:autogram/ui/widgets/markdown_text.dart' as _i15;
-import 'package:autogram/ui/widgets/option_picker.dart' as _i16;
-import 'package:autogram/ui/widgets/preference_tile.dart' as _i17;
-import 'package:autogram/ui/widgets/result_view.dart' as _i18;
-import 'package:autogram/ui/widgets/retry_view.dart' as _i19;
-import 'package:autogram/ui/widgets/signature_type_picker.dart' as _i25;
-import 'package:autogram/ui/widgets/step_indicator.dart' as _i20;
+import 'package:autogram/ui/widgets/markdown_text.dart' as _i16;
+import 'package:autogram/ui/widgets/option_picker.dart' as _i17;
+import 'package:autogram/ui/widgets/preference_tile.dart' as _i18;
+import 'package:autogram/ui/widgets/result_view.dart' as _i19;
+import 'package:autogram/ui/widgets/retry_view.dart' as _i20;
+import 'package:autogram/ui/widgets/signature_type_picker.dart' as _i27;
+import 'package:autogram/ui/widgets/step_indicator.dart' as _i21;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -157,16 +160,23 @@ final directories = <_i1.WidgetbookNode>[
           builder: _i9.previewAppVersionText,
         ),
       ),
+      _i1.WidgetbookLeafComponent(
+        name: 'DocumentValidationInfo',
+        useCase: _i1.WidgetbookUseCase(
+          name: '',
+          builder: _i10.previewDocumentValidationInfo,
+        ),
+      ),
       _i1.WidgetbookComponent(
         name: 'DocumentValidationStrip',
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i10.previewLoadingDocumentValidationStrip,
+            builder: _i11.previewLoadingDocumentValidationStrip,
           ),
           _i1.WidgetbookUseCase(
             name: 'signatures',
-            builder: _i10.previewOtherDocumentValidationStrip,
+            builder: _i11.previewOtherDocumentValidationStrip,
           ),
         ],
       ),
@@ -174,49 +184,49 @@ final directories = <_i1.WidgetbookNode>[
         name: 'DocumentVisualization',
         useCase: _i1.WidgetbookUseCase(
           name: 'DocumentVisualization',
-          builder: _i11.previewDocumentVisualization,
+          builder: _i12.previewDocumentVisualization,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'ErrorContent',
         useCase: _i1.WidgetbookUseCase(
           name: 'ErrorContent',
-          builder: _i12.previewErrorContent,
+          builder: _i13.previewErrorContent,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'HtmlPreview',
         useCase: _i1.WidgetbookUseCase(
           name: 'HtmlPreview',
-          builder: _i13.previewHtmlPreview,
+          builder: _i14.previewHtmlPreview,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'LoadingContent',
         useCase: _i1.WidgetbookUseCase(
           name: 'LoadingContent',
-          builder: _i14.previewLoadingContent,
+          builder: _i15.previewLoadingContent,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'MarkdownText',
         useCase: _i1.WidgetbookUseCase(
           name: '',
-          builder: _i15.previewMarkdownText,
+          builder: _i16.previewMarkdownText,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'OptionPicker',
         useCase: _i1.WidgetbookUseCase(
           name: 'OptionPicker',
-          builder: _i16.previewOptionPicker,
+          builder: _i17.previewOptionPicker,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'PreferenceTile',
         useCase: _i1.WidgetbookUseCase(
           name: 'PreferenceTile',
-          builder: _i17.previewPreferenceTile,
+          builder: _i18.previewPreferenceTile,
         ),
       ),
       _i1.WidgetbookComponent(
@@ -224,19 +234,19 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'custom',
-            builder: _i18.previewCustomResultView,
+            builder: _i19.previewCustomResultView,
           ),
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i18.previewErrorResultView,
+            builder: _i19.previewErrorResultView,
           ),
           _i1.WidgetbookUseCase(
             name: 'info',
-            builder: _i18.previewInfoResultView,
+            builder: _i19.previewInfoResultView,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i18.previewSuccessResultView,
+            builder: _i19.previewSuccessResultView,
           ),
         ],
       ),
@@ -244,21 +254,21 @@ final directories = <_i1.WidgetbookNode>[
         name: 'RetryView',
         useCase: _i1.WidgetbookUseCase(
           name: 'RetryView',
-          builder: _i19.previewRetryView,
+          builder: _i20.previewRetryView,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'StepIndicator',
         useCase: _i1.WidgetbookUseCase(
           name: 'StepIndicator',
-          builder: _i20.previewStepIndicator,
+          builder: _i21.previewStepIndicator,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: '_ViewFinder',
         useCase: _i1.WidgetbookUseCase(
           name: '',
-          builder: _i21.previewViewFinder,
+          builder: _i22.previewViewFinder,
         ),
       ),
     ],
@@ -270,7 +280,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'BottomSheet',
         useCase: _i1.WidgetbookUseCase(
           name: 'NotificationsPermissionRationale',
-          builder: _i22.previewNotificationsPermissionRationaleModal,
+          builder: _i23.previewNotificationsPermissionRationaleModal,
         ),
       )
     ],
@@ -279,12 +289,19 @@ final directories = <_i1.WidgetbookNode>[
     name: 'Fragments',
     children: [
       _i1.WidgetbookLeafComponent(
+        name: 'DocumentValidationInfoFragment',
+        useCase: _i1.WidgetbookUseCase(
+          name: '',
+          builder: _i24.previewDocumentValidationInfoFragment,
+        ),
+      ),
+      _i1.WidgetbookLeafComponent(
         name: 'ShowWebPageFragment',
         useCase: _i1.WidgetbookUseCase(
           name: 'ShowWebPageFragment',
-          builder: _i23.previewShowWebPageFragment,
+          builder: _i25.previewShowWebPageFragment,
         ),
-      )
+      ),
     ],
   ),
   _i1.WidgetbookCategory(
@@ -294,14 +311,14 @@ final directories = <_i1.WidgetbookNode>[
         name: 'CertificatePicker',
         useCase: _i1.WidgetbookUseCase(
           name: 'CertificatePicker',
-          builder: _i24.previewCertificatePicker,
+          builder: _i26.previewCertificatePicker,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'SignatureTypePicker',
         useCase: _i1.WidgetbookUseCase(
           name: '',
-          builder: _i25.previewSignatureTypePicker,
+          builder: _i27.previewSignatureTypePicker,
         ),
       ),
     ],
@@ -313,14 +330,14 @@ final directories = <_i1.WidgetbookNode>[
         name: 'AboutScreen',
         useCase: _i1.WidgetbookUseCase(
           name: 'AboutScreen',
-          builder: _i26.previewAboutScreen,
+          builder: _i28.previewAboutScreen,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'MainMenuScreen',
         useCase: _i1.WidgetbookUseCase(
           name: '',
-          builder: _i27.previewMainMenuScreen,
+          builder: _i29.previewMainMenuScreen,
         ),
       ),
       _i1.WidgetbookLeafComponent(
@@ -334,14 +351,14 @@ final directories = <_i1.WidgetbookNode>[
         name: 'OnboardingAcceptDocumentScreen',
         useCase: _i1.WidgetbookUseCase(
           name: '',
-          builder: _i28.previewOnboardingAcceptDocumentScreen,
+          builder: _i30.previewOnboardingAcceptDocumentScreen,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'OnboardingFinishedScreen',
         useCase: _i1.WidgetbookUseCase(
           name: '',
-          builder: _i29.previewOnboardingFinishedScreen,
+          builder: _i31.previewOnboardingFinishedScreen,
         ),
       ),
       _i1.WidgetbookComponent(
@@ -349,20 +366,20 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'canceled',
-            builder: _i30.previewCanceledOnboardingSelectSigningCertificateBody,
+            builder: _i32.previewCanceledOnboardingSelectSigningCertificateBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'initial',
-            builder: _i30.previewInitialOnboardingSelectSigningCertificateBody,
+            builder: _i32.previewInitialOnboardingSelectSigningCertificateBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'no certificate',
             builder:
-                _i30.previewNoCertificateOnboardingSelectSigningCertificateBody,
+                _i32.previewNoCertificateOnboardingSelectSigningCertificateBody,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i30.previewSuccessOnboardingSelectSigningCertificateBody,
+            builder: _i32.previewSuccessOnboardingSelectSigningCertificateBody,
           ),
         ],
       ),
@@ -371,11 +388,11 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i31.previewErrorOpenDocumentScreen,
+            builder: _i33.previewErrorOpenDocumentScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i31.previewLoadingOpenDocumentScreen,
+            builder: _i33.previewLoadingOpenDocumentScreen,
           ),
         ],
       ),
@@ -383,7 +400,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'PairedDeviceListScreen',
         useCase: _i1.WidgetbookUseCase(
           name: '',
-          builder: _i32.previewPairedDeviceListScreen,
+          builder: _i34.previewPairedDeviceListScreen,
         ),
       ),
       _i1.WidgetbookComponent(
@@ -391,19 +408,19 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i33.previewErrorPresentSignedDocumentScreen,
+            builder: _i35.previewErrorPresentSignedDocumentScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'initial',
-            builder: _i33.previewInitialPresentSignedDocumentScreen,
+            builder: _i35.previewInitialPresentSignedDocumentScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i33.previewLoadingPresentSignedDocumentScreen,
+            builder: _i35.previewLoadingPresentSignedDocumentScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i33.previewSuccessPresentSignedDocumentScreen,
+            builder: _i35.previewSuccessPresentSignedDocumentScreen,
           ),
         ],
       ),
@@ -412,15 +429,15 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i34.previewErrorPreviewDocumentScreen,
+            builder: _i36.previewErrorPreviewDocumentScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i34.previewLoadingPreviewDocumentScreen,
+            builder: _i36.previewLoadingPreviewDocumentScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i34.previewSuccessPreviewDocumentScreen,
+            builder: _i36.previewSuccessPreviewDocumentScreen,
           ),
         ],
       ),
@@ -428,7 +445,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'QRCodeScannerScreen',
         useCase: _i1.WidgetbookUseCase(
           name: '',
-          builder: _i21.previewQRCodeScannerScreen,
+          builder: _i22.previewQRCodeScannerScreen,
         ),
       ),
       _i1.WidgetbookComponent(
@@ -436,23 +453,23 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'canceled',
-            builder: _i35.previewCanceledSelectCertificateScreen,
+            builder: _i37.previewCanceledSelectCertificateScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i35.previewErrorSelectCertificateScreen,
+            builder: _i37.previewErrorSelectCertificateScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i35.previewLoadingSelectCertificateScreen,
+            builder: _i37.previewLoadingSelectCertificateScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'no certificate',
-            builder: _i35.previewNoCertificateSelectCertificateScreen,
+            builder: _i37.previewNoCertificateSelectCertificateScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i35.previewSuccessSelectCertificateScreen,
+            builder: _i37.previewSuccessSelectCertificateScreen,
           ),
         ],
       ),
@@ -460,14 +477,14 @@ final directories = <_i1.WidgetbookNode>[
         name: 'SettingsScreen',
         useCase: _i1.WidgetbookUseCase(
           name: 'SettingsScreen',
-          builder: _i36.previewSettingsScreen,
+          builder: _i38.previewSettingsScreen,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'ShowDocumentScreen',
         useCase: _i1.WidgetbookUseCase(
           name: '',
-          builder: _i37.previewShowDocumentScreen,
+          builder: _i39.previewShowDocumentScreen,
         ),
       ),
       _i1.WidgetbookComponent(
@@ -475,15 +492,15 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'error',
-            builder: _i38.previewErrorSignDocumentScreen,
+            builder: _i40.previewErrorSignDocumentScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'loading',
-            builder: _i38.previewLoadingSignDocumentScreen,
+            builder: _i40.previewLoadingSignDocumentScreen,
           ),
           _i1.WidgetbookUseCase(
             name: 'success',
-            builder: _i38.previewSuccessSignDocumentScreen,
+            builder: _i40.previewSuccessSignDocumentScreen,
           ),
         ],
       ),
@@ -491,7 +508,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'StartRemoteDocumentSigningScreen',
         useCase: _i1.WidgetbookUseCase(
           name: '',
-          builder: _i39.previewStartRemoteDocumentSigningScreen,
+          builder: _i41.previewStartRemoteDocumentSigningScreen,
         ),
       ),
     ],

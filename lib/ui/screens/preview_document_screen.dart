@@ -1,7 +1,7 @@
 import 'dart:io' show File;
 
 import 'package:autogram_sign/autogram_sign.dart'
-    show DocumentVisualizationResponseBody;
+    show DocumentValidationResponseBody, DocumentVisualizationResponseBody;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +15,7 @@ import '../../file_system_entity_extensions.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../fragment/document_validation_fragment.dart';
+import '../fragment/document_validation_info_fragment.dart';
 import '../widgets/document_visualization.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
@@ -24,8 +25,9 @@ import 'select_certificate_screen.dart';
 /// Screen for previewing single document from [file] and [documentId].
 ///
 /// Uses [PreviewDocumentCubit].
-///
+/// TODO Also update docs - mention fragments
 /// Navigates next to [SelectCertificateScreen].
+/// Shows [DocumentValidationInfoFragment].
 ///
 /// See also:
 ///  - [OpenDocumentScreen]
@@ -54,6 +56,9 @@ class PreviewDocumentScreen extends StatelessWidget {
             state: state,
             onSignRequested: () {
               _onSignRequested(context);
+            },
+            onShowDocumentValidationInfoRequested: (data) {
+              _onShowDocumentValidationInfoRequested(context, data);
             },
           );
         },
@@ -102,6 +107,19 @@ class PreviewDocumentScreen extends StatelessWidget {
 
     return Navigator.of(context).push(route);
   }
+
+  Future<void> _onShowDocumentValidationInfoRequested(
+    BuildContext context,
+    DocumentValidationResponseBody data,
+  ) {
+    // TODO Call avm.showModalBottomSheet
+    return showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return DocumentValidationInfoFragment(data: data);
+      },
+    );
+  }
 }
 
 /// [PreviewDocumentScreen] body.
@@ -109,19 +127,23 @@ class _Body extends StatelessWidget {
   final String documentId;
   final PreviewDocumentState state;
   final VoidCallback? onSignRequested;
+  final ValueSetter<DocumentValidationResponseBody>?
+      onShowDocumentValidationInfoRequested;
 
   const _Body({
     this.documentId = '',
     required this.state,
     required this.onSignRequested,
+    this.onShowDocumentValidationInfoRequested,
   });
 
   @override
   Widget build(BuildContext context) {
+    // TODO Fix margins according to Designs https://www.figma.com/design/9i8kwShc6o8Urp2lYoPg6M/Autogram-v-mobile-(WIP)?node-id=742-718&node-type=FRAME&t=tOi5uDxBr4g6AUTW-0
     final child1 = DocumentValidationFragment(
       documentId: documentId,
-      onShowDocumentValidationInfoRequested: (response) {
-        // TODO Show popup with details
+      onShowDocumentValidationInfoRequested: (data) {
+        onShowDocumentValidationInfoRequested?.call(data);
       },
     );
     // TODO Extract whole child2 as Fragment, so it can have separate preview

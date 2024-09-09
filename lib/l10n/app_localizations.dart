@@ -475,6 +475,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, one {Dokument obsahuje **1 podpis**} few {Dokument obsahuje **{count} podpisy**} many {Dokument obsahuje {count} podpisov**} other {Dokument obsahuje **{count} podpisov**}}'**
   String documentValidationHasValidSignaturesLabel(num count);
 
+  /// No description provided for @documentValidationSignaturesHeading.
+  ///
+  /// In sk, this message translates to:
+  /// **'Podpisy v dokumente'**
+  String get documentValidationSignaturesHeading;
+
   /// No description provided for @selectCertificateTitle.
   ///
   /// In sk, this message translates to:
