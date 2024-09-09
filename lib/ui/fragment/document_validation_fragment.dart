@@ -1,6 +1,5 @@
 import 'package:autogram_sign/autogram_sign.dart'
-    show
-        DocumentValidationResponseBody;
+    show DocumentValidationResponseBody;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,7 +11,7 @@ import '../widgets/document_validation_strip.dart';
 ///
 /// Uses [DocumentValidationCubit].
 class DocumentValidationFragment extends StatelessWidget {
-  // TODO Stateful widget?
+  // TODO Consider migrating to to stateful widget becasue of Cubit
   final String documentId;
 
   const DocumentValidationFragment({
@@ -40,6 +39,9 @@ class DocumentValidationFragment extends StatelessWidget {
         ),
       DocumentValidationLoadingState _ => const DocumentValidationStrip(
           value: DocumentValidationStripValue.loading(),
+        ),
+      DocumentValidationNotSignedState _ => const DocumentValidationStrip(
+          value: DocumentValidationStripValue.none(),
         ),
       DocumentValidationSuccessState state => DocumentValidationStrip(
           value: DocumentValidationStripValue.value(

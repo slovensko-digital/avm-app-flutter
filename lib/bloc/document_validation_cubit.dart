@@ -7,10 +7,11 @@ import 'package:logging/logging.dart';
 
 import '../ui/fragment/document_validation_fragment.dart';
 import 'document_validation_state.dart';
+import 'preview_document_cubit.dart';
 
 export 'document_validation_state.dart';
 
-/// Cubit for the [DocumentValidationFragment] with only [createDocument] function.
+/// Cubit for the [DocumentValidationFragment] with [validateDocument] function.
 ///
 /// See also:
 ///  - [PreviewDocumentCubit]
@@ -38,7 +39,12 @@ class DocumentValidationCubit extends Cubit<DocumentValidationState> {
     } catch (error, stackTrace) {
       _log.severe("Error validating Document.", error, stackTrace);
 
-      emit(DocumentValidationErrorState(error));
+      if (error is ServiceException &&
+          error.errorCode == "DOCUMENT_NOT_SIGNED") {
+        emit(const DocumentValidationNotSignedState());
+      } else {
+        emit(DocumentValidationErrorState(error));
+      }
     }
   }
 }

@@ -84,6 +84,11 @@ class DocumentValidationStripValue {
     required this.validCount,
     required this.invalidCount,
   }) : isLoading = false;
+
+  const DocumentValidationStripValue.none()
+      : validCount = 0,
+        invalidCount = 0,
+        isLoading = false;
 }
 
 @widgetbook.UseCase(

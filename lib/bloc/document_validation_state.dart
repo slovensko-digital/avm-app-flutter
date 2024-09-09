@@ -34,6 +34,10 @@ class DocumentValidationErrorState extends DocumentValidationState {
   }
 }
 
+class DocumentValidationNotSignedState extends DocumentValidationState {
+  const DocumentValidationNotSignedState();
+}
+
 class DocumentValidationSuccessState extends DocumentValidationState {
   final DocumentValidationResponseBody? response;
 
