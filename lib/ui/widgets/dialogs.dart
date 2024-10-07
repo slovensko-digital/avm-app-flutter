@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -43,15 +44,15 @@ Future<bool?> showNotificationsPermissionRationaleModal(BuildContext context) {
     ],
   );
 
-  return _showModalBottomSheet<bool>(
+  return showModalBottomSheet<bool>(
     context: context,
     child: child,
   );
 }
 
-/// Calls Material [showModalBottomSheet] with predefined [child] wrapper
+/// Calls Material `showModalBottomSheet` with predefined [child] wrapper
 /// and [avm.CloseButton].
-Future<T?> _showModalBottomSheet<T>({
+Future<T?> showModalBottomSheet<T>({
   required BuildContext context,
   required Widget child,
 }) {
@@ -67,7 +68,7 @@ Future<T?> _showModalBottomSheet<T>({
     ),
   );
 
-  return showModalBottomSheet<T>(
+  return material.showModalBottomSheet<T>(
     context: context,
     isScrollControlled: true,
     constraints: const BoxConstraints(minWidth: double.infinity),

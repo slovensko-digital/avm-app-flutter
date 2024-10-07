@@ -6,31 +6,46 @@ import '../../oids.dart';
 import '../../utils.dart';
 import '../widgets/chip.dart' as avm;
 
+typedef _ValidationResult
+    = DocumentValidationResponseBody$Signatures$ItemValidationResult;
+
 /// Displays Document validation info based on [data] provided.
 class DocumentValidationInfo extends StatelessWidget {
-  // TODO Add primitive params for preview + create factory ctor for DocumentValidationResponseBody$Signatures$Item
-  final DocumentValidationResponseBody$Signatures$Item data;
+  final String subject;
+  final DocumentValidationResponseBody$Signatures$ItemValidationResult
+      validationResult;
 
-  const DocumentValidationInfo(this.data, {super.key});
+  const DocumentValidationInfo._({
+    required this.subject,
+    required this.validationResult,
+  });
 
-  @override
-  Widget build(BuildContext context) {
-    final cert =
-        x509CertificateDataFromDer(data.signingCertificate.certificateDer)
-            .tbsCertificate;
+  factory DocumentValidationInfo(
+    DocumentValidationResponseBody$Signatures$Item data,
+  ) {
+    final certDer = data.signingCertificate.certificateDer;
+    final cert = x509CertificateDataFromDer(certDer).tbsCertificate;
     final label = [
       cert?.subject[X500Oids.cn],
       cert?.subject[X500Oids.ln],
       cert?.subject[X500Oids.c],
     ].whereType<String>().join(", ");
 
+    return DocumentValidationInfo._(
+      subject: label,
+      validationResult: data.validationResult,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
           child: Text(
-            label,
+            subject,
             maxLines: 2,
             style: const TextStyle(fontWeight: FontWeight.bold),
             overflow: TextOverflow.ellipsis,
@@ -42,52 +57,28 @@ class DocumentValidationInfo extends StatelessWidget {
   }
 
   Widget _buildChip(BuildContext context) {
-    final icon = switch (data.validationResult) {
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .totalPassed =>
-        Icons.check,
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .indeterminate =>
-        Icons.warning_amber_outlined,
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .totalFailed =>
-        Icons.error_outline,
+    final icon = switch (validationResult) {
+      _ValidationResult.totalPassed => Icons.check,
+      _ValidationResult.indeterminate => Icons.warning_amber_outlined,
+      _ValidationResult.totalFailed => Icons.error_outline,
       _ => Icons.question_mark_outlined,
     };
-    final foreground = switch (data.validationResult) {
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .totalPassed =>
-        const Color(0xFF033608),
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .indeterminate =>
-        const Color(0xFF4E2A00),
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .totalFailed =>
-        const Color(0xFF4E0711),
+    final foreground = switch (validationResult) {
+      _ValidationResult.totalPassed => const Color(0xFF033608),
+      _ValidationResult.indeterminate => const Color(0xFF4E2A00),
+      _ValidationResult.totalFailed => const Color(0xFF4E0711),
       _ => Colors.black,
     };
-    final background = switch (data.validationResult) {
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .totalPassed =>
-        const Color(0xFFEDF5F3),
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .indeterminate =>
-        const Color(0xFFF4F4EC),
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .totalFailed =>
-        const Color(0xFFFBEEF0),
+    final background = switch (validationResult) {
+      _ValidationResult.totalPassed => const Color(0xFFEDF5F3),
+      _ValidationResult.indeterminate => const Color(0xFFF4F4EC),
+      _ValidationResult.totalFailed => const Color(0xFFFBEEF0),
       _ => Colors.white,
     };
-    final border = switch (data.validationResult) {
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .totalPassed =>
-        const Color(0xFFA9D9CD),
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .indeterminate =>
-        const Color(0xFFD5D6A2),
-      DocumentValidationResponseBody$Signatures$ItemValidationResult
-            .totalFailed =>
-        const Color(0xFFC3112B),
+    final border = switch (validationResult) {
+      _ValidationResult.totalPassed => const Color(0xFFA9D9CD),
+      _ValidationResult.indeterminate => const Color(0xFFD5D6A2),
+      _ValidationResult.totalFailed => const Color(0xFFC3112B),
       _ => Colors.grey,
     };
 
@@ -107,8 +98,8 @@ class DocumentValidationInfo extends StatelessWidget {
   type: DocumentValidationInfo,
 )
 Widget previewDocumentValidationInfo(BuildContext context) {
-  return const DocumentValidationInfo(
-    DocumentValidationResponseBody$Signatures$Item(
+  return DocumentValidationInfo(
+    const DocumentValidationResponseBody$Signatures$Item(
       validationResult:
           DocumentValidationResponseBody$Signatures$ItemValidationResult
               .totalPassed,
