@@ -4,6 +4,7 @@
 
 - #35
 - #39
+- Update AGP and Gradle version for latest Android Studio Ladybug (2024.2.1 Patch 1)
 
 ## 2024-07-16 - v1.0.4(35)
 
