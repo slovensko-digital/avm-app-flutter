@@ -6,8 +6,12 @@ import '../../strings_context.dart';
 import 'loading_indicator.dart';
 import 'markdown_text.dart';
 
-/// Presents state of document validation - displays text and potentionally
-/// loading indicator on the left or arrow on the right when has any signatures.
+/// Presents state of document validation - displays text and potentially
+/// loading indicator on the left and on the right one of the:
+/// - arrow on the right when has any signatures
+/// - × when has no signatures
+///
+/// [onTap] is invoked when taped on whole widget.
 class DocumentValidationStrip extends StatelessWidget {
   final DocumentValidationStripValue value;
   final VoidCallback? onTap;
@@ -43,26 +47,27 @@ class DocumentValidationStrip extends StatelessWidget {
     };
     const foregroundColor = Colors.white;
 
+    final children = [
+      if (isLoading) const LoadingIndicator(size: 16),
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: MarkdownText(text, textColor: foregroundColor),
+        ),
+      ),
+      Icon(
+        (hasSignatures ? Icons.arrow_right_alt_outlined : Icons.close),
+        color: foregroundColor,
+      )
+    ];
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
         color: backgroundColor,
         child: Row(
-          children: [
-            if (isLoading) const LoadingIndicator(size: 16),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                child: MarkdownText(text, textColor: foregroundColor),
-              ),
-            ),
-            if (hasSignatures)
-              const Icon(
-                Icons.arrow_right_alt_outlined,
-                color: foregroundColor,
-              )
-          ],
+          children: children,
         ),
       ),
     );

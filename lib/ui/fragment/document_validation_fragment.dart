@@ -9,11 +9,14 @@ import '../../bloc/document_validation_cubit.dart';
 import '../../di.dart';
 import '../widgets/document_validation_strip.dart';
 
+typedef _ValidationResult
+    = DocumentValidationResponseBody$Signatures$ItemValidationResult;
+
 /// Executes Document validation and displays output in [DocumentValidationStrip].
 ///
 /// Uses [DocumentValidationCubit].
 class DocumentValidationFragment extends StatelessWidget {
-  // TODO Consider migrating to to stateful widget becasue of Cubit
+  // TODO Consider migrating to to stateful widget because of Cubit
   final String documentId;
   final ValueSetter<DocumentValidationResponseBody>
       onShowDocumentValidationInfoRequested;
@@ -63,18 +66,13 @@ class DocumentValidationFragment extends StatelessWidget {
   }
 }
 
+/// A set of extensions on [DocumentValidationResponseBody].
 extension _DocumentValidationResponseBodyExtensions
     on DocumentValidationResponseBody {
   int? get validSignaturesCount => signatures
-      ?.where((s) =>
-          s.validationResult ==
-          DocumentValidationResponseBody$Signatures$ItemValidationResult
-              .totalPassed)
+      ?.where((s) => s.validationResult == _ValidationResult.totalPassed)
       .length;
   int? get invalidSignaturesCount => signatures
-      ?.where((s) =>
-          s.validationResult !=
-          DocumentValidationResponseBody$Signatures$ItemValidationResult
-              .totalPassed)
+      ?.where((s) => s.validationResult != _ValidationResult.totalPassed)
       .length;
 }

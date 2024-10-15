@@ -9,7 +9,7 @@ import '../widgets/chip.dart' as avm;
 typedef _ValidationResult
     = DocumentValidationResponseBody$Signatures$ItemValidationResult;
 
-/// Displays Document validation info based on [data] provided.
+/// Displays Document validation info based on [validationResult] provided.
 class DocumentValidationInfo extends StatelessWidget {
   final String subject;
   final DocumentValidationResponseBody$Signatures$ItemValidationResult
