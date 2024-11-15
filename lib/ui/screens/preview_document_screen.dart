@@ -83,7 +83,6 @@ class PreviewDocumentScreen extends StatelessWidget {
       await Share.shareXFiles(
         [XFile(file.path)],
         subject: file.basename,
-        text: context.strings.shareDocumentText,
       );
     }
   }
