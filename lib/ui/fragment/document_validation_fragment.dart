@@ -15,8 +15,7 @@ typedef _ValidationResult
 /// Executes Document validation and displays output in [DocumentValidationStrip].
 ///
 /// Uses [DocumentValidationCubit].
-class DocumentValidationFragment extends StatelessWidget {
-  // TODO Consider migrating to to stateful widget because of Cubit
+class DocumentValidationFragment extends StatefulWidget {
   final String documentId;
   final ValueSetter<DocumentValidationResponseBody>
       onShowDocumentValidationInfoRequested;
@@ -28,11 +27,20 @@ class DocumentValidationFragment extends StatelessWidget {
   });
 
   @override
+  State<DocumentValidationFragment> createState() =>
+      _DocumentValidationFragmentState();
+}
+
+class _DocumentValidationFragmentState
+    extends State<DocumentValidationFragment> {
+  bool _hidden = false;
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider<DocumentValidationCubit>(
       create: (context) {
         return getIt.get<DocumentValidationCubit>()
-          ..validateDocument(documentId);
+          ..validateDocument(widget.documentId);
       },
       child: BlocBuilder<DocumentValidationCubit, DocumentValidationState>(
         builder: _buildContent,
@@ -41,6 +49,11 @@ class DocumentValidationFragment extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context, DocumentValidationState state) {
+    if (_hidden) {
+      // TODO Animate height from 100% to 0
+      return const SizedBox.shrink();
+    }
+
     return switch (state) {
       DocumentValidationInitialState _ => const DocumentValidationStrip(
           value: DocumentValidationStripValue.loading(),
@@ -48,8 +61,13 @@ class DocumentValidationFragment extends StatelessWidget {
       DocumentValidationLoadingState _ => const DocumentValidationStrip(
           value: DocumentValidationStripValue.loading(),
         ),
-      DocumentValidationNotSignedState _ => const DocumentValidationStrip(
-          value: DocumentValidationStripValue.none(),
+      DocumentValidationNotSignedState _ => DocumentValidationStrip(
+          value: const DocumentValidationStripValue.none(),
+          onTap: () {
+            setState(() {
+              _hidden = true;
+            });
+          },
         ),
       DocumentValidationSuccessState state => DocumentValidationStrip(
           value: DocumentValidationStripValue.value(
@@ -57,7 +75,7 @@ class DocumentValidationFragment extends StatelessWidget {
             invalidCount: state.response.invalidSignaturesCount ?? 0,
           ),
           onTap: () {
-            onShowDocumentValidationInfoRequested.call(state.response);
+            widget.onShowDocumentValidationInfoRequested.call(state.response);
           },
         ),
       DocumentValidationErrorState _ => const SizedBox.shrink(),

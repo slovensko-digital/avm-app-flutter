@@ -59,6 +59,7 @@ class DocumentValidationStrip extends StatelessWidget {
       Icon(
         icon,
         color: foregroundColor,
+        semanticLabel: null,
       )
     ];
 
@@ -80,21 +81,22 @@ class DocumentValidationStripValue {
   final bool isLoading;
   final int validCount;
   final int invalidCount;
+  final Object? error;
 
   const DocumentValidationStripValue.loading()
       : isLoading = true,
         validCount = 0,
-        invalidCount = 0;
+        invalidCount = 0,
+        error = null;
 
   const DocumentValidationStripValue.value({
     required this.validCount,
     required this.invalidCount,
-  }) : isLoading = false;
+  })  : isLoading = false,
+        error = null;
 
   const DocumentValidationStripValue.none()
-      : validCount = 0,
-        invalidCount = 0,
-        isLoading = false;
+      : this.value(validCount: 0, invalidCount: 0);
 }
 
 @widgetbook.UseCase(
