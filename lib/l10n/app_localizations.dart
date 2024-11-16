@@ -376,7 +376,7 @@ abstract class AppLocalizations {
   /// No description provided for @introBody.
   ///
   /// In sk, this message translates to:
-  /// **'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie'**
+  /// **'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie\n ✅ Rýchle overenie podpisov'**
   String get introBody;
 
   /// No description provided for @onboardingFinishedHeading.

@@ -194,7 +194,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get introHeading => 'Nový, lepší a krajší podpisovač v mobile';
 
   @override
-  String get introBody => 'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie';
+  String get introBody => 'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie\n ✅ Rýchle overenie podpisov';
 
   @override
   String get onboardingFinishedHeading => 'Autogram je pripravený';
