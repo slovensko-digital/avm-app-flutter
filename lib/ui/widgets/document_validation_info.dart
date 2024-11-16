@@ -50,12 +50,7 @@ class DocumentValidationInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subject = [
-      _certificate.subject[X500Oids.cn],
-      _certificate.subject[X500Oids.ln],
-      _certificate.subject[X500Oids.c],
-    ].whereType<String>().join(", ");
-
+    final subject = _certificate.subject[X500Oids.cn] ?? '';
     final label = InkWell(
       onTap: () {
         CertificateDetailsDialog.show(context, _certificate);
