@@ -74,8 +74,9 @@
   "documentVisualizationCannotVisualizeTypeError": "Neviem vizualizovať {type} typ.",
 
   "documentValidationLoadingLabel": "Prebieha overovanie podpisov",
-  "documentValidationNoSignaturesLabel": "Dokument neobsahuje **žiadny podpis**",
+  "documentValidationNoSignaturesLabel": "Dokument zatiaľ neobsahuje **žiadny podpis**",
   "documentValidationHasInvalidSignaturesLabel": "Dokument obsahuje **neplatné podpisy**",
+  "documentValidationHasIndeterminateSignatureLabel": "Dokument obsahuje **neznámy podpis**",
   "documentValidationHasValidSignaturesLabel": "{count, plural, one {Dokument obsahuje **1 podpis**} few {Dokument obsahuje **{count} podpisy**} many {Dokument obsahuje {count} podpisov**} other {Dokument obsahuje **{count} podpisov**}}",
   "documentValidationSignaturesHeading": "Podpisy v dokumente",
 

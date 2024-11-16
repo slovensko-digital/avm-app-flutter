@@ -1,6 +1,7 @@
 import 'package:autogram_sign/autogram_sign.dart'
     show
         DocumentValidationResponseBody,
+        DocumentValidationResponseBody$Signatures$Item,
         DocumentValidationResponseBody$Signatures$ItemValidationResult;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -71,8 +72,9 @@ class _DocumentValidationFragmentState
         ),
       DocumentValidationSuccessState state => DocumentValidationStrip(
           value: DocumentValidationStripValue.value(
-            validCount: state.response.validSignaturesCount ?? 0,
-            invalidCount: state.response.invalidSignaturesCount ?? 0,
+            failedCount: state.response.failedCount,
+            indeterminateCount: state.response.indeterminateCount,
+            passedCount: state.response.passedCount,
           ),
           onTap: () {
             widget.onShowDocumentValidationInfoRequested.call(state.response);
@@ -87,10 +89,18 @@ class _DocumentValidationFragmentState
 /// A set of extensions on [DocumentValidationResponseBody].
 extension _DocumentValidationResponseBodyExtensions
     on DocumentValidationResponseBody {
-  int? get validSignaturesCount => signatures
-      ?.where((s) => s.validationResult == _ValidationResult.totalPassed)
+  List<DocumentValidationResponseBody$Signatures$Item> get signaturesOrEmpty =>
+      (signatures ?? []);
+
+  int get failedCount => signaturesOrEmpty
+      .where((s) => s.validationResult == _ValidationResult.totalFailed)
       .length;
-  int? get invalidSignaturesCount => signatures
-      ?.where((s) => s.validationResult != _ValidationResult.totalPassed)
+
+  int get indeterminateCount => signaturesOrEmpty
+      .where((s) => s.validationResult == _ValidationResult.indeterminate)
+      .length;
+
+  int get passedCount => signaturesOrEmpty
+      .where((s) => s.validationResult == _ValidationResult.totalPassed)
       .length;
 }

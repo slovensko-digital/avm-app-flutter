@@ -460,7 +460,7 @@ abstract class AppLocalizations {
   /// No description provided for @documentValidationNoSignaturesLabel.
   ///
   /// In sk, this message translates to:
-  /// **'Dokument neobsahuje **žiadny podpis**'**
+  /// **'Dokument zatiaľ neobsahuje **žiadny podpis**'**
   String get documentValidationNoSignaturesLabel;
 
   /// No description provided for @documentValidationHasInvalidSignaturesLabel.
@@ -468,6 +468,12 @@ abstract class AppLocalizations {
   /// In sk, this message translates to:
   /// **'Dokument obsahuje **neplatné podpisy**'**
   String get documentValidationHasInvalidSignaturesLabel;
+
+  /// No description provided for @documentValidationHasIndeterminateSignatureLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument obsahuje **neznámy podpis**'**
+  String get documentValidationHasIndeterminateSignatureLabel;
 
   /// No description provided for @documentValidationHasValidSignaturesLabel.
   ///

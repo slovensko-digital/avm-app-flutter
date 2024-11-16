@@ -238,10 +238,13 @@ class AppLocalizationsSk extends AppLocalizations {
   String get documentValidationLoadingLabel => 'Prebieha overovanie podpisov';
 
   @override
-  String get documentValidationNoSignaturesLabel => 'Dokument neobsahuje **žiadny podpis**';
+  String get documentValidationNoSignaturesLabel => 'Dokument zatiaľ neobsahuje **žiadny podpis**';
 
   @override
   String get documentValidationHasInvalidSignaturesLabel => 'Dokument obsahuje **neplatné podpisy**';
+
+  @override
+  String get documentValidationHasIndeterminateSignatureLabel => 'Dokument obsahuje **neznámy podpis**';
 
   @override
   String documentValidationHasValidSignaturesLabel(num count) {

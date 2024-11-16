@@ -24,26 +24,38 @@ class DocumentValidationStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final data = (value.isLoading, value.validCount, value.invalidCount);
+    final data = (
+      value.isLoading,
+      value.failedCount,
+      value.indeterminateCount,
+      value.passedCount
+    );
     final isLoading = value.isLoading;
-    final hasSignatures = (value.validCount > 0 || value.invalidCount > 0);
-
+    final hasSignatures =
+        (value.failedCount + value.indeterminateCount + value.passedCount) > 0;
     final strings = context.strings;
-
-    final String text = switch (data) {
-      (true, _, _) => strings.documentValidationLoadingLabel,
-      (false, _, > 0) => strings.documentValidationHasInvalidSignaturesLabel,
-      (false, > 0, _) =>
-        strings.documentValidationHasValidSignaturesLabel(value.validCount),
-      (false, 0, 0) => strings.documentValidationNoSignaturesLabel,
-      (_, _, _) => "" // technically invalid case
-    };
-    final Color backgroundColor = switch (data) {
-      (true, _, _) => const Color(0xFF126DFF),
-      (false, _, > 0) => const Color(0xFFC3112B),
-      (false, > 0, _) => const Color(0xFF078814),
-      (false, 0, 0) => const Color(0xFF126DFF),
-      (_, _, _) => Colors.transparent,
+    final (String text, Color backgroundColor) = switch (data) {
+      (true, _, _, _) => (
+          strings.documentValidationLoadingLabel,
+          const Color(0xFF126DFF)
+        ),
+      (false, 0, 0, 0) => (
+          strings.documentValidationNoSignaturesLabel,
+          const Color(0xFF126DFF),
+        ),
+      (false, > 0, _, _) => (
+          strings.documentValidationHasInvalidSignaturesLabel,
+          const Color(0xFFC3112B),
+        ),
+      (false, _, > 0, _) => (
+          strings.documentValidationHasIndeterminateSignatureLabel,
+          const Color(0xFFbd730c),
+        ),
+      (false, 0, 0, > 0) => (
+          strings.documentValidationHasValidSignaturesLabel(value.passedCount),
+          const Color(0xFF078814),
+        ),
+      (_, _, _, _) => ("", Colors.transparent), // technically invalid case
     };
     const foregroundColor = Colors.white;
     final icon = (hasSignatures ? Icons.arrow_right_alt_outlined : Icons.close);
@@ -79,24 +91,31 @@ class DocumentValidationStrip extends StatelessWidget {
 /// Value for [DocumentValidationStrip] widget.
 class DocumentValidationStripValue {
   final bool isLoading;
-  final int validCount;
-  final int invalidCount;
+  final int failedCount;
+  final int indeterminateCount;
+  final int passedCount;
   final Object? error;
 
   const DocumentValidationStripValue.loading()
       : isLoading = true,
-        validCount = 0,
-        invalidCount = 0,
+        failedCount = 0,
+        indeterminateCount = 0,
+        passedCount = 0,
         error = null;
 
   const DocumentValidationStripValue.value({
-    required this.validCount,
-    required this.invalidCount,
+    required this.failedCount,
+    required this.indeterminateCount,
+    required this.passedCount,
   })  : isLoading = false,
         error = null;
 
   const DocumentValidationStripValue.none()
-      : this.value(validCount: 0, invalidCount: 0);
+      : this.value(
+          failedCount: 0,
+          indeterminateCount: 0,
+          passedCount: 0,
+        );
 }
 
 @widgetbook.UseCase(
@@ -116,21 +135,27 @@ Widget previewLoadingDocumentValidationStrip(BuildContext context) {
   type: DocumentValidationStrip,
 )
 Widget previewOtherDocumentValidationStrip(BuildContext context) {
-  final validCount = context.knobs.list(
-    label: 'Valid count',
+  final passedCount = context.knobs.list(
+    label: 'Passed count',
     options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     initialOption: 0,
   );
-  final invalidCount = context.knobs.list(
-    label: 'Invalid count',
+  final indeterminateCount = context.knobs.list(
+    label: 'Indeterminate count',
+    options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    initialOption: 0,
+  );
+  final failedCount = context.knobs.list(
+    label: 'Failed count',
     options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     initialOption: 0,
   );
 
   return DocumentValidationStrip(
     value: DocumentValidationStripValue.value(
-      validCount: validCount,
-      invalidCount: invalidCount,
+      failedCount: failedCount,
+      indeterminateCount: indeterminateCount,
+      passedCount: passedCount,
     ),
   );
 }
