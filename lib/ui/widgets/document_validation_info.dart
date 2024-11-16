@@ -1,10 +1,12 @@
 import 'package:autogram_sign/autogram_sign.dart';
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../oids.dart';
 import '../../utils.dart';
+import '../screens/certificate_details_dialog.dart';
 import '../widgets/chip.dart' as avm;
 
 typedef SigningCertificateQualification
@@ -17,17 +19,17 @@ typedef _ValidationResult
 /// On left side, there is subject; validation result with qualification are
 /// on right side.
 class DocumentValidationInfo extends StatelessWidget {
-  final String _subject;
+  final TbsCertificate _certificate;
   final _ValidationResult _validationResult;
   final SigningCertificateQualification _qualification;
   final bool _areQualifiedTimestamps;
 
   const DocumentValidationInfo._({
-    required String subject,
+    required TbsCertificate certificate,
     required _ValidationResult validationResult,
     required SigningCertificateQualification qualification,
     required bool areQualifiedTimestamps,
-  })  : _subject = subject,
+  })  : _certificate = certificate,
         _validationResult = validationResult,
         _qualification = qualification,
         _areQualifiedTimestamps = areQualifiedTimestamps;
@@ -36,15 +38,10 @@ class DocumentValidationInfo extends StatelessWidget {
     DocumentValidationResponseBody$Signatures$Item data,
   ) {
     final certDer = data.signingCertificate.certificateDer;
-    final cert = x509CertificateDataFromDer(certDer).tbsCertificate;
-    final label = [
-      cert?.subject[X500Oids.cn],
-      cert?.subject[X500Oids.ln],
-      cert?.subject[X500Oids.c],
-    ].whereType<String>().join(", ");
+    final certificate = x509CertificateDataFromDer(certDer).tbsCertificate!;
 
     return DocumentValidationInfo._(
-      subject: label,
+      certificate: certificate,
       validationResult: data.validationResult,
       qualification: data.signingCertificate.qualification,
       areQualifiedTimestamps: data.areQualifiedTimestamps,
@@ -53,11 +50,22 @@ class DocumentValidationInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final label = Text(
-      _subject,
-      maxLines: 2,
-      style: const TextStyle(fontWeight: FontWeight.bold),
-      overflow: TextOverflow.ellipsis,
+    final subject = [
+      _certificate.subject[X500Oids.cn],
+      _certificate.subject[X500Oids.ln],
+      _certificate.subject[X500Oids.c],
+    ].whereType<String>().join(", ");
+
+    final label = InkWell(
+      onTap: () {
+        CertificateDetailsDialog.show(context, _certificate);
+      },
+      child: Text(
+        subject,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+        overflow: TextOverflow.ellipsis,
+        maxLines: 2,
+      ),
     );
 
     return Row(

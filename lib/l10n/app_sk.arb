@@ -90,6 +90,11 @@
   "selectSigningCertificateErrorHeading": "Chyba pri načítavaní certifikátov z občianskeho preukazu.",
 
   "certificateIssuer": "Vydavateľ: {text}",
+  "certificateIssuerLabel": "Vydavateľ",
+  "certificateSubjectLabel": "Vydaný pre",
+  "certificateValidityLabel": "Platnosť",
+  "certificateValidityNotBeforeLabel": "Platný od",
+  "certificateValidityNotAfterLabel": "Platný do",
   "certificateNotAfter": "Platný do: {text}",
 
   "signDocumentTitle": "Podpisovanie dokumentu",

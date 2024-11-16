@@ -535,6 +535,36 @@ abstract class AppLocalizations {
   /// **'Vydavateľ: {text}'**
   String certificateIssuer(Object text);
 
+  /// No description provided for @certificateIssuerLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Vydavateľ'**
+  String get certificateIssuerLabel;
+
+  /// No description provided for @certificateSubjectLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Vydaný pre'**
+  String get certificateSubjectLabel;
+
+  /// No description provided for @certificateValidityLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Platnosť'**
+  String get certificateValidityLabel;
+
+  /// No description provided for @certificateValidityNotBeforeLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Platný od'**
+  String get certificateValidityNotBeforeLabel;
+
+  /// No description provided for @certificateValidityNotAfterLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Platný do'**
+  String get certificateValidityNotAfterLabel;
+
   /// No description provided for @certificateNotAfter.
   ///
   /// In sk, this message translates to:

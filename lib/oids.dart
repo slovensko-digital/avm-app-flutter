@@ -8,6 +8,9 @@ class X500Oids {
   /// Organization name (ON).
   static const on = '2.5.4.10';
 
+  /// Organization unit name (OU).
+  static const ou = '2.5.4.11';
+
   /// Serial number (SN).
   static const sn = '2.5.4.5';
 

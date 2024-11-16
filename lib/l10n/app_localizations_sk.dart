@@ -289,6 +289,21 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String get certificateIssuerLabel => 'Vydavateľ';
+
+  @override
+  String get certificateSubjectLabel => 'Vydaný pre';
+
+  @override
+  String get certificateValidityLabel => 'Platnosť';
+
+  @override
+  String get certificateValidityNotBeforeLabel => 'Platný od';
+
+  @override
+  String get certificateValidityNotAfterLabel => 'Platný do';
+
+  @override
   String certificateNotAfter(Object text) {
     return 'Platný do: $text';
   }
