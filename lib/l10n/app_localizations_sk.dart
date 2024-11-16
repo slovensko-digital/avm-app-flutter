@@ -87,6 +87,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get qrCodeScannerOpenSemantics => 'Podpísať vzdialený dokument pomocou QR kódu';
 
   @override
+  String get shareDocumentPreviewSemantics => 'Zdieľať náhľad dokumentu';
+
+  @override
   String deepLinkParseErrorMessage(Object error) {
     return 'Nepodporovaný alebo nesprávny odkaz:\n$error';
   }

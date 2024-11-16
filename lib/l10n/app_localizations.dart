@@ -247,6 +247,12 @@ abstract class AppLocalizations {
   /// **'Podpísať vzdialený dokument pomocou QR kódu'**
   String get qrCodeScannerOpenSemantics;
 
+  /// No description provided for @shareDocumentPreviewSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zdieľať náhľad dokumentu'**
+  String get shareDocumentPreviewSemantics;
+
   /// No description provided for @deepLinkParseErrorMessage.
   ///
   /// In sk, this message translates to:

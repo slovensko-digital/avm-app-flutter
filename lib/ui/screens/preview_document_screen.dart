@@ -63,10 +63,15 @@ class PreviewDocumentScreen extends StatelessWidget {
         title: Text(context.strings.previewDocumentTitle),
         actions: [
           if (file != null)
-            IconButton(
-              onPressed: () => _onShareRequested(context),
-              icon: const Icon(Icons.share_outlined),
-              color: Theme.of(context).colorScheme.primary,
+            Semantics(
+              label: context.strings.shareDocumentPreviewSemantics,
+              excludeSemantics: true,
+              button: true,
+              child: IconButton(
+                onPressed: () => _onShareRequested(context),
+                icon: const Icon(Icons.share_outlined),
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
         ],
       ),
