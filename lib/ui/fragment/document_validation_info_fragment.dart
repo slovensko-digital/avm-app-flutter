@@ -32,15 +32,17 @@ class DocumentValidationInfoFragment extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context) {
-    final signatures = data.signatures ?? [];
+    final signatures = (data.signatures ?? []);
 
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(vertical: 8),
       itemCount: signatures.length,
       itemBuilder: (context, index) {
         final signature = signatures[index];
 
-        return DocumentValidationInfo(signature);
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: DocumentValidationInfo(signature),
+        );
       },
       separatorBuilder: (context, _) {
         return const Divider();
