@@ -223,6 +223,24 @@ abstract class AppLocalizations {
   /// **'Otvoriť menu'**
   String get buttonMenuLabelSemantics;
 
+  /// No description provided for @qrCodeScannerTorchOnSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zapnúť blesk'**
+  String get qrCodeScannerTorchOnSemantics;
+
+  /// No description provided for @qrCodeScannerTorchOffSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Vypnúť blesk'**
+  String get qrCodeScannerTorchOffSemantics;
+
+  /// No description provided for @qrCodeScannerBackSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Späť'**
+  String get qrCodeScannerBackSemantics;
+
   /// No description provided for @deepLinkParseErrorMessage.
   ///
   /// In sk, this message translates to:

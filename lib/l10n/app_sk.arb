@@ -23,6 +23,9 @@
   "buttonSignWithCertificateLabel": "Podpísať ako {subject}",
   "buttonSignWithDifferentCertificateLabel": "Podpísať iným certifikátom",
   "buttonMenuLabelSemantics": "Otvoriť menu",
+  "qrCodeScannerTorchOnSemantics": "Zapnúť blesk",
+  "qrCodeScannerTorchOffSemantics": "Vypnúť blesk",
+  "qrCodeScannerBackSemantics": "Späť",
 
   "deepLinkParseErrorMessage": "Nepodporovaný alebo nesprávny odkaz:\n{error}",
   "stepIndicatorText": "Krok {stepNumber} z {totalSteps}",
