@@ -309,6 +309,30 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String get validationResultPassedLabel => 'Platný';
+
+  @override
+  String get validationResultFailedLabel => 'Neplatný';
+
+  @override
+  String get validationResultIndeterminateLabel => 'Neznámy';
+
+  @override
+  String get validationResultUnknownLabel => 'Neznámy';
+
+  @override
+  String get signatureQualificationQesigLabel => 'Vlastnoručný podpis';
+
+  @override
+  String get signatureQualificationQesigWithQTLabel => 'Osvedčený podpis';
+
+  @override
+  String get signatureQualificationQesealWithQTLabel => 'Elektronická pečať';
+
+  @override
+  String get signatureQualificationAdesigWithQTLabel => 'Uznaný spôsob autorizácie';
+
+  @override
   String get signDocumentTitle => 'Podpisovanie dokumentu';
 
   @override

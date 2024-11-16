@@ -97,6 +97,16 @@
   "certificateValidityNotAfterLabel": "Platný do",
   "certificateNotAfter": "Platný do: {text}",
 
+  "validationResultPassedLabel": "Platný",
+  "validationResultFailedLabel": "Neplatný",
+  "validationResultIndeterminateLabel": "Neznámy",
+  "validationResultUnknownLabel": "Neznámy",
+
+  "signatureQualificationQesigLabel": "Vlastnoručný podpis",
+  "signatureQualificationQesigWithQTLabel": "Osvedčený podpis",
+  "signatureQualificationQesealWithQTLabel": "Elektronická pečať",
+  "signatureQualificationAdesigWithQTLabel": "Uznaný spôsob autorizácie",
+
   "signDocumentTitle": "Podpisovanie dokumentu",
   "signDocumentCanceledHeading": "Podpisovanie pomocou občianskeho preukazu bolo prerušené",
   "signDocumentErrorHeading": "Pri podpisovaní sa vyskytla chyba",

@@ -571,6 +571,54 @@ abstract class AppLocalizations {
   /// **'Platný do: {text}'**
   String certificateNotAfter(Object text);
 
+  /// No description provided for @validationResultPassedLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Platný'**
+  String get validationResultPassedLabel;
+
+  /// No description provided for @validationResultFailedLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Neplatný'**
+  String get validationResultFailedLabel;
+
+  /// No description provided for @validationResultIndeterminateLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Neznámy'**
+  String get validationResultIndeterminateLabel;
+
+  /// No description provided for @validationResultUnknownLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Neznámy'**
+  String get validationResultUnknownLabel;
+
+  /// No description provided for @signatureQualificationQesigLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Vlastnoručný podpis'**
+  String get signatureQualificationQesigLabel;
+
+  /// No description provided for @signatureQualificationQesigWithQTLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Osvedčený podpis'**
+  String get signatureQualificationQesigWithQTLabel;
+
+  /// No description provided for @signatureQualificationQesealWithQTLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Elektronická pečať'**
+  String get signatureQualificationQesealWithQTLabel;
+
+  /// No description provided for @signatureQualificationAdesigWithQTLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Uznaný spôsob autorizácie'**
+  String get signatureQualificationAdesigWithQTLabel;
+
   /// No description provided for @signDocumentTitle.
   ///
   /// In sk, this message translates to:

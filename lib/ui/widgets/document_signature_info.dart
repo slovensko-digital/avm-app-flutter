@@ -5,6 +5,7 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../oids.dart';
+import '../../strings_context.dart';
 import '../../utils.dart';
 import '../widgets/chip.dart' as avm;
 
@@ -95,7 +96,7 @@ class DocumentSignatureInfo extends StatelessWidget {
     };
 
     return avm.Chip(
-      label: _getLabel(),
+      label: _getLabel(context),
       foreground: foreground,
       background: background,
       border: border,
@@ -103,30 +104,30 @@ class DocumentSignatureInfo extends StatelessWidget {
     );
   }
 
-  String _getLabel() {
-    // TODO Extract labels into ARB
-    switch (_validationResult) {
-      case _ValidationResult.totalFailed:
-        return "Neplatný";
+  String _getLabel(BuildContext context) {
+    final strings = context.strings;
 
-      case _ValidationResult.indeterminate:
-      case _ValidationResult.swaggerGeneratedUnknown:
-        return "Neznámy";
-
-      case _ValidationResult.totalPassed:
-        return switch (_qualification) {
+    return switch (_validationResult) {
+      _ValidationResult.totalFailed => strings.validationResultFailedLabel,
+      _ValidationResult.indeterminate =>
+        strings.validationResultIndeterminateLabel,
+      _ValidationResult.swaggerGeneratedUnknown =>
+        strings.validationResultUnknownLabel,
+      _ValidationResult.totalPassed => switch (_qualification) {
           SigningCertificateQualification.qesig => (!_areQualifiedTimestamps
-              ? "Vlastnoručný podpis"
-              : "Osvedčený podpis"),
-          SigningCertificateQualification.qeseal =>
-            (_areQualifiedTimestamps ? "Elektronická pečať" : ""),
-          SigningCertificateQualification.adesigQcQc =>
-            (_areQualifiedTimestamps ? "Uznaný spôsob autorizácie" : ""),
+              ? strings.signatureQualificationQesigLabel
+              : strings.signatureQualificationQesigWithQTLabel),
+          SigningCertificateQualification.qeseal => (_areQualifiedTimestamps
+              ? strings.signatureQualificationQesealWithQTLabel
+              : ""),
+          SigningCertificateQualification.adesigQcQc => (_areQualifiedTimestamps
+              ? strings.signatureQualificationAdesigWithQTLabel
+              : ""),
           _ => ""
           // TODO handle other cases properly
           // https://github.com/slovensko-digital/autogram/blob/748d17c4c8d1b14516dba76bbb8f7beaadbc1bf6/src/main/java/digital/slovensko/autogram/ui/gui/SignatureBadgeFactory.java#L116
-        };
-    }
+        }
+    };
   }
 }
 
