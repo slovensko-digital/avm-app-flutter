@@ -6,12 +6,12 @@ import '../../strings_context.dart';
 import 'loading_indicator.dart';
 import 'markdown_text.dart';
 
-/// Presents state of document validation - displays text and potentially
+/// Presents state of Document validation - displays text and potentially
 /// loading indicator on the left and on the right one of the:
 /// - arrow on the right when has any signatures
 /// - × when has no signatures
 ///
-/// [onTap] is invoked when taped on whole widget.
+/// [onTap] is called when taped on whole widget.
 class DocumentValidationStrip extends StatelessWidget {
   final DocumentValidationStripValue value;
   final VoidCallback? onTap;
@@ -46,6 +46,7 @@ class DocumentValidationStrip extends StatelessWidget {
       (_, _, _) => Colors.transparent,
     };
     const foregroundColor = Colors.white;
+    final icon = (hasSignatures ? Icons.arrow_right_alt_outlined : Icons.close);
 
     final children = [
       if (isLoading) const LoadingIndicator(size: 16),
@@ -56,7 +57,7 @@ class DocumentValidationStrip extends StatelessWidget {
         ),
       ),
       Icon(
-        (hasSignatures ? Icons.arrow_right_alt_outlined : Icons.close),
+        icon,
         color: foregroundColor,
       )
     ];

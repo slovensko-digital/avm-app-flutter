@@ -31,7 +31,7 @@ class PreviewDocumentCubit extends Cubit<PreviewDocumentState> {
     emit(state.toLoading());
 
     try {
-      _log.info("Getting Document Visualisation for DocumentId: $documentId");
+      _log.info("Getting Document Visualisation for Document Id: $documentId");
 
       final visualization = await _service.getDocumentVisualization(documentId);
 

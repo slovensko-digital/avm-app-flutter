@@ -33,16 +33,19 @@ class DocumentValidationCubit extends Cubit<DocumentValidationState> {
     try {
       final response = await _service.getDocumentValidation(documentId);
 
-      _log.info("Got Document validation: $response.");
+      _log.info(
+          "Got Document validation: (signatureForm: ${response.signatureForm?.value}, signatures: ${response.signatures?.map((e) => e.validationResult.value)}).");
 
       emit(DocumentValidationSuccessState(response));
     } catch (error, stackTrace) {
-      _log.severe("Error validating Document.", error, stackTrace);
-
       if (error is ServiceException &&
           error.errorCode == "DOCUMENT_NOT_SIGNED") {
+        _log.info("Cannot validate unsigned Document.");
+
         emit(const DocumentValidationNotSignedState());
       } else {
+        _log.severe("Error validating Document.", error, stackTrace);
+
         emit(DocumentValidationErrorState(error));
       }
     }
