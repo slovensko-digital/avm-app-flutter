@@ -17,8 +17,6 @@ class DocumentValidationInfoFragment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final signatures = data.signatures ?? [];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -27,20 +25,26 @@ class DocumentValidationInfoFragment extends StatelessWidget {
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         Expanded(
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            itemCount: signatures.length,
-            itemBuilder: (context, index) {
-              final signature = signatures[index];
-
-              return DocumentValidationInfo(signature);
-            },
-            separatorBuilder: (context, _) {
-              return const Divider();
-            },
-          ),
+          child: _buildList(context),
         ),
       ],
+    );
+  }
+
+  Widget _buildList(BuildContext context) {
+    final signatures = data.signatures ?? [];
+
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      itemCount: signatures.length,
+      itemBuilder: (context, index) {
+        final signature = signatures[index];
+
+        return DocumentValidationInfo(signature);
+      },
+      separatorBuilder: (context, _) {
+        return const Divider();
+      },
     );
   }
 }
