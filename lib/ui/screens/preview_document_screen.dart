@@ -139,7 +139,6 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO Fix margins according to Designs https://www.figma.com/design/9i8kwShc6o8Urp2lYoPg6M/Autogram-v-mobile-(WIP)?node-id=742-718&node-type=FRAME&t=tOi5uDxBr4g6AUTW-0
     final child1 = DocumentValidationFragment(
       documentId: documentId,
       onShowDocumentValidationInfoRequested: (data) {
@@ -166,13 +165,12 @@ class _Body extends StatelessWidget {
       ],
     );
 
-    return Padding(
-      padding: kScreenMargin,
-      child: child,
-    );
+    return child;
   }
 }
 
+/// Displays [visualization] inside [DocumentVisualization] with
+/// primary button below.
 class _SuccessContent extends StatelessWidget {
   final DocumentVisualizationResponseBody visualization;
   final VoidCallback? onSignRequested;
@@ -191,12 +189,12 @@ class _SuccessContent extends StatelessWidget {
         // Document preview
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.all(2),
             child: DottedBorder(
               color: dashColor,
               strokeWidth: 4,
               dashPattern: const [16, 16],
-              padding: const EdgeInsets.all(2),
+              padding: const EdgeInsets.all(0),
               child: DocumentVisualization(
                 visualization: visualization,
               ),
@@ -205,12 +203,15 @@ class _SuccessContent extends StatelessWidget {
         ),
 
         // Primary button
-        FilledButton(
-          style: FilledButton.styleFrom(
-            minimumSize: kPrimaryButtonMinimumSize,
+        Padding(
+          padding: kScreenMargin,
+          child: FilledButton(
+            style: FilledButton.styleFrom(
+              minimumSize: kPrimaryButtonMinimumSize,
+            ),
+            onPressed: onSignRequested,
+            child: Text(context.strings.buttonSignLabel),
           ),
-          onPressed: onSignRequested,
-          child: Text(context.strings.buttonSignLabel),
         ),
       ],
     );
