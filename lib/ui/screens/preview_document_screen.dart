@@ -15,6 +15,7 @@ import '../app_theme.dart';
 import '../fragment/document_validation_fragment.dart';
 import '../fragment/document_validation_info_fragment.dart';
 import '../fragment/preview_document_fragment.dart';
+import '../widgets/dialogs.dart' as avm;
 import 'open_document_screen.dart';
 import 'select_certificate_screen.dart';
 
@@ -94,12 +95,12 @@ class PreviewDocumentScreen extends StatelessWidget {
     BuildContext context,
     DocumentValidationResponseBody data,
   ) {
-    // TODO Call avm.showModalBottomSheet or full screen popup
-    return showModalBottomSheet(
+    return avm.showModalBottomSheet(
       context: context,
-      builder: (_) {
-        return DocumentValidationInfoFragment(data: data);
-      },
+      child: SizedBox(
+        height: 240,
+        child: DocumentValidationInfoFragment(data: data),
+      ),
     );
   }
 
