@@ -245,7 +245,7 @@ class _ValueListenableBoundTile<T> extends StatelessWidget {
         );
 
         return AlertDialog(
-          title: Text(title),
+          title: Semantics(header: true, child: Text(title)),
           content: content,
         );
       },
