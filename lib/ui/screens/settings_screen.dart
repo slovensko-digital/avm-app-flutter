@@ -191,12 +191,15 @@ class _ValueListenableBoundTile<T> extends StatelessWidget {
       builder: (context, value, _) {
         final summary = summaryGetter(setting.value);
 
-        return PreferenceTile(
-          title: title,
-          summary: summary,
-          onPressed: () {
-            _onEditItemRequested(context, value);
-          },
+        return Semantics(
+          button: true,
+          child: PreferenceTile(
+            title: title,
+            summary: summary,
+            onPressed: () {
+              _onEditItemRequested(context, value);
+            },
+          ),
         );
       },
     );
