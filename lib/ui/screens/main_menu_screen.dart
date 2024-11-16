@@ -29,12 +29,15 @@ class MainMenuScreen extends StatelessWidget {
           const Spacer(flex: 1),
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: Text(
-              strings.menuTitle,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.15,
+            child: Semantics(
+              header: true,
+              child: Text(
+                strings.menuTitle,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.15,
+                ),
               ),
             ),
           ),
