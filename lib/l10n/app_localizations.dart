@@ -253,6 +253,12 @@ abstract class AppLocalizations {
   /// **'Zdieľať náhľad dokumentu'**
   String get shareDocumentPreviewSemantics;
 
+  /// No description provided for @previewDocumentSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Náhľad dokumentu'**
+  String get previewDocumentSemantics;
+
   /// No description provided for @deepLinkParseErrorMessage.
   ///
   /// In sk, this message translates to:

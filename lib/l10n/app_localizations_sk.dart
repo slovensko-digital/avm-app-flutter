@@ -90,6 +90,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get shareDocumentPreviewSemantics => 'Zdieľať náhľad dokumentu';
 
   @override
+  String get previewDocumentSemantics => 'Náhľad dokumentu';
+
+  @override
   String deepLinkParseErrorMessage(Object error) {
     return 'Nepodporovaný alebo nesprávny odkaz:\n$error';
   }

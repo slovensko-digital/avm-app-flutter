@@ -28,6 +28,7 @@
   "qrCodeScannerBackSemantics": "Späť",
   "qrCodeScannerOpenSemantics": "Podpísať vzdialený dokument pomocou QR kódu",
   "shareDocumentPreviewSemantics": "Zdieľať náhľad dokumentu",
+  "previewDocumentSemantics": "Náhľad dokumentu",
 
   "deepLinkParseErrorMessage": "Nepodporovaný alebo nesprávny odkaz:\n{error}",
   "stepIndicatorText": "Krok {stepNumber} z {totalSteps}",
