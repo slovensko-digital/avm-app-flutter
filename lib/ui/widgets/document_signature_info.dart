@@ -6,7 +6,6 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../oids.dart';
 import '../../utils.dart';
-import '../screens/certificate_details_dialog.dart';
 import '../widgets/chip.dart' as avm;
 
 typedef SigningCertificateQualification
@@ -14,17 +13,17 @@ typedef SigningCertificateQualification
 typedef _ValidationResult
     = DocumentValidationResponseBody$Signatures$ItemValidationResult;
 
-/// Displays Document validation info based on provided [data].
+/// Displays Document validation info based on provided [DocumentValidationResponseBody$Signatures$Item].
 ///
 /// On left side, there is subject; validation result with qualification are
 /// on right side.
-class DocumentValidationInfo extends StatelessWidget {
+class DocumentSignatureInfo extends StatelessWidget {
   final TbsCertificate _certificate;
   final _ValidationResult _validationResult;
   final SigningCertificateQualification _qualification;
   final bool _areQualifiedTimestamps;
 
-  const DocumentValidationInfo._({
+  const DocumentSignatureInfo._({
     required TbsCertificate certificate,
     required _ValidationResult validationResult,
     required SigningCertificateQualification qualification,
@@ -34,13 +33,13 @@ class DocumentValidationInfo extends StatelessWidget {
         _qualification = qualification,
         _areQualifiedTimestamps = areQualifiedTimestamps;
 
-  factory DocumentValidationInfo(
+  factory DocumentSignatureInfo(
     DocumentValidationResponseBody$Signatures$Item data,
   ) {
     final certDer = data.signingCertificate.certificateDer;
     final certificate = x509CertificateDataFromDer(certDer).tbsCertificate!;
 
-    return DocumentValidationInfo._(
+    return DocumentSignatureInfo._(
       certificate: certificate,
       validationResult: data.validationResult,
       qualification: data.signingCertificate.qualification,
@@ -51,16 +50,11 @@ class DocumentValidationInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final subject = _certificate.subject[X500Oids.cn] ?? '';
-    final label = InkWell(
-      onTap: () {
-        CertificateDetailsDialog.show(context, _certificate);
-      },
-      child: Text(
-        subject,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-        overflow: TextOverflow.ellipsis,
-        maxLines: 2,
-      ),
+    final label = Text(
+      subject,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+      overflow: TextOverflow.ellipsis,
+      maxLines: 2,
     );
 
     return Row(
@@ -139,9 +133,9 @@ class DocumentValidationInfo extends StatelessWidget {
 @widgetbook.UseCase(
   path: '[Core]',
   name: '',
-  type: DocumentValidationInfo,
+  type: DocumentSignatureInfo,
 )
-Widget previewDocumentValidationInfo(BuildContext context) {
+Widget previewDocumentSignatureInfo(BuildContext context) {
   final validationResult = _ValidationResult.values.byName(context.knobs.list(
     label: "Validation result",
     options: _ValidationResult.values.map((e) => e.name).toList(),
@@ -153,7 +147,7 @@ Widget previewDocumentValidationInfo(BuildContext context) {
   ));
   final areQualifiedTimestamps = context.knobs.boolean(label: "TS qualified");
 
-  return DocumentValidationInfo(
+  return DocumentSignatureInfo(
     DocumentValidationResponseBody$Signatures$Item(
       validationResult: validationResult,
       level:

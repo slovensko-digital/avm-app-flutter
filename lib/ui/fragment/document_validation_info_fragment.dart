@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../strings_context.dart';
-import '../widgets/document_validation_info.dart';
+import '../widgets/document_signature_info.dart';
 
 /// Displays Document validation info based on [data] provided
-/// as list of [DocumentValidationInfo] for each signature.
+/// as list of [DocumentSignatureInfo] for each signature.
 class DocumentValidationInfoFragment extends StatelessWidget {
   final DocumentValidationResponseBody data;
 
@@ -42,7 +42,7 @@ class DocumentValidationInfoFragment extends StatelessWidget {
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          child: DocumentValidationInfo(signature),
+          child: DocumentSignatureInfo(signature),
         );
       },
       separatorBuilder: (context, _) {

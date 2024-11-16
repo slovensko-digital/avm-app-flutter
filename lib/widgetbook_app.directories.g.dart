@@ -42,7 +42,7 @@ import 'package:autogram/ui/widgets/certificate_picker.dart' as _i29;
 import 'package:autogram/ui/widgets/chip.dart' as _i7;
 import 'package:autogram/ui/widgets/close_button.dart' as _i8;
 import 'package:autogram/ui/widgets/dialogs.dart' as _i25;
-import 'package:autogram/ui/widgets/document_validation_info.dart' as _i12;
+import 'package:autogram/ui/widgets/document_signature_info.dart' as _i12;
 import 'package:autogram/ui/widgets/document_validation_strip.dart' as _i13;
 import 'package:autogram/ui/widgets/document_visualization.dart' as _i14;
 import 'package:autogram/ui/widgets/error_content.dart' as _i15;
@@ -180,7 +180,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'DocumentValidationInfo',
         useCase: _i1.WidgetbookUseCase(
           name: '',
-          builder: _i12.previewDocumentValidationInfo,
+          builder: _i12.previewDocumentSignatureInfo,
         ),
       ),
       _i1.WidgetbookComponent(
