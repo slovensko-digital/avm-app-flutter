@@ -30,10 +30,11 @@ class Chip extends StatelessWidget {
         border: Border.all(color: border, width: 1),
         borderRadius: const BorderRadius.all(Radius.circular(4)),
       ),
-      padding: const EdgeInsets.all(4),
+      padding: const EdgeInsets.only(left: 8, top: 6, bottom: 6, right: 12),
       child: Row(
         children: [
           if (leading != null) leading!,
+          if (leading != null) const SizedBox(width: 8),
           Text(label, style: TextStyle(color: foreground)),
         ],
       ),
