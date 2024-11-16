@@ -19,20 +19,17 @@ typedef _ValidationResult
 /// On left side, there is subject; validation result with qualification are
 /// on right side.
 class DocumentSignatureInfo extends StatelessWidget {
-  final TbsCertificate _certificate;
-  final _ValidationResult _validationResult;
-  final SigningCertificateQualification _qualification;
-  final bool _areQualifiedTimestamps;
+  final TbsCertificate certificate;
+  final _ValidationResult validationResult;
+  final SigningCertificateQualification qualification;
+  final bool areQualifiedTimestamps;
 
   const DocumentSignatureInfo._({
-    required TbsCertificate certificate,
-    required _ValidationResult validationResult,
-    required SigningCertificateQualification qualification,
-    required bool areQualifiedTimestamps,
-  })  : _certificate = certificate,
-        _validationResult = validationResult,
-        _qualification = qualification,
-        _areQualifiedTimestamps = areQualifiedTimestamps;
+    required this.certificate,
+    required this.validationResult,
+    required this.qualification,
+    required this.areQualifiedTimestamps,
+  });
 
   factory DocumentSignatureInfo(
     DocumentValidationResponseBody$Signatures$Item data,
@@ -50,7 +47,7 @@ class DocumentSignatureInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subject = _certificate.subject[X500Oids.cn] ?? '';
+    final subject = certificate.subject[X500Oids.cn] ?? '';
     final label = Text(
       subject,
       style: const TextStyle(fontWeight: FontWeight.bold),
@@ -70,25 +67,25 @@ class DocumentSignatureInfo extends StatelessWidget {
   }
 
   Widget _buildChip(BuildContext context) {
-    final icon = switch (_validationResult) {
+    final icon = switch (validationResult) {
       _ValidationResult.totalPassed => Icons.check,
       _ValidationResult.indeterminate => Icons.warning_amber_outlined,
       _ValidationResult.totalFailed => Icons.error_outline,
       _ => Icons.question_mark_outlined,
     };
-    final foreground = switch (_validationResult) {
+    final foreground = switch (validationResult) {
       _ValidationResult.totalPassed => const Color(0xFF033608),
       _ValidationResult.indeterminate => const Color(0xFF4E2A00),
       _ValidationResult.totalFailed => const Color(0xFF4E0711),
       _ => Colors.black,
     };
-    final background = switch (_validationResult) {
+    final background = switch (validationResult) {
       _ValidationResult.totalPassed => const Color(0xFFEDF5F3),
       _ValidationResult.indeterminate => const Color(0xFFF4F4EC),
       _ValidationResult.totalFailed => const Color(0xFFFBEEF0),
       _ => Colors.white,
     };
-    final border = switch (_validationResult) {
+    final border = switch (validationResult) {
       _ValidationResult.totalPassed => const Color(0xFFA9D9CD),
       _ValidationResult.indeterminate => const Color(0xFFD5D6A2),
       _ValidationResult.totalFailed => const Color(0xFFC3112B),
@@ -107,20 +104,20 @@ class DocumentSignatureInfo extends StatelessWidget {
   String _getLabel(BuildContext context) {
     final strings = context.strings;
 
-    return switch (_validationResult) {
+    return switch (validationResult) {
       _ValidationResult.totalFailed => strings.validationResultFailedLabel,
       _ValidationResult.indeterminate =>
         strings.validationResultIndeterminateLabel,
       _ValidationResult.swaggerGeneratedUnknown =>
         strings.validationResultUnknownLabel,
-      _ValidationResult.totalPassed => switch (_qualification) {
-          SigningCertificateQualification.qesig => (!_areQualifiedTimestamps
+      _ValidationResult.totalPassed => switch (qualification) {
+          SigningCertificateQualification.qesig => (!areQualifiedTimestamps
               ? strings.signatureQualificationQesigLabel
               : strings.signatureQualificationQesigWithQTLabel),
-          SigningCertificateQualification.qeseal => (_areQualifiedTimestamps
+          SigningCertificateQualification.qeseal => (areQualifiedTimestamps
               ? strings.signatureQualificationQesealWithQTLabel
               : ""),
-          SigningCertificateQualification.adesigQcQc => (_areQualifiedTimestamps
+          SigningCertificateQualification.adesigQcQc => (areQualifiedTimestamps
               ? strings.signatureQualificationAdesigWithQTLabel
               : ""),
           _ => ""
