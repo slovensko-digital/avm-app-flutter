@@ -22,6 +22,7 @@
   "buttonSelectCertificateLabel": "Vybrať certifikát",
   "buttonSignWithCertificateLabel": "Podpísať ako {subject}",
   "buttonSignWithDifferentCertificateLabel": "Podpísať iným certifikátom",
+  "buttonMenuLabelSemantics": "Otvoriť menu",
 
   "deepLinkParseErrorMessage": "Nepodporovaný alebo nesprávny odkaz:\n{error}",
   "stepIndicatorText": "Krok {stepNumber} z {totalSteps}",

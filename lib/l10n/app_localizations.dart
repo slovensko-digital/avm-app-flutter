@@ -217,6 +217,12 @@ abstract class AppLocalizations {
   /// **'Podpísať iným certifikátom'**
   String get buttonSignWithDifferentCertificateLabel;
 
+  /// No description provided for @buttonMenuLabelSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Otvoriť menu'**
+  String get buttonMenuLabelSemantics;
+
   /// No description provided for @deepLinkParseErrorMessage.
   ///
   /// In sk, this message translates to:

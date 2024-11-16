@@ -72,6 +72,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get buttonSignWithDifferentCertificateLabel => 'Podpísať iným certifikátom';
 
   @override
+  String get buttonMenuLabelSemantics => 'Otvoriť menu';
+
+  @override
   String deepLinkParseErrorMessage(Object error) {
     return 'Nepodporovaný alebo nesprávny odkaz:\n$error';
   }
