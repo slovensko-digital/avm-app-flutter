@@ -177,7 +177,7 @@ final directories = <_i1.WidgetbookNode>[
         ),
       ),
       _i1.WidgetbookLeafComponent(
-        name: 'DocumentValidationInfo',
+        name: 'DocumentSignatureInfo',
         useCase: _i1.WidgetbookUseCase(
           name: '',
           builder: _i12.previewDocumentSignatureInfo,
