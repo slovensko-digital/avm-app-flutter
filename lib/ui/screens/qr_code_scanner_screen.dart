@@ -58,13 +58,18 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
             padding: kScreenMargin.copyWith(
               top: MediaQuery.of(context).padding.top,
             ),
-            child: SquareButton(
-              onPressed: () {
-                Navigator.maybePop(context);
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: Theme.of(context).colorScheme.onBackground,
+            child: Semantics(
+              label: context.strings.qrCodeScannerBackSemantics,
+              button: true,
+              excludeSemantics: true,
+              child: SquareButton(
+                onPressed: () {
+                  Navigator.maybePop(context);
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
               ),
             ),
           ),
@@ -93,9 +98,20 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                     TorchState.on => Icons.flashlight_off,
                   };
 
-                  return Icon(
-                    icon,
-                    color: Theme.of(context).colorScheme.onBackground,
+                  final semanticsLabel = switch (torchState) {
+                    TorchState.off =>
+                      context.strings.qrCodeScannerTorchOnSemantics,
+                    TorchState.on =>
+                      context.strings.qrCodeScannerTorchOffSemantics,
+                  };
+
+                  return Semantics(
+                    button: true,
+                    label: semanticsLabel,
+                    child: Icon(
+                      icon,
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
                   );
                 },
               ),

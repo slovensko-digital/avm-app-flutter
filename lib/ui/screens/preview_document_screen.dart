@@ -63,10 +63,15 @@ class PreviewDocumentScreen extends StatelessWidget {
         title: Text(context.strings.previewDocumentTitle),
         actions: [
           if (file != null)
-            IconButton(
-              onPressed: () => _onShareRequested(context),
-              icon: const Icon(Icons.share_outlined),
-              color: Theme.of(context).colorScheme.primary,
+            Semantics(
+              label: context.strings.shareDocumentPreviewSemantics,
+              excludeSemantics: true,
+              button: true,
+              child: IconButton(
+                onPressed: () => _onShareRequested(context),
+                icon: const Icon(Icons.share_outlined),
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
         ],
       ),
@@ -143,20 +148,27 @@ class _SuccessContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dashColor = Theme.of(context).colorScheme.primary;
-
+    print(" mime  ${visualization.filename}" ?? "");
     return Column(
       children: [
         // Document preview
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: DottedBorder(
-              color: dashColor,
-              strokeWidth: 4,
-              dashPattern: const [16, 16],
-              padding: const EdgeInsets.all(2),
-              child: DocumentVisualization(
-                visualization: visualization,
+            child: Semantics(
+              image: ["jpeg", "jpg", "png", "gif", "bmp", "webp", "svg", "heic"]
+                  .any((element) =>
+                      visualization.filename?.endsWith(element) ?? false),
+              label: context.strings.previewDocumentSemantics,
+              excludeSemantics: true,
+              child: DottedBorder(
+                color: dashColor,
+                strokeWidth: 4,
+                dashPattern: const [16, 16],
+                padding: const EdgeInsets.all(2),
+                child: DocumentVisualization(
+                  visualization: visualization,
+                ),
               ),
             ),
           ),

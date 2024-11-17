@@ -72,6 +72,27 @@ class AppLocalizationsSk extends AppLocalizations {
   String get buttonSignWithDifferentCertificateLabel => 'Podpísať iným certifikátom';
 
   @override
+  String get buttonMenuLabelSemantics => 'Otvoriť menu';
+
+  @override
+  String get qrCodeScannerTorchOnSemantics => 'Zapnúť blesk';
+
+  @override
+  String get qrCodeScannerTorchOffSemantics => 'Vypnúť blesk';
+
+  @override
+  String get qrCodeScannerBackSemantics => 'Späť';
+
+  @override
+  String get qrCodeScannerOpenSemantics => 'Podpísať vzdialený dokument pomocou QR kódu';
+
+  @override
+  String get shareDocumentPreviewSemantics => 'Zdieľať náhľad dokumentu';
+
+  @override
+  String get previewDocumentSemantics => 'Náhľad dokumentu';
+
+  @override
   String deepLinkParseErrorMessage(Object error) {
     return 'Nepodporovaný alebo nesprávny odkaz:\n$error';
   }

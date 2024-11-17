@@ -59,7 +59,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(System.getenv("AVM_KEYSTORE_FILE"))
+            def keystorePath = System.getenv("AVM_KEYSTORE_FILE")
+            if (keystorePath != null) {
+                storeFile file(keystorePath)
+            }
             storePassword System.getenv("AVM_KEYSTORE_PASSWORD")
             keyAlias System.getenv("AVM_KEY_ALIAS")
             keyPassword System.getenv("AVM_KEY_PASSWORD")
@@ -69,6 +72,10 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+        }
+
+        debug {
+            // no signing config for debug builds
         }
     }
 }

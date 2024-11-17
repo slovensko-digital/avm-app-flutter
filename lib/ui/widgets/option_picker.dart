@@ -55,18 +55,22 @@ class OptionPicker<T> extends StatelessWidget {
       ),
     );
 
-    return Material(
-      child: InkWell(
-        onTap: () {
-          onValueChanged(value);
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            radio,
-            const SizedBox(width: 8),
-            label,
-          ],
+    return Semantics(
+      checked: value == selectedValue,
+      inMutuallyExclusiveGroup: true,
+      child: Material(
+        child: InkWell(
+          onTap: () {
+            onValueChanged(value);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ExcludeSemantics(child: radio),
+              const SizedBox(width: 8),
+              label,
+            ],
+          ),
         ),
       ),
     );
