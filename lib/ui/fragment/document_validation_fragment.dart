@@ -51,7 +51,6 @@ class _DocumentValidationFragmentState
 
   Widget _buildContent(BuildContext context, DocumentValidationState state) {
     if (_hidden) {
-      // TODO Animate height from 100% to 0
       return const SizedBox.shrink();
     }
 
