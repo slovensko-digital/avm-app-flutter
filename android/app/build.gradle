@@ -59,7 +59,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(System.getenv("AVM_KEYSTORE_FILE"))
+            def keystorePath = System.getenv("AVM_KEYSTORE_FILE")
+            if (keystorePath != null) {
+                storeFile file(keystorePath)
+            }
             storePassword System.getenv("AVM_KEYSTORE_PASSWORD")
             keyAlias System.getenv("AVM_KEY_ALIAS")
             keyPassword System.getenv("AVM_KEY_PASSWORD")
@@ -70,6 +73,10 @@ android {
         release {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            // no signing config for debug builds
         }
     }
     ndkVersion "25.1.8937393"

@@ -29,12 +29,15 @@ class MainMenuScreen extends StatelessWidget {
           const Spacer(flex: 1),
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: Text(
-              strings.menuTitle,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.15,
+            child: Semantics(
+              header: true,
+              child: Text(
+                strings.menuTitle,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.15,
+                ),
               ),
             ),
           ),
@@ -157,11 +160,14 @@ class _MenuItem extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: InkWell(
-        onTap: onPressed,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: text,
+      child: Semantics(
+        button: true,
+        child: InkWell(
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: text,
+          ),
         ),
       ),
     );

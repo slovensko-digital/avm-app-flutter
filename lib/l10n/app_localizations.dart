@@ -217,6 +217,48 @@ abstract class AppLocalizations {
   /// **'Podpísať iným certifikátom'**
   String get buttonSignWithDifferentCertificateLabel;
 
+  /// No description provided for @buttonMenuLabelSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Otvoriť menu'**
+  String get buttonMenuLabelSemantics;
+
+  /// No description provided for @qrCodeScannerTorchOnSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zapnúť blesk'**
+  String get qrCodeScannerTorchOnSemantics;
+
+  /// No description provided for @qrCodeScannerTorchOffSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Vypnúť blesk'**
+  String get qrCodeScannerTorchOffSemantics;
+
+  /// No description provided for @qrCodeScannerBackSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Späť'**
+  String get qrCodeScannerBackSemantics;
+
+  /// No description provided for @qrCodeScannerOpenSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Podpísať vzdialený dokument pomocou QR kódu'**
+  String get qrCodeScannerOpenSemantics;
+
+  /// No description provided for @shareDocumentPreviewSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zdieľať náhľad dokumentu'**
+  String get shareDocumentPreviewSemantics;
+
+  /// No description provided for @previewDocumentSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Náhľad dokumentu'**
+  String get previewDocumentSemantics;
+
   /// No description provided for @deepLinkParseErrorMessage.
   ///
   /// In sk, this message translates to:

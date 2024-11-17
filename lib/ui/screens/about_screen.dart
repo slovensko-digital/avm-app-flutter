@@ -40,10 +40,13 @@ class _Body extends StatelessWidget {
 
     final child = Column(
       children: [
-        Text(
-          strings.appName,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headlineLarge,
+        Semantics(
+          header: true,
+          child: Text(
+            strings.appName,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
         ),
         const SizedBox(height: 16),
         const AppVersionText(),
