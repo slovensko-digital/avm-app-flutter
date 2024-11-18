@@ -215,7 +215,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get introHeading => 'Nový, lepší a krajší podpisovač v mobile';
 
   @override
-  String get introBody => 'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie';
+  String get introBody => 'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie\n ✅ Rýchle overenie podpisov';
 
   @override
   String get onboardingFinishedHeading => 'Autogram je pripravený';
@@ -256,6 +256,34 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String get documentValidationLoadingLabel => 'Prebieha overovanie podpisov';
+
+  @override
+  String get documentValidationNoSignaturesLabel => 'Dokument zatiaľ neobsahuje **žiadny podpis**';
+
+  @override
+  String get documentValidationHasInvalidSignaturesLabel => 'Dokument obsahuje **neplatné podpisy**';
+
+  @override
+  String get documentValidationHasIndeterminateSignatureLabel => 'Dokument obsahuje **neznámy podpis**';
+
+  @override
+  String documentValidationHasValidSignaturesLabel(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Dokument obsahuje **$count podpisov**',
+      many: 'Dokument obsahuje $count podpisov**',
+      few: 'Dokument obsahuje **$count podpisy**',
+      one: 'Dokument obsahuje **1 podpis**',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get documentValidationSignaturesHeading => 'Podpisy v dokumente';
+
+  @override
   String get selectCertificateTitle => 'Výber typu podpisu';
 
   @override
@@ -285,9 +313,48 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String get certificateIssuerLabel => 'Vydavateľ';
+
+  @override
+  String get certificateSubjectLabel => 'Vydaný pre';
+
+  @override
+  String get certificateValidityLabel => 'Platnosť';
+
+  @override
+  String get certificateValidityNotBeforeLabel => 'Platný od';
+
+  @override
+  String get certificateValidityNotAfterLabel => 'Platný do';
+
+  @override
   String certificateNotAfter(Object text) {
     return 'Platný do: $text';
   }
+
+  @override
+  String get validationResultPassedLabel => 'Platný';
+
+  @override
+  String get validationResultFailedLabel => 'Neplatný';
+
+  @override
+  String get validationResultIndeterminateLabel => 'Neznámy';
+
+  @override
+  String get validationResultUnknownLabel => 'Neznámy';
+
+  @override
+  String get signatureQualificationQesigLabel => 'Vlastnoručný podpis';
+
+  @override
+  String get signatureQualificationQesigWithQTLabel => 'Osvedčený podpis';
+
+  @override
+  String get signatureQualificationQesealWithQTLabel => 'Elektronická pečať';
+
+  @override
+  String get signatureQualificationAdesigWithQTLabel => 'Uznaný spôsob autorizácie';
 
   @override
   String get signDocumentTitle => 'Podpisovanie dokumentu';

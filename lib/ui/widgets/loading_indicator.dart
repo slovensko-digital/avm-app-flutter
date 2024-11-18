@@ -3,13 +3,13 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 /// Widget for displaying indeterminate loading indicator.
 class LoadingIndicator extends StatelessWidget {
-  static const size = 24;
-
+  final int size;
   final Color color;
   final Color backgroundColor;
 
   const LoadingIndicator({
     super.key,
+    this.size = 24,
     this.color = const Color(0xFF126dff),
     this.backgroundColor = const Color(0xFFc3d9f9),
   });

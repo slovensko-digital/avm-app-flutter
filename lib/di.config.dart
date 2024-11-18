@@ -20,7 +20,8 @@ import 'package:injectable/injectable.dart' as _i2;
 
 import 'app_service.dart' as _i3;
 import 'bloc/create_document_cubit.dart' as _i16;
-import 'bloc/get_document_signature_type_cubit.dart' as _i21;
+import 'bloc/document_validation_cubit.dart' as _i20;
+import 'bloc/get_document_signature_type_cubit.dart' as _i22;
 import 'bloc/paired_device_list_cubit.dart' as _i8;
 import 'bloc/present_signed_document_cubit.dart' as _i9;
 import 'bloc/preview_document_cubit.dart' as _i11;
@@ -28,9 +29,9 @@ import 'bloc/select_signing_certificate_cubit.dart' as _i12;
 import 'bloc/sign_document_cubit.dart' as _i15;
 import 'data/document_signing_type.dart' as _i10;
 import 'data/pdf_signing_option.dart' as _i19;
-import 'di.dart' as _i22;
+import 'di.dart' as _i23;
 import 'services/encryption_key_registry.dart' as _i5;
-import 'use_case/get_document_signature_type_use_case.dart' as _i20;
+import 'use_case/get_document_signature_type_use_case.dart' as _i21;
 import 'use_case/get_document_version_use_case.dart' as _i6;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -101,17 +102,19 @@ extension GetItInjectableX on _i1.GetIt {
           file: file,
           pdfSigningOption: pdfSigningOption,
         ));
-    gh.lazySingleton<_i20.GetDocumentSignatureTypeUseCase>(
-        () => _i20.GetDocumentSignatureTypeUseCase(gh<_i7.IAutogramService>()));
-    gh.factory<_i21.GetDocumentSignatureTypeCubit>(() =>
-        _i21.GetDocumentSignatureTypeCubit(
+    gh.factory<_i20.DocumentValidationCubit>(() =>
+        _i20.DocumentValidationCubit(service: gh<_i7.IAutogramService>()));
+    gh.lazySingleton<_i21.GetDocumentSignatureTypeUseCase>(
+        () => _i21.GetDocumentSignatureTypeUseCase(gh<_i7.IAutogramService>()));
+    gh.factory<_i22.GetDocumentSignatureTypeCubit>(() =>
+        _i22.GetDocumentSignatureTypeCubit(
             getDocumentSignatureType:
-                gh<_i20.GetDocumentSignatureTypeUseCase>()));
+                gh<_i21.GetDocumentSignatureTypeUseCase>()));
     return this;
   }
 }
 
-class _$ExtrernalModule extends _i22.ExtrernalModule {
+class _$ExtrernalModule extends _i23.ExtrernalModule {
   @override
   _i4.Eidmsdk get eidmsdk => _i4.Eidmsdk();
 }

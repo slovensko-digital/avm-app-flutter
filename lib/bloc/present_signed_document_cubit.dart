@@ -32,11 +32,11 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
 
   final SignDocumentResponseBody signedDocument;
 
-  PresentSignedDocumentCubit(
-      {required AppService appService,
-      @factoryParam required this.signedDocument,
-      @factoryParam required DocumentSigningType signingType})
-      : _appService = appService,
+  PresentSignedDocumentCubit({
+    required AppService appService,
+    @factoryParam required this.signedDocument,
+    @factoryParam required DocumentSigningType signingType,
+  })  : _appService = appService,
         super(
           signingType == DocumentSigningType.local
               ? const PresentSignedDocumentInitialState()

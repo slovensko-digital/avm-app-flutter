@@ -105,11 +105,7 @@ class _Body extends StatelessWidget {
 
         final cert = value.tbsCertificate;
 
-        return [
-          cert.subject[X500Oids.cn],
-          cert.subject[X500Oids.ln],
-          cert.subject[X500Oids.c],
-        ].whereType<String>().join(", ");
+        return cert.subject[X500Oids.cn];
       }(),
       onPressed: null,
     );

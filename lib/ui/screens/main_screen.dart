@@ -302,7 +302,10 @@ class _Body extends StatelessWidget {
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 24),
-          Text(strings.introBody),
+          Text(
+            strings.introBody,
+            style: const TextStyle(height: 1.75),
+          ),
           const Spacer(),
 
           // Primary button

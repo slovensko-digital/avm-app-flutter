@@ -1,5 +1,12 @@
 # Changelog
 
+## NEXT - 1.1.0(36)
+
+- Update AGP and Gradle version for latest Android Studio Ladybug (2024.2.1 Patch 1)
+- #35 | Android - opening only specific file types
+- #39 | When sharing document, set file name
+- #36 | Implement first version of Document validation
+
 ## 2024-07-16 - v1.0.4(35)
 
 - #32 | Cleanup

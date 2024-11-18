@@ -1,30 +1,34 @@
 import 'dart:io' show File;
 
 import 'package:autogram_sign/autogram_sign.dart'
-    show DocumentVisualizationResponseBody;
-import 'package:dotted_border/dotted_border.dart';
+    show DocumentValidationResponseBody;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/preview_document_cubit.dart';
 import '../../data/document_signing_type.dart';
 import '../../file_system_entity_extensions.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
-import '../widgets/document_visualization.dart';
-import '../widgets/error_content.dart';
-import '../widgets/loading_content.dart';
+import '../fragment/document_validation_fragment.dart';
+import '../fragment/document_validation_info_fragment.dart';
+import '../fragment/preview_document_fragment.dart';
+import '../widgets/dialogs.dart' as avm;
 import 'open_document_screen.dart';
 import 'select_certificate_screen.dart';
 
 /// Screen for previewing single document from [file] and [documentId].
 ///
+/// Contains two fragments:
+///  - [DocumentValidationFragment]
+///  - [PreviewDocumentFragment]
+///
 /// Uses [PreviewDocumentCubit].
 ///
 /// Navigates next to [SelectCertificateScreen].
+/// Shows [DocumentValidationInfoFragment].
 ///
 /// See also:
 ///  - [OpenDocumentScreen]
@@ -40,7 +44,13 @@ class PreviewDocumentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final body = BlocProvider<PreviewDocumentCubit>(
+    final child1 = DocumentValidationFragment(
+      documentId: documentId,
+      onShowDocumentValidationInfoRequested: (data) {
+        _onShowDocumentValidationInfoRequested(context, data);
+      },
+    );
+    final child2 = BlocProvider<PreviewDocumentCubit>(
       create: (context) {
         return GetIt.instance.get<PreviewDocumentCubit>(
           param1: documentId,
@@ -48,14 +58,19 @@ class PreviewDocumentScreen extends StatelessWidget {
       },
       child: BlocBuilder<PreviewDocumentCubit, PreviewDocumentState>(
         builder: (context, state) {
-          return _Body(
+          return _Content(
             state: state,
-            onSignRequested: () {
-              _onSignRequested(context);
-            },
+            onSignRequested: () => _onSignRequested(context),
           );
         },
       ),
+    );
+
+    final body = Column(
+      children: [
+        child1,
+        Expanded(child: child2),
+      ],
     );
 
     return Scaffold(
@@ -77,6 +92,19 @@ class PreviewDocumentScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: body,
+      ),
+    );
+  }
+
+  Future<void> _onShowDocumentValidationInfoRequested(
+    BuildContext context,
+    DocumentValidationResponseBody data,
+  ) {
+    return avm.showModalBottomSheet(
+      context: context,
+      child: SizedBox(
+        height: 240,
+        child: DocumentValidationInfoFragment(data: data),
       ),
     );
   }
@@ -107,124 +135,38 @@ class PreviewDocumentScreen extends StatelessWidget {
   }
 }
 
-/// [PreviewDocumentScreen] body.
-class _Body extends StatelessWidget {
+/// [PreviewDocumentScreen] content.
+class _Content extends StatelessWidget {
   final PreviewDocumentState state;
   final VoidCallback? onSignRequested;
 
-  const _Body({required this.state, required this.onSignRequested});
-
-  @override
-  Widget build(BuildContext context) {
-    final child = switch (state) {
-      PreviewDocumentInitialState _ => const LoadingContent(),
-      PreviewDocumentLoadingState _ => const LoadingContent(),
-      PreviewDocumentSuccessState state => _SuccessContent(
-          visualization: state.visualization,
-          onSignRequested: onSignRequested,
-        ),
-      PreviewDocumentErrorState state => ErrorContent(
-          title: context.strings.previewDocumentErrorHeading,
-          error: state.error,
-        ),
-    };
-
-    return Padding(
-      padding: kScreenMargin,
-      child: child,
-    );
-  }
-}
-
-class _SuccessContent extends StatelessWidget {
-  final DocumentVisualizationResponseBody visualization;
-  final VoidCallback? onSignRequested;
-
-  const _SuccessContent({
-    required this.visualization,
+  const _Content({
+    required this.state,
     required this.onSignRequested,
   });
 
   @override
   Widget build(BuildContext context) {
-    final dashColor = Theme.of(context).colorScheme.primary;
-    print(" mime  ${visualization.filename}" ?? "");
     return Column(
       children: [
         // Document preview
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: Semantics(
-              image: ["jpeg", "jpg", "png", "gif", "bmp", "webp", "svg", "heic"]
-                  .any((element) =>
-                      visualization.filename?.endsWith(element) ?? false),
-              label: context.strings.previewDocumentSemantics,
-              excludeSemantics: true,
-              child: DottedBorder(
-                color: dashColor,
-                strokeWidth: 4,
-                dashPattern: const [16, 16],
-                padding: const EdgeInsets.all(2),
-                child: DocumentVisualization(
-                  visualization: visualization,
-                ),
-              ),
-            ),
-          ),
+          child: PreviewDocumentFragment(state: state),
         ),
 
         // Primary button
-        FilledButton(
-          style: FilledButton.styleFrom(
-            minimumSize: kPrimaryButtonMinimumSize,
+        if (state is PreviewDocumentSuccessState)
+          Padding(
+            padding: kScreenMargin,
+            child: FilledButton(
+              style: FilledButton.styleFrom(
+                minimumSize: kPrimaryButtonMinimumSize,
+              ),
+              onPressed: () => onSignRequested?.call(),
+              child: Text(context.strings.buttonSignLabel),
+            ),
           ),
-          onPressed: onSignRequested,
-          child: Text(context.strings.buttonSignLabel),
-        ),
       ],
     );
   }
-}
-
-@widgetbook.UseCase(
-  path: '[Screens]',
-  name: 'loading',
-  type: PreviewDocumentScreen,
-)
-Widget previewLoadingPreviewDocumentScreen(BuildContext context) {
-  return const _Body(
-    state: PreviewDocumentLoadingState(),
-    onSignRequested: null,
-  );
-}
-
-@widgetbook.UseCase(
-  path: '[Screens]',
-  name: 'error',
-  type: PreviewDocumentScreen,
-)
-Widget previewErrorPreviewDocumentScreen(BuildContext context) {
-  return const _Body(
-    state: PreviewDocumentErrorState("Error message!"),
-    onSignRequested: null,
-  );
-}
-
-@widgetbook.UseCase(
-  path: '[Screens]',
-  name: 'success',
-  type: PreviewDocumentScreen,
-)
-Widget previewSuccessPreviewDocumentScreen(BuildContext context) {
-  return const _Body(
-    state: PreviewDocumentSuccessState(
-      DocumentVisualizationResponseBody(
-        mimeType: "text/plain;base64",
-        filename: "sample.txt",
-        content: "",
-      ),
-    ),
-    onSignRequested: null,
-  );
 }
