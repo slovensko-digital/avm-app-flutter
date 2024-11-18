@@ -2,6 +2,8 @@ import 'dart:io' show File;
 
 import 'package:flutter/foundation.dart';
 
+import 'present_signed_document_cubit.dart';
+
 /// State for [PresentSignedDocumentCubit].
 @immutable
 sealed class PresentSignedDocumentState {
@@ -15,8 +17,8 @@ sealed class PresentSignedDocumentState {
     return PresentSignedDocumentErrorState(error);
   }
 
-  PresentSignedDocumentSuccessState toSuccess(File file) {
-    return PresentSignedDocumentSuccessState(file);
+  PresentSignedLocalDocumentSuccessState toSuccess(File file) {
+    return PresentSignedLocalDocumentSuccessState(file);
   }
 
   @override
@@ -44,13 +46,19 @@ class PresentSignedDocumentErrorState extends PresentSignedDocumentState {
   }
 }
 
-class PresentSignedDocumentSuccessState extends PresentSignedDocumentState {
+class PresentSignedLocalDocumentSuccessState
+    extends PresentSignedDocumentState {
   final File file;
 
-  const PresentSignedDocumentSuccessState(this.file);
+  const PresentSignedLocalDocumentSuccessState(this.file);
 
   @override
   String toString() {
     return "$runtimeType(file: $file)";
   }
+}
+
+class PresentSignedRemoteDocumentSuccessState
+    extends PresentSignedDocumentState {
+  const PresentSignedRemoteDocumentSuccessState();
 }

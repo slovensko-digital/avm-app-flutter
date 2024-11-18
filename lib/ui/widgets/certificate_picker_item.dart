@@ -31,18 +31,15 @@ class CertificatePickerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final cert = certificate.tbsCertificate;
 
-    // NOT using RadioListTile because need to scale-up and style Radio
-
-    final title = [
-      cert.subject[X500Oids.cn],
-      cert.subject[X500Oids.ln],
-      cert.subject[X500Oids.c],
-    ].whereType<String>().join(", ");
     final strings = context.strings;
+
+    final title = cert.subject[X500Oids.cn] ?? '';
     final identity = "${cert.subject[X500Oids.sn]}";
     final issuer = strings.certificateIssuer("${cert.issuer[X500Oids.cn]}");
     final validTo =
         strings.certificateNotAfter(_dateFormat.format(cert.validity.notAfter));
+
+    // NOT using RadioListTile because need to scale-up and style Radio
 
     return ListTile(
       onTap: () {

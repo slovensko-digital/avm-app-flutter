@@ -233,21 +233,31 @@ AppBar _MainAppBar({
   return AppBar(
     foregroundColor: kMainAppBarForegroundColor,
     backgroundColor: kMainAppBarBackgroundColor,
-    leading: IconButton(
-      icon: SvgPicture.asset(
-        'assets/icons/menu.svg',
-        colorFilter: colorFilter,
+    leading: Semantics(
+      button: true,
+      excludeSemantics: true,
+      label: context.strings.buttonMenuLabelSemantics,
+      child: IconButton(
+        icon: SvgPicture.asset(
+          'assets/icons/menu.svg',
+          colorFilter: colorFilter,
+        ),
+        onPressed: onMenuPressed,
       ),
-      onPressed: onMenuPressed,
     ),
     actions: [
       if (showQrCodeScannerIcon)
-        IconButton(
-          icon: SvgPicture.asset(
-            'assets/icons/qr_code_scanner.svg',
-            colorFilter: colorFilter,
+        Semantics(
+          label: context.strings.qrCodeScannerOpenSemantics,
+          button: true,
+          excludeSemantics: true,
+          child: IconButton(
+            icon: SvgPicture.asset(
+              'assets/icons/qr_code_scanner.svg',
+              colorFilter: colorFilter,
+            ),
+            onPressed: onQrCodeScannerPressed,
           ),
-          onPressed: onQrCodeScannerPressed,
         ),
     ],
     title: Builder(builder: (context) {
@@ -292,7 +302,10 @@ class _Body extends StatelessWidget {
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 24),
-          Text(strings.introBody),
+          Text(
+            strings.introBody,
+            style: const TextStyle(height: 1.75),
+          ),
           const Spacer(),
 
           // Primary button

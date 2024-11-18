@@ -217,6 +217,48 @@ abstract class AppLocalizations {
   /// **'Podpísať iným certifikátom'**
   String get buttonSignWithDifferentCertificateLabel;
 
+  /// No description provided for @buttonMenuLabelSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Otvoriť menu'**
+  String get buttonMenuLabelSemantics;
+
+  /// No description provided for @qrCodeScannerTorchOnSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zapnúť blesk'**
+  String get qrCodeScannerTorchOnSemantics;
+
+  /// No description provided for @qrCodeScannerTorchOffSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Vypnúť blesk'**
+  String get qrCodeScannerTorchOffSemantics;
+
+  /// No description provided for @qrCodeScannerBackSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Späť'**
+  String get qrCodeScannerBackSemantics;
+
+  /// No description provided for @qrCodeScannerOpenSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Podpísať vzdialený dokument pomocou QR kódu'**
+  String get qrCodeScannerOpenSemantics;
+
+  /// No description provided for @shareDocumentPreviewSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zdieľať náhľad dokumentu'**
+  String get shareDocumentPreviewSemantics;
+
+  /// No description provided for @previewDocumentSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Náhľad dokumentu'**
+  String get previewDocumentSemantics;
+
   /// No description provided for @deepLinkParseErrorMessage.
   ///
   /// In sk, this message translates to:
@@ -376,7 +418,7 @@ abstract class AppLocalizations {
   /// No description provided for @introBody.
   ///
   /// In sk, this message translates to:
-  /// **'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie'**
+  /// **'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie\n ✅ Rýchle overenie podpisov'**
   String get introBody;
 
   /// No description provided for @onboardingFinishedHeading.
@@ -451,6 +493,42 @@ abstract class AppLocalizations {
   /// **'Neviem vizualizovať {type} typ.'**
   String documentVisualizationCannotVisualizeTypeError(Object type);
 
+  /// No description provided for @documentValidationLoadingLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Prebieha overovanie podpisov'**
+  String get documentValidationLoadingLabel;
+
+  /// No description provided for @documentValidationNoSignaturesLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument zatiaľ neobsahuje **žiadny podpis**'**
+  String get documentValidationNoSignaturesLabel;
+
+  /// No description provided for @documentValidationHasInvalidSignaturesLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument obsahuje **neplatné podpisy**'**
+  String get documentValidationHasInvalidSignaturesLabel;
+
+  /// No description provided for @documentValidationHasIndeterminateSignatureLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument obsahuje **neznámy podpis**'**
+  String get documentValidationHasIndeterminateSignatureLabel;
+
+  /// No description provided for @documentValidationHasValidSignaturesLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'{count, plural, one {Dokument obsahuje **1 podpis**} few {Dokument obsahuje **{count} podpisy**} many {Dokument obsahuje {count} podpisov**} other {Dokument obsahuje **{count} podpisov**}}'**
+  String documentValidationHasValidSignaturesLabel(num count);
+
+  /// No description provided for @documentValidationSignaturesHeading.
+  ///
+  /// In sk, this message translates to:
+  /// **'Podpisy v dokumente'**
+  String get documentValidationSignaturesHeading;
+
   /// No description provided for @selectCertificateTitle.
   ///
   /// In sk, this message translates to:
@@ -505,11 +583,89 @@ abstract class AppLocalizations {
   /// **'Vydavateľ: {text}'**
   String certificateIssuer(Object text);
 
+  /// No description provided for @certificateIssuerLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Vydavateľ'**
+  String get certificateIssuerLabel;
+
+  /// No description provided for @certificateSubjectLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Vydaný pre'**
+  String get certificateSubjectLabel;
+
+  /// No description provided for @certificateValidityLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Platnosť'**
+  String get certificateValidityLabel;
+
+  /// No description provided for @certificateValidityNotBeforeLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Platný od'**
+  String get certificateValidityNotBeforeLabel;
+
+  /// No description provided for @certificateValidityNotAfterLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Platný do'**
+  String get certificateValidityNotAfterLabel;
+
   /// No description provided for @certificateNotAfter.
   ///
   /// In sk, this message translates to:
   /// **'Platný do: {text}'**
   String certificateNotAfter(Object text);
+
+  /// No description provided for @validationResultPassedLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Platný'**
+  String get validationResultPassedLabel;
+
+  /// No description provided for @validationResultFailedLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Neplatný'**
+  String get validationResultFailedLabel;
+
+  /// No description provided for @validationResultIndeterminateLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Neznámy'**
+  String get validationResultIndeterminateLabel;
+
+  /// No description provided for @validationResultUnknownLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Neznámy'**
+  String get validationResultUnknownLabel;
+
+  /// No description provided for @signatureQualificationQesigLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Vlastnoručný podpis'**
+  String get signatureQualificationQesigLabel;
+
+  /// No description provided for @signatureQualificationQesigWithQTLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Osvedčený podpis'**
+  String get signatureQualificationQesigWithQTLabel;
+
+  /// No description provided for @signatureQualificationQesealWithQTLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Elektronická pečať'**
+  String get signatureQualificationQesealWithQTLabel;
+
+  /// No description provided for @signatureQualificationAdesigWithQTLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Uznaný spôsob autorizácie'**
+  String get signatureQualificationAdesigWithQTLabel;
 
   /// No description provided for @signDocumentTitle.
   ///
@@ -552,12 +708,6 @@ abstract class AppLocalizations {
   /// In sk, this message translates to:
   /// **'Zdieľať podpísaný dokument'**
   String get shareSignedDocumentLabel;
-
-  /// No description provided for @shareSignedDocumentSubject.
-  ///
-  /// In sk, this message translates to:
-  /// **'Elektronicky podpísaný dokument'**
-  String get shareSignedDocumentSubject;
 
   /// No description provided for @shareSignedDocumentText.
   ///
