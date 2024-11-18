@@ -18,7 +18,7 @@ dependencies:
   autogram_sign:
     git:
       url: https://github.com/slovensko-digital/avm-client-dart
-      ref: v0.4.2
+      ref: v0.4.4
   package_info_plus:
   share_plus:
   wakelock_plus:
