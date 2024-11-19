@@ -81,7 +81,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
           child: _ViewFinder(),
         ),
 
-        // Toggle troch button
+        // Toggle torch button
         Align(
           alignment: Alignment.bottomRight,
           child: Padding(
