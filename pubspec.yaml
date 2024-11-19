@@ -4,7 +4,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.1.0+36
 
 environment:
-  sdk: '>=3.3.4 <4.0.0'
+  sdk: '>=3.4.4 <4.0.0'
 
 dependencies:
   flutter:
@@ -44,7 +44,7 @@ dependencies:
   firebase_core:
   firebase_crashlytics:
   url_launcher:
-  mobile_scanner: 4.0.1
+  mobile_scanner: 4.0.1 # TODO Update mobile_scanner  to v6.x
   html:
   flutter_markdown:
 
