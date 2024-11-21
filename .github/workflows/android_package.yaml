@@ -27,18 +27,6 @@ jobs:
         with:
           path: app
 
-      - name: Checkout "eidmsdk_flutter"
-        uses: actions/checkout@v4
-        with:
-          repository: slovensko-digital/eidmsdk-flutter
-          path: eidmsdk_flutter
-
-      - name: Checkout "autogram_sign"
-        uses: actions/checkout@v4
-        with:
-          repository: slovensko-digital/avm-client-dart
-          path: autogram_sign
-
       - uses: actions/setup-java@v1
         with:
           java-version: '17.x'
