@@ -14,6 +14,7 @@ abstract class Button {}
   type: Button,
 )
 Widget previewTextButton(BuildContext context) {
+  final enabled = context.knobs.boolean(label: "Enabled", initialValue: true);
   final text = context.knobs.string(
     label: "Text",
     initialValue: "Button text",
@@ -22,7 +23,28 @@ Widget previewTextButton(BuildContext context) {
   return Padding(
     padding: kScreenMargin,
     child: TextButton(
-      onPressed: () {},
+      onPressed: (enabled ? () {} : null),
+      child: Text(text),
+    ),
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[AVM]',
+  name: 'elevated',
+  type: Button,
+)
+Widget previewElevatedButton(BuildContext context) {
+  final enabled = context.knobs.boolean(label: "Enabled", initialValue: true);
+  final text = context.knobs.string(
+    label: "Text",
+    initialValue: "Button text",
+  );
+
+  return Padding(
+    padding: kScreenMargin,
+    child: FilledButton(
+      onPressed: (enabled ? () {} : null),
       child: Text(text),
     ),
   );
@@ -34,7 +56,8 @@ Widget previewTextButton(BuildContext context) {
   type: Button,
 )
 Widget previewFilledButton(BuildContext context) {
-  final isLoading = context.knobs.boolean(label: "Loading?");
+  final enabled = context.knobs.boolean(label: "Enabled", initialValue: true);
+  final isLoading = context.knobs.boolean(label: "Loading");
   final text = context.knobs.string(
     label: "Text",
     initialValue: "Button text",
@@ -47,7 +70,7 @@ Widget previewFilledButton(BuildContext context) {
   return Padding(
     padding: kScreenMargin,
     child: FilledButton(
-      onPressed: () {},
+      onPressed: (enabled ? () {} : null),
       child: child,
     ),
   );

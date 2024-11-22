@@ -99,6 +99,10 @@ final directories = <_i1.WidgetbookNode>[
         name: 'Button',
         useCases: [
           _i1.WidgetbookUseCase(
+            name: 'elevated',
+            builder: _i6.previewElevatedButton,
+          ),
+          _i1.WidgetbookUseCase(
             name: 'filled',
             builder: _i6.previewFilledButton,
           ),
