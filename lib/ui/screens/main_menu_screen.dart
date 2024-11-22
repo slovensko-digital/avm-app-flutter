@@ -15,6 +15,7 @@ import 'start_remote_document_signing_screen.dart';
 ///  - link to show Privacy Policy or Terms of Service in [ShowDocumentScreen]
 ///  - link to show [AboutScreen]
 class MainMenuScreen extends StatelessWidget {
+  // TODO Add params - override in preview
   const MainMenuScreen({super.key});
 
   @override
@@ -22,13 +23,13 @@ class MainMenuScreen extends StatelessWidget {
     final strings = context.strings;
 
     final body = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Spacer(flex: 1),
           Padding(
-            padding: const EdgeInsets.only(bottom: 20),
+            padding: const EdgeInsets.only(left: 10, bottom: 20),
             child: Semantics(
               header: true,
               child: Text(
@@ -141,6 +142,7 @@ class MainMenuScreen extends StatelessWidget {
   }
 }
 
+/// Single clickable menu item.
 class _MenuItem extends StatelessWidget {
   final String title;
   final VoidCallback? onPressed;
@@ -149,25 +151,17 @@ class _MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final text = Text(
-      title,
-      style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0.4,
+    return TextButton(
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        foregroundColor: Theme.of(context).colorScheme.onSurface,
       ),
-    );
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Semantics(
-        button: true,
-        child: InkWell(
-          onTap: onPressed,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: text,
-          ),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.4,
         ),
       ),
     );
