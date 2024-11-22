@@ -9,6 +9,6 @@ extension FileExtensions on File {
   /// Returns redacted file info usable for logging.
   ///
   /// In case of [kDebugMode], full [File.path] is returned;
-  /// "???.[FileExtensions.extension]" otherwise.
+  /// "???.[extension]" otherwise.
   String get redactedInfo => (kDebugMode ? path : "???$extension");
 }

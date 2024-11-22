@@ -38,7 +38,7 @@ ThemeData appTheme(
       );
   final appBarTheme = AppBarTheme(
     titleTextStyle: TextStyle(
-      color: colorScheme.onBackground,
+      color: colorScheme.onSurface,
       fontSize: 20,
       fontWeight: FontWeight.w700,
       letterSpacing: 0.15,
@@ -46,12 +46,12 @@ ThemeData appTheme(
   );
   final dialogTheme = DialogTheme(
     titleTextStyle: TextStyle(
-      color: colorScheme.onBackground,
+      color: colorScheme.onSurface,
       fontSize: 20,
       fontWeight: FontWeight.w700,
       letterSpacing: 0.15,
     ),
-    surfaceTintColor: colorScheme.background,
+    surfaceTintColor: colorScheme.surface,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(8)),
     ),
