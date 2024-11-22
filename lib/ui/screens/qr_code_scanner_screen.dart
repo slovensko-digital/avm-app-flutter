@@ -68,7 +68,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                 },
                 child: Icon(
                   Icons.arrow_back,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ),
@@ -98,11 +98,10 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                     TorchState.on => Icons.flashlight_off,
                   };
 
+                  final strings = context.strings;
                   final semanticsLabel = switch (torchState) {
-                    TorchState.off =>
-                      context.strings.qrCodeScannerTorchOnSemantics,
-                    TorchState.on =>
-                      context.strings.qrCodeScannerTorchOffSemantics,
+                    TorchState.off => strings.qrCodeScannerTorchOnSemantics,
+                    TorchState.on => strings.qrCodeScannerTorchOffSemantics,
                   };
 
                   return Semantics(
@@ -110,7 +109,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                     label: semanticsLabel,
                     child: Icon(
                       icon,
-                      color: Theme.of(context).colorScheme.onBackground,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   );
                 },
@@ -150,7 +149,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
       style: FilledButton.styleFrom(
         minimumSize: size,
         padding: EdgeInsets.zero,
-        backgroundColor: colors.background,
+        backgroundColor: colors.surface,
       ),
       child: child,
     );
@@ -285,7 +284,7 @@ class _InfoPanel extends StatelessWidget {
           padding: const EdgeInsets.only(top: iconSize / 2),
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.all(Radius.circular(16)),
             ),
             width: double.infinity,

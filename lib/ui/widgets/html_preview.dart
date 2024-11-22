@@ -32,7 +32,7 @@ class _HtmlPreviewState extends State<HtmlPreview> {
     super.didChangeDependencies();
 
     if (!kIsWeb) {
-      controller.setBackgroundColor(Theme.of(context).colorScheme.background);
+      controller.setBackgroundColor(Theme.of(context).colorScheme.surface);
     }
   }
 
@@ -60,6 +60,6 @@ class _HtmlPreviewState extends State<HtmlPreview> {
 )
 Widget previewHtmlPreview(BuildContext context) {
   return HtmlPreview(
-    htmlDataSource: Future.value("<html><h1>Hello world!</h1></html>"),
+    htmlDataSource: Future.value("<html lang=en><h1>Hello world!</h1></html>"),
   );
 }
