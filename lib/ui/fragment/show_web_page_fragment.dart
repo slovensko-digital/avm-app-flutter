@@ -48,7 +48,7 @@ class _ShowWebPageFragmentState extends State<ShowWebPageFragment> {
     if (!kIsWeb) {
       controller
         ..setJavaScriptMode(JavaScriptMode.unrestricted)
-        ..setBackgroundColor(Theme.of(context).colorScheme.onSurface)
+        ..setBackgroundColor(Theme.of(context).colorScheme.surface)
         // In HTML, onPageFinished could be iframe.onload,
         // however there is no case for onPageStarted, onWebResourceError
         ..setNavigationDelegate(NavigationDelegate(
