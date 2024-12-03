@@ -20,7 +20,8 @@ typedef _ValidationResult
 /// on right side.
 class DocumentSignatureInfo extends StatelessWidget {
   final TbsCertificate certificate;
-  final _ValidationResult validationResult;
+  final DocumentValidationResponseBody$Signatures$ItemValidationResult
+      validationResult;
   final SigningCertificateQualification qualification;
   final bool areQualifiedTimestamps;
 

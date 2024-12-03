@@ -123,7 +123,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _showMenu() {
-    const screen = MainMenuScreen();
+    const screen = MainMenuScreen.create();
 
     return showGeneralDialog(
       context: context,
