@@ -45,8 +45,8 @@ dependencies:
   notified_preferences:
   widgetbook_annotation:
   widgetbook:
-  firebase_core:
-  firebase_crashlytics:
+  firebase_core: 2.27.0
+  firebase_crashlytics: 3.4.18
   url_launcher:
   mobile_scanner: 4.0.1 # TODO Update mobile_scanner  to v6.x
   html:
