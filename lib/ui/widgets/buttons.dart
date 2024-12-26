@@ -43,7 +43,7 @@ Widget previewElevatedButton(BuildContext context) {
 
   return Padding(
     padding: kScreenMargin,
-    child: FilledButton(
+    child: ElevatedButton(
       onPressed: (enabled ? () {} : null),
       child: Text(text),
     ),

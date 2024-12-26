@@ -28,10 +28,11 @@ ThemeData appTheme(
   BuildContext context, {
   Brightness? brightness,
 }) {
-  const color = Color(0xFF126DFF);
+  const primaryColor = Color(0xFF126DFF);
   final colorScheme = ColorScheme.fromSeed(
     brightness: brightness ?? MediaQuery.platformBrightnessOf(context),
-    seedColor: color,
+    seedColor: primaryColor,
+    primary: primaryColor,
   );
   final textTheme = Theme.of(context).textTheme.apply(
         fontSizeFactor: 1.2,
@@ -72,7 +73,7 @@ ThemeData appTheme(
 
   return ThemeData(
     useMaterial3: true,
-    primaryColor: color,
+    primaryColor: primaryColor,
     colorScheme: colorScheme,
     fontFamily: "Source Sans 3",
     // see /assets/fonts
@@ -86,6 +87,11 @@ ThemeData appTheme(
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         shape: buttonShape,
+        textStyle: buttonTextStyle,
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
         textStyle: buttonTextStyle,
       ),
     ),

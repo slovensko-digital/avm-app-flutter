@@ -6,7 +6,8 @@
 - #35 | Android - opening only specific file types
 - #39 | When sharing document, set file name
 - #36 | Implement first version of Document validation
-- #76 | Replace Main menu buttons with built-in TextButton to resolve Google UX warning 
+- #76 | Replace Main menu buttons with built-in TextButton to resolve Google UX warning
+- #75 | Update to Flutter SDK v3.22.3
 
 ## 2024-07-16 - v1.0.4(35)
 
