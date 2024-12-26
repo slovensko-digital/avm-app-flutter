@@ -1,4 +1,4 @@
-import 'package:autogram/use_case/get_document_version_use_case.dart';
+import 'package:autogram/use_case/get_html_document_version_use_case.dart';
 import 'package:test/test.dart';
 
 /// Tests for the [GetHtmlDocumentVersionUseCase] class.

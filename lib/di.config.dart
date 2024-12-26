@@ -32,7 +32,7 @@ import 'data/pdf_signing_option.dart' as _i732;
 import 'di.dart' as _i913;
 import 'services/encryption_key_registry.dart' as _i429;
 import 'use_case/get_document_signature_type_use_case.dart' as _i400;
-import 'use_case/get_document_version_use_case.dart' as _i123;
+import 'use_case/get_html_document_version_use_case.dart' as _i123;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
