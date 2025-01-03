@@ -50,7 +50,7 @@ jobs:
         working-directory: ./app
         run: echo $ENCODED_STRING | base64 -d > release_keystore.jks
 
-      - name: Build Googla Play .aab
+      - name: Build Google Play .aab
         env:
           AVM_KEYSTORE_FILE: ../../release_keystore.jks
           AVM_KEYSTORE_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_PASSWORD }}
@@ -60,7 +60,7 @@ jobs:
         working-directory: ./app
         run: flutter build appbundle --release
 
-      - name: Build Andorid .apk
+      - name: Build Android .apk
         env:
           AVM_KEYSTORE_FILE: ../../release_keystore.jks
           AVM_KEYSTORE_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_PASSWORD }}
