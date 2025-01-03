@@ -1,6 +1,11 @@
 # Changelog
 
-## NEXT - 1.1.0(36)
+## 2025-01-03 - v1.2.0(37)
+
+- #75 | Update to Flutter SDK v3.22.3
+- #76 | Replace Main menu buttons with built-in TextButton to resolve Google UX warning
+
+## 2024-11-18 - v1.1.0(36)
 
 - Update AGP and Gradle version for latest Android Studio Ladybug (2024.2.1 Patch 1)
 - #35 | Android - opening only specific file types
