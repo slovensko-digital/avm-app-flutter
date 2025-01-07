@@ -1,7 +1,7 @@
 name: autogram
 description: "Autogram v mobile"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.2.0+37
+version: 1.2.1+38
 
 environment:
   sdk: '>=3.4.4 <4.0.0'
@@ -14,7 +14,7 @@ dependencies:
   eidmsdk:
     git:
       url: https://github.com/slovensko-digital/eidmsdk-flutter
-      ref: main
+      ref: 027083b4ea0b453eab08b575bfc0ca71a121c035
   autogram_sign:
     git:
       url: https://github.com/slovensko-digital/avm-client-dart
