@@ -30,39 +30,40 @@ class StartRemoteDocumentSigningScreen extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     final strings = context.strings;
-    final child = Column(
+
+    return Column(
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(strings.signRemoteDocumentBody1),
-                const SizedBox(height: 30),
-                Text(strings.signRemoteDocumentBody2),
-                const Spacer(flex: 1),
-              ],
+            padding: kScreenMargin.copyWith(bottom: 0),
+            child: SingleChildScrollView(
+              primary: true,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(strings.signRemoteDocumentBody1),
+                  const SizedBox(height: 30),
+                  Text(strings.signRemoteDocumentBody2),
+                ],
+              ),
             ),
           ),
         ),
 
         // Primary button
-        FilledButton(
-          style: FilledButton.styleFrom(
-            minimumSize: kPrimaryButtonMinimumSize,
+        Padding(
+          padding: kScreenMargin,
+          child: FilledButton(
+            style: FilledButton.styleFrom(
+              minimumSize: kPrimaryButtonMinimumSize,
+            ),
+            onPressed: () {
+              _startQrCodeScanner(context);
+            },
+            child: Text(strings.buttonScanQrCodeLabel),
           ),
-          onPressed: () {
-            _startQrCodeScanner(context);
-          },
-          child: Text(strings.buttonScanQrCodeLabel),
         ),
       ],
-    );
-
-    return Padding(
-      padding: kScreenMargin,
-      child: child,
     );
   }
 

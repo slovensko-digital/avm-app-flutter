@@ -29,14 +29,15 @@ import 'start_remote_document_signing_screen.dart';
 /// Main app screen that presents app features.
 ///
 /// Has ability to:
-/// - open new file and navigate next to [OpenDocumentScreen]
 /// - show [MainMenuScreen]
+/// - open new file and navigate next to [OpenDocumentScreen]
 /// - navigate to [StartRemoteDocumentSigningScreen]
-/// - start Onboarding by navigating to [OnboardingScreen]
+/// - starting [Onboarding] flow
 class MainScreen extends StatefulWidget {
+  /// URI to file being opened.
   final Uri? incomingUri;
 
-  const MainScreen({super.key, required this.incomingUri});
+  const MainScreen({super.key, this.incomingUri});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -83,13 +84,12 @@ class _MainScreenState extends State<MainScreen> {
           child: Scaffold(
             appBar: _MainAppBar(
               context: context,
-              showQrCodeScannerIcon: (onboardingRequired == false),
               onMenuPressed: _showMenu,
-              onQrCodeScannerPressed: _showQrCodeScanner,
             ),
             body: _Body(
               onboardingRequired: onboardingRequired,
               onStartOnboardingRequested: _onStartOnboardingRequested,
+              onStartQrCodeScannerRequested: _showQrCodeScanner,
               onOpenFileRequested: _onOpenFileRequested,
             ),
           ),
@@ -223,9 +223,7 @@ class _MainScreenState extends State<MainScreen> {
 // ignore: non_constant_identifier_names
 AppBar _MainAppBar({
   required BuildContext context,
-  bool showQrCodeScannerIcon = true,
   VoidCallback? onMenuPressed,
-  VoidCallback? onQrCodeScannerPressed,
 }) {
   final iconColor = Theme.of(context).colorScheme.onSecondary;
   final colorFilter = ColorFilter.mode(iconColor, BlendMode.srcIn);
@@ -245,21 +243,6 @@ AppBar _MainAppBar({
         onPressed: onMenuPressed,
       ),
     ),
-    actions: [
-      if (showQrCodeScannerIcon)
-        Semantics(
-          label: context.strings.qrCodeScannerOpenSemantics,
-          button: true,
-          excludeSemantics: true,
-          child: IconButton(
-            icon: SvgPicture.asset(
-              'assets/icons/qr_code_scanner.svg',
-              colorFilter: colorFilter,
-            ),
-            onPressed: onQrCodeScannerPressed,
-          ),
-        ),
-    ],
     title: Builder(builder: (context) {
       return Text(
         context.strings.appName,
@@ -275,43 +258,84 @@ AppBar _MainAppBar({
 class _Body extends StatelessWidget {
   final bool? onboardingRequired;
   final VoidCallback? onStartOnboardingRequested;
+  final VoidCallback? onStartQrCodeScannerRequested;
   final VoidCallback? onOpenFileRequested;
 
   const _Body({
     required this.onboardingRequired,
-    required this.onStartOnboardingRequested,
-    required this.onOpenFileRequested,
+    this.onStartOnboardingRequested,
+    this.onStartQrCodeScannerRequested,
+    this.onOpenFileRequested,
   });
 
   @override
   Widget build(BuildContext context) {
     final strings = context.strings;
+    final primaryColor = Theme.of(context).primaryColor;
 
-    return Padding(
-      padding: kScreenMargin,
-      child: Column(
-        children: [
-          const SizedBox(height: 96),
-          const Padding(
-            padding: EdgeInsets.all(48),
-            child: AutogramLogo(),
+    return Column(
+      children: [
+        // logo, headline and body text
+        Expanded(
+          child: Padding(
+            padding: kScreenMargin.copyWith(bottom: 0),
+            child: SingleChildScrollView(
+              primary: true,
+              child: Column(
+                children: [
+                  // TODO Decrease top space relatively to overall free space
+                  const SizedBox(height: 60),
+                  const Padding(
+                    padding: EdgeInsets.all(48),
+                    child: AutogramLogo(),
+                  ),
+                  Text(
+                    strings.introHeading,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    strings.introBody,
+                    style: const TextStyle(height: 1.75),
+                  ),
+                ],
+              ),
+            ),
           ),
-          Text(
-            strings.introHeading,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            strings.introBody,
-            style: const TextStyle(height: 1.75),
-          ),
-          const Spacer(),
+        ),
 
-          // Primary button
-          _buildPrimaryButton(context),
-        ],
-      ),
+        // two buttons
+        Padding(
+          padding: kScreenMargin,
+          child: Column(
+            children: [
+              // Secondary button
+              if (onboardingRequired == false)
+                FilledButton(
+                  // OutlinedButton is ugly
+                  style: FilledButton.styleFrom(
+                    minimumSize: kPrimaryButtonMinimumSize,
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: primaryColor,
+                    side: BorderSide(color: primaryColor, width: 2),
+                  ),
+                  onPressed: onStartQrCodeScannerRequested,
+                  child: Text(strings.buttonScanQrCodeLabel),
+                ),
+
+              if (onboardingRequired == false)
+                const SizedBox(height: kButtonSpace),
+
+              // Primary button
+              _buildPrimaryButton(context),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -343,16 +367,10 @@ class _Body extends StatelessWidget {
   type: AppBar,
 )
 Widget previewMainAppBar(BuildContext context) {
-  final showQrCodeScannerIcon = context.knobs.boolean(
-    label: "Show QR code scanner",
-    initialValue: true,
-  );
-
   return SizedBox(
     height: kToolbarHeight,
     child: _MainAppBar(
       context: context,
-      showQrCodeScannerIcon: showQrCodeScannerIcon,
       onMenuPressed: () {
         developer.log("onMenuPressed");
       },
@@ -375,6 +393,9 @@ Widget previewMainScreen(BuildContext context) {
     onboardingRequired: onboardingRequired,
     onStartOnboardingRequested: () {
       developer.log("onStartOnboardingRequested");
+    },
+    onStartQrCodeScannerRequested: () {
+      developer.log("onStartQrCodeScannerRequested");
     },
     onOpenFileRequested: () {
       developer.log("onOpenFileRequested");
