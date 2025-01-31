@@ -1,5 +1,11 @@
 # Changelog
 
+## 2025-01-31 - v1.2.1(38)
+
+- #68 | Some screens have scrollable content so it's usable also with larger text size
+- #80 | Action for remote signing using QR code scanner is by text button instead of icon
+- #79 | Fix unable to open file via browser in Android
+
 ## 2025-01-03 - v1.2.0(37)
 
 - #75 | Update to Flutter SDK v3.22.3
