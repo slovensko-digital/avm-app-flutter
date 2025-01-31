@@ -34,9 +34,10 @@ import 'start_remote_document_signing_screen.dart';
 /// - navigate to [StartRemoteDocumentSigningScreen]
 /// - starting [Onboarding] flow
 class MainScreen extends StatefulWidget {
+  /// URI to file being opened.
   final Uri? incomingUri;
 
-  const MainScreen({super.key, required this.incomingUri});
+  const MainScreen({super.key, this.incomingUri});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
