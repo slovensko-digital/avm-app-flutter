@@ -56,7 +56,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
           alignment: Alignment.topLeft,
           child: Padding(
             padding: kScreenMargin.copyWith(
-              top: MediaQuery.of(context).padding.top,
+              top: MediaQuery.paddingOf(context).top,
             ),
             child: Semantics(
               label: context.strings.qrCodeScannerBackSemantics,
@@ -81,50 +81,44 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
           child: _ViewFinder(),
         ),
 
-        // Toggle torch button
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: kScreenMargin.copyWith(bottom: 128),
-            child: SquareButton(
-              onPressed: () {
-                _controller.toggleTorch();
-              },
-              child: ValueListenableBuilder<TorchState>(
-                valueListenable: _controller.torchState,
-                builder: (context, torchState, _) {
-                  // TODO This icon is below info panel when text size is 2.0x
-                  final icon = switch (torchState) {
-                    TorchState.off => Icons.flashlight_on,
-                    TorchState.on => Icons.flashlight_off,
-                  };
-
-                  final strings = context.strings;
-                  final semanticsLabel = switch (torchState) {
-                    TorchState.off => strings.qrCodeScannerTorchOnSemantics,
-                    TorchState.on => strings.qrCodeScannerTorchOffSemantics,
-                  };
-
-                  return Semantics(
-                    button: true,
-                    label: semanticsLabel,
-                    child: Icon(
-                      icon,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  );
+        // Toggle torch button + bottom info panel
+        Padding(
+          padding: kScreenMargin,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              SquareButton(
+                onPressed: () {
+                  _controller.toggleTorch();
                 },
-              ),
-            ),
-          ),
-        ),
+                child: ValueListenableBuilder<TorchState>(
+                  valueListenable: _controller.torchState,
+                  builder: (context, torchState, _) {
+                    final icon = switch (torchState) {
+                      TorchState.off => Icons.flashlight_on,
+                      TorchState.on => Icons.flashlight_off,
+                    };
 
-        // Bottom info panel
-        const Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: kScreenMargin,
-            child: _InfoPanel(),
+                    final strings = context.strings;
+                    final semanticsLabel = switch (torchState) {
+                      TorchState.off => strings.qrCodeScannerTorchOnSemantics,
+                      TorchState.on => strings.qrCodeScannerTorchOffSemantics,
+                    };
+
+                    return Semantics(
+                      button: true,
+                      label: semanticsLabel,
+                      child: Icon(
+                        icon,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const _InfoPanel(),
+            ],
           ),
         ),
       ],
@@ -306,6 +300,17 @@ class _InfoPanel extends StatelessWidget {
       ],
     );
   }
+}
+
+@widgetbook.UseCase(
+  path: '[Core]',
+  name: '',
+  type: _InfoPanel,
+)
+Widget previewInfoPanel(BuildContext context) {
+  return const Center(
+    child: _InfoPanel(),
+  );
 }
 
 @widgetbook.UseCase(

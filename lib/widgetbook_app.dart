@@ -47,6 +47,7 @@ class WidgetbookApp extends StatelessWidget {
             return SafeArea(child: child);
           },
         ),
+      TextScaleAddon(),
       MaterialThemeAddon(
         themes: themes,
         initialTheme: initialTheme,
