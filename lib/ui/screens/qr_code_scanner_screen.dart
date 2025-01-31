@@ -93,6 +93,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
               child: ValueListenableBuilder<TorchState>(
                 valueListenable: _controller.torchState,
                 builder: (context, torchState, _) {
+                  // TODO This icon is below info panel when text size is 2.0x
                   final icon = switch (torchState) {
                     TorchState.off => Icons.flashlight_on,
                     TorchState.on => Icons.flashlight_off,
