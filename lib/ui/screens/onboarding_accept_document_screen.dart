@@ -7,7 +7,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../di.dart';
 import '../../strings_context.dart';
-import '../../use_case/get_document_version_use_case.dart';
+import '../../use_case/get_html_document_version_use_case.dart';
 import '../../util/errors.dart';
 import '../app_theme.dart';
 import '../fragment/show_web_page_fragment.dart';

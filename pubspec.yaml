@@ -1,10 +1,10 @@
 name: autogram
 description: "Autogram v mobile"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.3+34
+version: 1.2.1+38
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'
+  sdk: '>=3.4.4 <4.0.0'
 
 dependencies:
   flutter:
@@ -12,39 +12,43 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   eidmsdk:
-    path: ../eidmsdk_flutter
+    git:
+      url: https://github.com/slovensko-digital/eidmsdk-flutter
+      ref: main
   autogram_sign:
-    path: ../autogram_sign
+    git:
+      url: https://github.com/slovensko-digital/avm-client-dart
+      ref: v0.4.4
   package_info_plus:
   share_plus:
   wakelock_plus:
   flutter_svg:
   http:
   chopper: '>=7.4.0 <8.0.0'
-  injectable: ^2.2.0
-  get_it: ^7.6.1
-  flutter_hooks: ^0.20.5
-  localstorage: ^4.0.1+4
+  injectable:
+  get_it:
+  flutter_hooks:
+  localstorage: '>=4.0.0 <5.0.0'
   pdf:
-  printing: ^5.12.0
+  printing:
   webview_flutter:
   webview_flutter_web:
   logging:
   path:
   path_provider:
-  file_picker:
-  flutter_bloc: ^8.0.0
+  file_picker: '8.1.4' # newer versions have permission bug on Android
+  flutter_bloc:
   provider:
   basic_utils:
   intl:
-  dotted_border: ^2.1.0
+  dotted_border:
   notified_preferences:
-  widgetbook_annotation: ^3.1.0
-  widgetbook: ^3.7.0
-  firebase_core:
-  firebase_crashlytics:
+  widgetbook_annotation:
+  widgetbook:
+  firebase_core: 2.27.0
+  firebase_crashlytics: 3.4.18
   url_launcher:
-  mobile_scanner:
+  mobile_scanner: 4.0.1 # TODO Update mobile_scanner  to v6.x
   html:
   flutter_markdown:
 

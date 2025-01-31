@@ -56,15 +56,20 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
           alignment: Alignment.topLeft,
           child: Padding(
             padding: kScreenMargin.copyWith(
-              top: MediaQuery.of(context).padding.top,
+              top: MediaQuery.paddingOf(context).top,
             ),
-            child: SquareButton(
-              onPressed: () {
-                Navigator.maybePop(context);
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: Theme.of(context).colorScheme.onBackground,
+            child: Semantics(
+              label: context.strings.qrCodeScannerBackSemantics,
+              button: true,
+              excludeSemantics: true,
+              child: SquareButton(
+                onPressed: () {
+                  Navigator.maybePop(context);
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
             ),
           ),
@@ -76,39 +81,44 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
           child: _ViewFinder(),
         ),
 
-        // Toggle troch button
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: kScreenMargin.copyWith(bottom: 128),
-            child: SquareButton(
-              onPressed: () {
-                _controller.toggleTorch();
-              },
-              child: ValueListenableBuilder<TorchState>(
-                valueListenable: _controller.torchState,
-                builder: (context, torchState, _) {
-                  final icon = switch (torchState) {
-                    TorchState.off => Icons.flashlight_on,
-                    TorchState.on => Icons.flashlight_off,
-                  };
-
-                  return Icon(
-                    icon,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  );
+        // Toggle torch button + bottom info panel
+        Padding(
+          padding: kScreenMargin,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              SquareButton(
+                onPressed: () {
+                  _controller.toggleTorch();
                 },
-              ),
-            ),
-          ),
-        ),
+                child: ValueListenableBuilder<TorchState>(
+                  valueListenable: _controller.torchState,
+                  builder: (context, torchState, _) {
+                    final icon = switch (torchState) {
+                      TorchState.off => Icons.flashlight_on,
+                      TorchState.on => Icons.flashlight_off,
+                    };
 
-        // Bottom info panel
-        const Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: kScreenMargin,
-            child: _InfoPanel(),
+                    final strings = context.strings;
+                    final semanticsLabel = switch (torchState) {
+                      TorchState.off => strings.qrCodeScannerTorchOnSemantics,
+                      TorchState.on => strings.qrCodeScannerTorchOffSemantics,
+                    };
+
+                    return Semantics(
+                      button: true,
+                      label: semanticsLabel,
+                      child: Icon(
+                        icon,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const _InfoPanel(),
+            ],
           ),
         ),
       ],
@@ -134,7 +144,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
       style: FilledButton.styleFrom(
         minimumSize: size,
         padding: EdgeInsets.zero,
-        backgroundColor: colors.background,
+        backgroundColor: colors.surface,
       ),
       child: child,
     );
@@ -269,7 +279,7 @@ class _InfoPanel extends StatelessWidget {
           padding: const EdgeInsets.only(top: iconSize / 2),
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.all(Radius.circular(16)),
             ),
             width: double.infinity,
@@ -290,6 +300,17 @@ class _InfoPanel extends StatelessWidget {
       ],
     );
   }
+}
+
+@widgetbook.UseCase(
+  path: '[Core]',
+  name: '',
+  type: _InfoPanel,
+)
+Widget previewInfoPanel(BuildContext context) {
+  return const Center(
+    child: _InfoPanel(),
+  );
 }
 
 @widgetbook.UseCase(

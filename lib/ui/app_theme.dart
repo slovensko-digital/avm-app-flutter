@@ -28,17 +28,19 @@ ThemeData appTheme(
   BuildContext context, {
   Brightness? brightness,
 }) {
-  const color = Color(0xFF126DFF);
+  const primaryColor = Color(0xFF126DFF);
   final colorScheme = ColorScheme.fromSeed(
     brightness: brightness ?? MediaQuery.platformBrightnessOf(context),
-    seedColor: color,
+    seedColor: primaryColor,
+    primary: primaryColor,
   );
+  // TODO Consider using Typography.material2021().black.apply(fontSizeFactor: 1.2) so that BuildContext is not needed
   final textTheme = Theme.of(context).textTheme.apply(
         fontSizeFactor: 1.2,
       );
   final appBarTheme = AppBarTheme(
     titleTextStyle: TextStyle(
-      color: colorScheme.onBackground,
+      color: colorScheme.onSurface,
       fontSize: 20,
       fontWeight: FontWeight.w700,
       letterSpacing: 0.15,
@@ -46,12 +48,12 @@ ThemeData appTheme(
   );
   final dialogTheme = DialogTheme(
     titleTextStyle: TextStyle(
-      color: colorScheme.onBackground,
+      color: colorScheme.onSurface,
       fontSize: 20,
       fontWeight: FontWeight.w700,
       letterSpacing: 0.15,
     ),
-    surfaceTintColor: colorScheme.background,
+    surfaceTintColor: colorScheme.surface,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(8)),
     ),
@@ -72,7 +74,7 @@ ThemeData appTheme(
 
   return ThemeData(
     useMaterial3: true,
-    primaryColor: color,
+    primaryColor: primaryColor,
     colorScheme: colorScheme,
     fontFamily: "Source Sans 3",
     // see /assets/fonts
@@ -86,6 +88,11 @@ ThemeData appTheme(
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         shape: buttonShape,
+        textStyle: buttonTextStyle,
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
         textStyle: buttonTextStyle,
       ),
     ),

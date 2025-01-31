@@ -22,6 +22,13 @@
   "buttonSelectCertificateLabel": "Vybrať certifikát",
   "buttonSignWithCertificateLabel": "Podpísať ako {subject}",
   "buttonSignWithDifferentCertificateLabel": "Podpísať iným certifikátom",
+  "buttonMenuLabelSemantics": "Otvoriť menu",
+  "qrCodeScannerTorchOnSemantics": "Zapnúť blesk",
+  "qrCodeScannerTorchOffSemantics": "Vypnúť blesk",
+  "qrCodeScannerBackSemantics": "Späť",
+  "qrCodeScannerOpenSemantics": "Podpísať vzdialený dokument pomocou QR kódu",
+  "shareDocumentPreviewSemantics": "Zdieľať náhľad dokumentu",
+  "previewDocumentSemantics": "Náhľad dokumentu",
 
   "deepLinkParseErrorMessage": "Nepodporovaný alebo nesprávny odkaz:\n{error}",
   "stepIndicatorText": "Krok {stepNumber} z {totalSteps}",
@@ -53,7 +60,7 @@
   "thirdPartyLicensesLabel": "Licencie knižníc tretích strán",
 
   "introHeading": "Nový, lepší a krajší podpisovač v mobile",
-  "introBody": "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie",
+  "introBody": "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie\n ✅ Rýchle overenie podpisov",
 
   "onboardingFinishedHeading": "Autogram je pripravený",
   "onboardingFinishedBody": "Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie",
@@ -73,6 +80,13 @@
 
   "documentVisualizationCannotVisualizeTypeError": "Neviem vizualizovať {type} typ.",
 
+  "documentValidationLoadingLabel": "Prebieha overovanie podpisov",
+  "documentValidationNoSignaturesLabel": "Dokument zatiaľ neobsahuje **žiadny podpis**",
+  "documentValidationHasInvalidSignaturesLabel": "Dokument obsahuje **neplatné podpisy**",
+  "documentValidationHasIndeterminateSignatureLabel": "Dokument obsahuje **neznámy podpis**",
+  "documentValidationHasValidSignaturesLabel": "{count, plural, one {Dokument obsahuje **1 podpis**} few {Dokument obsahuje **{count} podpisy**} many {Dokument obsahuje {count} podpisov**} other {Dokument obsahuje **{count} podpisov**}}",
+  "documentValidationSignaturesHeading": "Podpisy v dokumente",
+
   "selectCertificateTitle": "Výber typu podpisu",
   "selectSigningCertificateTitle": "Nastavenie certifikátu",
   "selectSigningCertificateBody": "Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Podpisový certifikát si môžete nastaviť aj neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát teraz, pripravte si, prosím, občiansky preukaz a nasledujte inštrukcie na obrazovke.",
@@ -84,7 +98,22 @@
   "selectSigningCertificateErrorHeading": "Chyba pri načítavaní certifikátov z občianskeho preukazu.",
 
   "certificateIssuer": "Vydavateľ: {text}",
+  "certificateIssuerLabel": "Vydavateľ",
+  "certificateSubjectLabel": "Vydaný pre",
+  "certificateValidityLabel": "Platnosť",
+  "certificateValidityNotBeforeLabel": "Platný od",
+  "certificateValidityNotAfterLabel": "Platný do",
   "certificateNotAfter": "Platný do: {text}",
+
+  "validationResultPassedLabel": "Platný",
+  "validationResultFailedLabel": "Neplatný",
+  "validationResultIndeterminateLabel": "Neznámy",
+  "validationResultUnknownLabel": "Neznámy",
+
+  "signatureQualificationQesigLabel": "Vlastnoručný podpis",
+  "signatureQualificationQesigWithQTLabel": "Osvedčený podpis",
+  "signatureQualificationQesealWithQTLabel": "Elektronická pečať",
+  "signatureQualificationAdesigWithQTLabel": "Uznaný spôsob autorizácie",
 
   "signDocumentTitle": "Podpisovanie dokumentu",
   "signDocumentCanceledHeading": "Podpisovanie pomocou občianskeho preukazu bolo prerušené",
@@ -95,7 +124,6 @@
   "saveSignedDocumentErrorMessage": "Pri ukladaní súboru sa vyskytla chyba:\n{error}",
 
   "shareSignedDocumentLabel": "Zdieľať podpísaný dokument",
-  "shareSignedDocumentSubject": "Elektronicky podpísaný dokument",
   "shareSignedDocumentText": "\n\nPodpísané aplikáciou Autogram v mobile",
   "shareSignedDocumentErrorMessage": "Pri zdieľaní súboru sa vyskytla chyba:\n{error}",
 

@@ -88,18 +88,24 @@ class _ListItem extends StatelessWidget {
     );
 
     // NOT using RadioListTile because need to scale-up and style Radio
-    return ListTile(
-      onTap: (canSelect ? onSelected : null),
-      enabled: enabled,
-      leading: Transform.scale(
-        scale: kRadioScale,
-        child: radio,
+    return Semantics(
+      checked: value == selectedValue,
+      inMutuallyExclusiveGroup: true,
+      excludeSemantics: true,
+      label: "$titleText, $subtitleText",
+      child: ListTile(
+        onTap: (canSelect ? onSelected : null),
+        enabled: enabled,
+        leading: Transform.scale(
+          scale: kRadioScale,
+          child: radio,
+        ),
+        title: Text(
+          titleText,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(subtitleText),
       ),
-      title: Text(
-        titleText,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
-      subtitle: Text(subtitleText),
     );
   }
 }

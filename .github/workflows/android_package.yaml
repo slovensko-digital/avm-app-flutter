@@ -19,7 +19,7 @@ permissions:
 jobs:
   build:
     environment: packaging
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
@@ -27,25 +27,13 @@ jobs:
         with:
           path: app
 
-      - name: Checkout "eidmsdk_flutter"
-        uses: actions/checkout@v4
-        with:
-          repository: slovensko-digital/eidmsdk-flutter
-          path: eidmsdk_flutter
-
-      - name: Checkout "autogram_sign"
-        uses: actions/checkout@v4
-        with:
-          repository: slovensko-digital/avm-client-dart
-          path: autogram_sign
-
       - uses: actions/setup-java@v1
         with:
           java-version: '17.x'
 
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '3.16.5'
+          flutter-version: '3.22.3'
           channel: 'stable'
 
       - name: Install dependencies
@@ -62,7 +50,7 @@ jobs:
         working-directory: ./app
         run: echo $ENCODED_STRING | base64 -d > release_keystore.jks
 
-      - name: Build Googla Play .aab
+      - name: Build Google Play .aab
         env:
           AVM_KEYSTORE_FILE: ../../release_keystore.jks
           AVM_KEYSTORE_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_PASSWORD }}
@@ -72,7 +60,7 @@ jobs:
         working-directory: ./app
         run: flutter build appbundle --release
 
-      - name: Build Andorid .apk
+      - name: Build Android .apk
         env:
           AVM_KEYSTORE_FILE: ../../release_keystore.jks
           AVM_KEYSTORE_PASSWORD: ${{ secrets.GOOGLE_RELEASE_KEYSTORE_PASSWORD }}
@@ -83,15 +71,15 @@ jobs:
         run: flutter build apk --release
 
       - name: Upload .aab Build to Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-           name: release-artifacts
+           name: release-artifacts_${{ github.run_id }}.aab
            path: ./app/build/app/outputs/bundle/release/app-release.aab
 
       - name: Upload .apk Build to Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: release-artifacts
+          name: release-artifacts_${{ github.run_id }}.apk
           path: ./app/build/app/outputs/apk/release/app-release.apk
 
       - name: Create release if tag pushed

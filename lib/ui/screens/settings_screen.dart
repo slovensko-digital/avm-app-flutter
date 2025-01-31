@@ -105,11 +105,7 @@ class _Body extends StatelessWidget {
 
         final cert = value.tbsCertificate;
 
-        return [
-          cert.subject[X500Oids.cn],
-          cert.subject[X500Oids.ln],
-          cert.subject[X500Oids.c],
-        ].whereType<String>().join(", ");
+        return cert.subject[X500Oids.cn];
       }(),
       onPressed: null,
     );
@@ -191,12 +187,15 @@ class _ValueListenableBoundTile<T> extends StatelessWidget {
       builder: (context, value, _) {
         final summary = summaryGetter(setting.value);
 
-        return PreferenceTile(
-          title: title,
-          summary: summary,
-          onPressed: () {
-            _onEditItemRequested(context, value);
-          },
+        return Semantics(
+          button: true,
+          child: PreferenceTile(
+            title: title,
+            summary: summary,
+            onPressed: () {
+              _onEditItemRequested(context, value);
+            },
+          ),
         );
       },
     );
@@ -242,7 +241,7 @@ class _ValueListenableBoundTile<T> extends StatelessWidget {
         );
 
         return AlertDialog(
-          title: Text(title),
+          title: Semantics(header: true, child: Text(title)),
           content: content,
         );
       },

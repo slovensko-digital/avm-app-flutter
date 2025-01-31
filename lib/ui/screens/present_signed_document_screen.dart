@@ -42,6 +42,7 @@ class PresentSignedDocumentScreen extends StatelessWidget {
       create: (context) {
         final cubit = getIt.get<PresentSignedDocumentCubit>(
           param1: signedDocument,
+          param2: signingType,
         );
 
         if (signingType == DocumentSigningType.local) {
@@ -108,8 +109,10 @@ class PresentSignedDocumentScreen extends StatelessWidget {
 
       await Share.shareXFiles(
         [XFile(file.path)],
-        subject: strings.shareSignedDocumentSubject,
         text: strings.shareSignedDocumentText,
+        // It would be better to have something meaningful for email clients,
+        // however this is also used in Google Drive as target file name
+        subject: file.basename,
       );
     } catch (error) {
       if (context.mounted) {
@@ -161,9 +164,14 @@ class _Body extends StatelessWidget {
           onShareFileRequested: onShareFileRequested,
           onCloseRequested: onCloseRequested,
         ),
-      PresentSignedDocumentSuccessState state => _SuccessContent(
+      PresentSignedLocalDocumentSuccessState state => _SuccessContent(
           file: state.file,
           onShareFileRequested: onShareFileRequested,
+          onCloseRequested: onCloseRequested,
+        ),
+      PresentSignedRemoteDocumentSuccessState() => _SuccessContent(
+          file: null,
+          onShareFileRequested: null,
           onCloseRequested: onCloseRequested,
         ),
     };
@@ -345,7 +353,7 @@ Widget previewSuccessPresentSignedDocumentScreen(BuildContext context) {
   final file = File(path);
 
   return _Body(
-    state: PresentSignedDocumentSuccessState(file),
+    state: PresentSignedLocalDocumentSuccessState(file),
     signingType: signingType,
     onShareFileRequested: () {
       developer.log('onShareFileRequested');

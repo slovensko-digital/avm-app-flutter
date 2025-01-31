@@ -1,5 +1,28 @@
 # Changelog
 
+## 2025-01-31 - v1.2.1(38)
+
+- #68 | Some screens have scrollable content so it's usable also with larger text size
+- #80 | Action for remote signing using QR code scanner is by text button instead of icon
+- #79 | Fix unable to open file via browser in Android
+
+## 2025-01-03 - v1.2.0(37)
+
+- #75 | Update to Flutter SDK v3.22.3
+- #76 | Replace Main menu buttons with built-in TextButton to resolve Google UX warning
+
+## 2024-11-18 - v1.1.0(36)
+
+- Update AGP and Gradle version for latest Android Studio Ladybug (2024.2.1 Patch 1)
+- #35 | Android - opening only specific file types
+- #39 | When sharing document, set file name
+- #36 | Implement first version of Document validation
+
+## 2024-07-16 - v1.0.4(35)
+
+- #32 | Cleanup
+- #35 | Limit Android "Share" / "Open" action file types 
+
 ## 2024-07-16 - v1.0.3(34)
 
 - #30 | Logging into Crashlytics

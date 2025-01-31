@@ -11,6 +11,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../app_service.dart';
+import '../data/document_signing_type.dart';
 import '../file_extensions.dart';
 import '../file_system_entity_extensions.dart';
 import '../ui/screens/present_signed_document_screen.dart';
@@ -34,8 +35,14 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   PresentSignedDocumentCubit({
     required AppService appService,
     @factoryParam required this.signedDocument,
+    @factoryParam required DocumentSigningType signingType,
   })  : _appService = appService,
-        super(const PresentSignedDocumentInitialState());
+        super(
+          signingType == DocumentSigningType.local
+              ? const PresentSignedDocumentInitialState()
+              // Remote documents are not saved locally, so we go directly to success state
+              : const PresentSignedRemoteDocumentSuccessState(),
+        );
 
   /// Saves [signedDocument] into public directory.
   Future<void> saveDocument() async {
@@ -67,7 +74,7 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   Future<File> getShareableFile() async {
     final state = this.state;
 
-    if (state is PresentSignedDocumentSuccessState) {
+    if (state is PresentSignedLocalDocumentSuccessState) {
       final file = state.file;
 
       if (await file.exists()) {
@@ -103,6 +110,7 @@ class PresentSignedDocumentCubit extends Cubit<PresentSignedDocumentState> {
   }
 
   /// Saves [signedDocument] content into given [file].
+  // TODO As extension function on SignDocumentResponseBody type
   Future<void> _saveDocumentIntoFile(File file) {
     return Future.microtask(() => base64Decode(signedDocument.content))
         .then((bytes) => file.writeAsBytes(bytes, flush: true));
