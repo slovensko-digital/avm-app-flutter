@@ -272,47 +272,69 @@ class _Body extends StatelessWidget {
     final strings = context.strings;
     final primaryColor = Theme.of(context).primaryColor;
 
-    return Padding(
-      padding: kScreenMargin,
-      child: Column(
-        children: [
-          const SizedBox(height: 96),
-          const Padding(
-            padding: EdgeInsets.all(48),
-            child: AutogramLogo(),
-          ),
-          Text(
-            strings.introHeading,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            strings.introBody,
-            style: const TextStyle(height: 1.75),
-          ),
-          const Spacer(),
-
-          // Secondary button
-          if (onboardingRequired == false)
-            FilledButton(
-              // OutlinedButton is ugly
-              style: FilledButton.styleFrom(
-                minimumSize: kPrimaryButtonMinimumSize,
-                backgroundColor: Colors.transparent,
-                foregroundColor: primaryColor,
-                side: BorderSide(color: primaryColor, width: 2),
+    return Column(
+      children: [
+        // logo, headline and body text
+        Expanded(
+          child: Padding(
+            padding: kScreenMargin.copyWith(bottom: 0),
+            child: SingleChildScrollView(
+              primary: true,
+              child: Column(
+                children: [
+                  // TODO Decrease top space relatively to overall free space
+                  const SizedBox(height: 60),
+                  const Padding(
+                    padding: EdgeInsets.all(48),
+                    child: AutogramLogo(),
+                  ),
+                  Text(
+                    strings.introHeading,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    strings.introBody,
+                    style: const TextStyle(height: 1.75),
+                  ),
+                ],
               ),
-              onPressed: onStartQrCodeScannerRequested,
-              child: Text(strings.buttonScanQrCodeLabel),
             ),
+          ),
+        ),
 
-          if (onboardingRequired == false) const SizedBox(height: kButtonSpace),
+        // two buttons
+        Padding(
+          padding: kScreenMargin,
+          child: Column(
+            children: [
+              // Secondary button
+              if (onboardingRequired == false)
+                FilledButton(
+                  // OutlinedButton is ugly
+                  style: FilledButton.styleFrom(
+                    minimumSize: kPrimaryButtonMinimumSize,
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: primaryColor,
+                    side: BorderSide(color: primaryColor, width: 2),
+                  ),
+                  onPressed: onStartQrCodeScannerRequested,
+                  child: Text(strings.buttonScanQrCodeLabel),
+                ),
 
-          // Primary button
-          _buildPrimaryButton(context),
-        ],
-      ),
+              if (onboardingRequired == false)
+                const SizedBox(height: kButtonSpace),
+
+              // Primary button
+              _buildPrimaryButton(context),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
