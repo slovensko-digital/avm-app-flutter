@@ -46,8 +46,8 @@ User onboarding - started with [`Onboarding`](lib/ui/onboarding.dart):
 #### Sign single document
 
 Signing of single (PDF, TXT, image, eForms XML, ...) document using
-[`Eidmsdk`](../eidmsdk_flutter/lib/eidmsdk.dart) and
-[`AutogramService`](../autogram_sign/lib/src/iautogram_service.dart).
+[`Eidmsdk`](https://github.com/slovensko-digital/eidmsdk-flutter/blob/main/lib/eidmsdk.dart) and
+[`IAutogramService`](https://github.com/slovensko-digital/avm-client-dart/blob/main/lib/src/iautogram_service.dart).
 
 1. [`MainScreen`](lib/ui/screens/main_screen.dart) - to present app features and consume shared
    `File`.

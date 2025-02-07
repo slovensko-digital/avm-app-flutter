@@ -57,7 +57,6 @@ void _onRecord(final LogRecord record) {
       stackTrace: record.stackTrace,
     );
   } else {
-    // TODO Collect also some Settings (acceptedPrivacyPolicyVersion, acceptedTermsOfServiceVersion) on app init and on change
     FirebaseCrashlytics.instance.log(formatCrashlyticsLog(record));
   }
 }

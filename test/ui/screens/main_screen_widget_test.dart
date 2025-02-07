@@ -40,10 +40,6 @@ void main() async {
     );
   });
 
-  // TODO Only button to start onboarding is displayed initially
-  // TODO Button to remote sign and open document using browser are displayed when onboarding was succeeded
-  // TODO Body text is scrollable and buttons are always visible
-
   testWidgets('MainScreen has AppBar, logo, heading and body text',
       (tester) async {
     await tester.pumpWidget(widget);
