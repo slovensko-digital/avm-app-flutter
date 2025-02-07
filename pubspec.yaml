@@ -36,7 +36,7 @@ dependencies:
   logging:
   path:
   path_provider:
-  file_picker:
+  file_picker: '8.1.4' # newer versions have permission bug on Android
   flutter_bloc:
   provider:
   basic_utils:

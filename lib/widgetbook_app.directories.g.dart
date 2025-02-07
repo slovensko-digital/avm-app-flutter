@@ -285,6 +285,13 @@ final directories = <_i1.WidgetbookNode>[
         ),
       ),
       _i1.WidgetbookLeafComponent(
+        name: '_InfoPanel',
+        useCase: _i1.WidgetbookUseCase(
+          name: '',
+          builder: _i24.previewInfoPanel,
+        ),
+      ),
+      _i1.WidgetbookLeafComponent(
         name: '_ViewFinder',
         useCase: _i1.WidgetbookUseCase(
           name: '',

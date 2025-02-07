@@ -44,6 +44,7 @@ abstract interface class Settings {
 /// [Settings] implementation that uses [SharedPreferences].
 /// Note, [clear] is from [NotifiedPreferences].
 // TODO Register Settings using Injectable as singleton - would need to pass instance into DI so no need to use "async"
+// This is needed not only for convenience when constructing Blocks, however needed for tests
 class _SettingsImpl with NotifiedPreferences implements Settings {
   @override
   late final ValueNotifier<String?> acceptedPrivacyPolicyVersion =

@@ -34,6 +34,7 @@ ThemeData appTheme(
     seedColor: primaryColor,
     primary: primaryColor,
   );
+  // TODO Consider using Typography.material2021().black.apply(fontSizeFactor: 1.2) so that BuildContext is not needed
   final textTheme = Theme.of(context).textTheme.apply(
         fontSizeFactor: 1.2,
       );
