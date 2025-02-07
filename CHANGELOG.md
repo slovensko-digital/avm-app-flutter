@@ -1,5 +1,9 @@
 # Changelog
 
+## NEXT - v1.2.2(39)
+
+- Update QR code scanner library to its latest version
+
 ## 2025-01-31 - v1.2.1(38)
 
 - #68 | Some screens have scrollable content so it's usable also with larger text size
