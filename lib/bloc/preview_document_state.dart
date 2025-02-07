@@ -9,20 +9,6 @@ import 'preview_document_cubit.dart';
 sealed class PreviewDocumentState {
   const PreviewDocumentState();
 
-  // TODO Cleanup these
-  PreviewDocumentLoadingState toLoading() {
-    return const PreviewDocumentLoadingState();
-  }
-
-  PreviewDocumentSuccessState toSuccess(
-      DocumentVisualizationResponseBody visualization) {
-    return PreviewDocumentSuccessState(visualization);
-  }
-
-  PreviewDocumentErrorState toError(Object error) {
-    return PreviewDocumentErrorState(error);
-  }
-
   @override
   String toString() {
     return "$runtimeType()";
@@ -55,6 +41,6 @@ class PreviewDocumentSuccessState extends PreviewDocumentState {
 
   @override
   String toString() {
-    return "$runtimeType(visualization: ...)";
+    return "$runtimeType(visualization: (mimeType: ${visualization.mimeType}, filename: ${visualization.filename}))";
   }
 }

@@ -28,7 +28,7 @@ class PreviewDocumentCubit extends Cubit<PreviewDocumentState> {
 
   /// Gets the Document Visualisation for [documentId].
   Future<void> getVisualization() async {
-    emit(state.toLoading());
+    emit(const PreviewDocumentLoadingState());
 
     try {
       _log.info("Getting Document Visualisation for Document Id: $documentId");
@@ -37,11 +37,11 @@ class PreviewDocumentCubit extends Cubit<PreviewDocumentState> {
 
       _log.info("Got Document Visualisation.");
 
-      emit(state.toSuccess(visualization));
+      emit(PreviewDocumentSuccessState(visualization));
     } catch (error, stackTrace) {
       _log.severe("Error getting Document Visualisation.", error, stackTrace);
 
-      emit(state.toError(error));
+      emit(PreviewDocumentErrorState(error));
     }
   }
 }
