@@ -9,6 +9,7 @@ import 'preview_document_cubit.dart';
 sealed class PreviewDocumentState {
   const PreviewDocumentState();
 
+  // TODO Cleanup these
   PreviewDocumentLoadingState toLoading() {
     return const PreviewDocumentLoadingState();
   }

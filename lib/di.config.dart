@@ -32,7 +32,7 @@ import 'data/pdf_signing_option.dart' as _i732;
 import 'di.dart' as _i913;
 import 'services/encryption_key_registry.dart' as _i429;
 import 'use_case/get_document_signature_type_use_case.dart' as _i400;
-import 'use_case/get_html_document_version_use_case.dart' as _i123;
+import 'use_case/get_html_document_version_use_case.dart' as _i752;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -50,8 +50,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i429.EncryptionKeyRegistry>(
         () => _i429.EncryptionKeyRegistry());
     gh.lazySingleton<_i713.Eidmsdk>(() => extrernalModule.eidmsdk);
-    gh.lazySingleton<_i123.GetHtmlDocumentVersionUseCase>(
-        () => _i123.GetHtmlDocumentVersionUseCase());
+    gh.lazySingleton<_i752.GetHtmlDocumentVersionUseCase>(
+        () => _i752.GetHtmlDocumentVersionUseCase());
     gh.lazySingleton<_i825.IAutogramService>(
         () => extrernalModule.create(gh<_i429.EncryptionKeyRegistry>()));
     gh.factoryParam<_i687.PresentSignedDocumentCubit,

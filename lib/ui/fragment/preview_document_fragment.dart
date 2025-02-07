@@ -93,9 +93,9 @@ Widget previewSuccessPreviewDocumentScreen(BuildContext context) {
   return const PreviewDocumentFragment(
     state: PreviewDocumentSuccessState(
       DocumentVisualizationResponseBody(
-        mimeType: "text/plain;base64",
+        mimeType: "text/plain",
         filename: "sample.txt",
-        content: "",
+        content: "Sample text",
       ),
     ),
   );

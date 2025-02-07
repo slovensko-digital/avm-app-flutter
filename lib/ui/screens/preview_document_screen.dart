@@ -1,11 +1,13 @@
+import 'dart:developer' as developer;
 import 'dart:io' show File;
 
 import 'package:autogram_sign/autogram_sign.dart'
-    show DocumentValidationResponseBody;
+    show DocumentValidationResponseBody, DocumentVisualizationResponseBody;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/preview_document_cubit.dart';
 import '../../data/document_signing_type.dart';
@@ -58,7 +60,7 @@ class PreviewDocumentScreen extends StatelessWidget {
       },
       child: BlocBuilder<PreviewDocumentCubit, PreviewDocumentState>(
         builder: (context, state) {
-          return _Content(
+          return _Body(
             state: state,
             onSignRequested: () => _onSignRequested(context),
           );
@@ -135,27 +137,28 @@ class PreviewDocumentScreen extends StatelessWidget {
   }
 }
 
-/// [PreviewDocumentScreen] content.
-class _Content extends StatelessWidget {
+/// [PreviewDocumentScreen] body.
+class _Body extends StatelessWidget {
   final PreviewDocumentState state;
   final VoidCallback? onSignRequested;
 
-  const _Content({
+  const _Body({
     required this.state,
-    required this.onSignRequested,
+    this.onSignRequested,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Document preview
-        Expanded(
-          child: PreviewDocumentFragment(state: state),
-        ),
+    if (state is PreviewDocumentSuccessState) {
+      // Top content has no Padding intentionally!
+      return Column(
+        children: [
+          // Document preview
+          Expanded(
+            child: PreviewDocumentFragment(state: state),
+          ),
 
-        // Primary button
-        if (state is PreviewDocumentSuccessState)
+          // Primary button
           Padding(
             padding: kScreenMargin,
             child: FilledButton(
@@ -166,7 +169,55 @@ class _Content extends StatelessWidget {
               child: Text(context.strings.buttonSignLabel),
             ),
           ),
-      ],
-    );
+        ],
+      );
+    } else {
+      return Padding(
+        padding: kScreenMargin,
+        child: PreviewDocumentFragment(state: state),
+      );
+    }
   }
+}
+
+@widgetbook.UseCase(
+  path: '[Screens]',
+  name: 'loading',
+  type: PreviewDocumentScreen,
+)
+Widget previewLoadingPreviewDocumentScreen(BuildContext context) {
+  return const _Body(
+    state: PreviewDocumentLoadingState(),
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[Screens]',
+  name: 'error',
+  type: PreviewDocumentScreen,
+)
+Widget previewErrorPreviewDocumentScreen(BuildContext context) {
+  return const _Body(
+    state: PreviewDocumentErrorState("Error message!"),
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[Screens]',
+  name: 'success',
+  type: PreviewDocumentScreen,
+)
+Widget previewSuccessPreviewDocumentScreen(BuildContext context) {
+  return _Body(
+    state: const PreviewDocumentSuccessState(
+      DocumentVisualizationResponseBody(
+        mimeType: "text/plain",
+        filename: "sample.txt",
+        content: "Sample text",
+      ),
+    ),
+    onSignRequested: () {
+      developer.log("onSignRequested");
+    },
+  );
 }
