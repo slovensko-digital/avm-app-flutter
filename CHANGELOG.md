@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.1(45)
+
+- Update QR code scanner library to its latest version
+
 ## 2025-08-14 - v1.4.1(44)
 
 - #109 | Update to Flutter SDK v3.29.3

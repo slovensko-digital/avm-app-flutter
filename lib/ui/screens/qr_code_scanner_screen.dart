@@ -96,17 +96,22 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                 onPressed: () {
                   _controller.toggleTorch();
                 },
-                child: ValueListenableBuilder<TorchState>(
-                  valueListenable: _controller.torchState,
-                  builder: (context, torchState, _) {
+                child: ValueListenableBuilder<MobileScannerState>(
+                  valueListenable: _controller,
+                  builder: (context, scannerState, _) {
+                    final torchState = scannerState.torchState;
                     final icon = switch (torchState) {
                       TorchState.off => Icons.flashlight_on,
                       TorchState.on => Icons.flashlight_off,
+                      TorchState.auto => Icons.flashlight_on,
+                      TorchState.unavailable => null,
                     };
 
                     final semanticsLabel = switch (torchState) {
                       TorchState.off => strings.qrCodeScannerTorchOnSemantics,
                       TorchState.on => strings.qrCodeScannerTorchOffSemantics,
+                      TorchState.auto => strings.qrCodeScannerTorchOffSemantics,
+                      TorchState.unavailable => null,
                     };
 
                     return Semantics(
