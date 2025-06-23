@@ -48,7 +48,7 @@ dependencies:
   firebase_core: 2.27.0
   firebase_crashlytics: 3.4.18
   url_launcher:
-  mobile_scanner: ^6.0.0
+  mobile_scanner: 6.0.10
   html:
   flutter_markdown:
 
