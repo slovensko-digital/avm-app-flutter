@@ -1,5 +1,9 @@
 # Changelog
 
+## 2025-06-24 - v1.2.2(39)
+
+- #98 | Fix iOS build for latest Xcode v16.4 
+
 ## 2025-01-31 - v1.2.1(38)
 
 - #68 | Some screens have scrollable content so it's usable also with larger text size
