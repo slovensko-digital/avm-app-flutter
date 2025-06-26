@@ -1,8 +1,12 @@
 # Changelog
 
-## NEXT - v1.3.0(xx)
+## NEXT - v1.3.0(40)
 
 - Update eID mSDK to latest version - Android: v1.4.2, iOS: v1.8.2
+
+## 2025-06-24 - v1.2.2(39)
+
+- #98 | Fix iOS build for latest Xcode v16.4 
 
 ## 2025-01-31 - v1.2.1(38)
 
