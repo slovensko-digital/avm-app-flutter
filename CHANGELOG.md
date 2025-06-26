@@ -2,7 +2,7 @@
 
 ## NEXT - v1.2.3(40)
 
-- Update QR code scanner library to its latest version
+- Update QR code scanner library to its latest compatible version
 
 ## 2025-06-24 - v1.2.2(39)
 
