@@ -1,8 +1,12 @@
 # Changelog
 
-## NEXT - v1.2.2(39)
+## NEXT - v1.2.3(40)
 
 - Update QR code scanner library to its latest version
+
+## 2025-06-24 - v1.2.2(39)
+
+- #98 | Fix iOS build for latest Xcode v16.4 
 
 ## 2025-01-31 - v1.2.1(38)
 
