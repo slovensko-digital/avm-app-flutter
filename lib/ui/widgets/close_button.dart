@@ -10,7 +10,7 @@ class CloseButton extends StatelessWidget {
     final shape = RoundedRectangleBorder(
       side: BorderSide(
         width: 2,
-        color: Theme.of(context).dividerColor.withOpacity(0.10),
+        color: Theme.of(context).dividerColor.withAlpha((255.0 * 0.10).round()),
       ),
       borderRadius: const BorderRadius.all(Radius.circular(8)),
     );

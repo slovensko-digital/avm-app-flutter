@@ -186,7 +186,7 @@ Widget previewRadio(BuildContext context) {
 )
 Widget previewDialog(BuildContext context) {
   return Container(
-    color: Colors.grey.withOpacity(0.25),
+    color: Colors.grey.withAlpha((255.0 * 0.25).round()),
     child: const Dialog(
       child: SizedBox(
         width: 240,
