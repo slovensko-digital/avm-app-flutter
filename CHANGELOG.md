@@ -1,6 +1,6 @@
 # Changelog
 
-## NEXT - v1.3.0(40)
+## 2025-07-01 - v1.3.0(41)
 
 - Update eID mSDK to latest version - Android: v1.4.2, iOS: v1.8.2
 
