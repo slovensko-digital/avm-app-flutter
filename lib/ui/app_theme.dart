@@ -157,7 +157,7 @@ Widget previewRadio(BuildContext context) {
       );
     }
 
-    return ButtonBar(
+    return OverflowBar(
       alignment: MainAxisAlignment.start,
       children: [
         customRadio(
