@@ -294,11 +294,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: main
-      resolved-ref: e7fbc7d41a9cc861219d685c315904f7a63bdc41
+      ref: "v0.9.0"
+      resolved-ref: "6dc9436dab7362097d5e783efd022d2d090605bf"
       url: "https://github.com/slovensko-digital/eidmsdk-flutter"
     source: git
-    version: "0.0.1"
+    version: "0.9.0"
   equatable:
     dependency: transitive
     description:
