@@ -1,5 +1,10 @@
 # Changelog
 
+## NEXT - v1.3.1(42)
+
+- iOS: Setup image for Launch screen  
+- #12 | iOS: Enable iPad destination back
+
 ## 2025-07-01 - v1.3.0(41)
 
 - Update eID mSDK to latest version - Android: v1.4.2, iOS: v1.8.2
