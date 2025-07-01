@@ -170,6 +170,7 @@ PODS:
     - Flutter
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
+    - FlutterMacOS
 
 DEPENDENCIES:
   - eidmsdk (from `.symlinks/plugins/eidmsdk/ios`)
@@ -185,7 +186,7 @@ DEPENDENCIES:
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
-  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/darwin`)
 
 SPEC REPOS:
   trunk:
@@ -245,7 +246,7 @@ EXTERNAL SOURCES:
   wakelock_plus:
     :path: ".symlinks/plugins/wakelock_plus/ios"
   webview_flutter_wkwebview:
-    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
@@ -287,8 +288,8 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
-  wakelock_plus: 04623e3f525556020ebd4034310f20fe7fda8b49
-  webview_flutter_wkwebview: 45a041c7831641076618876de3ba75c712860c6b
+  wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
+  webview_flutter_wkwebview: 1821ceac936eba6f7984d89a9f3bcb4dea99ebb2
 
 PODFILE CHECKSUM: 2f64fb8bdb2bb4edcdb0e76d185a01ed14db81e0
 
