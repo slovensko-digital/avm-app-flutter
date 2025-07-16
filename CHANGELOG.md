@@ -4,6 +4,8 @@
 
 - iOS: Setup image for Launch screen  
 - #12 | iOS: Enable iPad destination back
+- #101 | Update to Flutter SDK v3.27.4
+- #101 | Targeting Android 15 (SDK 35)
 
 ## 2025-07-01 - v1.3.0(41)
 
