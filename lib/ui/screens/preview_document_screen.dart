@@ -113,10 +113,12 @@ class PreviewDocumentScreen extends StatelessWidget {
     final file = this.file;
 
     if (file != null) {
-      await Share.shareXFiles(
-        [XFile(file.path)],
-        subject: file.basename,
-        text: context.strings.shareDocumentText,
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [XFile(file.path)],
+          subject: file.basename,
+          text: context.strings.shareDocumentText,
+        ),
       );
     }
   }

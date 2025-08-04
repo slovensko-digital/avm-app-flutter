@@ -87,13 +87,15 @@ class TestPage extends HookWidget {
                   return;
                 }
 
-                Share.shareXFiles([
-                  XFile.fromData(
-                    fileContent,
-                    mimeType: file.mimeType,
-                    name: file.name.isEmpty ? 'document.pdf' : file.name,
-                  ),
-                ]);
+                SharePlus.instance.share(ShareParams(
+                  files: [
+                    XFile.fromData(
+                      fileContent,
+                      mimeType: file.mimeType,
+                      name: file.name.isEmpty ? 'document.pdf' : file.name,
+                    ),
+                  ],
+                ));
               },
             ),
           ),
@@ -299,7 +301,9 @@ class TestPage extends HookWidget {
                     path.join(directory.path, currentDocumentInfo.filename);
                 await documentFile.saveTo(documentPath);
                 documentFile = XFile(documentPath);
-                await Share.shareXFiles([documentFile]);
+                await SharePlus.instance.share(
+                  ShareParams(files: [documentFile]),
+                );
                 await File(documentFile.path).delete();
               },
             ),

@@ -227,7 +227,9 @@ class _ValueListenableBoundTile<T> extends StatelessWidget {
                     // Delay closing this modal so user have chance to see
                     // newly selected option
                     Future.delayed(const Duration(milliseconds: 150), () {
-                      Navigator.of(context).pop(value);
+                      if (context.mounted) {
+                        Navigator.of(context).pop(value);
+                      }
                     });
                   }
                 },

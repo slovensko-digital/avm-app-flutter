@@ -107,12 +107,14 @@ class PresentSignedDocumentScreen extends StatelessWidget {
     try {
       final file = await cubit.getShareableFile();
 
-      await Share.shareXFiles(
-        [XFile(file.path)],
-        text: strings.shareSignedDocumentText,
-        // It would be better to have something meaningful for email clients,
-        // however this is also used in Google Drive as target file name
-        subject: file.basename,
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [XFile(file.path)],
+          text: strings.shareSignedDocumentText,
+          // It would be better to have something meaningful for email clients,
+          // however this is also used in Google Drive as target file name
+          subject: file.basename,
+        ),
       );
     } catch (error) {
       if (context.mounted) {

@@ -79,11 +79,13 @@ FVM init and Pub get:
 fvm install
 ```
 
-Activate `flutterfire_cli` for local Dart (NOT system Dart):
+Activate `flutterfire_cli` for local Dart (NOT system Dart), and make sure it's in the PATH:
 
 ```shell
 fvm dart pub global activate flutterfire_cli
 ```
+
+Download packages:
 
 ```shell
 fvm flutter pub get
