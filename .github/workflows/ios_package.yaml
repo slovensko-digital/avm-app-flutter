@@ -13,7 +13,7 @@ permissions:
 jobs:
   build:
     environment: packaging
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
       - name: Checkout
