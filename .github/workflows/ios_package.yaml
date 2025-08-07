@@ -36,5 +36,4 @@ jobs:
 
       - name: Build iOS .ipa
         working-directory: ./app
-        # https://docs.flutter.dev/deployment/ios#create-an-app-bundle
-        run: flutter build ipa --release
+        run: flutter build ipa --no-codesign
