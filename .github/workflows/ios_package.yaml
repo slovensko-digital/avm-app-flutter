@@ -34,6 +34,10 @@ jobs:
         working-directory: ./app
         run: flutter test
 
+      - name: Install FlutterFire CLI
+        working-directory: ./app
+        run: dart pub global activate flutterfire_cli
+
       - name: Build iOS .ipa
         working-directory: ./app
         run: flutter build ipa --no-codesign
