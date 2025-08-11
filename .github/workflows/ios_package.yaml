@@ -13,7 +13,7 @@ permissions:
 jobs:
   build:
     environment: packaging
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
       - name: Checkout
@@ -34,7 +34,10 @@ jobs:
         working-directory: ./app
         run: flutter test
 
+      - name: Install FlutterFire CLI
+        working-directory: ./app
+        run: dart pub global activate flutterfire_cli
+
       - name: Build iOS .ipa
         working-directory: ./app
-        # https://docs.flutter.dev/deployment/ios#create-an-app-bundle
-        run: flutter build ipa --release
+        run: flutter build ipa --no-codesign
