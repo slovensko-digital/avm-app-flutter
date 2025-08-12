@@ -111,6 +111,12 @@ abstract class AppLocalizations {
   /// **'Autogram'**
   String get appTitle;
 
+  /// No description provided for @buttonShowDetailsOnTapSemantics.
+  ///
+  /// In sk, this message translates to:
+  /// **'Po tapnutí sa zobrazia podrobnosti.'**
+  String get buttonShowDetailsOnTapSemantics;
+
   /// No description provided for @buttonOKLabel.
   ///
   /// In sk, this message translates to:
