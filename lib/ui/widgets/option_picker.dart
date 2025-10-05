@@ -51,7 +51,6 @@ class OptionPicker<T> extends StatelessWidget {
         value: value,
         groupValue: selectedValue,
         onChanged: onValueChanged,
-        activeColor: kRadioActiveColor,
       ),
     );
 
