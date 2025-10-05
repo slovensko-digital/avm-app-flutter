@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../strings_context.dart';
+
 /// AVM close icon button.
 class CloseButton extends StatelessWidget {
   const CloseButton({super.key});
@@ -15,16 +17,20 @@ class CloseButton extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(8)),
     );
 
-    return RawMaterialButton(
-      constraints: const BoxConstraints(
-        minWidth: kMinInteractiveDimension,
-        minHeight: kMinInteractiveDimension,
+    return Semantics(
+      label: context.strings.buttonCloseLabel,
+      button: true,
+      child: RawMaterialButton(
+        constraints: const BoxConstraints(
+          minWidth: kMinInteractiveDimension,
+          minHeight: kMinInteractiveDimension,
+        ),
+        shape: shape,
+        onPressed: () {
+          Navigator.maybeOf(context)?.maybePop();
+        },
+        child: const Icon(Icons.close_outlined),
       ),
-      shape: shape,
-      onPressed: () {
-        Navigator.maybeOf(context)?.maybePop();
-      },
-      child: const Icon(Icons.close_outlined),
     );
   }
 }
