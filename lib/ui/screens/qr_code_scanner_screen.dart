@@ -43,6 +43,8 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.strings;
+    final colors = Theme.of(context).colorScheme;
     final body = Stack(
       children: [
         // Scanner
@@ -59,7 +61,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
               top: MediaQuery.paddingOf(context).top,
             ),
             child: Semantics(
-              label: context.strings.qrCodeScannerBackSemantics,
+              label: strings.qrCodeScannerBackSemantics,
               button: true,
               excludeSemantics: true,
               child: SquareButton(
@@ -68,7 +70,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                 },
                 child: Icon(
                   Icons.arrow_back,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: colors.onSurface,
                 ),
               ),
             ),
@@ -102,7 +104,6 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                       TorchState.on => Icons.flashlight_off,
                     };
 
-                    final strings = context.strings;
                     final semanticsLabel = switch (torchState) {
                       TorchState.off => strings.qrCodeScannerTorchOnSemantics,
                       TorchState.on => strings.qrCodeScannerTorchOffSemantics,
@@ -113,7 +114,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                       label: semanticsLabel,
                       child: Icon(
                         icon,
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: colors.onSurface,
                       ),
                     );
                   },
