@@ -83,7 +83,9 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
 
         // Toggle torch button + bottom info panel
         Padding(
-          padding: kScreenMargin,
+          padding: kScreenMargin.add(
+            EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -137,7 +139,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
     required Widget child,
   }) {
     final colors = Theme.of(context).colorScheme;
-    const size = Size(kMinInteractiveDimension, kMinInteractiveDimension);
+    const size = Size.square(kMinInteractiveDimension);
 
     return FilledButton(
       onPressed: onPressed,
