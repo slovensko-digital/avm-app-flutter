@@ -63,10 +63,13 @@ class ResultView extends StatelessWidget {
     );
     final headline = Padding(
       padding: const EdgeInsets.symmetric(vertical: 30),
-      child: Text(
-        titleText,
-        textAlign: TextAlign.center,
-        style: headlineTextStyle,
+      child: Semantics(
+        header: true,
+        child: Text(
+          titleText,
+          textAlign: TextAlign.center,
+          style: headlineTextStyle,
+        ),
       ),
     );
 

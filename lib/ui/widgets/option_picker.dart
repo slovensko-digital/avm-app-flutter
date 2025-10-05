@@ -51,7 +51,6 @@ class OptionPicker<T> extends StatelessWidget {
         value: value,
         groupValue: selectedValue,
         onChanged: onValueChanged,
-        activeColor: kRadioActiveColor,
       ),
     );
 
@@ -59,6 +58,7 @@ class OptionPicker<T> extends StatelessWidget {
       checked: value == selectedValue,
       inMutuallyExclusiveGroup: true,
       child: Material(
+        color: Colors.transparent,
         child: InkWell(
           onTap: () {
             onValueChanged(value);

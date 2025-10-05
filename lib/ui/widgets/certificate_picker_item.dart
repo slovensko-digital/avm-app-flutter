@@ -53,7 +53,6 @@ class CertificatePickerItem extends StatelessWidget {
           onChanged: (_) {
             onCertificateChanged(certificate);
           },
-          activeColor: kRadioActiveColor,
         ),
       ),
       title: Text(

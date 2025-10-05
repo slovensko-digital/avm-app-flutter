@@ -84,7 +84,6 @@ class _ListItem extends StatelessWidget {
               }
             }
           : null,
-      activeColor: kRadioActiveColor,
     );
 
     // NOT using RadioListTile because need to scale-up and style Radio

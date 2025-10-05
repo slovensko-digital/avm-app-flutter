@@ -75,13 +75,20 @@ class DocumentValidationStrip extends StatelessWidget {
       )
     ];
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-        color: backgroundColor,
-        child: Row(
-          children: children,
+    final semanticsLabel =
+        "${text.replaceAll('*', '')}. ${strings.buttonShowDetailsOnTapSemantics}";
+
+    return Semantics(
+      button: true,
+      label: semanticsLabel,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+          color: backgroundColor,
+          child: Row(
+            children: children,
+          ),
         ),
       ),
     );

@@ -51,11 +51,12 @@ dependencies:
   mobile_scanner: 4.0.1 # TODO Update mobile_scanner  to v6.x
   html:
   flutter_markdown:
+  markdown:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: 5.0.0
+  flutter_lints:
   test:
   build_runner:
   injectable_generator: ^2.2.0

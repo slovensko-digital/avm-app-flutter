@@ -18,6 +18,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get appTitle => 'Autogram';
 
   @override
+  String get buttonShowDetailsOnTapSemantics => 'Po tapnutí sa zobrazia podrobnosti.';
+
+  @override
   String get buttonOKLabel => 'OK';
 
   @override

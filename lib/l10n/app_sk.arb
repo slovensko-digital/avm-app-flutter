@@ -4,6 +4,7 @@
   "appName": "Autogram v mobile",
   "appTitle": "Autogram",
 
+  "buttonShowDetailsOnTapSemantics": "Po tapnutí sa zobrazia podrobnosti.",
   "buttonOKLabel": "OK",
   "buttonCancelLabel": "Zrušiť",
   "buttonCloseLabel": "Zavrieť",

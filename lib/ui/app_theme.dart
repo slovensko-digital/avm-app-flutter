@@ -17,9 +17,6 @@ const kMainAppBarBackgroundColor = Color(0xFF072C66);
 /// Main [AppBar.foregroundColor] value.
 const kMainAppBarForegroundColor = Color(0xFFFFFFFF);
 
-/// [Radio.activeColor] value.
-const kRadioActiveColor = Colors.black;
-
 /// [Radio] scale factor to default size.
 const kRadioScale = 1.66;
 
@@ -102,7 +99,16 @@ ThemeData appTheme(
         textStyle: buttonTextStyle,
       ),
     ),
-    // radioTheme: not set
+    radioTheme: RadioThemeData(
+      fillColor: WidgetStateProperty.resolveWith<Color?>(
+        (states) {
+          if (states.contains(WidgetState.disabled)) {
+            return colorScheme.onSurface.withValues(alpha: 0.38);
+          }
+          return colorScheme.onSurface;
+        },
+      ),
+    ),
   );
 }
 
@@ -145,7 +151,6 @@ Widget previewRadio(BuildContext context) {
         child: Radio<int>(
           value: value,
           groupValue: selectedValue,
-          activeColor: kRadioActiveColor,
           onChanged: enabled
               ? (value) {
                   if (value != null) {
