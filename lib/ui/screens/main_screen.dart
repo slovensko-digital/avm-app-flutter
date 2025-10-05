@@ -86,11 +86,13 @@ class _MainScreenState extends State<MainScreen> {
               context: context,
               onMenuPressed: _showMenu,
             ),
-            body: _Body(
-              onboardingRequired: onboardingRequired,
-              onStartOnboardingRequested: _onStartOnboardingRequested,
-              onStartQrCodeScannerRequested: _showQrCodeScanner,
-              onOpenFileRequested: _onOpenFileRequested,
+            body: SafeArea(
+              child: _Body(
+                onboardingRequired: onboardingRequired,
+                onStartOnboardingRequested: _onStartOnboardingRequested,
+                onStartQrCodeScannerRequested: _showQrCodeScanner,
+                onOpenFileRequested: _onOpenFileRequested,
+              ),
             ),
           ),
         );
