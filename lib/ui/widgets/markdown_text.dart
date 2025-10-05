@@ -1,7 +1,9 @@
 import 'dart:developer' as developer;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -38,6 +40,9 @@ class MarkdownText extends StatelessWidget {
       data: data,
       styleSheet: styleSheet,
       onTapLink: onLinkTap,
+      builders: {
+        'a': _LinkBuilder(),
+      },
     );
   }
 
@@ -45,6 +50,38 @@ class MarkdownText extends StatelessWidget {
     if (href != null) {
       launchUrlString(href, mode: LaunchMode.externalApplication);
     }
+  }
+}
+
+/// Custom link builder with [Semantics].
+class _LinkBuilder extends MarkdownElementBuilder {
+  @override
+  Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
+    final text = element.textContent;
+    final href = element.attributes['href'];
+    final url = href != null ? Uri.tryParse(href) : null;
+    final title = element.attributes['title'] ?? '';
+
+    return Builder(
+      builder: (context) {
+        final body = context.findAncestorWidgetOfExactType<MarkdownBody>()!;
+        final onTapLink = body.onTapLink;
+        final recognizer = TapGestureRecognizer()
+          ..onTap = () => onTapLink?.call(text, href, title);
+
+        return Semantics(
+          link: true,
+          linkUrl: url,
+          child: Text.rich(
+            TextSpan(
+              text: text,
+              style: preferredStyle,
+              recognizer: recognizer,
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
