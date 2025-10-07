@@ -294,19 +294,19 @@ packages:
     dependency: "direct main"
     description:
       name: dotted_border
-      sha256: "99b091ec6891ba0c5331fdc2b502993c7c108f898995739a73c6845d71dad70c"
+      sha256: "108837e11848ca776c53b30bc870086f84b62ed6e01c503ed976e8f8c7df9c04"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "2.1.0"
   eidmsdk:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v0.9.1"
-      resolved-ref: "8cc0dde6803f1cbb60948394d1267081bacefedd"
+      ref: "v0.9.0"
+      resolved-ref: "6dc9436dab7362097d5e783efd022d2d090605bf"
       url: "https://github.com/slovensko-digital/eidmsdk-flutter"
     source: git
-    version: "0.9.1"
+    version: "0.9.0"
   equatable:
     dependency: transitive
     description:
@@ -441,10 +441,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
-      sha256: c2fe1001710127dfa7da89977a08d591398370d099aacdaa6d44da7eb14b8476
+      sha256: b0694b7fb1689b0e6cc193b3f1fcac6423c4f93c74fb20b806c6b6f196db0c31
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.31"
+    version: "2.0.30"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -555,10 +555,10 @@ packages:
     dependency: transitive
     description:
       name: inspector
-      sha256: a01ea538b15947a9189835cc910041bab91aea3ad7c421684118aa1040189ded
+      sha256: "4df4a50b36975550ecd76dc30720ffe03ecb8003f594e3e0b2d34916735094d2"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "3.0.0"
   intl:
     dependency: "direct main"
     description:
@@ -683,10 +683,10 @@ packages:
     dependency: "direct main"
     description:
       name: mobile_scanner
-      sha256: "91d28b825784e15572fdc39165c5733099ce0e69c6f6f0964ebdbf98a62130fd"
+      sha256: "5e7e09d904dc01de071b79b3f3789b302b0ed3c9c963109cd3f83ad90de62ecf"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.6"
+    version: "7.1.2"
   nested:
     dependency: transitive
     description:
@@ -743,6 +743,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  path_drawing:
+    dependency: transitive
+    description:
+      name: path_drawing
+      sha256: bbb1934c0cbb03091af082a6389ca2080345291ef07a5fa6d6e078ba8682f977
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   path_parsing:
     dependency: transitive
     description:
@@ -763,10 +771,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: "3b4c1fc3aa55ddc9cd4aa6759984330d5c8e66aa7702a6223c61540dc6380c37"
+      sha256: "993381400e94d18469750e5b9dcb8206f15bc09f9da86b9e44a9b0092a0066db"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.19"
+    version: "2.2.18"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -1384,10 +1392,10 @@ packages:
     dependency: "direct main"
     description:
       name: widgetbook
-      sha256: "83a58c9b4556debc7b87209a860bd5ab3daaec0786a54189aa5a3fd54bdcb6fb"
+      sha256: "82915588d0348dc6434cb16b0d34a793910b824b61c8eaf48282a99efad456d6"
       url: "https://pub.dev"
     source: hosted
-    version: "3.18.0"
+    version: "3.17.1"
   widgetbook_annotation:
     dependency: "direct main"
     description:

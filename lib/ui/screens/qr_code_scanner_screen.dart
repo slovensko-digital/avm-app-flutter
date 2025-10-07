@@ -50,6 +50,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
         // Scanner
         MobileScanner(
           controller: _controller,
+          tapToFocus: true,
           onDetect: _handleBarcode,
         ),
 
