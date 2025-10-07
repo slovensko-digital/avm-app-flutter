@@ -4,6 +4,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../app_theme.dart';
 import 'loading_indicator.dart';
+import 'square_button.dart';
 
 /// Just placeholder class for widgetbook preview.
 abstract class Button {}
@@ -73,5 +74,23 @@ Widget previewFilledButton(BuildContext context) {
       onPressed: (enabled ? () {} : null),
       child: child,
     ),
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[AVM]',
+  name: 'square',
+  type: Button,
+)
+Widget previewSquareButton(BuildContext context) {
+  final enabled = context.knobs.boolean(label: "Enabled", initialValue: true);
+  final colors = Theme.of(context).colorScheme;
+  final color = colors.primary;
+  final child = Icon(Icons.close, color: colors.onPrimary);
+
+  return SquareButton(
+    onPressed: (enabled ? () {} : null),
+    child: child,
+    backgroundColor: color,
   );
 }
