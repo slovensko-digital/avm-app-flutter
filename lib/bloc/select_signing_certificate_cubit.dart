@@ -68,6 +68,7 @@ class SelectSigningCertificateCubit
         }
       }
     } catch (error, stackTrace) {
+      // TODO Catch CertificateNotFoundException and return SelectSigningCertificateNoCertificateState
       _log.severe("Error getting Certificates.", error, stackTrace);
 
       emit(state.toError(error));
