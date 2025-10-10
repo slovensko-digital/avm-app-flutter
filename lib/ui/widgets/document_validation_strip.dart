@@ -34,30 +34,39 @@ class DocumentValidationStrip extends StatelessWidget {
     final hasSignatures =
         (value.failedCount + value.indeterminateCount + value.passedCount) > 0;
     final strings = context.strings;
-    final (String text, Color backgroundColor) = switch (data) {
+    final (String text, Color foregroundColor, Color backgroundColor) =
+        switch (data) {
       (true, _, _, _) => (
           strings.documentValidationLoadingLabel,
+          Colors.white,
           const Color(0xFF126DFF)
         ),
       (false, 0, 0, 0) => (
           strings.documentValidationNoSignaturesLabel,
+          Colors.white,
           const Color(0xFF126DFF),
         ),
       (false, > 0, _, _) => (
           strings.documentValidationHasInvalidSignaturesLabel,
+          Colors.white,
           const Color(0xFFC3112B),
         ),
       (false, _, > 0, _) => (
           strings.documentValidationHasIndeterminateSignatureLabel,
-          const Color(0xFFbd730c),
+          Colors.black,
+          const Color(0xFFEBCFAA),
         ),
       (false, 0, 0, > 0) => (
           strings.documentValidationHasValidSignaturesLabel(value.passedCount),
+          Colors.white,
           const Color(0xFF078814),
         ),
-      (_, _, _, _) => ("", Colors.transparent), // technically invalid case
+      (_, _, _, _) => (
+          "",
+          Colors.black,
+          Colors.transparent
+        ), // technically invalid case
     };
-    const foregroundColor = Colors.white;
     final icon = (hasSignatures ? Icons.arrow_right_alt_outlined : Icons.close);
 
     final children = [
