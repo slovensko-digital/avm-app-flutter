@@ -129,6 +129,7 @@ class PresentSignedDocumentScreen extends StatelessWidget {
   /// Handles close request.
   Future<void> _handleClose(BuildContext context) {
     if (signingType == DocumentSigningType.remote) {
+      // TODO Check different flag - only if it was signed from deeplink
       return SystemNavigator.pop();
     } else {
       return Navigator.of(context).maybePop();
