@@ -64,9 +64,7 @@ class OpenDocumentScreen extends StatelessWidget {
       file: state.file,
       documentId: state.documentId,
     );
-    final route = MaterialPageRoute(
-      builder: (context) => screen,
-    );
+    final route = MaterialPageRoute(builder: (context) => screen);
 
     Navigator.of(context).pushReplacement(route);
   }

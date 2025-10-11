@@ -183,6 +183,7 @@ class _MainScreenState extends State<MainScreen> {
       final screen = PreviewDocumentScreen(
         documentId: action.guid,
         file: null,
+        openFromDeepLink: true,
       );
       final route = MaterialPageRoute(builder: (_) => screen);
 

@@ -25,7 +25,7 @@ class AboutScreen extends StatelessWidget {
         title: Text(context.strings.aboutTitle),
         actions: const [CloseButton()],
       ),
-      body: const _Body(),
+      body: const SafeArea(child: _Body()),
     );
   }
 }

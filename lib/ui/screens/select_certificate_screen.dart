@@ -31,11 +31,13 @@ import 'sign_document_screen.dart';
 class SelectCertificateScreen extends StatelessWidget {
   final String documentId;
   final DocumentSigningType signingType;
+  final bool openFromDeepLink;
 
   const SelectCertificateScreen({
     super.key,
     required this.documentId,
     required this.signingType,
+    required this.openFromDeepLink,
   });
 
   @override
@@ -61,20 +63,22 @@ class SelectCertificateScreen extends StatelessWidget {
                   ? Text(context.strings.selectCertificateTitle)
                   : null,
             ),
-            body: _Body(
-              state: state,
-              signingType: signingType,
-              documentId: documentId,
-              onSignDocumentRequested: (certificate, signatureType) {
-                _onSignDocumentRequested(
-                  context: context,
-                  certificate: certificate,
-                  signatureType: signatureType,
-                );
-              },
-              onReloadCertificatesRequested: () {
-                _onReloadCertificatesRequested(context);
-              },
+            body: SafeArea(
+              child: _Body(
+                state: state,
+                signingType: signingType,
+                documentId: documentId,
+                onSignDocumentRequested: (certificate, signatureType) {
+                  _onSignDocumentRequested(
+                    context: context,
+                    certificate: certificate,
+                    signatureType: signatureType,
+                  );
+                },
+                onReloadCertificatesRequested: () {
+                  _onReloadCertificatesRequested(context);
+                },
+              ),
             ),
           );
         },
@@ -94,6 +98,7 @@ class SelectCertificateScreen extends StatelessWidget {
       certificate: certificate,
       signatureType: signatureType,
       signingType: signingType,
+      openFromDeepLink: openFromDeepLink,
     );
     final route = MaterialPageRoute(builder: (_) => screen);
 
