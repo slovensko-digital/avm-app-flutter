@@ -180,6 +180,7 @@ class _MainScreenState extends State<MainScreen> {
     if (action is SignRemoteDocumentAction) {
       getIt.get<EncryptionKeyRegistry>().value = action.key;
 
+      // TODO In this case, the app should be closed after successful document sign
       final screen = PreviewDocumentScreen(
         documentId: action.guid,
         file: null,
