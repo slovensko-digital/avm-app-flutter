@@ -41,7 +41,8 @@ class MarkdownText extends StatelessWidget {
       styleSheet: styleSheet,
       onTapLink: onLinkTap,
       builders: {
-        'a': _LinkBuilder(),
+        // TODO Fix _LinkBuilder for flow text with link; not it's on new line
+        // 'a': _LinkBuilder(),
       },
     );
   }
