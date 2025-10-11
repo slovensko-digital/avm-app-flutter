@@ -12,10 +12,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   eidmsdk:
-    path: ../eidmsdk-flutter
-#    git:
-#      url: https://github.com/slovensko-digital/eidmsdk-flutter
-#      ref: v0.9.0
+    git:
+      url: https://github.com/slovensko-digital/eidmsdk-flutter
+      ref: feature/better-error-codes
   autogram_sign:
     git:
       url: https://github.com/slovensko-digital/avm-client-dart

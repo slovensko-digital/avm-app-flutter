@@ -8,21 +8,6 @@ import 'select_signing_certificate_cubit.dart';
 sealed class SelectSigningCertificateState {
   const SelectSigningCertificateState();
 
-  SelectSigningCertificateLoadingState toLoading() =>
-      const SelectSigningCertificateLoadingState();
-
-  SelectSigningCertificateErrorState toError(Object error) =>
-      SelectSigningCertificateErrorState(error);
-
-  SelectSigningCertificateSuccessState toSuccess(Certificate certificate) =>
-      SelectSigningCertificateSuccessState(certificate);
-
-  SelectSigningCertificateCanceledState toCanceled() =>
-      const SelectSigningCertificateCanceledState();
-
-  SelectSigningCertificateNoCertificateState toNoCertificate() =>
-      const SelectSigningCertificateNoCertificateState();
-
   @override
   String toString() {
     return "$runtimeType()";
