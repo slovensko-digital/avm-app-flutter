@@ -35,11 +35,13 @@ import 'select_certificate_screen.dart';
 class PreviewDocumentScreen extends StatelessWidget {
   final File? file;
   final String documentId;
+  final bool openFromDeepLink;
 
   const PreviewDocumentScreen({
     super.key,
     this.file,
     required this.documentId,
+    this.openFromDeepLink = false,
   });
 
   @override
@@ -128,10 +130,9 @@ class PreviewDocumentScreen extends StatelessWidget {
       documentId: documentId,
       signingType:
           file != null ? DocumentSigningType.local : DocumentSigningType.remote,
+      openFromDeepLink: openFromDeepLink,
     );
-    final route = MaterialPageRoute(
-      builder: (context) => screen,
-    );
+    final route = MaterialPageRoute(builder: (context) => screen);
 
     return Navigator.of(context).push(route);
   }

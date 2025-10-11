@@ -31,11 +31,13 @@ import 'sign_document_screen.dart';
 class SelectCertificateScreen extends StatelessWidget {
   final String documentId;
   final DocumentSigningType signingType;
+  final bool openFromDeepLink;
 
   const SelectCertificateScreen({
     super.key,
     required this.documentId,
     required this.signingType,
+    required this.openFromDeepLink,
   });
 
   @override
@@ -94,6 +96,7 @@ class SelectCertificateScreen extends StatelessWidget {
       certificate: certificate,
       signatureType: signatureType,
       signingType: signingType,
+      openFromDeepLink: openFromDeepLink,
     );
     final route = MaterialPageRoute(builder: (_) => screen);
 

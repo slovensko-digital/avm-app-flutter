@@ -30,11 +30,13 @@ import '../widgets/result_view.dart';
 class PresentSignedDocumentScreen extends StatelessWidget {
   final SignDocumentResponseBody signedDocument;
   final DocumentSigningType signingType;
+  final bool openFromDeepLink;
 
   const PresentSignedDocumentScreen({
     super.key,
     required this.signedDocument,
     required this.signingType,
+    required this.openFromDeepLink,
   });
 
   @override
@@ -128,8 +130,7 @@ class PresentSignedDocumentScreen extends StatelessWidget {
 
   /// Handles close request.
   Future<void> _handleClose(BuildContext context) {
-    if (signingType == DocumentSigningType.remote) {
-      // TODO Check different flag - only if it was signed from deeplink
+    if (openFromDeepLink) {
       return SystemNavigator.pop();
     } else {
       return Navigator.of(context).maybePop();
