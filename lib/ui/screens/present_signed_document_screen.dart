@@ -4,6 +4,7 @@ import 'dart:io' show File, OSError, PathAccessException;
 import 'package:autogram_sign/autogram_sign.dart' show SignDocumentResponseBody;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show SystemNavigator;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -29,11 +30,13 @@ import '../widgets/result_view.dart';
 class PresentSignedDocumentScreen extends StatelessWidget {
   final SignDocumentResponseBody signedDocument;
   final DocumentSigningType signingType;
+  final bool openFromDeepLink;
 
   const PresentSignedDocumentScreen({
     super.key,
     required this.signedDocument,
     required this.signingType,
+    required this.openFromDeepLink,
   });
 
   @override
@@ -55,30 +58,32 @@ class PresentSignedDocumentScreen extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
         ),
-        body: Builder(
-          builder: (context) {
-            // Need outer Context to access Cubit
-            return BlocConsumer<PresentSignedDocumentCubit,
-                PresentSignedDocumentState>(
-              listener: (context, state) {
-                if (state is PresentSignedDocumentErrorState) {
-                  final error = state.error;
-                  final message = context.strings
-                      .saveSignedDocumentErrorMessage(getErrorMessage(error));
+        body: SafeArea(
+          child: Builder(
+            builder: (context) {
+              // Need outer Context to access Cubit
+              return BlocConsumer<PresentSignedDocumentCubit,
+                  PresentSignedDocumentState>(
+                listener: (context, state) {
+                  if (state is PresentSignedDocumentErrorState) {
+                    final error = state.error;
+                    final message = context.strings
+                        .saveSignedDocumentErrorMessage(getErrorMessage(error));
 
-                  _showError(context, message);
-                }
-              },
-              builder: (context, state) {
-                return _Body(
-                  state: state,
-                  signingType: signingType,
-                  onShareFileRequested: () => _handleShareFile(context),
-                  onCloseRequested: () => _handleClose(context),
-                );
-              },
-            );
-          },
+                    _showError(context, message);
+                  }
+                },
+                builder: (context, state) {
+                  return _Body(
+                    state: state,
+                    signingType: signingType,
+                    onShareFileRequested: () => _handleShareFile(context),
+                    onCloseRequested: () => _handleClose(context),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -127,7 +132,11 @@ class PresentSignedDocumentScreen extends StatelessWidget {
 
   /// Handles close request.
   Future<void> _handleClose(BuildContext context) {
-    return Navigator.of(context).maybePop();
+    if (openFromDeepLink) {
+      return SystemNavigator.pop();
+    } else {
+      return Navigator.of(context).maybePop();
+    }
   }
 }
 

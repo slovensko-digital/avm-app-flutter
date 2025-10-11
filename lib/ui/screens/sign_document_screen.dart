@@ -27,6 +27,7 @@ class SignDocumentScreen extends StatelessWidget {
   final Certificate certificate;
   final SignatureType signatureType;
   final DocumentSigningType signingType;
+  final bool openFromDeepLink;
 
   const SignDocumentScreen({
     super.key,
@@ -34,6 +35,7 @@ class SignDocumentScreen extends StatelessWidget {
     required this.certificate,
     required this.signatureType,
     required this.signingType,
+    required this.openFromDeepLink,
   });
 
   @override
@@ -76,6 +78,7 @@ class SignDocumentScreen extends StatelessWidget {
     final screen = PresentSignedDocumentScreen(
       signedDocument: state.signedDocument,
       signingType: signingType,
+      openFromDeepLink: openFromDeepLink,
     );
     final route = MaterialPageRoute(builder: (_) => screen);
 
