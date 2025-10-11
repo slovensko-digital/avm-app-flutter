@@ -4,6 +4,7 @@ import 'dart:io' show File, OSError, PathAccessException;
 import 'package:autogram_sign/autogram_sign.dart' show SignDocumentResponseBody;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show SystemNavigator;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -127,7 +128,11 @@ class PresentSignedDocumentScreen extends StatelessWidget {
 
   /// Handles close request.
   Future<void> _handleClose(BuildContext context) {
-    return Navigator.of(context).maybePop();
+    if (signingType == DocumentSigningType.remote) {
+      return SystemNavigator.pop();
+    } else {
+      return Navigator.of(context).maybePop();
+    }
   }
 }
 
