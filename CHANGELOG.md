@@ -4,7 +4,8 @@
 
 - #104 | Accessibility improvements
 - #105 | Accessibility - better color contrast for "unknown signature" case in validation strip
-- #107 | Closing app when successfully signed from Deep link 
+- #107 | Closing app when successfully signed from Deep link
+- #26 | Handling case when eID mSDK returned "No certificates on ID" error 
 
 ## 2025-08-07 - v1.3.1(42)
 
