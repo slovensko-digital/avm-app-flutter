@@ -63,20 +63,22 @@ class SelectCertificateScreen extends StatelessWidget {
                   ? Text(context.strings.selectCertificateTitle)
                   : null,
             ),
-            body: _Body(
-              state: state,
-              signingType: signingType,
-              documentId: documentId,
-              onSignDocumentRequested: (certificate, signatureType) {
-                _onSignDocumentRequested(
-                  context: context,
-                  certificate: certificate,
-                  signatureType: signatureType,
-                );
-              },
-              onReloadCertificatesRequested: () {
-                _onReloadCertificatesRequested(context);
-              },
+            body: SafeArea(
+              child: _Body(
+                state: state,
+                signingType: signingType,
+                documentId: documentId,
+                onSignDocumentRequested: (certificate, signatureType) {
+                  _onSignDocumentRequested(
+                    context: context,
+                    certificate: certificate,
+                    signatureType: signatureType,
+                  );
+                },
+                onReloadCertificatesRequested: () {
+                  _onReloadCertificatesRequested(context);
+                },
+              ),
             ),
           );
         },

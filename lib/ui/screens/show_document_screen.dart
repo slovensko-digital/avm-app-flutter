@@ -24,17 +24,15 @@ class ShowDocumentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final body = ShowWebPageFragment(
-      url: url,
-    );
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(title),
         actions: const [CloseButton()],
       ),
-      body: body,
+      body: SafeArea(
+        child: ShowWebPageFragment(url: url),
+      ),
     );
   }
 }

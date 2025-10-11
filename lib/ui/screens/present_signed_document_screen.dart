@@ -58,30 +58,32 @@ class PresentSignedDocumentScreen extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
         ),
-        body: Builder(
-          builder: (context) {
-            // Need outer Context to access Cubit
-            return BlocConsumer<PresentSignedDocumentCubit,
-                PresentSignedDocumentState>(
-              listener: (context, state) {
-                if (state is PresentSignedDocumentErrorState) {
-                  final error = state.error;
-                  final message = context.strings
-                      .saveSignedDocumentErrorMessage(getErrorMessage(error));
+        body: SafeArea(
+          child: Builder(
+            builder: (context) {
+              // Need outer Context to access Cubit
+              return BlocConsumer<PresentSignedDocumentCubit,
+                  PresentSignedDocumentState>(
+                listener: (context, state) {
+                  if (state is PresentSignedDocumentErrorState) {
+                    final error = state.error;
+                    final message = context.strings
+                        .saveSignedDocumentErrorMessage(getErrorMessage(error));
 
-                  _showError(context, message);
-                }
-              },
-              builder: (context, state) {
-                return _Body(
-                  state: state,
-                  signingType: signingType,
-                  onShareFileRequested: () => _handleShareFile(context),
-                  onCloseRequested: () => _handleClose(context),
-                );
-              },
-            );
-          },
+                    _showError(context, message);
+                  }
+                },
+                builder: (context, state) {
+                  return _Body(
+                    state: state,
+                    signingType: signingType,
+                    onShareFileRequested: () => _handleShareFile(context),
+                    onCloseRequested: () => _handleClose(context),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );

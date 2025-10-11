@@ -92,9 +92,7 @@ class PreviewDocumentScreen extends StatelessWidget {
             ),
         ],
       ),
-      body: SafeArea(
-        child: body,
-      ),
+      body: SafeArea(child: body),
     );
   }
 
