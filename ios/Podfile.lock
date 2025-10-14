@@ -251,6 +251,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
+  DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
   eidmsdk: f8cd146c24355be318f05821b210ad6dd0196927
   file_picker: 9b3292d7c8bc68c8a7bf8eb78f730e49c8efc517
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
