@@ -274,7 +274,7 @@ class _SuccessContent extends StatelessWidget {
   type: PresentSignedDocumentScreen,
 )
 Widget previewInitialPresentSignedDocumentScreen(BuildContext context) {
-  final signingType = context.knobs.list(
+  final signingType = context.knobs.object.dropdown(
     label: "Signing type",
     options: DocumentSigningType.values,
     initialOption: DocumentSigningType.local,
@@ -298,7 +298,7 @@ Widget previewInitialPresentSignedDocumentScreen(BuildContext context) {
   type: PresentSignedDocumentScreen,
 )
 Widget previewLoadingPresentSignedDocumentScreen(BuildContext context) {
-  final signingType = context.knobs.list(
+  final signingType = context.knobs.object.dropdown(
     label: "Signing type",
     options: DocumentSigningType.values,
     initialOption: DocumentSigningType.local,
@@ -322,7 +322,7 @@ Widget previewLoadingPresentSignedDocumentScreen(BuildContext context) {
   type: PresentSignedDocumentScreen,
 )
 Widget previewErrorPresentSignedDocumentScreen(BuildContext context) {
-  final signingType = context.knobs.list(
+  final signingType = context.knobs.object.dropdown(
     label: "Signing type",
     options: DocumentSigningType.values,
     initialOption: DocumentSigningType.local,
@@ -353,7 +353,7 @@ Widget previewErrorPresentSignedDocumentScreen(BuildContext context) {
   type: PresentSignedDocumentScreen,
 )
 Widget previewSuccessPresentSignedDocumentScreen(BuildContext context) {
-  final signingType = context.knobs.list(
+  final signingType = context.knobs.object.dropdown(
     label: "Signing type",
     options: DocumentSigningType.values,
     initialOption: DocumentSigningType.local,

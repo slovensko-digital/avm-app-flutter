@@ -145,7 +145,7 @@ Widget previewDocumentVisualization(BuildContext context) {
           "PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICA8dGl0bGU+SW1hZ2UgdmlzdWFsaXphdGlvbjwvdGl0bGU+CjwvaGVhZD4KPGJvZHkgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IGdyZWVuIj48L2JvZHk+CjwvaHRtbD4=",
     ),
   };
-  final selectedVisualizationKey = context.knobs.list(
+  final selectedVisualizationKey = context.knobs.object.dropdown(
     label: "Document",
     options: visualizations.keys.toList(),
     initialOption: visualizations.keys.firstOrNull,

@@ -151,17 +151,17 @@ Widget previewLoadingDocumentValidationStrip(BuildContext context) {
   type: DocumentValidationStrip,
 )
 Widget previewOtherDocumentValidationStrip(BuildContext context) {
-  final passedCount = context.knobs.list(
+  final passedCount = context.knobs.object.dropdown(
     label: 'Passed count',
     options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     initialOption: 0,
   );
-  final indeterminateCount = context.knobs.list(
+  final indeterminateCount = context.knobs.object.dropdown(
     label: 'Indeterminate count',
     options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     initialOption: 0,
   );
-  final failedCount = context.knobs.list(
+  final failedCount = context.knobs.object.dropdown(
     label: 'Failed count',
     options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     initialOption: 0,
