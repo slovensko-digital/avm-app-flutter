@@ -41,7 +41,7 @@ dependencies:
   provider:
   basic_utils:
   intl:
-  dotted_border: 2.1.0
+  dotted_border:
   notified_preferences:
   widgetbook_annotation:
   widgetbook:

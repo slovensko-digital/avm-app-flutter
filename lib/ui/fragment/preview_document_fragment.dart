@@ -50,13 +50,16 @@ class _SuccessContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(2),
       child: DottedBorder(
+        options: RectDottedBorderOptions(
         color: dashColor,
         strokeWidth: 4,
         dashPattern: const [16, 16],
         padding: EdgeInsets.zero,
-        child: DocumentVisualization(
-          visualization: visualization,
         ),
+        child: Padding(
+          padding: const EdgeInsets.all(2),
+        child: DocumentVisualization(visualization: visualization),
+      ),
       ),
     );
   }
