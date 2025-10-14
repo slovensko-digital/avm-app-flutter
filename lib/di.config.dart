@@ -36,82 +36,85 @@ import 'use_case/get_document_signature_type_use_case.dart' as _i400;
 import 'use_case/get_html_document_version_use_case.dart' as _i752;
 
 extension GetItInjectableX on _i174.GetIt {
-// initializes the registration of main-scope dependencies inside of GetIt
+  // initializes the registration of main-scope dependencies inside of GetIt
   _i174.GetIt init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
   }) {
-    final gh = _i526.GetItHelper(
-      this,
-      environment,
-      environmentFilter,
-    );
+    final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final extrernalModule = _$ExtrernalModule();
-    gh.singleton<_i403.AppService>(() => _i403.AppService());
+    gh.singleton<_i403.AppService>(() => _i403.AppService.new());
     gh.singleton<_i429.EncryptionKeyRegistry>(
-        () => _i429.EncryptionKeyRegistry());
+      () => _i429.EncryptionKeyRegistry(),
+    );
     gh.lazySingleton<_i713.Eidmsdk>(() => extrernalModule.eidmsdk);
     gh.lazySingleton<_i752.GetHtmlDocumentVersionUseCase>(
-        () => _i752.GetHtmlDocumentVersionUseCase());
+      () => _i752.GetHtmlDocumentVersionUseCase(),
+    );
     gh.lazySingleton<_i825.IAutogramService>(
-        () => extrernalModule.create(gh<_i429.EncryptionKeyRegistry>()));
-    gh.factoryParam<_i687.PresentSignedDocumentCubit,
-        _i825.SignDocumentResponseBody, _i873.DocumentSigningType>((
-      signedDocument,
-      signingType,
-    ) =>
-        _i687.PresentSignedDocumentCubit(
-          appService: gh<_i403.AppService>(),
-          signedDocument: signedDocument,
-          signingType: signingType,
-        ));
-    gh.factoryParam<_i374.CreateDocumentCubit, _i687.FutureOr<_i497.File>,
-        _i732.PdfSigningOption>((
-      file,
-      pdfSigningOption,
-    ) =>
-        _i374.CreateDocumentCubit(
-          service: gh<_i825.IAutogramService>(),
-          file: file,
-          pdfSigningOption: pdfSigningOption,
-        ));
-    gh.factoryParam<_i520.SignDocumentCubit, String, _i518.Certificate>((
-      documentId,
-      certificate,
-    ) =>
-        _i520.SignDocumentCubit(
-          service: gh<_i825.IAutogramService>(),
-          eidmsdk: gh<_i713.Eidmsdk>(),
-          documentId: documentId,
-          certificate: certificate,
-        ));
-    gh.factoryParam<_i1033.SelectSigningCertificateCubit,
-        _i971.ValueNotifier<_i518.Certificate?>, dynamic>((
-      signingCertificate,
-      _,
-    ) =>
-        _i1033.SelectSigningCertificateCubit(
-          eidmsdk: gh<_i713.Eidmsdk>(),
-          signingCertificate: signingCertificate,
-        ));
-    gh.factory<_i205.DocumentValidationCubit>(() =>
-        _i205.DocumentValidationCubit(service: gh<_i825.IAutogramService>()));
-    gh.factory<_i578.PairedDeviceListCubit>(() =>
-        _i578.PairedDeviceListCubit(service: gh<_i825.IAutogramService>()));
-    gh.lazySingleton<_i400.GetDocumentSignatureTypeUseCase>(() =>
-        _i400.GetDocumentSignatureTypeUseCase(gh<_i825.IAutogramService>()));
-    gh.factoryParam<_i21.PreviewDocumentCubit, String, dynamic>((
-      documentId,
-      _,
-    ) =>
-        _i21.PreviewDocumentCubit(
-          service: gh<_i825.IAutogramService>(),
-          documentId: documentId,
-        ));
-    gh.factory<_i767.GetDocumentSignatureTypeCubit>(() =>
-        _i767.GetDocumentSignatureTypeCubit(
-            getDocumentSignatureType:
-                gh<_i400.GetDocumentSignatureTypeUseCase>()));
+      () => extrernalModule.create(gh<_i429.EncryptionKeyRegistry>()),
+    );
+    gh.factoryParam<
+      _i687.PresentSignedDocumentCubit,
+      _i825.SignDocumentResponseBody,
+      _i873.DocumentSigningType
+    >(
+      (signedDocument, signingType) => _i687.PresentSignedDocumentCubit(
+        appService: gh<_i403.AppService>(),
+        signedDocument: signedDocument,
+        signingType: signingType,
+      ),
+    );
+    gh.factoryParam<
+      _i374.CreateDocumentCubit,
+      _i687.FutureOr<_i497.File>,
+      _i732.PdfSigningOption
+    >(
+      (file, pdfSigningOption) => _i374.CreateDocumentCubit(
+        service: gh<_i825.IAutogramService>(),
+        file: file,
+        pdfSigningOption: pdfSigningOption,
+      ),
+    );
+    gh.factoryParam<_i520.SignDocumentCubit, String, _i518.Certificate>(
+      (documentId, certificate) => _i520.SignDocumentCubit(
+        service: gh<_i825.IAutogramService>(),
+        eidmsdk: gh<_i713.Eidmsdk>(),
+        documentId: documentId,
+        certificate: certificate,
+      ),
+    );
+    gh.factoryParam<
+      _i1033.SelectSigningCertificateCubit,
+      _i971.ValueNotifier<_i518.Certificate?>,
+      dynamic
+    >(
+      (signingCertificate, _) => _i1033.SelectSigningCertificateCubit(
+        eidmsdk: gh<_i713.Eidmsdk>(),
+        signingCertificate: signingCertificate,
+      ),
+    );
+    gh.factory<_i205.DocumentValidationCubit>(
+      () =>
+          _i205.DocumentValidationCubit(service: gh<_i825.IAutogramService>()),
+    );
+    gh.factory<_i578.PairedDeviceListCubit>(
+      () => _i578.PairedDeviceListCubit(service: gh<_i825.IAutogramService>()),
+    );
+    gh.lazySingleton<_i400.GetDocumentSignatureTypeUseCase>(
+      () => _i400.GetDocumentSignatureTypeUseCase(gh<_i825.IAutogramService>()),
+    );
+    gh.factoryParam<_i21.PreviewDocumentCubit, String, dynamic>(
+      (documentId, _) => _i21.PreviewDocumentCubit(
+        service: gh<_i825.IAutogramService>(),
+        documentId: documentId,
+      ),
+    );
+    gh.factory<_i767.GetDocumentSignatureTypeCubit>(
+      () => _i767.GetDocumentSignatureTypeCubit(
+        getDocumentSignatureType: gh<_i400.GetDocumentSignatureTypeUseCase>(),
+      ),
+    );
     return this;
   }
 }

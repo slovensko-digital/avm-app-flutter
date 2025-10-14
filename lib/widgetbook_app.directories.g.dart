@@ -213,16 +213,18 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'CertificateDetails',
         useCase: _widgetbook.WidgetbookUseCase(
           name: 'CertificateDetails',
-          builder: _autogram_ui_widgets_certificate_details
-              .previewCertificateDetails,
+          builder:
+              _autogram_ui_widgets_certificate_details
+                  .previewCertificateDetails,
         ),
       ),
       _widgetbook.WidgetbookLeafComponent(
         name: 'DocumentSignatureInfo',
         useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _autogram_ui_widgets_document_signature_info
-              .previewDocumentSignatureInfo,
+          builder:
+              _autogram_ui_widgets_document_signature_info
+                  .previewDocumentSignatureInfo,
         ),
       ),
       _widgetbook.WidgetbookComponent(
@@ -230,13 +232,15 @@ final directories = <_widgetbook.WidgetbookNode>[
         useCases: [
           _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _autogram_ui_widgets_document_validation_strip
-                .previewLoadingDocumentValidationStrip,
+            builder:
+                _autogram_ui_widgets_document_validation_strip
+                    .previewLoadingDocumentValidationStrip,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'signatures',
-            builder: _autogram_ui_widgets_document_validation_strip
-                .previewOtherDocumentValidationStrip,
+            builder:
+                _autogram_ui_widgets_document_validation_strip
+                    .previewOtherDocumentValidationStrip,
           ),
         ],
       ),
@@ -244,8 +248,9 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'DocumentVisualization',
         useCase: _widgetbook.WidgetbookUseCase(
           name: 'DocumentVisualization',
-          builder: _autogram_ui_widgets_document_visualization
-              .previewDocumentVisualization,
+          builder:
+              _autogram_ui_widgets_document_visualization
+                  .previewDocumentVisualization,
         ),
       ),
       _widgetbook.WidgetbookLeafComponent(
@@ -349,10 +354,11 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'BottomSheet',
         useCase: _widgetbook.WidgetbookUseCase(
           name: 'NotificationsPermissionRationale',
-          builder: _autogram_ui_widgets_dialogs
-              .previewNotificationsPermissionRationaleModal,
+          builder:
+              _autogram_ui_widgets_dialogs
+                  .previewNotificationsPermissionRationaleModal,
         ),
-      )
+      ),
     ],
   ),
   _widgetbook.WidgetbookCategory(
@@ -362,8 +368,9 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'DocumentValidationInfoFragment',
         useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _autogram_ui_fragment_document_validation_info_fragment
-              .previewDocumentValidationInfoFragment,
+          builder:
+              _autogram_ui_fragment_document_validation_info_fragment
+                  .previewDocumentValidationInfoFragment,
         ),
       ),
       _widgetbook.WidgetbookComponent(
@@ -371,18 +378,21 @@ final directories = <_widgetbook.WidgetbookNode>[
         useCases: [
           _widgetbook.WidgetbookUseCase(
             name: 'error',
-            builder: _autogram_ui_fragment_preview_document_fragment
-                .previewErrorPreviewDocumentScreen,
+            builder:
+                _autogram_ui_fragment_preview_document_fragment
+                    .previewErrorPreviewDocumentScreen,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _autogram_ui_fragment_preview_document_fragment
-                .previewLoadingPreviewDocumentFragment,
+            builder:
+                _autogram_ui_fragment_preview_document_fragment
+                    .previewLoadingPreviewDocumentFragment,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'success',
-            builder: _autogram_ui_fragment_preview_document_fragment
-                .previewSuccessPreviewDocumentScreen,
+            builder:
+                _autogram_ui_fragment_preview_document_fragment
+                    .previewSuccessPreviewDocumentScreen,
           ),
         ],
       ),
@@ -390,8 +400,9 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'ShowWebPageFragment',
         useCase: _widgetbook.WidgetbookUseCase(
           name: 'ShowWebPageFragment',
-          builder: _autogram_ui_fragment_show_web_page_fragment
-              .previewShowWebPageFragment,
+          builder:
+              _autogram_ui_fragment_show_web_page_fragment
+                  .previewShowWebPageFragment,
         ),
       ),
     ],
@@ -411,8 +422,9 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'SignatureTypePicker',
         useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _autogram_ui_widgets_signature_type_picker
-              .previewSignatureTypePicker,
+          builder:
+              _autogram_ui_widgets_signature_type_picker
+                  .previewSignatureTypePicker,
         ),
       ),
     ],
@@ -445,16 +457,18 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'OnboardingAcceptDocumentScreen',
         useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _autogram_ui_screens_onboarding_accept_document_screen
-              .previewOnboardingAcceptDocumentScreen,
+          builder:
+              _autogram_ui_screens_onboarding_accept_document_screen
+                  .previewOnboardingAcceptDocumentScreen,
         ),
       ),
       _widgetbook.WidgetbookLeafComponent(
         name: 'OnboardingFinishedScreen',
         useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _autogram_ui_screens_onboarding_finished_screen
-              .previewOnboardingFinishedScreen,
+          builder:
+              _autogram_ui_screens_onboarding_finished_screen
+                  .previewOnboardingFinishedScreen,
         ),
       ),
       _widgetbook.WidgetbookComponent(
@@ -491,13 +505,15 @@ final directories = <_widgetbook.WidgetbookNode>[
         useCases: [
           _widgetbook.WidgetbookUseCase(
             name: 'error',
-            builder: _autogram_ui_screens_open_document_screen
-                .previewErrorOpenDocumentScreen,
+            builder:
+                _autogram_ui_screens_open_document_screen
+                    .previewErrorOpenDocumentScreen,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _autogram_ui_screens_open_document_screen
-                .previewLoadingOpenDocumentScreen,
+            builder:
+                _autogram_ui_screens_open_document_screen
+                    .previewLoadingOpenDocumentScreen,
           ),
         ],
       ),
@@ -505,8 +521,9 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'PairedDeviceListScreen',
         useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _autogram_ui_screens_paired_device_list_screen
-              .previewPairedDeviceListScreen,
+          builder:
+              _autogram_ui_screens_paired_device_list_screen
+                  .previewPairedDeviceListScreen,
         ),
       ),
       _widgetbook.WidgetbookComponent(
@@ -514,23 +531,27 @@ final directories = <_widgetbook.WidgetbookNode>[
         useCases: [
           _widgetbook.WidgetbookUseCase(
             name: 'error',
-            builder: _autogram_ui_screens_present_signed_document_screen
-                .previewErrorPresentSignedDocumentScreen,
+            builder:
+                _autogram_ui_screens_present_signed_document_screen
+                    .previewErrorPresentSignedDocumentScreen,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'initial',
-            builder: _autogram_ui_screens_present_signed_document_screen
-                .previewInitialPresentSignedDocumentScreen,
+            builder:
+                _autogram_ui_screens_present_signed_document_screen
+                    .previewInitialPresentSignedDocumentScreen,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _autogram_ui_screens_present_signed_document_screen
-                .previewLoadingPresentSignedDocumentScreen,
+            builder:
+                _autogram_ui_screens_present_signed_document_screen
+                    .previewLoadingPresentSignedDocumentScreen,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'success',
-            builder: _autogram_ui_screens_present_signed_document_screen
-                .previewSuccessPresentSignedDocumentScreen,
+            builder:
+                _autogram_ui_screens_present_signed_document_screen
+                    .previewSuccessPresentSignedDocumentScreen,
           ),
         ],
       ),
@@ -538,8 +559,9 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'QRCodeScannerScreen',
         useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _autogram_ui_screens_qr_code_scanner_screen
-              .previewQRCodeScannerScreen,
+          builder:
+              _autogram_ui_screens_qr_code_scanner_screen
+                  .previewQRCodeScannerScreen,
         ),
       ),
       _widgetbook.WidgetbookComponent(
@@ -547,28 +569,33 @@ final directories = <_widgetbook.WidgetbookNode>[
         useCases: [
           _widgetbook.WidgetbookUseCase(
             name: 'canceled',
-            builder: _autogram_ui_screens_select_certificate_screen
-                .previewCanceledSelectCertificateScreen,
+            builder:
+                _autogram_ui_screens_select_certificate_screen
+                    .previewCanceledSelectCertificateScreen,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'error',
-            builder: _autogram_ui_screens_select_certificate_screen
-                .previewErrorSelectCertificateScreen,
+            builder:
+                _autogram_ui_screens_select_certificate_screen
+                    .previewErrorSelectCertificateScreen,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _autogram_ui_screens_select_certificate_screen
-                .previewLoadingSelectCertificateScreen,
+            builder:
+                _autogram_ui_screens_select_certificate_screen
+                    .previewLoadingSelectCertificateScreen,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'no certificate',
-            builder: _autogram_ui_screens_select_certificate_screen
-                .previewNoCertificateSelectCertificateScreen,
+            builder:
+                _autogram_ui_screens_select_certificate_screen
+                    .previewNoCertificateSelectCertificateScreen,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'success',
-            builder: _autogram_ui_screens_select_certificate_screen
-                .previewSuccessSelectCertificateScreen,
+            builder:
+                _autogram_ui_screens_select_certificate_screen
+                    .previewSuccessSelectCertificateScreen,
           ),
         ],
       ),
@@ -583,8 +610,9 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'ShowDocumentScreen',
         useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _autogram_ui_screens_show_document_screen
-              .previewShowDocumentScreen,
+          builder:
+              _autogram_ui_screens_show_document_screen
+                  .previewShowDocumentScreen,
         ),
       ),
       _widgetbook.WidgetbookComponent(
@@ -592,18 +620,21 @@ final directories = <_widgetbook.WidgetbookNode>[
         useCases: [
           _widgetbook.WidgetbookUseCase(
             name: 'error',
-            builder: _autogram_ui_screens_sign_document_screen
-                .previewErrorSignDocumentScreen,
+            builder:
+                _autogram_ui_screens_sign_document_screen
+                    .previewErrorSignDocumentScreen,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _autogram_ui_screens_sign_document_screen
-                .previewLoadingSignDocumentScreen,
+            builder:
+                _autogram_ui_screens_sign_document_screen
+                    .previewLoadingSignDocumentScreen,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'success',
-            builder: _autogram_ui_screens_sign_document_screen
-                .previewSuccessSignDocumentScreen,
+            builder:
+                _autogram_ui_screens_sign_document_screen
+                    .previewSuccessSignDocumentScreen,
           ),
         ],
       ),
@@ -611,8 +642,9 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'StartRemoteDocumentSigningScreen',
         useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _autogram_ui_screens_start_remote_document_signing_screen
-              .previewStartRemoteDocumentSigningScreen,
+          builder:
+              _autogram_ui_screens_start_remote_document_signing_screen
+                  .previewStartRemoteDocumentSigningScreen,
         ),
       ),
     ],

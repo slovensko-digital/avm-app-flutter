@@ -135,12 +135,12 @@ class DocumentSignatureInfo extends StatelessWidget {
   type: DocumentSignatureInfo,
 )
 Widget previewDocumentSignatureInfo(BuildContext context) {
-  final validationResult = _ValidationResult.values.byName(context.knobs.list(
+  final validationResult = _ValidationResult.values.byName(context.knobs.object.dropdown(
     label: "Validation result",
     options: _ValidationResult.values.map((e) => e.name).toList(),
   ));
   final qualification =
-      SigningCertificateQualification.values.byName(context.knobs.list(
+      SigningCertificateQualification.values.byName(context.knobs.object.dropdown(
     label: "Qualification",
     options: SigningCertificateQualification.values.map((e) => e.name).toList(),
   ));

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2025-08-14 - v1.4.1(44)
+
+- #109 | Update to Flutter SDK v3.29.3
+
 ## 2025-08-14 - v1.4.0(43)
 
 - #104 | Accessibility improvements

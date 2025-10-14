@@ -64,7 +64,7 @@ Widget previewChip(BuildContext context) {
     label: 'Border',
     initialValue: material.Colors.black,
   );
-  var icon = context.knobs.listOrNull(
+  var icon = context.knobs.objectOrNull.dropdown(
     label: 'Icon',
     options: ['ok', 'warning', 'error'],
   );

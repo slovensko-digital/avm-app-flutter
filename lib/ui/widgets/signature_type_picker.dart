@@ -119,7 +119,7 @@ Widget previewSignatureTypePicker(BuildContext context) {
     label: "Can change",
     initialValue: true,
   );
-  SignatureType? selectedValue = context.knobs.listOrNull(
+  SignatureType? selectedValue = context.knobs.objectOrNull.segmented(
     label: "Signature type",
     options: [SignatureType.withTimestamp, SignatureType.withoutTimestamp],
   );
