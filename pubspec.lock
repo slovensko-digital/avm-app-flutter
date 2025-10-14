@@ -307,8 +307,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "feature/better-error-codes"
-      resolved-ref: "125d6ddd89a6ac6fa134a8d0ea509c29e16a8a73"
+      ref: "v0.9.1"
+      resolved-ref: "8cc0dde6803f1cbb60948394d1267081bacefedd"
       url: "https://github.com/slovensko-digital/eidmsdk-flutter"
     source: git
     version: "0.9.1"
