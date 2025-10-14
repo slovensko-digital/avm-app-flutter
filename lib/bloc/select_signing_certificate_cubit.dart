@@ -1,5 +1,6 @@
 import 'package:eidmsdk/eidmsdk.dart';
 import 'package:eidmsdk/eidmsdk_platform_interface.dart';
+import 'package:eidmsdk/errors.dart' show CertificateNotFoundException;
 import 'package:eidmsdk/types.dart' show Certificate;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show Cubit;
@@ -24,16 +25,16 @@ class SelectSigningCertificateCubit
   SelectSigningCertificateCubit({
     required Eidmsdk eidmsdk,
     @factoryParam required ValueNotifier<Certificate?> signingCertificate,
-  })  : _eidmsdk = eidmsdk,
-        _signingCertificate = signingCertificate,
-        super(const SelectSigningCertificateInitialState());
+  }) : _eidmsdk = eidmsdk,
+       _signingCertificate = signingCertificate,
+       super(const SelectSigningCertificateInitialState());
 
   /// Gets the certificates.
   ///
   /// When [refresh] is `true`, then [_signingCertificate] is cleared.
   /// When [_signingCertificate] is non-`null`, then it's used and SDK call is skipped.
   Future<void> getCertificates({bool refresh = false}) async {
-    emit(state.toLoading());
+    emit(const SelectSigningCertificateLoadingState());
 
     if (refresh) {
       _signingCertificate.value = null;
@@ -42,7 +43,7 @@ class SelectSigningCertificateCubit
     final certificate = _signingCertificate.value;
 
     if (certificate != null) {
-      emit(state.toSuccess(certificate));
+      emit(SelectSigningCertificateSuccessState(certificate));
       return;
     }
 
@@ -56,21 +57,25 @@ class SelectSigningCertificateCubit
 
       // Will be null when it's cancelled by user
       if (certificates == null) {
-        emit(state.toCanceled());
+        emit(const SelectSigningCertificateCanceledState());
       } else {
         // Taking 1st QES cert.
         final certificate = certificates.certificates.firstOrNull;
 
         if (certificate == null) {
-          emit(state.toNoCertificate());
+          emit(SelectSigningCertificateNoCertificateState());
         } else {
-          emit(state.toSuccess(certificate));
+          emit(SelectSigningCertificateSuccessState(certificate));
         }
       }
     } catch (error, stackTrace) {
       _log.severe("Error getting Certificates.", error, stackTrace);
 
-      emit(state.toError(error));
+      if (error is CertificateNotFoundException) {
+        emit(const SelectSigningCertificateNoCertificateState());
+      } else {
+        emit(SelectSigningCertificateErrorState(error));
+      }
     }
   }
 }
