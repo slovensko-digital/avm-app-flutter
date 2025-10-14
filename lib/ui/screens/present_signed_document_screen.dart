@@ -133,6 +133,7 @@ class PresentSignedDocumentScreen extends StatelessWidget {
   /// Handles close request.
   Future<void> _handleClose(BuildContext context) {
     if (openFromDeepLink) {
+      // TODO Fix for IOS
       return SystemNavigator.pop();
     } else {
       return Navigator.of(context).maybePop();
