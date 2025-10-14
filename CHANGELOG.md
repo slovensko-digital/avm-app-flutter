@@ -1,6 +1,6 @@
 # Changelog
 
-## NEXT - v1.4.0(43)
+## 2025-08-14 - v1.4.0(43)
 
 - #104 | Accessibility improvements
 - #105 | Accessibility - better color contrast for "unknown signature" case in validation strip
