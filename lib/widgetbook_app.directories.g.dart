@@ -10,533 +10,609 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:autogram/ui/app_theme.dart' as _i3;
-import 'package:autogram/ui/assets.dart' as _i4;
+import 'package:autogram/ui/app_theme.dart' as _autogram_ui_app_theme;
+import 'package:autogram/ui/assets.dart' as _autogram_ui_assets;
 import 'package:autogram/ui/fragment/document_validation_info_fragment.dart'
-    as _i26;
-import 'package:autogram/ui/fragment/preview_document_fragment.dart' as _i27;
-import 'package:autogram/ui/fragment/show_web_page_fragment.dart' as _i28;
-import 'package:autogram/ui/screens/about_screen.dart' as _i31;
-import 'package:autogram/ui/screens/main_menu_screen.dart' as _i32;
-import 'package:autogram/ui/screens/main_screen.dart' as _i2;
+    as _autogram_ui_fragment_document_validation_info_fragment;
+import 'package:autogram/ui/fragment/preview_document_fragment.dart'
+    as _autogram_ui_fragment_preview_document_fragment;
+import 'package:autogram/ui/fragment/show_web_page_fragment.dart'
+    as _autogram_ui_fragment_show_web_page_fragment;
+import 'package:autogram/ui/screens/about_screen.dart'
+    as _autogram_ui_screens_about_screen;
+import 'package:autogram/ui/screens/main_menu_screen.dart'
+    as _autogram_ui_screens_main_menu_screen;
+import 'package:autogram/ui/screens/main_screen.dart'
+    as _autogram_ui_screens_main_screen;
 import 'package:autogram/ui/screens/onboarding_accept_document_screen.dart'
-    as _i33;
-import 'package:autogram/ui/screens/onboarding_finished_screen.dart' as _i34;
+    as _autogram_ui_screens_onboarding_accept_document_screen;
+import 'package:autogram/ui/screens/onboarding_finished_screen.dart'
+    as _autogram_ui_screens_onboarding_finished_screen;
 import 'package:autogram/ui/screens/onboarding_select_signing_certificate_screen.dart'
-    as _i35;
-import 'package:autogram/ui/screens/open_document_screen.dart' as _i36;
-import 'package:autogram/ui/screens/paired_device_list_screen.dart' as _i37;
+    as _autogram_ui_screens_onboarding_select_signing_certificate_screen;
+import 'package:autogram/ui/screens/open_document_screen.dart'
+    as _autogram_ui_screens_open_document_screen;
+import 'package:autogram/ui/screens/paired_device_list_screen.dart'
+    as _autogram_ui_screens_paired_device_list_screen;
 import 'package:autogram/ui/screens/present_signed_document_screen.dart'
-    as _i38;
-import 'package:autogram/ui/screens/qr_code_scanner_screen.dart' as _i24;
-import 'package:autogram/ui/screens/select_certificate_screen.dart' as _i39;
-import 'package:autogram/ui/screens/settings_screen.dart' as _i40;
-import 'package:autogram/ui/screens/show_document_screen.dart' as _i41;
-import 'package:autogram/ui/screens/sign_document_screen.dart' as _i42;
+    as _autogram_ui_screens_present_signed_document_screen;
+import 'package:autogram/ui/screens/qr_code_scanner_screen.dart'
+    as _autogram_ui_screens_qr_code_scanner_screen;
+import 'package:autogram/ui/screens/select_certificate_screen.dart'
+    as _autogram_ui_screens_select_certificate_screen;
+import 'package:autogram/ui/screens/settings_screen.dart'
+    as _autogram_ui_screens_settings_screen;
+import 'package:autogram/ui/screens/show_document_screen.dart'
+    as _autogram_ui_screens_show_document_screen;
+import 'package:autogram/ui/screens/sign_document_screen.dart'
+    as _autogram_ui_screens_sign_document_screen;
 import 'package:autogram/ui/screens/start_remote_document_signing_screen.dart'
-    as _i43;
-import 'package:autogram/ui/widgets/app_version_text.dart' as _i10;
-import 'package:autogram/ui/widgets/autogram_logo.dart' as _i5;
-import 'package:autogram/ui/widgets/buttons.dart' as _i6;
-import 'package:autogram/ui/widgets/certificate_details.dart' as _i11;
-import 'package:autogram/ui/widgets/certificate_picker.dart' as _i29;
-import 'package:autogram/ui/widgets/chip.dart' as _i7;
-import 'package:autogram/ui/widgets/close_button.dart' as _i8;
-import 'package:autogram/ui/widgets/dialogs.dart' as _i25;
-import 'package:autogram/ui/widgets/document_signature_info.dart' as _i12;
-import 'package:autogram/ui/widgets/document_validation_strip.dart' as _i13;
-import 'package:autogram/ui/widgets/document_visualization.dart' as _i14;
-import 'package:autogram/ui/widgets/error_content.dart' as _i15;
-import 'package:autogram/ui/widgets/html_preview.dart' as _i16;
-import 'package:autogram/ui/widgets/loading_content.dart' as _i17;
-import 'package:autogram/ui/widgets/loading_indicator.dart' as _i9;
-import 'package:autogram/ui/widgets/markdown_text.dart' as _i18;
-import 'package:autogram/ui/widgets/option_picker.dart' as _i19;
-import 'package:autogram/ui/widgets/preference_tile.dart' as _i20;
-import 'package:autogram/ui/widgets/result_view.dart' as _i21;
-import 'package:autogram/ui/widgets/retry_view.dart' as _i22;
-import 'package:autogram/ui/widgets/signature_type_picker.dart' as _i30;
-import 'package:autogram/ui/widgets/step_indicator.dart' as _i23;
-import 'package:widgetbook/widgetbook.dart' as _i1;
+    as _autogram_ui_screens_start_remote_document_signing_screen;
+import 'package:autogram/ui/widgets/app_version_text.dart'
+    as _autogram_ui_widgets_app_version_text;
+import 'package:autogram/ui/widgets/autogram_logo.dart'
+    as _autogram_ui_widgets_autogram_logo;
+import 'package:autogram/ui/widgets/buttons.dart'
+    as _autogram_ui_widgets_buttons;
+import 'package:autogram/ui/widgets/certificate_details.dart'
+    as _autogram_ui_widgets_certificate_details;
+import 'package:autogram/ui/widgets/certificate_picker.dart'
+    as _autogram_ui_widgets_certificate_picker;
+import 'package:autogram/ui/widgets/chip.dart' as _autogram_ui_widgets_chip;
+import 'package:autogram/ui/widgets/close_button.dart'
+    as _autogram_ui_widgets_close_button;
+import 'package:autogram/ui/widgets/dialogs.dart'
+    as _autogram_ui_widgets_dialogs;
+import 'package:autogram/ui/widgets/document_signature_info.dart'
+    as _autogram_ui_widgets_document_signature_info;
+import 'package:autogram/ui/widgets/document_validation_strip.dart'
+    as _autogram_ui_widgets_document_validation_strip;
+import 'package:autogram/ui/widgets/document_visualization.dart'
+    as _autogram_ui_widgets_document_visualization;
+import 'package:autogram/ui/widgets/error_content.dart'
+    as _autogram_ui_widgets_error_content;
+import 'package:autogram/ui/widgets/html_preview.dart'
+    as _autogram_ui_widgets_html_preview;
+import 'package:autogram/ui/widgets/loading_content.dart'
+    as _autogram_ui_widgets_loading_content;
+import 'package:autogram/ui/widgets/loading_indicator.dart'
+    as _autogram_ui_widgets_loading_indicator;
+import 'package:autogram/ui/widgets/markdown_text.dart'
+    as _autogram_ui_widgets_markdown_text;
+import 'package:autogram/ui/widgets/option_picker.dart'
+    as _autogram_ui_widgets_option_picker;
+import 'package:autogram/ui/widgets/preference_tile.dart'
+    as _autogram_ui_widgets_preference_tile;
+import 'package:autogram/ui/widgets/result_view.dart'
+    as _autogram_ui_widgets_result_view;
+import 'package:autogram/ui/widgets/retry_view.dart'
+    as _autogram_ui_widgets_retry_view;
+import 'package:autogram/ui/widgets/signature_type_picker.dart'
+    as _autogram_ui_widgets_signature_type_picker;
+import 'package:autogram/ui/widgets/step_indicator.dart'
+    as _autogram_ui_widgets_step_indicator;
+import 'package:widgetbook/widgetbook.dart' as _widgetbook;
 
-final directories = <_i1.WidgetbookNode>[
-  _i1.WidgetbookCategory(
+final directories = <_widgetbook.WidgetbookNode>[
+  _widgetbook.WidgetbookCategory(
     name: 'AVM',
     children: [
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'AppBar',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'main',
-            builder: _i2.previewMainAppBar,
+            builder: _autogram_ui_screens_main_screen.previewMainAppBar,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'normal',
-            builder: _i3.previewAppBar,
+            builder: _autogram_ui_app_theme.previewAppBar,
           ),
         ],
       ),
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'Asset',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'icons',
-            builder: _i4.previewIcons,
+            builder: _autogram_ui_assets.previewIcons,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'images',
-            builder: _i4.previewImages,
+            builder: _autogram_ui_assets.previewImages,
           ),
         ],
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'AutogramLogo',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'AutogramLogo',
-          builder: _i5.previewAutogramLogo,
+          builder: _autogram_ui_widgets_autogram_logo.previewAutogramLogo,
         ),
       ),
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'Button',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'elevated',
-            builder: _i6.previewElevatedButton,
+            builder: _autogram_ui_widgets_buttons.previewElevatedButton,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'filled',
-            builder: _i6.previewFilledButton,
+            builder: _autogram_ui_widgets_buttons.previewFilledButton,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'text',
-            builder: _i6.previewTextButton,
+            builder: _autogram_ui_widgets_buttons.previewTextButton,
           ),
         ],
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'Chip',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i7.previewChip,
+          builder: _autogram_ui_widgets_chip.previewChip,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'CloseButton',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'CloseButton',
-          builder: _i8.previewCloseButton,
+          builder: _autogram_ui_widgets_close_button.previewCloseButton,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'Dialog',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'Dialog',
-          builder: _i3.previewDialog,
+          builder: _autogram_ui_app_theme.previewDialog,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'LoadingIndicator',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'LoadingIndicator',
-          builder: _i9.previewLoadingIndicator,
+          builder:
+              _autogram_ui_widgets_loading_indicator.previewLoadingIndicator,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'MaterialBanner',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'MaterialBanner ',
-          builder: _i3.previewMaterialBanner,
+          builder: _autogram_ui_app_theme.previewMaterialBanner,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'Radio',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'Radio',
-          builder: _i3.previewRadio,
+          builder: _autogram_ui_app_theme.previewRadio,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'SnackBar',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'SnackBar',
-          builder: _i3.previewSnackBar,
+          builder: _autogram_ui_app_theme.previewSnackBar,
         ),
       ),
     ],
   ),
-  _i1.WidgetbookCategory(
+  _widgetbook.WidgetbookCategory(
     name: 'Core',
     children: [
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'AppVersionText',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i10.previewAppVersionText,
+          builder: _autogram_ui_widgets_app_version_text.previewAppVersionText,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'CertificateDetails',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'CertificateDetails',
-          builder: _i11.previewCertificateDetails,
+          builder: _autogram_ui_widgets_certificate_details
+              .previewCertificateDetails,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'DocumentSignatureInfo',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i12.previewDocumentSignatureInfo,
+          builder: _autogram_ui_widgets_document_signature_info
+              .previewDocumentSignatureInfo,
         ),
       ),
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'DocumentValidationStrip',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _i13.previewLoadingDocumentValidationStrip,
+            builder: _autogram_ui_widgets_document_validation_strip
+                .previewLoadingDocumentValidationStrip,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'signatures',
-            builder: _i13.previewOtherDocumentValidationStrip,
+            builder: _autogram_ui_widgets_document_validation_strip
+                .previewOtherDocumentValidationStrip,
           ),
         ],
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'DocumentVisualization',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'DocumentVisualization',
-          builder: _i14.previewDocumentVisualization,
+          builder: _autogram_ui_widgets_document_visualization
+              .previewDocumentVisualization,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'ErrorContent',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'ErrorContent',
-          builder: _i15.previewErrorContent,
+          builder: _autogram_ui_widgets_error_content.previewErrorContent,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'HtmlPreview',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'HtmlPreview',
-          builder: _i16.previewHtmlPreview,
+          builder: _autogram_ui_widgets_html_preview.previewHtmlPreview,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'LoadingContent',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'LoadingContent',
-          builder: _i17.previewLoadingContent,
+          builder: _autogram_ui_widgets_loading_content.previewLoadingContent,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'MarkdownText',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i18.previewMarkdownText,
+          builder: _autogram_ui_widgets_markdown_text.previewMarkdownText,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'OptionPicker',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'OptionPicker',
-          builder: _i19.previewOptionPicker,
+          builder: _autogram_ui_widgets_option_picker.previewOptionPicker,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'PreferenceTile',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'PreferenceTile',
-          builder: _i20.previewPreferenceTile,
+          builder: _autogram_ui_widgets_preference_tile.previewPreferenceTile,
         ),
       ),
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'ResultView',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'custom',
-            builder: _i21.previewCustomResultView,
+            builder: _autogram_ui_widgets_result_view.previewCustomResultView,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'error',
-            builder: _i21.previewErrorResultView,
+            builder: _autogram_ui_widgets_result_view.previewErrorResultView,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'info',
-            builder: _i21.previewInfoResultView,
+            builder: _autogram_ui_widgets_result_view.previewInfoResultView,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'success',
-            builder: _i21.previewSuccessResultView,
+            builder: _autogram_ui_widgets_result_view.previewSuccessResultView,
           ),
         ],
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'RetryView',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'RetryView',
-          builder: _i22.previewRetryView,
+          builder: _autogram_ui_widgets_retry_view.previewRetryView,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'StepIndicator',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'StepIndicator',
-          builder: _i23.previewStepIndicator,
+          builder: _autogram_ui_widgets_step_indicator.previewStepIndicator,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: '_InfoPanel',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i24.previewInfoPanel,
+          builder: _autogram_ui_screens_qr_code_scanner_screen.previewInfoPanel,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: '_ViewFinder',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i24.previewViewFinder,
+          builder:
+              _autogram_ui_screens_qr_code_scanner_screen.previewViewFinder,
         ),
       ),
     ],
   ),
-  _i1.WidgetbookCategory(
+  _widgetbook.WidgetbookCategory(
     name: 'Dialogs',
     children: [
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'BottomSheet',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'NotificationsPermissionRationale',
-          builder: _i25.previewNotificationsPermissionRationaleModal,
+          builder: _autogram_ui_widgets_dialogs
+              .previewNotificationsPermissionRationaleModal,
         ),
       )
     ],
   ),
-  _i1.WidgetbookCategory(
+  _widgetbook.WidgetbookCategory(
     name: 'Fragments',
     children: [
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'DocumentValidationInfoFragment',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i26.previewDocumentValidationInfoFragment,
+          builder: _autogram_ui_fragment_document_validation_info_fragment
+              .previewDocumentValidationInfoFragment,
         ),
       ),
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'PreviewDocumentFragment',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'error',
-            builder: _i27.previewErrorPreviewDocumentScreen,
+            builder: _autogram_ui_fragment_preview_document_fragment
+                .previewErrorPreviewDocumentScreen,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _i27.previewLoadingPreviewDocumentFragment,
+            builder: _autogram_ui_fragment_preview_document_fragment
+                .previewLoadingPreviewDocumentFragment,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'success',
-            builder: _i27.previewSuccessPreviewDocumentScreen,
+            builder: _autogram_ui_fragment_preview_document_fragment
+                .previewSuccessPreviewDocumentScreen,
           ),
         ],
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'ShowWebPageFragment',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'ShowWebPageFragment',
-          builder: _i28.previewShowWebPageFragment,
+          builder: _autogram_ui_fragment_show_web_page_fragment
+              .previewShowWebPageFragment,
         ),
       ),
     ],
   ),
-  _i1.WidgetbookCategory(
+  _widgetbook.WidgetbookCategory(
     name: 'Lists',
     children: [
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'CertificatePicker',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'CertificatePicker',
-          builder: _i29.previewCertificatePicker,
+          builder:
+              _autogram_ui_widgets_certificate_picker.previewCertificatePicker,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'SignatureTypePicker',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i30.previewSignatureTypePicker,
+          builder: _autogram_ui_widgets_signature_type_picker
+              .previewSignatureTypePicker,
         ),
       ),
     ],
   ),
-  _i1.WidgetbookCategory(
+  _widgetbook.WidgetbookCategory(
     name: 'Screens',
     children: [
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'AboutScreen',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'AboutScreen',
-          builder: _i31.previewAboutScreen,
+          builder: _autogram_ui_screens_about_screen.previewAboutScreen,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'MainMenuScreen',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i32.previewMainMenuScreen,
+          builder: _autogram_ui_screens_main_menu_screen.previewMainMenuScreen,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'MainScreen',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i2.previewMainScreen,
+          builder: _autogram_ui_screens_main_screen.previewMainScreen,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'OnboardingAcceptDocumentScreen',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i33.previewOnboardingAcceptDocumentScreen,
+          builder: _autogram_ui_screens_onboarding_accept_document_screen
+              .previewOnboardingAcceptDocumentScreen,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'OnboardingFinishedScreen',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i34.previewOnboardingFinishedScreen,
+          builder: _autogram_ui_screens_onboarding_finished_screen
+              .previewOnboardingFinishedScreen,
         ),
       ),
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'OnboardingSelectSigningCertificateScreen',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'canceled',
-            builder: _i35.previewCanceledOnboardingSelectSigningCertificateBody,
+            builder:
+                _autogram_ui_screens_onboarding_select_signing_certificate_screen
+                    .previewCanceledOnboardingSelectSigningCertificateBody,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'initial',
-            builder: _i35.previewInitialOnboardingSelectSigningCertificateBody,
+            builder:
+                _autogram_ui_screens_onboarding_select_signing_certificate_screen
+                    .previewInitialOnboardingSelectSigningCertificateBody,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'no certificate',
             builder:
-                _i35.previewNoCertificateOnboardingSelectSigningCertificateBody,
+                _autogram_ui_screens_onboarding_select_signing_certificate_screen
+                    .previewNoCertificateOnboardingSelectSigningCertificateBody,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'success',
-            builder: _i35.previewSuccessOnboardingSelectSigningCertificateBody,
+            builder:
+                _autogram_ui_screens_onboarding_select_signing_certificate_screen
+                    .previewSuccessOnboardingSelectSigningCertificateBody,
           ),
         ],
       ),
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'OpenDocumentScreen',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'error',
-            builder: _i36.previewErrorOpenDocumentScreen,
+            builder: _autogram_ui_screens_open_document_screen
+                .previewErrorOpenDocumentScreen,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _i36.previewLoadingOpenDocumentScreen,
+            builder: _autogram_ui_screens_open_document_screen
+                .previewLoadingOpenDocumentScreen,
           ),
         ],
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'PairedDeviceListScreen',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i37.previewPairedDeviceListScreen,
+          builder: _autogram_ui_screens_paired_device_list_screen
+              .previewPairedDeviceListScreen,
         ),
       ),
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'PresentSignedDocumentScreen',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'error',
-            builder: _i38.previewErrorPresentSignedDocumentScreen,
+            builder: _autogram_ui_screens_present_signed_document_screen
+                .previewErrorPresentSignedDocumentScreen,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'initial',
-            builder: _i38.previewInitialPresentSignedDocumentScreen,
+            builder: _autogram_ui_screens_present_signed_document_screen
+                .previewInitialPresentSignedDocumentScreen,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _i38.previewLoadingPresentSignedDocumentScreen,
+            builder: _autogram_ui_screens_present_signed_document_screen
+                .previewLoadingPresentSignedDocumentScreen,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'success',
-            builder: _i38.previewSuccessPresentSignedDocumentScreen,
+            builder: _autogram_ui_screens_present_signed_document_screen
+                .previewSuccessPresentSignedDocumentScreen,
           ),
         ],
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'QRCodeScannerScreen',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i24.previewQRCodeScannerScreen,
+          builder: _autogram_ui_screens_qr_code_scanner_screen
+              .previewQRCodeScannerScreen,
         ),
       ),
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'SelectCertificateScreen',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'canceled',
-            builder: _i39.previewCanceledSelectCertificateScreen,
+            builder: _autogram_ui_screens_select_certificate_screen
+                .previewCanceledSelectCertificateScreen,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'error',
-            builder: _i39.previewErrorSelectCertificateScreen,
+            builder: _autogram_ui_screens_select_certificate_screen
+                .previewErrorSelectCertificateScreen,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _i39.previewLoadingSelectCertificateScreen,
+            builder: _autogram_ui_screens_select_certificate_screen
+                .previewLoadingSelectCertificateScreen,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'no certificate',
-            builder: _i39.previewNoCertificateSelectCertificateScreen,
+            builder: _autogram_ui_screens_select_certificate_screen
+                .previewNoCertificateSelectCertificateScreen,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'success',
-            builder: _i39.previewSuccessSelectCertificateScreen,
+            builder: _autogram_ui_screens_select_certificate_screen
+                .previewSuccessSelectCertificateScreen,
           ),
         ],
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'SettingsScreen',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'SettingsScreen',
-          builder: _i40.previewSettingsScreen,
+          builder: _autogram_ui_screens_settings_screen.previewSettingsScreen,
         ),
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'ShowDocumentScreen',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i41.previewShowDocumentScreen,
+          builder: _autogram_ui_screens_show_document_screen
+              .previewShowDocumentScreen,
         ),
       ),
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'SignDocumentScreen',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'error',
-            builder: _i42.previewErrorSignDocumentScreen,
+            builder: _autogram_ui_screens_sign_document_screen
+                .previewErrorSignDocumentScreen,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'loading',
-            builder: _i42.previewLoadingSignDocumentScreen,
+            builder: _autogram_ui_screens_sign_document_screen
+                .previewLoadingSignDocumentScreen,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'success',
-            builder: _i42.previewSuccessSignDocumentScreen,
+            builder: _autogram_ui_screens_sign_document_screen
+                .previewSuccessSignDocumentScreen,
           ),
         ],
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'StartRemoteDocumentSigningScreen',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: '',
-          builder: _i43.previewStartRemoteDocumentSigningScreen,
+          builder: _autogram_ui_screens_start_remote_document_signing_screen
+              .previewStartRemoteDocumentSigningScreen,
         ),
       ),
     ],

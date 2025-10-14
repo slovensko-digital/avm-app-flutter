@@ -1,8 +1,15 @@
 # Changelog
 
-## NEXT - v1.3.1(42)
+## 2025-08-14 - v1.4.0(43)
 
-- iOS: Setup image for Launch screen  
+- #104 | Accessibility improvements
+- #105 | Accessibility - better color contrast for "unknown signature" case in validation strip
+- #107 | Closing app when successfully signed from Deep link
+- #26 | Handling case when eID mSDK returned "No certificates on ID" error 
+
+## 2025-08-07 - v1.3.1(42)
+
+- #100 | iOS: Setup image for Launch screen  
 - #12 | iOS: Enable iPad destination back
 - #101 | Update to Flutter SDK v3.27.4
 - #101 | Targeting Android 15 (SDK 35)
