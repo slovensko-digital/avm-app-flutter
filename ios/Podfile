@@ -43,8 +43,4 @@ post_install do |installer|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.5'
     end
   end
-
-  command = "xcrun bitcode_strip -r Pods/OpenSSL-Universal/Frameworks/OpenSSL.xcframework/ios-arm64/OpenSSL.framework/OpenSSL -o Pods/OpenSSL-Universal/Frameworks/OpenSSL.xcframework/ios-arm64/OpenSSL.framework/OpenSSL"
-  puts "Stripping OpenSSL bitcode"
-  system(command)
 end

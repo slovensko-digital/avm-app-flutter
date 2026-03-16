@@ -30,7 +30,7 @@ PODS:
   - DKPhotoGallery/Resource (0.0.19):
     - SDWebImage
     - SwiftyGif
-  - eidmsdk (0.9.0):
+  - eidmsdk (0.9.1):
     - Flutter
     - JWTDecode
     - lottie-ios
@@ -206,7 +206,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
-  eidmsdk: 836211c7d1a5b442ee358344096286d02d122bbb
+  eidmsdk: f8cd146c24355be318f05821b210ad6dd0196927
   file_picker: 9b3292d7c8bc68c8a7bf8eb78f730e49c8efc517
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
   firebase_core: 2a80983e98480c7f02ff001358621c8d7f1ff8f0
@@ -238,6 +238,6 @@ SPEC CHECKSUMS:
   wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
   webview_flutter_wkwebview: 1821ceac936eba6f7984d89a9f3bcb4dea99ebb2
 
-PODFILE CHECKSUM: 067922d56faad17624201acf464def085f5e1a95
+PODFILE CHECKSUM: 7d6d5bbe061e367b4573db88360ed9e73668e11d
 
 COCOAPODS: 1.16.2
