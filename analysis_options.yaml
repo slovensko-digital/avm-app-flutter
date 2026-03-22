@@ -1,8 +1,5 @@
 include: package:flutter_lints/flutter.yaml
 
-formatter:
-  trailing_comma: preserve
-
 analyzer:
   exclude:
     - lib/l10n/*.dart
