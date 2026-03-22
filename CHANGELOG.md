@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.4.1(45)
+## 2026-03-22 - v1.4.2(45)
 
 - Update QR code scanner library to its latest version
 
