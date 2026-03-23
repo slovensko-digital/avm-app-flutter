@@ -142,6 +142,10 @@ final directories = <_widgetbook.WidgetbookNode>[
             builder: _autogram_ui_widgets_buttons.previewFilledButton,
           ),
           _widgetbook.WidgetbookUseCase(
+            name: 'square',
+            builder: _autogram_ui_widgets_buttons.previewSquareButton,
+          ),
+          _widgetbook.WidgetbookUseCase(
             name: 'text',
             builder: _autogram_ui_widgets_buttons.previewTextButton,
           ),

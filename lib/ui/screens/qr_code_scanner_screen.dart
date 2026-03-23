@@ -6,6 +6,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../strings_context.dart';
 import '../app_theme.dart';
+import '../widgets/square_button.dart';
 
 /// QR code scanner screen.
 ///
@@ -50,6 +51,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
         // Scanner
         MobileScanner(
           controller: _controller,
+          tapToFocus: true,
           onDetect: _handleBarcode,
         ),
 
@@ -68,6 +70,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                 onPressed: () {
                   Navigator.maybePop(context);
                 },
+                backgroundColor: colors.surface,
                 child: Icon(
                   Icons.arrow_back,
                   color: colors.onSurface,
@@ -92,33 +95,16 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              SquareButton(
-                onPressed: () {
-                  _controller.toggleTorch();
+              ValueListenableBuilder<MobileScannerState>(
+                valueListenable: _controller,
+                builder: (context, scannerState, _) {
+                  return _TorchButton(
+                    onPressed: () {
+                      _controller.toggleTorch();
+                    },
+                    state: scannerState.torchState,
+                  );
                 },
-                child: ValueListenableBuilder<TorchState>(
-                  valueListenable: _controller.torchState,
-                  builder: (context, torchState, _) {
-                    final icon = switch (torchState) {
-                      TorchState.off => Icons.flashlight_on,
-                      TorchState.on => Icons.flashlight_off,
-                    };
-
-                    final semanticsLabel = switch (torchState) {
-                      TorchState.off => strings.qrCodeScannerTorchOnSemantics,
-                      TorchState.on => strings.qrCodeScannerTorchOffSemantics,
-                    };
-
-                    return Semantics(
-                      button: true,
-                      label: semanticsLabel,
-                      child: Icon(
-                        icon,
-                        color: colors.onSurface,
-                      ),
-                    );
-                  },
-                ),
               ),
               const _InfoPanel(),
             ],
@@ -131,25 +117,6 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
       body: body,
-    );
-  }
-
-  // ignore: non_constant_identifier_names
-  Widget SquareButton({
-    VoidCallback? onPressed,
-    required Widget child,
-  }) {
-    final colors = Theme.of(context).colorScheme;
-    const size = Size.square(kMinInteractiveDimension);
-
-    return FilledButton(
-      onPressed: onPressed,
-      style: FilledButton.styleFrom(
-        minimumSize: size,
-        padding: EdgeInsets.zero,
-        backgroundColor: colors.surface,
-      ),
-      child: child,
     );
   }
 
@@ -265,6 +232,52 @@ class _BorderPainter extends CustomPainter {
 
   @override
   bool shouldRebuildSemantics(_BorderPainter oldDelegate) => false;
+}
+
+/// Torch button with toggle icon to enable / disble the torch.
+class _TorchButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+  final TorchState state;
+
+  const _TorchButton({
+    required this.onPressed,
+    required this.state,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (state == TorchState.unavailable) {
+      return const SizedBox.shrink();
+    }
+
+    final icon = switch (state) {
+      TorchState.off => Icons.flashlight_on,
+      TorchState.on => Icons.flashlight_off,
+      TorchState.auto => Icons.flashlight_on,
+      TorchState.unavailable => null,
+    };
+    final strings = context.strings;
+    final semanticsLabel = switch (state) {
+      TorchState.off => strings.qrCodeScannerTorchOnSemantics,
+      TorchState.on => strings.qrCodeScannerTorchOffSemantics,
+      TorchState.auto => strings.qrCodeScannerTorchOffSemantics,
+      TorchState.unavailable => null,
+    };
+    final colors = Theme.of(context).colorScheme;
+
+    return SquareButton(
+      onPressed: onPressed,
+      backgroundColor: colors.surface,
+      child: Semantics(
+        button: true,
+        label: semanticsLabel,
+        child: Icon(
+          icon,
+          color: colors.onSurface,
+        ),
+      ),
+    );
+  }
 }
 
 /// Info panel with "i" icon and text.

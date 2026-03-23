@@ -28,8 +28,8 @@ if (flutterVersionName == null) {
 
 android {
     namespace "digital.slovensko.autogram"
-    compileSdkVersion 35
-    ndkVersion flutter.ndkVersion
+    compileSdkVersion 36
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -79,7 +79,6 @@ android {
             // no signing config for debug builds
         }
     }
-    ndkVersion = "27.0.12077973"
 }
 
 repositories {
