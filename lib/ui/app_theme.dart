@@ -43,7 +43,7 @@ ThemeData appTheme(
       letterSpacing: 0.15,
     ),
   );
-  final dialogTheme = DialogTheme(
+  final dialogTheme = DialogThemeData(
     titleTextStyle: TextStyle(
       color: colorScheme.onSurface,
       fontSize: 20,
