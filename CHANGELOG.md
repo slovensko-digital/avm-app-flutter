@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-03-26 - v1.5.0(47)
+
+- #113 | eID mSDK update v2.0
+
 ## 2026-03-24 - v1.4.2(46)
 
 - #112 | Update to Flutter SDK v3.38.10
