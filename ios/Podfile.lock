@@ -43,10 +43,10 @@ PODS:
   - Firebase/Crashlytics (10.22.0):
     - Firebase/CoreOnly
     - FirebaseCrashlytics (~> 10.22.0)
-  - firebase_core (2.27.0):
+  - firebase_core (2.28.0):
     - Firebase/CoreOnly (= 10.22.0)
     - Flutter
-  - firebase_crashlytics (3.4.18):
+  - firebase_crashlytics (3.5.0):
     - Firebase/Crashlytics (= 10.22.0)
     - firebase_core
     - Flutter
@@ -97,8 +97,8 @@ PODS:
   - GoogleUtilities/UserDefaults (7.13.3):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - JWTDecode (3.3.0)
-  - lottie-ios (4.5.2)
+  - JWTDecode (3.1.0)
+  - lottie-ios (4.6.0)
   - mobile_scanner (7.0.0):
     - Flutter
     - FlutterMacOS
@@ -110,17 +110,14 @@ PODS:
   - OpenSSL-Universal (3.3.3001)
   - package_info_plus (0.4.5):
     - Flutter
-  - path_provider_foundation (0.0.1):
-    - Flutter
-    - FlutterMacOS
   - printing (1.0.0):
     - Flutter
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
     - PromisesObjC (= 2.4.0)
-  - SDWebImage (5.21.2):
-    - SDWebImage/Core (= 5.21.2)
-  - SDWebImage/Core (5.21.2)
+  - SDWebImage (5.21.7):
+    - SDWebImage/Core (= 5.21.7)
+  - SDWebImage/Core (5.21.7)
   - share_plus (0.0.1):
     - Flutter
   - shared_preferences_foundation (0.0.1):
@@ -141,9 +138,9 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - Flutter (from `Flutter`)
+  - JWTDecode (= 3.1.0)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/darwin`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
-  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - printing (from `.symlinks/plugins/printing/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
@@ -188,8 +185,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/mobile_scanner/darwin"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
-  path_provider_foundation:
-    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   printing:
     :path: ".symlinks/plugins/printing/ios"
   share_plus:
@@ -209,35 +204,34 @@ SPEC CHECKSUMS:
   eidmsdk: f8cd146c24355be318f05821b210ad6dd0196927
   file_picker: 9b3292d7c8bc68c8a7bf8eb78f730e49c8efc517
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
-  firebase_core: 2a80983e98480c7f02ff001358621c8d7f1ff8f0
-  firebase_crashlytics: 85fdba54a96f7daefd59441cfc289bad404908fb
+  firebase_core: 89cc8450a3785a2626ac38ac73f2439c94771ec2
+  firebase_crashlytics: b76cf265f7d8a812142a8979ff046adc57ed0336
   FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
   FirebaseCoreExtension: 705ca5b14bf71d2564a0ddc677df1fc86ffa600f
   FirebaseCoreInternal: df84dd300b561c27d5571684f389bf60b0a5c934
   FirebaseCrashlytics: e568d68ce89117c80cddb04073ab9018725fbb8c
   FirebaseInstallations: 913cf60d0400ebd5d6b63a28b290372ab44590dd
   FirebaseSessions: dbd14adac65ce996228652c1fc3a3f576bdf3ecc
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
-  JWTDecode: 1ca6f765844457d0dd8690436860fecee788f631
-  lottie-ios: 96784afc26ea031d3e2b6cae342a4b8915072489
+  JWTDecode: 3eaab1e06b6f4dcbdd6716aff09ba4c2104ca8b7
+  lottie-ios: 8f959969761e9c45d70353667d00af0e5b9cadb3
   mobile_scanner: 9157936403f5a0644ca3779a38ff8404c5434a93
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   OpenSSL-Universal: 6082b0bf950e5636fe0d78def171184e2b3899c2
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
-  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   printing: 54ff03f28fe9ba3aa93358afb80a8595a071dd07
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
-  SDWebImage: 9f177d83116802728e122410fb25ad88f5c7608a
+  SDWebImage: e9fc87c1aab89a8ab1bbd74eba378c6f53be8abf
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
-  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
+  shared_preferences_foundation: 7036424c3d8ec98dfe75ff1667cb0cd531ec82bb
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
-  url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
+  url_launcher_ios: 7a95fa5b60cc718a708b8f2966718e93db0cef1b
   wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
-  webview_flutter_wkwebview: 1821ceac936eba6f7984d89a9f3bcb4dea99ebb2
+  webview_flutter_wkwebview: 8ebf4fded22593026f7dbff1fbff31ea98573c8d
 
-PODFILE CHECKSUM: 6ffbbc12f6521af5d2b516261f294d6c0f8e9bfd
+PODFILE CHECKSUM: d243cf2f63d8293282e03c292eb8263d58bca24b
 
 COCOAPODS: 1.16.2

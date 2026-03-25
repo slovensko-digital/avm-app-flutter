@@ -18,7 +18,8 @@ class AppLocalizationsSk extends AppLocalizations {
   String get appTitle => 'Autogram';
 
   @override
-  String get buttonShowDetailsOnTapSemantics => 'Po tapnutí sa zobrazia podrobnosti.';
+  String get buttonShowDetailsOnTapSemantics =>
+      'Po tapnutí sa zobrazia podrobnosti.';
 
   @override
   String get buttonOKLabel => 'OK';
@@ -74,7 +75,8 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
-  String get buttonSignWithDifferentCertificateLabel => 'Podpísať iným certifikátom';
+  String get buttonSignWithDifferentCertificateLabel =>
+      'Podpísať iným certifikátom';
 
   @override
   String get buttonMenuLabelSemantics => 'Otvoriť menu';
@@ -89,7 +91,8 @@ class AppLocalizationsSk extends AppLocalizations {
   String get qrCodeScannerBackSemantics => 'Späť';
 
   @override
-  String get qrCodeScannerOpenSemantics => 'Podpísať vzdialený dokument pomocou QR kódu';
+  String get qrCodeScannerOpenSemantics =>
+      'Podpísať vzdialený dokument pomocou QR kódu';
 
   @override
   String get shareDocumentPreviewSemantics => 'Zdieľať náhľad dokumentu';
@@ -111,7 +114,8 @@ class AppLocalizationsSk extends AppLocalizations {
   String get notificationPermissionRationaleTitle => 'Povoliť upozornenia';
 
   @override
-  String get notificationPermissionRationaleMessage => 'Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.';
+  String get notificationPermissionRationaleMessage =>
+      'Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.';
 
   @override
   String get menuTitle => 'Menu';
@@ -129,47 +133,41 @@ class AppLocalizationsSk extends AppLocalizations {
   String get signingPdfContainerTitle => 'Podpisovanie PDF';
 
   @override
-  String get signatureTypeErrorHeading => 'Chyba pri načítaní parametrov podpisu';
+  String get signatureTypeErrorHeading =>
+      'Chyba pri načítaní parametrov podpisu';
 
   @override
   String get signatureTypeTitle => 'Predvolený typ podpisu';
 
   @override
   String signatureTypeSummary(String name) {
-    String _temp0 = intl.Intl.selectLogic(
-      name,
-      {
-        'withoutTimestamp': 'Vlastnoručný podpis',
-        'withTimestamp': 'Osvedčený podpis',
-        'other': 'Spýtať sa pri podpisovaní',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(name, {
+      'withoutTimestamp': 'Vlastnoručný podpis',
+      'withTimestamp': 'Osvedčený podpis',
+      'other': 'Spýtať sa pri podpisovaní',
+    });
     return '$_temp0';
   }
 
   @override
   String signatureTypeValueTitle(String name) {
-    String _temp0 = intl.Intl.selectLogic(
-      name,
-      {
-        'withoutTimestamp': 'Vlastnoručný podpis',
-        'withTimestamp': 'Osvedčený podpis',
-        'other': '-',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(name, {
+      'withoutTimestamp': 'Vlastnoručný podpis',
+      'withTimestamp': 'Osvedčený podpis',
+      'other': '-',
+    });
     return '$_temp0';
   }
 
   @override
   String signatureTypeValueSubtitle(String name) {
-    String _temp0 = intl.Intl.selectLogic(
-      name,
-      {
-        'withoutTimestamp': 'Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.',
-        'withTimestamp': 'Ako keby ste podpis overili u notára.\nObsahuje časovú pečiatku.',
-        'other': '-',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(name, {
+      'withoutTimestamp':
+          'Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.',
+      'withTimestamp':
+          'Ako keby ste podpis overili u notára.\nObsahuje časovú pečiatku.',
+      'other': '-',
+    });
     return '$_temp0';
   }
 
@@ -196,22 +194,26 @@ class AppLocalizationsSk extends AppLocalizations {
   String get privacyPolicyTitle => 'Ochrana osobných údajov';
 
   @override
-  String get privacyPolicyUrl => 'https://sluzby.slovensko.digital/autogram-v-mobile/ochrana-osobnych-udajov';
+  String get privacyPolicyUrl =>
+      'https://sluzby.slovensko.digital/autogram-v-mobile/ochrana-osobnych-udajov';
 
   @override
   String get termsOfServiceTitle => 'Podmienky používania';
 
   @override
-  String get termsOfServiceUrl => 'https://sluzby.slovensko.digital/autogram-v-mobile/vseobecne-obchodne-podmienky';
+  String get termsOfServiceUrl =>
+      'https://sluzby.slovensko.digital/autogram-v-mobile/vseobecne-obchodne-podmienky';
 
   @override
   String get aboutTitle => 'O aplikácii';
 
   @override
-  String get eidSDKLicenseText => 'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „<https://github.com/eidmsdk>“.';
+  String get eidSDKLicenseText =>
+      'Na komunikáciu s čipom občianskeho preukazu je použitá knižnica eID mSDK od Ministerstva vnútra Slovenskej republiky. Knižnica eID mSDK a podmienky jej použitia sú zverejnené na stránke „<https://github.com/eidmsdk>“.';
 
   @override
-  String get aboutAuthorsText => 'Autormi tohto projektu sú [freevision s.r.o.](https://freevision.sk/?utm_source=digital.slovensko.avm), [Služby Slovensko.Digital, s.r.o.](https://ekosystem.slovensko.digital/?utm_source=digital.slovensko.avm) a ďalší dobrovoľníci. Prevádzku zabezpečuje [Služby Slovensko.Digital, s.r.o.](https://ekosystem.slovensko.digital/?utm_source=digital.slovensko.avm)\n\nZdrojové kódy sú dostupné na [GitHub-e organizácie Slovensko.Digital](https://github.com/slovensko-digital/avm-app-flutter).';
+  String get aboutAuthorsText =>
+      'Autormi tohto projektu sú [freevision s.r.o.](https://freevision.sk/?utm_source=digital.slovensko.avm), [Služby Slovensko.Digital, s.r.o.](https://ekosystem.slovensko.digital/?utm_source=digital.slovensko.avm) a ďalší dobrovoľníci. Prevádzku zabezpečuje [Služby Slovensko.Digital, s.r.o.](https://ekosystem.slovensko.digital/?utm_source=digital.slovensko.avm)\n\nZdrojové kódy sú dostupné na [GitHub-e organizácie Slovensko.Digital](https://github.com/slovensko-digital/avm-app-flutter).';
 
   @override
   String get thirdPartyLicensesLabel => 'Licencie knižníc tretích strán';
@@ -220,25 +222,31 @@ class AppLocalizationsSk extends AppLocalizations {
   String get introHeading => 'Nový, lepší a krajší podpisovač v mobile';
 
   @override
-  String get introBody => 'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie\n ✅ Rýchle overenie podpisov';
+  String get introBody =>
+      'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie\n ✅ Rýchle overenie podpisov';
 
   @override
   String get onboardingFinishedHeading => 'Autogram je pripravený';
 
   @override
-  String get onboardingFinishedBody => 'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie';
+  String get onboardingFinishedBody =>
+      'Začnite výberom dokumentu na:\n ✅ Jednoduché podpisovanie';
 
   @override
-  String get qrCodeScannerInfoBody => 'Prosím nasmerujte kameru\nna QR kód na obrazovke';
+  String get qrCodeScannerInfoBody =>
+      'Prosím nasmerujte kameru\nna QR kód na obrazovke';
 
   @override
-  String get qrCodeScannerUnsupportedContentErrorMessage => 'Naskenovali ste nepodporovaný alebo neznámy obsah QR kódu.';
+  String get qrCodeScannerUnsupportedContentErrorMessage =>
+      'Naskenovali ste nepodporovaný alebo neznámy obsah QR kódu.';
 
   @override
-  String get signRemoteDocumentBody1 => 'Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia “Autogram na štátnych weboch“ vo vašom internetovom prehladávači.';
+  String get signRemoteDocumentBody1 =>
+      'Mobilom môžete podpisovať aj dokumenty nachádzajúce sa vo vašom počítači, či v informačnom systéme pomocou rozšírenia “Autogram na štátnych weboch“ vo vašom internetovom prehladávači.';
 
   @override
-  String get signRemoteDocumentBody2 => '1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “Podpísať mobilom”.\n2. Telefónom naskenujte QR kód z vášho počítača.';
+  String get signRemoteDocumentBody2 =>
+      '1. Pri podpisovaní v internetovom prehliadači vo vašom počítači vyberte možnosť “Podpísať mobilom”.\n2. Telefónom naskenujte QR kód z vášho počítača.';
 
   @override
   String get openDocumentTitle => 'Otváranie dokumentu';
@@ -250,7 +258,8 @@ class AppLocalizationsSk extends AppLocalizations {
   String get previewDocumentTitle => 'Náhľad dokumentu';
 
   @override
-  String get previewDocumentErrorHeading => 'Chyba pri načítaní vizualizácie dokumentu';
+  String get previewDocumentErrorHeading =>
+      'Chyba pri načítaní vizualizácie dokumentu';
 
   @override
   String get shareDocumentText => '\n\nSúbor z aplikácie Autogram v mobile';
@@ -264,13 +273,16 @@ class AppLocalizationsSk extends AppLocalizations {
   String get documentValidationLoadingLabel => 'Prebieha overovanie podpisov';
 
   @override
-  String get documentValidationNoSignaturesLabel => 'Dokument zatiaľ neobsahuje **žiadny podpis**';
+  String get documentValidationNoSignaturesLabel =>
+      'Dokument zatiaľ neobsahuje **žiadny podpis**';
 
   @override
-  String get documentValidationHasInvalidSignaturesLabel => 'Dokument obsahuje **neplatné podpisy**';
+  String get documentValidationHasInvalidSignaturesLabel =>
+      'Dokument obsahuje **neplatné podpisy**';
 
   @override
-  String get documentValidationHasIndeterminateSignatureLabel => 'Dokument obsahuje **neznámy podpis**';
+  String get documentValidationHasIndeterminateSignatureLabel =>
+      'Dokument obsahuje **neznámy podpis**';
 
   @override
   String documentValidationHasValidSignaturesLabel(num count) {
@@ -295,22 +307,28 @@ class AppLocalizationsSk extends AppLocalizations {
   String get selectSigningCertificateTitle => 'Nastavenie certifikátu';
 
   @override
-  String get selectSigningCertificateBody => 'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Podpisový certifikát si môžete nastaviť aj neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát teraz, pripravte si, prosím, občiansky preukaz a nasledujte inštrukcie na obrazovke.';
+  String get selectSigningCertificateBody =>
+      'Na podpisovanie mobilom potrebujete disponovať vhodným podpisovým certifikátom. Podpisový certifikát si môžete nastaviť aj neskôr počas podpisovania prvého dokumentu.\n\n\nAk si prajete nastaviť podpisový certifikát teraz, pripravte si, prosím, občiansky preukaz a nasledujte inštrukcie na obrazovke.';
 
   @override
-  String get selectSigningCertificateCanceledHeading => 'Čítanie certifikátu bolo prerušené';
+  String get selectSigningCertificateCanceledHeading =>
+      'Čítanie certifikátu bolo prerušené';
 
   @override
-  String get selectSigningCertificateCanceledBody => 'Skúste prosím znovu načítať certifikát z vášho občianskeho preukazu.';
+  String get selectSigningCertificateCanceledBody =>
+      'Skúste prosím znovu načítať certifikát z vášho občianskeho preukazu.';
 
   @override
-  String get selectSigningCertificateNoCertificateHeading => 'Certifikát nebol nájdený';
+  String get selectSigningCertificateNoCertificateHeading =>
+      'Certifikát nebol nájdený';
 
   @override
-  String get selectSigningCertificateNoCertificateBody => 'Nepodarilo sa nájsť certifikát pre **kvalifikovaný elektronický podpis**.\n\nCertifikát je potrebné vydať v aplikácii “eID Klient”, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na [navody.digital](https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty).';
+  String get selectSigningCertificateNoCertificateBody =>
+      'Nepodarilo sa nájsť certifikát pre **kvalifikovaný elektronický podpis**.\n\nCertifikát je potrebné vydať v aplikácii “eID Klient”, prípadne použiť iný občiansky preukaz.\nNávod na vydanie certifikátu nájdete na [navody.digital](https://navody.digital/zivotne-situacie/aktivacia-eid/krok/certifikaty).';
 
   @override
-  String get selectSigningCertificateErrorHeading => 'Chyba pri načítavaní certifikátov z občianskeho preukazu.';
+  String get selectSigningCertificateErrorHeading =>
+      'Chyba pri načítavaní certifikátov z občianskeho preukazu.';
 
   @override
   String certificateIssuer(Object text) {
@@ -359,13 +377,15 @@ class AppLocalizationsSk extends AppLocalizations {
   String get signatureQualificationQesealWithQTLabel => 'Elektronická pečať';
 
   @override
-  String get signatureQualificationAdesigWithQTLabel => 'Uznaný spôsob autorizácie';
+  String get signatureQualificationAdesigWithQTLabel =>
+      'Uznaný spôsob autorizácie';
 
   @override
   String get signDocumentTitle => 'Podpisovanie dokumentu';
 
   @override
-  String get signDocumentCanceledHeading => 'Podpisovanie pomocou občianskeho preukazu bolo prerušené';
+  String get signDocumentCanceledHeading =>
+      'Podpisovanie pomocou občianskeho preukazu bolo prerušené';
 
   @override
   String get signDocumentErrorHeading => 'Pri podpisovaní sa vyskytla chyba';
@@ -387,7 +407,8 @@ class AppLocalizationsSk extends AppLocalizations {
   String get shareSignedDocumentLabel => 'Zdieľať podpísaný dokument';
 
   @override
-  String get shareSignedDocumentText => '\n\nPodpísané aplikáciou Autogram v mobile';
+  String get shareSignedDocumentText =>
+      '\n\nPodpísané aplikáciou Autogram v mobile';
 
   @override
   String shareSignedDocumentErrorMessage(Object error) {
