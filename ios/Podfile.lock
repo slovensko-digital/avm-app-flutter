@@ -30,7 +30,7 @@ PODS:
   - DKPhotoGallery/Resource (0.0.19):
     - SDWebImage
     - SwiftyGif
-  - eidmsdk (0.9.1):
+  - eidmsdk (1.0.0):
     - Flutter
     - JWTDecode
     - lottie-ios
@@ -138,7 +138,6 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - Flutter (from `Flutter`)
-  - JWTDecode (= 3.1.0)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/darwin`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - printing (from `.symlinks/plugins/printing/ios`)
@@ -201,7 +200,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
-  eidmsdk: f8cd146c24355be318f05821b210ad6dd0196927
+  eidmsdk: 983be6cdd4fc52ae9bcb9ed5a6fc9d54b4eae77e
   file_picker: 9b3292d7c8bc68c8a7bf8eb78f730e49c8efc517
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
   firebase_core: 89cc8450a3785a2626ac38ac73f2439c94771ec2
@@ -232,6 +231,6 @@ SPEC CHECKSUMS:
   wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
   webview_flutter_wkwebview: 8ebf4fded22593026f7dbff1fbff31ea98573c8d
 
-PODFILE CHECKSUM: d243cf2f63d8293282e03c292eb8263d58bca24b
+PODFILE CHECKSUM: 93b3a923f9135aa3cb84063a0f0c8b1ff407acd6
 
 COCOAPODS: 1.16.2
