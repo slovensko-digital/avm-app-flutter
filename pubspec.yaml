@@ -14,7 +14,7 @@ dependencies:
   eidmsdk:
     git:
       url: https://github.com/slovensko-digital/eidmsdk-flutter
-      ref: v0.9.1
+      ref: feature/sdk-update-v2
   autogram_sign:
     git:
       url: https://github.com/slovensko-digital/avm-client-dart
