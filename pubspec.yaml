@@ -45,8 +45,8 @@ dependencies:
   notified_preferences:
   widgetbook_annotation:
   widgetbook:
-  firebase_core: 2.28.0
-  firebase_crashlytics: 3.5.0
+  firebase_core: 3.15.2
+  firebase_crashlytics:
   url_launcher:
   mobile_scanner: ^7.1.0
   html:
