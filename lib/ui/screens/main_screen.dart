@@ -238,12 +238,15 @@ class _Body extends StatelessWidget {
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              return SingleChildScrollView(
-                primary: true,
-                padding: kScreenMargin,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(child: _buildContent(context)),
+              return Scrollbar(
+                child: SingleChildScrollView(
+                  primary: true,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: IntrinsicHeight(child: _buildContent(context)),
+                  ),
                 ),
               );
             },
@@ -271,21 +274,28 @@ class _Body extends StatelessWidget {
   Widget _buildContent(BuildContext context) {
     final strings = context.strings;
 
-    return Column(
-      children: [
-        // TODO Add reasonable spacer here
-        const Padding(
-          padding: EdgeInsets.all(48),
-          child: AutogramLogo(),
-        ),
-        Text(
-          strings.introHeading,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 24),
-        Text(strings.introBody, style: const TextStyle(height: 1.75)),
-      ],
+    return Padding(
+      padding: kScreenMargin.copyWith(bottom: 0),
+      child: Column(
+        children: [
+          Spacer(flex: 1),
+          const Padding(
+            padding: EdgeInsets.all(48),
+            child: AutogramLogo(),
+          ),
+          Text(
+            strings.introHeading,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            strings.introBody,
+            style: const TextStyle(height: 1.75),
+          ),
+          Spacer(flex: 4),
+        ],
+      ),
     );
   }
 
