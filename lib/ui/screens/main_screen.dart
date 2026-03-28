@@ -82,10 +82,7 @@ class _MainScreenState extends State<MainScreen> {
             }
           },
           child: Scaffold(
-            appBar: _MainAppBar(
-              context: context,
-              onMenuPressed: _showMenu,
-            ),
+            appBar: _MainAppBar(context: context, onMenuPressed: _showMenu),
             body: SafeArea(
               child: _Body(
                 onboardingRequired: onboardingRequired,
@@ -129,10 +126,8 @@ class _MainScreenState extends State<MainScreen> {
 
     return showGeneralDialog(
       context: context,
-      routeSettings: RouteSettings(
-        name: screen.runtimeType.toString(),
-      ),
-      pageBuilder: (context, _, __) => screen,
+      routeSettings: RouteSettings(name: screen.runtimeType.toString()),
+      pageBuilder: (context, _, _) => screen,
     );
   }
 
@@ -148,10 +143,9 @@ class _MainScreenState extends State<MainScreen> {
 
     // Removing other routes because might want to open another file from Files;
     // in that case we will stop any previous signing flow
-    return Navigator.of(context).pushAndRemoveUntil(
-      route,
-      (final route) => route.settings.name == '/',
-    );
+    return Navigator.of(
+      context,
+    ).pushAndRemoveUntil(route, (final route) => route.settings.name == '/');
   }
 
   void _handleDeepLink(Uri uri) {
@@ -189,10 +183,9 @@ class _MainScreenState extends State<MainScreen> {
 
       // Removing other routes because might want to open another file from URL;
       // in that case we will stop any previous signing flow
-      Navigator.of(context).pushAndRemoveUntil(
-        route,
-        (final route) => route.settings.name == '/',
-      );
+      Navigator.of(
+        context,
+      ).pushAndRemoveUntil(route, (final route) => route.settings.name == '/');
     }
   }
 
@@ -246,14 +239,14 @@ AppBar _MainAppBar({
         onPressed: onMenuPressed,
       ),
     ),
-    title: Builder(builder: (context) {
-      return Text(
-        context.strings.appName,
-        style: const TextStyle(
-          color: kMainAppBarForegroundColor,
-        ),
-      );
-    }),
+    title: Builder(
+      builder: (context) {
+        return Text(
+          context.strings.appName,
+          style: const TextStyle(color: kMainAppBarForegroundColor),
+        );
+      },
+    ),
   );
 }
 
@@ -301,10 +294,7 @@ class _Body extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  Text(
-                    strings.introBody,
-                    style: const TextStyle(height: 1.75),
-                  ),
+                  Text(strings.introBody, style: const TextStyle(height: 1.75)),
                 ],
               ),
             ),
@@ -355,20 +345,14 @@ class _Body extends StatelessWidget {
     }
 
     return FilledButton(
-      style: FilledButton.styleFrom(
-        minimumSize: kPrimaryButtonMinimumSize,
-      ),
+      style: FilledButton.styleFrom(minimumSize: kPrimaryButtonMinimumSize),
       onPressed: onPressed,
       child: Text(label),
     );
   }
 }
 
-@widgetbook.UseCase(
-  path: '[AVM]',
-  name: 'main',
-  type: AppBar,
-)
+@widgetbook.UseCase(path: '[AVM]', name: 'main', type: AppBar)
 Widget previewMainAppBar(BuildContext context) {
   return SizedBox(
     height: kToolbarHeight,
@@ -381,11 +365,7 @@ Widget previewMainAppBar(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(
-  path: '[Screens]',
-  name: '',
-  type: MainScreen,
-)
+@widgetbook.UseCase(path: '[Screens]', name: '', type: MainScreen)
 Widget previewMainScreen(BuildContext context) {
   final onboardingRequired = context.knobs.booleanOrNull(
     label: "Onboarding is required",

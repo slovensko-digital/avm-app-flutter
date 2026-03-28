@@ -55,15 +55,15 @@ class PresentSignedDocumentScreen extends StatelessWidget {
         return cubit;
       },
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-        ),
+        appBar: AppBar(automaticallyImplyLeading: false),
         body: SafeArea(
           child: Builder(
             builder: (context) {
               // Need outer Context to access Cubit
-              return BlocConsumer<PresentSignedDocumentCubit,
-                  PresentSignedDocumentState>(
+              return BlocConsumer<
+                PresentSignedDocumentCubit,
+                PresentSignedDocumentState
+              >(
                 listener: (context, state) {
                   if (state is PresentSignedDocumentErrorState) {
                     final error = state.error;
@@ -123,8 +123,9 @@ class PresentSignedDocumentScreen extends StatelessWidget {
       );
     } catch (error) {
       if (context.mounted) {
-        final message =
-            strings.shareSignedDocumentErrorMessage(getErrorMessage(error));
+        final message = strings.shareSignedDocumentErrorMessage(
+          getErrorMessage(error),
+        );
         _showError(context, message);
       }
     }
@@ -157,35 +158,33 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: kScreenMargin,
-      child: _getChild(context),
-    );
+    return Padding(padding: kScreenMargin, child: _getChild(context));
   }
 
   Widget _getChild(BuildContext context) {
     final sharingEnabled = (signingType == DocumentSigningType.local);
-    final onShareFileRequested =
-        sharingEnabled ? this.onShareFileRequested : null;
+    final onShareFileRequested = sharingEnabled
+        ? this.onShareFileRequested
+        : null;
 
     return switch (state) {
       PresentSignedDocumentInitialState _ => const LoadingContent(),
       PresentSignedDocumentLoadingState _ => const LoadingContent(),
       PresentSignedDocumentErrorState _ => _SuccessContent(
-          file: null,
-          onShareFileRequested: onShareFileRequested,
-          onCloseRequested: onCloseRequested,
-        ),
+        file: null,
+        onShareFileRequested: onShareFileRequested,
+        onCloseRequested: onCloseRequested,
+      ),
       PresentSignedLocalDocumentSuccessState state => _SuccessContent(
-          file: state.file,
-          onShareFileRequested: onShareFileRequested,
-          onCloseRequested: onCloseRequested,
-        ),
+        file: state.file,
+        onShareFileRequested: onShareFileRequested,
+        onCloseRequested: onCloseRequested,
+      ),
       PresentSignedRemoteDocumentSuccessState() => _SuccessContent(
-          file: null,
-          onShareFileRequested: null,
-          onCloseRequested: onCloseRequested,
-        ),
+        file: null,
+        onShareFileRequested: null,
+        onCloseRequested: onCloseRequested,
+      ),
     };
   }
 }
@@ -216,7 +215,7 @@ class _SuccessContent extends StatelessWidget {
 
       body = MarkdownText(
         text,
-        onLinkTap: (_, __, ___) {
+        onLinkTap: (_, _, _) {
           onShareFileRequested?.call();
         },
       );
@@ -245,9 +244,7 @@ class _SuccessContent extends StatelessWidget {
 
         // Secondary button
         TextButton(
-          style: TextButton.styleFrom(
-            minimumSize: kPrimaryButtonMinimumSize,
-          ),
+          style: TextButton.styleFrom(minimumSize: kPrimaryButtonMinimumSize),
           onPressed: onCloseRequested,
           child: Text(strings.buttonCloseLabel),
         ),
@@ -258,12 +255,12 @@ class _SuccessContent extends StatelessWidget {
   static String _getParentDirectoryName(File file) {
     return kIsWeb
         ? file.uri
-                .resolve('.')
-                .path
-                .split('/')
-                .where((e) => e.isNotEmpty)
-                .lastOrNull ??
-            '&nbsp;'
+                  .resolve('.')
+                  .path
+                  .split('/')
+                  .where((e) => e.isNotEmpty)
+                  .lastOrNull ??
+              '&nbsp;'
         : file.parent.basename;
   }
 }

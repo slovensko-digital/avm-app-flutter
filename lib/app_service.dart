@@ -99,7 +99,7 @@ class AppService {
     _collectIncomingUri(uri);
   }
 
-  static _collectIncomingUri(dynamic value) {
+  static void _collectIncomingUri(dynamic value) {
     if (value is String && value.isNotEmpty) {
       final uri = Uri.tryParse(value);
 

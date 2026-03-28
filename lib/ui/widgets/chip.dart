@@ -32,9 +32,9 @@ class Chip extends StatelessWidget {
       ),
       padding: const EdgeInsets.only(left: 8, top: 6, bottom: 6, right: 12),
       child: Row(
+        spacing: 8,
         children: [
-          if (leading != null) leading!,
-          if (leading != null) const SizedBox(width: 8),
+          ?leading,
           Text(label, style: TextStyle(color: foreground)),
         ],
       ),
@@ -42,16 +42,9 @@ class Chip extends StatelessWidget {
   }
 }
 
-@widgetbook.UseCase(
-  path: '[AVM]',
-  name: '',
-  type: Chip,
-)
+@widgetbook.UseCase(path: '[AVM]', name: '', type: Chip)
 Widget previewChip(BuildContext context) {
-  var label = context.knobs.string(
-    label: 'Label',
-    initialValue: 'Chip!',
-  );
+  var label = context.knobs.string(label: 'Label', initialValue: 'Chip!');
   var foreground = context.knobs.color(
     label: 'Foreground',
     initialValue: material.Colors.black,

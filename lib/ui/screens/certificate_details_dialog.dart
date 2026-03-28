@@ -25,9 +25,7 @@ class CertificateDetailsDialog extends StatelessWidget {
         title: null,
         actions: const [CloseButton()],
       ),
-      body: SafeArea(
-        child: body,
-      ),
+      body: SafeArea(child: body),
     );
   }
 
@@ -38,7 +36,7 @@ class CertificateDetailsDialog extends StatelessWidget {
     return showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      pageBuilder: (context, __, ___) {
+      pageBuilder: (context, _, _) {
         return CertificateDetailsDialog(certificate);
       },
     );
