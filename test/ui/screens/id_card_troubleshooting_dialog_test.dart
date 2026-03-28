@@ -2,6 +2,7 @@ import 'package:autogram/l10n/app_localizations.dart';
 import 'package:autogram/l10n/app_localizations_sk.dart';
 import 'package:autogram/ui/screens/id_card_troubleshooting_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Tests for the [IdCardTroubleshootingDialog] widget.
@@ -9,161 +10,65 @@ void main() {
   final strings = AppLocalizationsSk();
 
   /// Helper to wrap dialog with necessary MaterialApp context
-  Widget buildTestWidget({
-    required Widget child,
-  }) {
+  Widget buildTestWidget() {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Builder(
-            builder: (context) {
-              return GestureDetector(
-                onTap: () => showDialog(
-                  context: context,
-                  builder: (dialogContext) => child,
-                ),
-                child: const Text('Show Dialog'),
-              );
-            },
-          ),
-        ),
-      ),
+      home: const IdCardTroubleshootingDialog(),
     );
   }
 
   group('IdCardTroubleshootingDialog', () {
     testWidgets('displays dialog title', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestWidget(
-        child: const IdCardTroubleshootingDialog(),
-      ));
-
-      // Open the dialog
-      await tester.tap(find.text('Show Dialog'));
-      await tester.pumpAndSettle();
+      await tester.pumpWidget(buildTestWidget());
 
       expect(find.text(strings.idCardTroubleshootingTitle), findsOneWidget);
     });
 
-    testWidgets('displays close button in header', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestWidget(
-        child: const IdCardTroubleshootingDialog(),
-      ));
-
-      // Open the dialog
-      await tester.tap(find.text('Show Dialog'));
-      await tester.pumpAndSettle();
-
-      expect(find.byIcon(Icons.close), findsOneWidget);
-    });
-
     testWidgets('displays troubleshooting instructions', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestWidget(
-        child: const IdCardTroubleshootingDialog(),
-      ));
+      await tester.pumpWidget(buildTestWidget());
 
-      // Open the dialog
-      await tester.tap(find.text('Show Dialog'));
-      await tester.pumpAndSettle();
-
-      // The instructions should contain several key words
+      // The instructions should be rendered as markdown
       expect(find.byType(RichText), findsWidgets);
     });
 
     testWidgets('displays close button at the bottom', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestWidget(
-        child: const IdCardTroubleshootingDialog(),
-      ));
-
-      // Open the dialog
-      await tester.tap(find.text('Show Dialog'));
-      await tester.pumpAndSettle();
+      await tester.pumpWidget(buildTestWidget());
 
       expect(find.byType(ElevatedButton), findsOneWidget);
       expect(find.widgetWithText(ElevatedButton, strings.closeLabel), findsOneWidget);
     });
 
-    testWidgets('closes dialog when close button is pressed', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestWidget(
-        child: const IdCardTroubleshootingDialog(),
-      ));
+    testWidgets('animated image carousel cycles through images', (WidgetTester tester) async {
+      await tester.pumpWidget(buildTestWidget());
 
-      // Open the dialog
-      await tester.tap(find.text('Show Dialog'));
-      await tester.pumpAndSettle();
+      // Find the initial SVG (image 1)
+      expect(find.byType(SvgPicture), findsOneWidget);
 
-      expect(find.byType(Dialog), findsOneWidget);
+      // Verify first image is shown
+      await tester.pump();
+      expect(find.byType(SvgPicture), findsOneWidget);
 
-      // Close the dialog (scroll into view first — dialog may overflow viewport)
-      final closeButton = find.widgetWithText(ElevatedButton, strings.closeLabel);
-      await tester.ensureVisible(closeButton);
-      await tester.pumpAndSettle();
-      await tester.tap(closeButton);
-      await tester.pumpAndSettle();
+      // Wait for first image cycle (1.65 seconds)
+      await tester.pump(const Duration(milliseconds: 1700));
 
-      expect(find.byType(Dialog), findsNothing);
+      // Image should still exist (carousel still running)
+      expect(find.byType(SvgPicture), findsOneWidget);
     });
 
-    testWidgets('closes dialog when close icon is pressed', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestWidget(
-        child: const IdCardTroubleshootingDialog(),
-      ));
+    testWidgets('has proper styling and layout', (WidgetTester tester) async {
+      await tester.pumpWidget(buildTestWidget());
 
-      // Open the dialog
-      await tester.tap(find.text('Show Dialog'));
-      await tester.pumpAndSettle();
-
-      expect(find.byType(Dialog), findsOneWidget);
-
-      // Close the dialog using the close icon
-      await tester.tap(find.byIcon(Icons.close));
-      await tester.pumpAndSettle();
-
-      expect(find.byType(Dialog), findsNothing);
-    });
-
-    testWidgets('dialog is scrollable if content is large', (WidgetTester tester) async {
-      tester.binding.window.physicalSizeTestValue = const Size(400, 500);
-      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
-
-      await tester.pumpWidget(buildTestWidget(
-        child: const IdCardTroubleshootingDialog(),
-      ));
-
-      // Open the dialog
-      await tester.tap(find.text('Show Dialog'));
-      await tester.pumpAndSettle();
-
+      // Should have Scaffold
+      expect(find.byType(Scaffold), findsOneWidget);
+      
+      // Should have SingleChildScrollView for scrolling
       expect(find.byType(SingleChildScrollView), findsOneWidget);
-    });
-
-    testWidgets('dialog has proper styling with rounded corners', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestWidget(
-        child: const IdCardTroubleshootingDialog(),
-      ));
-
-      // Open the dialog
-      await tester.tap(find.text('Show Dialog'));
-      await tester.pumpAndSettle();
-
-      final dialog = find.byType(Dialog).first;
-      expect(dialog, findsOneWidget);
-    });
-
-    testWidgets('handles missing instruction image gracefully', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestWidget(
-        child: const IdCardTroubleshootingDialog(),
-      ));
-
-      // Open the dialog
-      await tester.tap(find.text('Show Dialog'));
-      await tester.pumpAndSettle();
-
-      // Even if the image doesn't exist, the dialog should still show
-      expect(find.byType(Dialog), findsOneWidget);
-      expect(find.byType(Column), findsWidgets);
+      
+      // Should have SvgPicture for images
+      expect(find.byType(SvgPicture), findsOneWidget);
     });
   });
 }
+

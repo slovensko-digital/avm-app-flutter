@@ -75,9 +75,13 @@ class SelectSigningCertificateFragment extends StatelessWidget {
 
   /// Shows the troubleshooting dialog with ID card attachment instructions.
   static void showTroubleshootingDialog(BuildContext context) {
-    showDialog(
+    showGeneralDialog(
       context: context,
-      builder: (context) => const IdCardTroubleshootingDialog(),
+      pageBuilder: (_, __, ___) => const IdCardTroubleshootingDialog(),
+      transitionDuration: const Duration(milliseconds: 300),
+      transitionBuilder: (context, animation, _, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
     );
   }
 }
