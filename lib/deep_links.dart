@@ -61,7 +61,6 @@ DeepLinkAction parseDeepLinkAction(Uri uri) {
         guid: uri.queryParameters["guid"]!,
         key: uri.queryParameters["key"]!,
         integration: uri.queryParameters["integration"],
-        pushkey: uri.queryParameters["pushkey"],
       );
     }(),
     _ => throw ArgumentError.value(
@@ -76,20 +75,17 @@ DeepLinkAction parseDeepLinkAction(Uri uri) {
 sealed class DeepLinkAction {}
 
 // TODO PAIRING Create type to RegisterIntegrationAction
-// TODO PAIRING Create interface for IntegrationAction
 
 /// Action to sign remote document.
 class SignRemoteDocumentAction extends DeepLinkAction {
   final String guid;
   final String key;
   final String? integration;
-  final String? pushkey; // TODO PAIRING Drop pushkey, but keep integration
 
   SignRemoteDocumentAction({
     required this.guid,
     required this.key,
     required this.integration,
-    required this.pushkey,
   });
 
   @override
