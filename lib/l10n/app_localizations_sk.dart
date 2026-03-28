@@ -331,6 +331,20 @@ class AppLocalizationsSk extends AppLocalizations {
       'Chyba pri načítavaní certifikátov z občianskeho preukazu.';
 
   @override
+  String get troubleshootingButtonLabel => 'Návod na riešenie problémov';
+
+  @override
+  String get idCardTroubleshootingTitle =>
+      'Ako správne priložiť občiansky preukaz';
+
+  @override
+  String get idCardTroubleshootingInstructions =>
+      '**Kroky na pripojenie občianskeho preukazu:**\n\n1. Uistite sa, že je váš telefón odomknutý a aplikácia je stále aktívna.\n2. Jemne položte spodnú časť občianskeho preukazu (chip) na zadnú stranu telefónu.\n3. Vyrovnajte preukaz so stredom zadnej strany telefónu.\n4. Nechajte ho v pokoji kým sa údaje nenačítajú.\n5. Ak sa to nepodarí, skúste preukaz jemne posunúť o pár centimetrov.\n\n**Pomôcka:**\n- Chip sa zvyčajne nachádza v spodnej časti preukazu.\n- Nenechávajte ostatné kovové predmety v blízkosti telefónu.\n- Ak máte puzdro, možno bude potrebné ho dočasne odstrániť.';
+
+  @override
+  String get closeLabel => 'Zavrieť';
+
+  @override
   String certificateIssuer(Object text) {
     return 'Vydavateľ: $text';
   }
