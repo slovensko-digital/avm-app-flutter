@@ -1,5 +1,5 @@
 import 'dart:developer' as developer;
-import 'dart:io' show File, OSError, PathAccessException;
+import 'dart:io' show File, OSError, PathAccessException, Platform;
 
 import 'package:autogram_sign/autogram_sign.dart' show SignDocumentResponseBody;
 import 'package:flutter/foundation.dart';
@@ -133,8 +133,7 @@ class PresentSignedDocumentScreen extends StatelessWidget {
 
   /// Handles close request.
   Future<void> _handleClose(BuildContext context) {
-    if (openFromDeepLink) {
-      // TODO Fix for IOS
+    if (openFromDeepLink && Platform.isAndroid) {
       return SystemNavigator.pop();
     } else {
       return Navigator.of(context).maybePop();
