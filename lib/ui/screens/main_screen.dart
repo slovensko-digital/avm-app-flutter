@@ -5,7 +5,6 @@ import 'dart:io' show File;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:logging/logging.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -21,6 +20,7 @@ import '../app_theme.dart';
 import '../onboarding.dart';
 import '../remote_document_signing.dart';
 import '../widgets/autogram_logo.dart';
+import '../widgets/main_app_bar.dart';
 import 'main_menu_screen.dart';
 import 'open_document_screen.dart';
 import 'preview_document_screen.dart';
@@ -82,7 +82,7 @@ class _MainScreenState extends State<MainScreen> {
             }
           },
           child: Scaffold(
-            appBar: _MainAppBar(context: context, onMenuPressed: _showMenu),
+            appBar: MainAppBar(context: context, onMenuPressed: _showMenu),
             body: SafeArea(
               child: _Body(
                 onboardingRequired: onboardingRequired,
@@ -127,7 +127,7 @@ class _MainScreenState extends State<MainScreen> {
     return showGeneralDialog(
       context: context,
       routeSettings: RouteSettings(name: screen.runtimeType.toString()),
-      pageBuilder: (context, _, __) => screen,
+      pageBuilder: (context, _, _) => screen,
     );
   }
 
@@ -214,36 +214,6 @@ class _MainScreenState extends State<MainScreen> {
       }
     }
   }
-}
-
-// ignore: non_constant_identifier_names
-AppBar _MainAppBar({
-  required BuildContext context,
-  VoidCallback? onMenuPressed,
-}) {
-  final strings = context.strings;
-  final iconColor = Theme.of(context).colorScheme.onSecondary;
-
-  return AppBar(
-    foregroundColor: kMainAppBarForegroundColor,
-    backgroundColor: kMainAppBarBackgroundColor,
-    leading: Semantics(
-      button: true,
-      excludeSemantics: true,
-      label: strings.buttonMenuLabelSemantics,
-      child: IconButton(
-        icon: SvgPicture.asset(
-          'assets/icons/menu.svg',
-          colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
-        ),
-        onPressed: onMenuPressed,
-      ),
-    ),
-    title: Text(
-      strings.appName,
-      style: const TextStyle(color: kMainAppBarForegroundColor),
-    ),
-  );
 }
 
 /// [MainScreen] body.
@@ -354,19 +324,6 @@ class _Body extends StatelessWidget {
       child: Text(strings.buttonScanQrCodeLabel),
     );
   }
-}
-
-@widgetbook.UseCase(path: '[AVM]', name: 'main', type: AppBar)
-Widget previewMainAppBar(BuildContext context) {
-  return SizedBox(
-    height: kToolbarHeight,
-    child: _MainAppBar(
-      context: context,
-      onMenuPressed: () {
-        developer.log("onMenuPressed");
-      },
-    ),
-  );
 }
 
 @widgetbook.UseCase(path: '[Screens]', name: '', type: MainScreen)
