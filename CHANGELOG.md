@@ -1,8 +1,9 @@
 # Changelog
 
-## 2026-03-28 - v1.5.0(48)
+## 2026-03-28 - v1.5.0(49)
 
 - #113 | eID mSDK update v2.0
+- #107 | iOS: Don't trying to close app after success
 
 ## 2026-03-28 - v1.4.3(47)
 
