@@ -82,10 +82,7 @@ class _MainScreenState extends State<MainScreen> {
             }
           },
           child: Scaffold(
-            appBar: _MainAppBar(
-              context: context,
-              onMenuPressed: _showMenu,
-            ),
+            appBar: _MainAppBar(context: context, onMenuPressed: _showMenu),
             body: SafeArea(
               child: _Body(
                 onboardingRequired: onboardingRequired,
@@ -129,9 +126,7 @@ class _MainScreenState extends State<MainScreen> {
 
     return showGeneralDialog(
       context: context,
-      routeSettings: RouteSettings(
-        name: screen.runtimeType.toString(),
-      ),
+      routeSettings: RouteSettings(name: screen.runtimeType.toString()),
       pageBuilder: (context, _, __) => screen,
     );
   }
@@ -148,10 +143,9 @@ class _MainScreenState extends State<MainScreen> {
 
     // Removing other routes because might want to open another file from Files;
     // in that case we will stop any previous signing flow
-    return Navigator.of(context).pushAndRemoveUntil(
-      route,
-      (final route) => route.settings.name == '/',
-    );
+    return Navigator.of(
+      context,
+    ).pushAndRemoveUntil(route, (final route) => route.settings.name == '/');
   }
 
   void _handleDeepLink(Uri uri) {
@@ -189,10 +183,9 @@ class _MainScreenState extends State<MainScreen> {
 
       // Removing other routes because might want to open another file from URL;
       // in that case we will stop any previous signing flow
-      Navigator.of(context).pushAndRemoveUntil(
-        route,
-        (final route) => route.settings.name == '/',
-      );
+      Navigator.of(
+        context,
+      ).pushAndRemoveUntil(route, (final route) => route.settings.name == '/');
     }
   }
 
@@ -228,8 +221,8 @@ AppBar _MainAppBar({
   required BuildContext context,
   VoidCallback? onMenuPressed,
 }) {
+  final strings = context.strings;
   final iconColor = Theme.of(context).colorScheme.onSecondary;
-  final colorFilter = ColorFilter.mode(iconColor, BlendMode.srcIn);
 
   return AppBar(
     foregroundColor: kMainAppBarForegroundColor,
@@ -237,23 +230,19 @@ AppBar _MainAppBar({
     leading: Semantics(
       button: true,
       excludeSemantics: true,
-      label: context.strings.buttonMenuLabelSemantics,
+      label: strings.buttonMenuLabelSemantics,
       child: IconButton(
         icon: SvgPicture.asset(
           'assets/icons/menu.svg',
-          colorFilter: colorFilter,
+          colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
         ),
         onPressed: onMenuPressed,
       ),
     ),
-    title: Builder(builder: (context) {
-      return Text(
-        context.strings.appName,
-        style: const TextStyle(
-          color: kMainAppBarForegroundColor,
-        ),
-      );
-    }),
+    title: Text(
+      strings.appName,
+      style: const TextStyle(color: kMainAppBarForegroundColor),
+    ),
   );
 }
 
@@ -273,41 +262,21 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final strings = context.strings;
-    final primaryColor = Theme.of(context).primaryColor;
-
     return Column(
       children: [
         // logo, headline and body text
         Expanded(
-          child: Padding(
-            padding: kScreenMargin.copyWith(bottom: 0),
-            child: SingleChildScrollView(
-              primary: true,
-              child: Column(
-                children: [
-                  // TODO Decrease top space relatively to overall free space
-                  const SizedBox(height: 60),
-                  const Padding(
-                    padding: EdgeInsets.all(48),
-                    child: AutogramLogo(),
-                  ),
-                  Text(
-                    strings.introHeading,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    strings.introBody,
-                    style: const TextStyle(height: 1.75),
-                  ),
-                ],
-              ),
-            ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                primary: true,
+                padding: kScreenMargin,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: IntrinsicHeight(child: _buildContent(context)),
+                ),
+              );
+            },
           ),
         ),
 
@@ -315,29 +284,37 @@ class _Body extends StatelessWidget {
         Padding(
           padding: kScreenMargin,
           child: Column(
+            spacing: kButtonSpace,
             children: [
               // Secondary button
-              if (onboardingRequired == false)
-                FilledButton(
-                  // OutlinedButton is ugly
-                  style: FilledButton.styleFrom(
-                    minimumSize: kPrimaryButtonMinimumSize,
-                    backgroundColor: Colors.transparent,
-                    foregroundColor: primaryColor,
-                    side: BorderSide(color: primaryColor, width: 2),
-                  ),
-                  onPressed: onStartQrCodeScannerRequested,
-                  child: Text(strings.buttonScanQrCodeLabel),
-                ),
-
-              if (onboardingRequired == false)
-                const SizedBox(height: kButtonSpace),
+              if (onboardingRequired == false) _buildScanButton(context),
 
               // Primary button
               _buildPrimaryButton(context),
             ],
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    final strings = context.strings;
+
+    return Column(
+      children: [
+        // TODO Add reasonable spacer here
+        const Padding(
+          padding: EdgeInsets.all(48),
+          child: AutogramLogo(),
+        ),
+        Text(
+          strings.introHeading,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 24),
+        Text(strings.introBody, style: const TextStyle(height: 1.75)),
       ],
     );
   }
@@ -355,20 +332,31 @@ class _Body extends StatelessWidget {
     }
 
     return FilledButton(
-      style: FilledButton.styleFrom(
-        minimumSize: kPrimaryButtonMinimumSize,
-      ),
+      style: FilledButton.styleFrom(minimumSize: kPrimaryButtonMinimumSize),
       onPressed: onPressed,
       child: Text(label),
     );
   }
+
+  Widget _buildScanButton(BuildContext context) {
+    final strings = context.strings;
+    final primaryColor = Theme.of(context).primaryColor;
+
+    return FilledButton(
+      // OutlinedButton is ugly
+      style: FilledButton.styleFrom(
+        minimumSize: kPrimaryButtonMinimumSize,
+        backgroundColor: Colors.transparent,
+        foregroundColor: primaryColor,
+        side: BorderSide(color: primaryColor, width: 2),
+      ),
+      onPressed: onStartQrCodeScannerRequested,
+      child: Text(strings.buttonScanQrCodeLabel),
+    );
+  }
 }
 
-@widgetbook.UseCase(
-  path: '[AVM]',
-  name: 'main',
-  type: AppBar,
-)
+@widgetbook.UseCase(path: '[AVM]', name: 'main', type: AppBar)
 Widget previewMainAppBar(BuildContext context) {
   return SizedBox(
     height: kToolbarHeight,
@@ -381,11 +369,7 @@ Widget previewMainAppBar(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(
-  path: '[Screens]',
-  name: '',
-  type: MainScreen,
-)
+@widgetbook.UseCase(path: '[Screens]', name: '', type: MainScreen)
 Widget previewMainScreen(BuildContext context) {
   final onboardingRequired = context.knobs.booleanOrNull(
     label: "Onboarding is required",

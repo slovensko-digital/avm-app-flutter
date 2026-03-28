@@ -4,6 +4,9 @@ analyzer:
   exclude:
     - lib/l10n/*.dart
 
+formatter:
+  trailing_commas: preserve
+
 linter:
   rules:
     - prefer_relative_imports
