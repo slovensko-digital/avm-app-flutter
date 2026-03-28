@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-03-28 - v1.4.3(47)
+
+- #114 | Made main screen content responsive
+
 ## 2026-03-24 - v1.4.2(46)
 
 - #112 | Update to Flutter SDK v3.38.10
