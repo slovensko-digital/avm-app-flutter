@@ -143,9 +143,10 @@ class _MainScreenState extends State<MainScreen> {
 
     // Removing other routes because might want to open another file from Files;
     // in that case we will stop any previous signing flow
-    return Navigator.of(
-      context,
-    ).pushAndRemoveUntil(route, (final route) => route.settings.name == '/');
+    return Navigator.of(context).pushAndRemoveUntil(
+      route,
+      (final route) => route.settings.name == '/',
+    );
   }
 
   void _handleDeepLink(Uri uri) {
@@ -183,9 +184,10 @@ class _MainScreenState extends State<MainScreen> {
 
       // Removing other routes because might want to open another file from URL;
       // in that case we will stop any previous signing flow
-      Navigator.of(
-        context,
-      ).pushAndRemoveUntil(route, (final route) => route.settings.name == '/');
+      Navigator.of(context).pushAndRemoveUntil(
+        route,
+        (final route) => route.settings.name == '/',
+      );
     }
   }
 
