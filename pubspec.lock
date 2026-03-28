@@ -294,8 +294,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "feature/sdk-update-v2"
-      resolved-ref: fa919a5a0a340a7eba4b20328793baf370af94e6
+      ref: "v1.0.0"
+      resolved-ref: bce0ee7209df4f6c6e5cf29dbdf02a0cab5b857b
       url: "https://github.com/slovensko-digital/eidmsdk-flutter"
     source: git
     version: "1.0.0"
