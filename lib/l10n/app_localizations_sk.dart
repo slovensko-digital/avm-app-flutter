@@ -141,33 +141,42 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String signatureTypeSummary(String name) {
-    String _temp0 = intl.Intl.selectLogic(name, {
-      'withoutTimestamp': 'Vlastnoručný podpis',
-      'withTimestamp': 'Osvedčený podpis',
-      'other': 'Spýtať sa pri podpisovaní',
-    });
+    String _temp0 = intl.Intl.selectLogic(
+      name,
+      {
+        'withoutTimestamp': 'Vlastnoručný podpis',
+        'withTimestamp': 'Osvedčený podpis',
+        'other': 'Spýtať sa pri podpisovaní',
+      },
+    );
     return '$_temp0';
   }
 
   @override
   String signatureTypeValueTitle(String name) {
-    String _temp0 = intl.Intl.selectLogic(name, {
-      'withoutTimestamp': 'Vlastnoručný podpis',
-      'withTimestamp': 'Osvedčený podpis',
-      'other': '-',
-    });
+    String _temp0 = intl.Intl.selectLogic(
+      name,
+      {
+        'withoutTimestamp': 'Vlastnoručný podpis',
+        'withTimestamp': 'Osvedčený podpis',
+        'other': '-',
+      },
+    );
     return '$_temp0';
   }
 
   @override
   String signatureTypeValueSubtitle(String name) {
-    String _temp0 = intl.Intl.selectLogic(name, {
-      'withoutTimestamp':
-          'Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.',
-      'withTimestamp':
-          'Ako keby ste podpis overili u notára.\nObsahuje časovú pečiatku.',
-      'other': '-',
-    });
+    String _temp0 = intl.Intl.selectLogic(
+      name,
+      {
+        'withoutTimestamp':
+            'Ako keby ste tento dokument podpísali na papieri.\nBez časovej pečiatky.',
+        'withTimestamp':
+            'Ako keby ste podpis overili u notára.\nObsahuje časovú pečiatku.',
+        'other': '-',
+      },
+    );
     return '$_temp0';
   }
 

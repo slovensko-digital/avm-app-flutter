@@ -1,8 +1,12 @@
 # Changelog
 
-## 2026-03-26 - v1.5.0(47)
+## 2026-03-28 - v1.5.0(48)
 
 - #113 | eID mSDK update v2.0
+
+## 2026-03-28 - v1.4.3(47)
+
+- #114 | Made main screen content responsive
 
 ## 2026-03-24 - v1.4.2(46)
 

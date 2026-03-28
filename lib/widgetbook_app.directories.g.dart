@@ -77,6 +77,8 @@ import 'package:autogram/ui/widgets/loading_content.dart'
     as _autogram_ui_widgets_loading_content;
 import 'package:autogram/ui/widgets/loading_indicator.dart'
     as _autogram_ui_widgets_loading_indicator;
+import 'package:autogram/ui/widgets/main_app_bar.dart'
+    as _autogram_ui_widgets_main_app_bar;
 import 'package:autogram/ui/widgets/markdown_text.dart'
     as _autogram_ui_widgets_markdown_text;
 import 'package:autogram/ui/widgets/option_picker.dart'
@@ -102,7 +104,7 @@ final directories = <_widgetbook.WidgetbookNode>[
         useCases: [
           _widgetbook.WidgetbookUseCase(
             name: 'main',
-            builder: _autogram_ui_screens_main_screen.previewMainAppBar,
+            builder: _autogram_ui_widgets_main_app_bar.previewMainAppBar,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'normal',

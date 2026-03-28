@@ -5,7 +5,6 @@ import 'dart:io' show File;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:logging/logging.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -21,6 +20,7 @@ import '../app_theme.dart';
 import '../onboarding.dart';
 import '../remote_document_signing.dart';
 import '../widgets/autogram_logo.dart';
+import '../widgets/main_app_bar.dart';
 import 'main_menu_screen.dart';
 import 'open_document_screen.dart';
 import 'preview_document_screen.dart';
@@ -82,7 +82,7 @@ class _MainScreenState extends State<MainScreen> {
             }
           },
           child: Scaffold(
-            appBar: _MainAppBar(context: context, onMenuPressed: _showMenu),
+            appBar: MainAppBar(context: context, onMenuPressed: _showMenu),
             body: SafeArea(
               child: _Body(
                 onboardingRequired: onboardingRequired,
@@ -143,9 +143,10 @@ class _MainScreenState extends State<MainScreen> {
 
     // Removing other routes because might want to open another file from Files;
     // in that case we will stop any previous signing flow
-    return Navigator.of(
-      context,
-    ).pushAndRemoveUntil(route, (final route) => route.settings.name == '/');
+    return Navigator.of(context).pushAndRemoveUntil(
+      route,
+      (final route) => route.settings.name == '/',
+    );
   }
 
   void _handleDeepLink(Uri uri) {
@@ -183,9 +184,10 @@ class _MainScreenState extends State<MainScreen> {
 
       // Removing other routes because might want to open another file from URL;
       // in that case we will stop any previous signing flow
-      Navigator.of(
-        context,
-      ).pushAndRemoveUntil(route, (final route) => route.settings.name == '/');
+      Navigator.of(context).pushAndRemoveUntil(
+        route,
+        (final route) => route.settings.name == '/',
+      );
     }
   }
 
@@ -216,40 +218,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-// ignore: non_constant_identifier_names
-AppBar _MainAppBar({
-  required BuildContext context,
-  VoidCallback? onMenuPressed,
-}) {
-  final iconColor = Theme.of(context).colorScheme.onSecondary;
-  final colorFilter = ColorFilter.mode(iconColor, BlendMode.srcIn);
-
-  return AppBar(
-    foregroundColor: kMainAppBarForegroundColor,
-    backgroundColor: kMainAppBarBackgroundColor,
-    leading: Semantics(
-      button: true,
-      excludeSemantics: true,
-      label: context.strings.buttonMenuLabelSemantics,
-      child: IconButton(
-        icon: SvgPicture.asset(
-          'assets/icons/menu.svg',
-          colorFilter: colorFilter,
-        ),
-        onPressed: onMenuPressed,
-      ),
-    ),
-    title: Builder(
-      builder: (context) {
-        return Text(
-          context.strings.appName,
-          style: const TextStyle(color: kMainAppBarForegroundColor),
-        );
-      },
-    ),
-  );
-}
-
 /// [MainScreen] body.
 class _Body extends StatelessWidget {
   final bool? onboardingRequired;
@@ -266,38 +234,24 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final strings = context.strings;
-    final primaryColor = Theme.of(context).primaryColor;
-
     return Column(
       children: [
         // logo, headline and body text
         Expanded(
-          child: Padding(
-            padding: kScreenMargin.copyWith(bottom: 0),
-            child: SingleChildScrollView(
-              primary: true,
-              child: Column(
-                children: [
-                  // TODO Decrease top space relatively to overall free space
-                  const SizedBox(height: 60),
-                  const Padding(
-                    padding: EdgeInsets.all(48),
-                    child: AutogramLogo(),
-                  ),
-                  Text(
-                    strings.introHeading,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Scrollbar(
+                child: SingleChildScrollView(
+                  primary: true,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
                     ),
+                    child: IntrinsicHeight(child: _buildContent(context)),
                   ),
-                  const SizedBox(height: 24),
-                  Text(strings.introBody, style: const TextStyle(height: 1.75)),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         ),
 
@@ -305,23 +259,10 @@ class _Body extends StatelessWidget {
         Padding(
           padding: kScreenMargin,
           child: Column(
+            spacing: kButtonSpace,
             children: [
               // Secondary button
-              if (onboardingRequired == false)
-                FilledButton(
-                  // OutlinedButton is ugly
-                  style: FilledButton.styleFrom(
-                    minimumSize: kPrimaryButtonMinimumSize,
-                    backgroundColor: Colors.transparent,
-                    foregroundColor: primaryColor,
-                    side: BorderSide(color: primaryColor, width: 2),
-                  ),
-                  onPressed: onStartQrCodeScannerRequested,
-                  child: Text(strings.buttonScanQrCodeLabel),
-                ),
-
-              if (onboardingRequired == false)
-                const SizedBox(height: kButtonSpace),
+              if (onboardingRequired == false) _buildScanButton(context),
 
               // Primary button
               _buildPrimaryButton(context),
@@ -329,6 +270,34 @@ class _Body extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    final strings = context.strings;
+
+    return Padding(
+      padding: kScreenMargin.copyWith(bottom: 0),
+      child: Column(
+        children: [
+          Spacer(flex: 1),
+          const Padding(
+            padding: EdgeInsets.all(48),
+            child: AutogramLogo(),
+          ),
+          Text(
+            strings.introHeading,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            strings.introBody,
+            style: const TextStyle(height: 1.75),
+          ),
+          Spacer(flex: 4),
+        ],
+      ),
     );
   }
 
@@ -350,19 +319,23 @@ class _Body extends StatelessWidget {
       child: Text(label),
     );
   }
-}
 
-@widgetbook.UseCase(path: '[AVM]', name: 'main', type: AppBar)
-Widget previewMainAppBar(BuildContext context) {
-  return SizedBox(
-    height: kToolbarHeight,
-    child: _MainAppBar(
-      context: context,
-      onMenuPressed: () {
-        developer.log("onMenuPressed");
-      },
-    ),
-  );
+  Widget _buildScanButton(BuildContext context) {
+    final strings = context.strings;
+    final primaryColor = Theme.of(context).primaryColor;
+
+    return FilledButton(
+      // OutlinedButton is ugly
+      style: FilledButton.styleFrom(
+        minimumSize: kPrimaryButtonMinimumSize,
+        backgroundColor: Colors.transparent,
+        foregroundColor: primaryColor,
+        side: BorderSide(color: primaryColor, width: 2),
+      ),
+      onPressed: onStartQrCodeScannerRequested,
+      child: Text(strings.buttonScanQrCodeLabel),
+    );
+  }
 }
 
 @widgetbook.UseCase(path: '[Screens]', name: '', type: MainScreen)
