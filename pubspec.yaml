@@ -1,7 +1,7 @@
 name: autogram
 description: "Autogram v mobile"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.4.3+47
+version: 1.5.0+49
 
 environment:
   sdk: '>=3.10.9 <4.0.0'
@@ -14,7 +14,7 @@ dependencies:
   eidmsdk:
     git:
       url: https://github.com/slovensko-digital/eidmsdk-flutter
-      ref: v0.9.1
+      ref: v1.0.0
   autogram_sign:
     git:
       url: https://github.com/slovensko-digital/avm-client-dart
@@ -45,8 +45,8 @@ dependencies:
   notified_preferences:
   widgetbook_annotation:
   widgetbook:
-  firebase_core: 2.28.0
-  firebase_crashlytics: 3.5.0
+  firebase_core: 3.15.2
+  firebase_crashlytics:
   url_launcher:
   mobile_scanner: ^7.1.0
   html:
