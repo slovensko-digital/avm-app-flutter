@@ -22,22 +22,19 @@ class WidgetbookApp extends StatelessWidget {
         WidgetbookTheme(
           name: brightness.name,
           data: appTheme(context, brightness: brightness),
-        )
+        ),
     ];
-    final initialTheme =
-        themes.singleWhere((e) => e.name == Brightness.light.name);
+    final initialTheme = themes.singleWhere(
+      (e) => e.name == Brightness.light.name,
+    );
 
     final addons = <WidgetbookAddon>[
       if (kIsWeb)
-        DeviceFrameAddon(
-          devices: [
-            Devices.ios.iPhoneSE,
-            Devices.ios.iPhone13,
-            Devices.ios.iPhone13ProMax,
-            Devices.android.smallPhone.copyWith(name: "360×640dp"),
-            Devices.android.mediumPhone.copyWith(name: "412×732dp"),
+        ViewportAddon(
+          [
+            ...IosViewports.phones,
+            ...AndroidViewports.phones,
           ],
-          initialDevice: Devices.ios.iPhone13,
         ),
       if (kIsWeb)
         BuilderAddon(
