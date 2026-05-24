@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../data/pdf_signing_option.dart';
-import '../app_theme.dart';
-import 'certificate_picker.dart';
+import 'radio_button.dart';
 import 'signature_type_picker.dart';
 
 /// Reusable widget to pick single option.
@@ -49,12 +48,7 @@ class OptionPicker<T> extends StatelessWidget {
   Widget _listItem(T value) {
     final labelBuilder = this.labelBuilder ?? _defaultLabelBuilder;
     final label = Expanded(child: labelBuilder(value));
-    final radio = Transform.scale(
-      scale: kRadioScale,
-      child: Radio<T>(
-        value: value,
-      ),
-    );
+    final radio = RadioButton<T>(value: value);
 
     return Semantics(
       checked: value == selectedValue,
@@ -99,12 +93,15 @@ Widget previewOptionPicker(BuildContext context) {
 
   return StatefulBuilder(
     builder: (context, setState) {
-      return OptionPicker(
-        values: PdfSigningOption.values,
-        selectedValue: selectedValue,
-        onValueChanged: (value) {
-          setState(() => selectedValue = value);
-        },
+      return Padding(
+        padding: const EdgeInsets.all(24),
+        child: OptionPicker(
+          values: PdfSigningOption.values,
+          selectedValue: selectedValue,
+          onValueChanged: (value) {
+            setState(() => selectedValue = value);
+          },
+        ),
       );
     },
   );

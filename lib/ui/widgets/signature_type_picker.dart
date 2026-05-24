@@ -6,6 +6,7 @@ import '../../data/signature_type.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import 'certificate_picker.dart';
+import 'radio_button.dart';
 
 /// Displays two options to select the [SignatureType] options; either
 /// [SignatureType.withTimestamp] or [SignatureType.withoutTimestamp].
@@ -78,14 +79,9 @@ class _ListItem extends StatelessWidget {
     final strings = context.strings;
     final titleText = strings.signatureTypeValueTitle(value.name);
     final subtitleText = strings.signatureTypeValueSubtitle(value.name);
-
     final enabled = (canSelect || value == selectedValue);
-    final radio = Radio<SignatureType>(
-      value: value,
-      enabled: enabled,
-    );
 
-    // NOT using RadioListTile because need to scale-up and style Radio
+    // NOT using RadioListTile because need to use custom RadioButton
     return Semantics(
       checked: value == selectedValue,
       inMutuallyExclusiveGroup: true,
@@ -94,9 +90,9 @@ class _ListItem extends StatelessWidget {
       child: ListTile(
         onTap: (canSelect ? onSelected : null),
         enabled: enabled,
-        leading: Transform.scale(
-          scale: kRadioScale,
-          child: radio,
+        leading: RadioButton<SignatureType>(
+          value: value,
+          enabled: enabled,
         ),
         title: Text(
           titleText,
@@ -114,6 +110,7 @@ class _ListItem extends StatelessWidget {
   type: SignatureTypePicker,
 )
 Widget previewSignatureTypePicker(BuildContext context) {
+  final strings = context.strings;
   final bool canChange = context.knobs.boolean(
     label: "Can change",
     initialValue: true,
@@ -121,6 +118,7 @@ Widget previewSignatureTypePicker(BuildContext context) {
   SignatureType? selectedValue = context.knobs.objectOrNull.segmented(
     label: "Signature type",
     options: [SignatureType.withTimestamp, SignatureType.withoutTimestamp],
+    labelBuilder: (e) => strings.signatureTypeValueTitle(e.name),
   );
 
   return StatefulBuilder(

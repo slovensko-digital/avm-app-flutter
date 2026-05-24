@@ -135,50 +135,6 @@ Widget previewAppBar(BuildContext context) {
 
 @widgetbook.UseCase(
   path: '[AVM]',
-  name: 'Radio',
-  type: Radio,
-)
-Widget previewRadio(BuildContext context) {
-  int selectedValue = 0;
-
-  return StatefulBuilder(
-    builder: (context, setState) {
-      Widget customRadio({
-        required int value,
-        bool enabled = true,
-      }) {
-        // TODO Extract Transform.scale + Radio into custom RadioButton Widget
-        return Transform.scale(
-          scale: kRadioScale,
-          child: Radio<int>(
-            value: value,
-            enabled: enabled,
-          ),
-        );
-      }
-
-      return RadioGroup<int>(
-        groupValue: selectedValue,
-        onChanged: (value) {
-          if (value != null) {
-            setState(() => selectedValue = value);
-          }
-        },
-        child: OverflowBar(
-          spacing: 24,
-          children: [
-            customRadio(value: 0),
-            customRadio(value: 1),
-            customRadio(value: 2, enabled: false),
-          ],
-        ),
-      );
-    },
-  );
-}
-
-@widgetbook.UseCase(
-  path: '[AVM]',
   name: 'Dialog',
   type: Dialog,
 )

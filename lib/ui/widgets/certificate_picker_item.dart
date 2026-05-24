@@ -5,8 +5,8 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../certificate_extensions.dart';
 import '../../oids.dart';
 import '../../strings_context.dart';
-import '../app_theme.dart';
 import 'certificate_picker.dart';
+import 'radio_button.dart';
 
 /// [CertificatePicker] item do display [certificate] info:
 ///  - Subject CN, LN, C
@@ -34,8 +34,9 @@ class CertificatePickerItem extends StatelessWidget {
     final title = cert.subject[X500Oids.cn] ?? '';
     final identity = "${cert.subject[X500Oids.sn]}";
     final issuer = strings.certificateIssuer("${cert.issuer[X500Oids.cn]}");
-    final validTo =
-        strings.certificateNotAfter(_dateFormat.format(cert.validity.notAfter));
+    final validTo = strings.certificateNotAfter(
+      _dateFormat.format(cert.validity.notAfter),
+    );
 
     // NOT using RadioListTile because need to scale-up and style Radio
 
@@ -43,11 +44,8 @@ class CertificatePickerItem extends StatelessWidget {
       onTap: () {
         onCertificateChanged(certificate);
       },
-      leading: Transform.scale(
-        scale: kRadioScale,
-        child: Radio<int>(
-          value: certificate.certIndex,
-        ),
+      leading: RadioButton<int>(
+        value: certificate.certIndex,
       ),
       title: Text(
         title,
