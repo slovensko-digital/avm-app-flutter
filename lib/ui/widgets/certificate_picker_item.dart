@@ -17,13 +17,11 @@ class CertificatePickerItem extends StatelessWidget {
   static final DateFormat _dateFormat = DateFormat("dd.MM.yyyy");
 
   final Certificate certificate;
-  final Certificate? selectedCertificate;
   final ValueChanged<Certificate> onCertificateChanged;
 
   const CertificatePickerItem({
     super.key,
     required this.certificate,
-    required this.selectedCertificate,
     required this.onCertificateChanged,
   });
 
@@ -49,10 +47,6 @@ class CertificatePickerItem extends StatelessWidget {
         scale: kRadioScale,
         child: Radio<int>(
           value: certificate.certIndex,
-          groupValue: selectedCertificate?.certIndex,
-          onChanged: (_) {
-            onCertificateChanged(certificate);
-          },
         ),
       ),
       title: Text(

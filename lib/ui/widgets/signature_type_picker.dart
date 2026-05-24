@@ -28,14 +28,22 @@ class SignatureTypePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      children: [
-        _listItem(SignatureType.withTimestamp),
-        const SizedBox(height: kButtonSpace),
-        _listItem(SignatureType.withoutTimestamp),
-      ],
+    return RadioGroup<SignatureType>(
+      groupValue: value,
+      onChanged: (newValue) {
+        if (newValue != null) {
+          onValueChanged(newValue);
+        }
+      },
+      child: ListView(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        children: [
+          _listItem(SignatureType.withTimestamp),
+          const SizedBox(height: kButtonSpace),
+          _listItem(SignatureType.withoutTimestamp),
+        ],
+      ),
     );
   }
 
@@ -74,16 +82,7 @@ class _ListItem extends StatelessWidget {
     final enabled = (canSelect || value == selectedValue);
     final radio = Radio<SignatureType>(
       value: value,
-      groupValue: selectedValue,
-      onChanged: enabled
-          ? (final SignatureType? value) {
-              if (value != null) {
-                if (selectedValue != value) {
-                  onSelected();
-                }
-              }
-            }
-          : null,
+      enabled: enabled,
     );
 
     // NOT using RadioListTile because need to scale-up and style Radio

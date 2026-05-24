@@ -28,17 +28,21 @@ class OptionPicker<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: values.length,
-      itemBuilder: (context, index) {
-        final value = values[index];
-        final child = _listItem(value);
+    return RadioGroup<T>(
+      groupValue: selectedValue,
+      onChanged: onValueChanged,
+      child: ListView.builder(
+        itemCount: values.length,
+        itemBuilder: (context, index) {
+          final value = values[index];
+          final child = _listItem(value);
 
-        return Padding(
-          padding: kMaterialListPadding,
-          child: child,
-        );
-      },
+          return Padding(
+            padding: kMaterialListPadding,
+            child: child,
+          );
+        },
+      ),
     );
   }
 
@@ -49,8 +53,6 @@ class OptionPicker<T> extends StatelessWidget {
       scale: kRadioScale,
       child: Radio<T>(
         value: value,
-        groupValue: selectedValue,
-        onChanged: onValueChanged,
       ),
     );
 
@@ -65,9 +67,9 @@ class OptionPicker<T> extends StatelessWidget {
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
+            spacing: 8,
             children: [
               ExcludeSemantics(child: radio),
-              const SizedBox(width: 8),
               label,
             ],
           ),
