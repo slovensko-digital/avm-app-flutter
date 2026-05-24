@@ -17,17 +17,6 @@ class WidgetbookApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themes = [
-      for (final brightness in Brightness.values)
-        WidgetbookTheme(
-          name: brightness.name,
-          data: appTheme(context, brightness: brightness),
-        ),
-    ];
-    final initialTheme = themes.singleWhere(
-      (e) => e.name == Brightness.light.name,
-    );
-
     final addons = <WidgetbookAddon>[
       if (kIsWeb)
         ViewportAddon(
@@ -45,10 +34,6 @@ class WidgetbookApp extends StatelessWidget {
           },
         ),
       TextScaleAddon(),
-      MaterialThemeAddon(
-        themes: themes,
-        initialTheme: initialTheme,
-      ),
     ];
 
     return Widgetbook.material(
