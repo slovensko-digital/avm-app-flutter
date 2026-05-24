@@ -31,7 +31,7 @@ Widget previewIcons(BuildContext context) {
               "assets/icons/$file",
             ),
           ),
-        )
+        ),
     ],
   );
 }
@@ -54,32 +54,27 @@ Widget previewImages(BuildContext context) {
 
   return GridView.extent(
     primary: true,
-    maxCrossAxisExtent: 140,
+    maxCrossAxisExtent: 180,
     padding: const EdgeInsets.all(spacing),
     mainAxisSpacing: spacing,
     crossAxisSpacing: spacing,
-    childAspectRatio: 0.65,
+    childAspectRatio: 1,
     children: [
       for (final file in files)
         Container(
           color: const Color(0xFFC0C0C0),
           child: Column(
+            spacing: 8,
             children: [
               SvgPicture.asset(
                 "assets/images/$file",
                 width: 120,
                 height: 120,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  file,
-                  textAlign: TextAlign.center,
-                ),
-              )
+              Text(file, textAlign: TextAlign.center),
             ],
           ),
-        )
+        ),
     ],
   );
 }
