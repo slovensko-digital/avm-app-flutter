@@ -17,6 +17,7 @@ import 'file_system_entity_extensions.dart';
 ///  - [getFileName]
 ///  - [getFile]
 ///  - [getDocumentsDirectory]
+///  - [isAllowedFileUri]
 @singleton
 class AppService {
   static final AppService _instance = AppService._();
@@ -92,6 +93,22 @@ class AppService {
 
     // On Android, this returns app specific path
     return provider.getDownloadsDirectory().then((value) => value!);
+  }
+
+  /// Returns `true` if [uri] is a safe `file://` URI according to the
+  /// platform's allowed-path policy:
+  ///
+  /// - **Android** — delegates to `FileUriValidator`: path must lie under
+  ///   external storage and must not be inside the app's private data dir.
+  /// - **iOS** — path must not be inside the app's sandbox container
+  ///   (`NSHomeDirectory()`), which covers `Library/Preferences`, databases,
+  ///   etc.
+  ///
+  /// Non-`file://` URIs always return `true`.
+  Future<bool> isAllowedFileUri(String uri) async {
+    return _methods
+        .invokeMethod<bool>('isAllowedFileUri', uri)
+        .then((value) => value!);
   }
 
   /// Emit new [incomingUri] value.

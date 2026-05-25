@@ -102,6 +102,7 @@ internal class AppService(
             "getFileName" -> result.onGetFileName(call.arguments as String)
             "getFile" -> result.onGetFile(call.arguments as String)
             "getDownloadsDirectory" -> result.onGetDownloadsDirectory()
+            "isAllowedFileUri" -> result.onIsAllowedFileUri(call.arguments as String)
         }
     }
 
@@ -187,6 +188,21 @@ internal class AppService(
         val file = getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS)
 
         success(file.absolutePath)
+    }
+
+    private fun MethodChannel.Result.onIsAllowedFileUri(value: String) {
+        val result: Result<Boolean> = runCatching {
+            value.toUri().isAllowedFileUri()
+        }
+
+        result.fold(
+            onSuccess = {
+                success(it)
+            },
+            onFailure = { error ->
+                error("IS_ALLOWED_FILE_URI_ERROR", error.message, null)
+            }
+        )
     }
 
     /** Gets the file name from this [Uri]. */
