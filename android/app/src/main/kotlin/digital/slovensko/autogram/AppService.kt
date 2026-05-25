@@ -185,7 +185,7 @@ internal class AppService(
     private val Uri.fileName: String?
         get() = when (scheme) {
             "file" -> File(path!!).name
-            "content" -> context.contentResolver.getDisplayName(this)
+            "content" -> context.contentResolver.getDisplayName(this)?.let { File(it).name }
             else -> null
         }
 
