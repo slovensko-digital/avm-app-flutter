@@ -20,7 +20,6 @@ import java.io.InputStream
 
 /**
  * Provides functionality for Flutter app:
- *  - `startQrCodeScanner()` - starts built-in QR code scanner app
  *  - `getFileName(String)` - returns only file name from content:// or file:// URI
  *  - `getFile(String)` - returns absolute file path from content:// or file:// URI
  *  - `getDownloadsDirectory()` - returns path to "Download" directory
@@ -100,7 +99,6 @@ internal class AppService(
         Log.d(TAG, "onMethodCall: call.method=${call.method}")
 
         when (call.method) {
-            "startQrCodeScanner" -> result.onStartQrCodeScanner()
             "getFileName" -> result.onGetFileName(call.arguments as String)
             "getFile" -> result.onGetFile(call.arguments as String)
             "getDownloadsDirectory" -> result.onGetDownloadsDirectory()
@@ -126,24 +124,6 @@ internal class AppService(
             incomingUriSink?.endOfStream()
             incomingUriSink = null
         }
-    }
-
-    private fun MethodChannel.Result.onStartQrCodeScanner() {
-        val intent = Intent()
-            .setClassName("com.sec.android.app.camera", "com.sec.android.app.camera.QrScannerActivity")
-            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-        // val component = intent.resolveActivity(context.packageManager)
-        val result = runCatching { context.startActivity(intent) }
-
-        result.fold(
-            onSuccess = {
-                success(true)
-            },
-            onFailure = { error ->
-                error("START_QR_CODE_SCANNER_ERROR", error.message, null)
-            }
-        )
     }
 
     private fun MethodChannel.Result.onGetFileName(value: String) {
