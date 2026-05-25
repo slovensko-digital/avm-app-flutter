@@ -55,7 +55,6 @@ class _HtmlPreviewState extends State<HtmlPreview> {
   /// Loads the HTML content from [widget.htmlDataSource] but also disables the
   /// JavaScript before.
   Future<void> _loadHtml() async {
-    await controller.setJavaScriptMode(JavaScriptMode.disabled);
     final html = await widget.htmlDataSource;
 
     controller.loadHtmlString(html);
