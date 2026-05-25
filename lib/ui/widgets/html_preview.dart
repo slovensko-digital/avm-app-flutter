@@ -24,7 +24,7 @@ class _HtmlPreviewState extends State<HtmlPreview> {
 
     controller = WebViewController();
 
-    Future.value(widget.htmlDataSource).then(controller.loadHtmlString);
+    unawaited(_loadHtml());
   }
 
   @override
@@ -41,7 +41,7 @@ class _HtmlPreviewState extends State<HtmlPreview> {
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.htmlDataSource != widget.htmlDataSource) {
-      Future.value(widget.htmlDataSource).then(controller.loadHtmlString);
+      unawaited(_loadHtml());
     }
   }
 
@@ -50,6 +50,15 @@ class _HtmlPreviewState extends State<HtmlPreview> {
     return WebViewWidget(
       controller: controller,
     );
+  }
+
+  /// Loads the HTML content from [widget.htmlDataSource] but also disables the
+  /// JavaScript before.
+  Future<void> _loadHtml() async {
+    await controller.setJavaScriptMode(JavaScriptMode.disabled);
+    final html = await widget.htmlDataSource;
+
+    controller.loadHtmlString(html);
   }
 }
 
