@@ -55,6 +55,7 @@ class MarkdownText extends StatelessWidget {
 }
 
 /// Custom link builder with [Semantics].
+// ignore: unused_element
 class _LinkBuilder extends MarkdownElementBuilder {
   @override
   Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
