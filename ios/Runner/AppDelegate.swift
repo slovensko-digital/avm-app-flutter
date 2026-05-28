@@ -11,8 +11,6 @@ import Flutter
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
-
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
@@ -21,7 +19,7 @@ import Flutter
     override func application(
         _ app: UIApplication,
         open url: URL,
-        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
     ) -> Bool {
 
         // let sourceApplication = options[.sourceApplication]
@@ -48,7 +46,7 @@ import Flutter
 
     func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
         GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
-                
-        appService = AppService(binaryMessenger: engineBridge.applicationRegistrar.messenger());
+
+        appService = AppService(binaryMessenger: engineBridge.applicationRegistrar.messenger())
     }
 }

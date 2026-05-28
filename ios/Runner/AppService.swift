@@ -30,12 +30,8 @@ class AppService : NSObject, FlutterStreamHandler {
 
         super.init(); // NSObject
 
-        // TODO Also make self implement FlutterMethodCallHandler
-        methods.setMethodCallHandler({ [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
-            self?.handleMethodCall(call, result: result)
-        })
-
-        events.setStreamHandler(self);
+        methods.setMethodCallHandler(handleMethodCall)
+        events.setStreamHandler(self)
     }
 
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
@@ -53,7 +49,7 @@ class AppService : NSObject, FlutterStreamHandler {
 
     func onCancel(withArguments arguments: Any?) -> FlutterError? {
         if ((arguments as? String) == "incomingUri") {
-            // TODO Call sharedFileSink.endOfStream
+            incomingUriSink?(FlutterEndOfEventStream)
             incomingUriSink = nil
         }
 
@@ -81,9 +77,9 @@ class AppService : NSObject, FlutterStreamHandler {
 
     private func handleMethodCall(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
-        case "getFile": onGetFile(value: call.arguments as! String, result: result)
-        case "isAllowedFileUri": onIsAllowedFileUri(value: call.arguments as! String, result: result)
-        default: result(FlutterMethodNotImplemented)
+            case "getFile": onGetFile(value: call.arguments as! String, result: result)
+            case "isAllowedFileUri": onIsAllowedFileUri(value: call.arguments as! String, result: result)
+            default: result(FlutterMethodNotImplemented)
         }
     }
 
@@ -101,6 +97,7 @@ class AppService : NSObject, FlutterStreamHandler {
             }
 
             sourceFile.startAccessingSecurityScopedResource() // this might return false when it' not needed, so dont' check it!
+            defer { sourceFile.stopAccessingSecurityScopedResource() }
 
             let fileManager = FileManager.default
 
@@ -113,9 +110,6 @@ class AppService : NSObject, FlutterStreamHandler {
             let fileName: String = sourceFile.lastPathComponent
             let outputFile: URL = outputDirectory.appendingPathComponent(fileName)
             try fileManager.copyItem(at: sourceFile, to: outputFile)
-
-            // TODO Put to finally block
-            sourceFile.stopAccessingSecurityScopedResource()
 
             // Return new file path without leading "file://"
             result(outputFile.path)
