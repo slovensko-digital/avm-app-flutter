@@ -85,21 +85,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i400.GetDocumentSignatureTypeUseCase>(
       () => _i400.GetDocumentSignatureTypeUseCase(gh<_i825.IAutogramService>()),
     );
+    gh.factoryParam<_i21.PreviewDocumentCubit, String, dynamic>(
+      (documentId, _) => _i21.PreviewDocumentCubit(
+        service: gh<_i825.IAutogramService>(),
+        documentId: documentId,
+      ),
+    );
     gh.factoryParam<
       _i374.CreateDocumentCubit,
       _i687.FutureOr<_i497.File>,
       _i732.PdfSigningOption
     >(
       (file, pdfSigningOption) => _i374.CreateDocumentCubit(
+        appService: gh<_i403.AppService>(),
         service: gh<_i825.IAutogramService>(),
         file: file,
         pdfSigningOption: pdfSigningOption,
-      ),
-    );
-    gh.factoryParam<_i21.PreviewDocumentCubit, String, dynamic>(
-      (documentId, _) => _i21.PreviewDocumentCubit(
-        service: gh<_i825.IAutogramService>(),
-        documentId: documentId,
       ),
     );
     gh.factoryParam<_i520.SignDocumentCubit, String, _i518.Certificate>(
