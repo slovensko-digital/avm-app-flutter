@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-05-28 - v1.6.0(50)
+
+- Security fixes regarding handling files and URIs and Android Intent handling
+- Update file picker
+- iOS: Adopt UISceneDelegate
+
 ## 2026-03-28 - v1.5.0(49)
 
 - #113 | eID mSDK update v2.0
