@@ -94,5 +94,26 @@
 		<string>A0000000770108700A1000FE00000400</string>
 		<string>E80704007F00070302</string>
 	</array>
+  <key>UIApplicationSceneManifest</key>
+  <dict>
+    <key>UIApplicationSupportsMultipleScenes</key>
+    <false/>
+    <key>UISceneConfigurations</key>
+    <dict>
+      <key>UIWindowSceneSessionRoleApplication</key>
+      <array>
+        <dict>
+          <key>UISceneClassName</key>
+          <string>UIWindowScene</string>
+          <key>UISceneDelegateClassName</key>
+          <string>FlutterSceneDelegate</string>
+          <key>UISceneConfigurationName</key>
+          <string>flutter</string>
+          <key>UISceneStoryboardFile</key>
+          <string>Main</string>
+        </dict>
+      </array>
+    </dict>
+  </dict>
 </dict>
 </plist>
