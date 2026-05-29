@@ -3,9 +3,10 @@
 ## NEXT - v1.6.0(50)
 
 - #118 | Update to Flutter SDK v3.41.9
-- Update file picker
-- Security fixes regarding handling files and URIs and Android Intent handling
-- iOS: Adopt UISceneDelegate for iOS 26
+- #119 | Update file picker
+- #119 | Security fixes regarding handling files and URIs and Android Intent handling
+- #119 | iOS: Adopt UISceneDelegate for iOS 26
+- #119 | Using PlainTextPreview for previewing plain text files
 
 ## 2026-03-28 - v1.5.0(49)
 
