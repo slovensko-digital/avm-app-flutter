@@ -1,10 +1,11 @@
 # Changelog
 
-## 2026-05-28 - v1.6.0(50)
+## NEXT - v1.6.0(50)
 
-- Security fixes regarding handling files and URIs and Android Intent handling
+- #118 | Update to Flutter SDK v3.41.9
 - Update file picker
-- iOS: Adopt UISceneDelegate
+- Security fixes regarding handling files and URIs and Android Intent handling
+- iOS: Adopt UISceneDelegate for iOS 26
 
 ## 2026-03-28 - v1.5.0(49)
 
