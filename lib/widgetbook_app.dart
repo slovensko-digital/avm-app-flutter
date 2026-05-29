@@ -39,6 +39,7 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       directories: directories,
       addons: addons,
+      themeMode: ThemeMode.light,
       appBuilder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
