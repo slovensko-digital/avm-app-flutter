@@ -4,6 +4,34 @@ import Flutter
 @main
 @objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
     var appService: AppService?
+    private var pendingIncomingUrl: URL?
+
+    private func isSupportedIncoming(url: URL) -> Bool {
+        url.isFileURL || ["https", "avm"].contains(url.scheme)
+    }
+
+    func handleIncoming(url: URL) -> Bool {
+        guard isSupportedIncoming(url: url) else {
+            return false
+        }
+
+        guard let appService else {
+            pendingIncomingUrl = url
+            return true
+        }
+
+        pendingIncomingUrl = nil
+        return appService.onNewUri(url: url)
+    }
+
+    func handleIncoming(userActivity: NSUserActivity) -> Bool {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let url = userActivity.webpageURL else {
+            return false
+        }
+
+        return handleIncoming(url: url)
+    }
 
     /// Handles app startup.
     /// https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application
@@ -26,7 +54,7 @@ import Flutter
         // let openInPlace = options[.openInPlace]
         // TODO Check source and fix URL encoding "%3D"
 
-        return appService?.onNewUri(url: url) ?? false
+        return handleIncoming(url: url)
     }
 
     /// iOS "Universal link" handler.
@@ -36,17 +64,18 @@ import Flutter
         continue userActivity: NSUserActivity,
         restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
     ) -> Bool {
-        if userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL {
-            // Handle the incoming universal link URL
-            return appService?.onNewUri(url: url) ?? false
-        }
-
-        return false
+        return handleIncoming(userActivity: userActivity)
     }
 
     func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
         GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
 
-        appService = AppService(binaryMessenger: engineBridge.applicationRegistrar.messenger())
+        let appService = AppService(binaryMessenger: engineBridge.applicationRegistrar.messenger())
+        self.appService = appService
+
+        if let pendingIncomingUrl {
+            _ = appService.onNewUri(url: pendingIncomingUrl)
+            self.pendingIncomingUrl = nil
+        }
     }
 }

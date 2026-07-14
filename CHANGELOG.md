@@ -1,6 +1,6 @@
 # Changelog
 
-## 2026-06-08 - v1.6.0(50)
+## 2026-06-08 - v1.6.0(54)
 
 - #118 | Update to Flutter SDK v3.41.9
 - #119 | Update file picker
