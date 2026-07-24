@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart' show Cubit;
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 
+import '../app_service.dart';
 import '../data/pdf_signing_option.dart';
 import '../file_system_entity_extensions.dart';
 import '../files.dart';
@@ -24,24 +25,32 @@ export 'create_document_state.dart';
 class CreateDocumentCubit extends Cubit<CreateDocumentState> {
   static final _log = Logger((CreateDocumentCubit).toString());
 
+  final AppService _appService;
   final IAutogramService _service;
   final FutureOr<File> _file;
   final PdfSigningOption _pdfSigningOption;
 
   CreateDocumentCubit({
+    required AppService appService,
     required IAutogramService service,
     @factoryParam required FutureOr<File> file,
     @factoryParam required PdfSigningOption pdfSigningOption,
-  })  : _service = service,
-        _file = file,
-        _pdfSigningOption = pdfSigningOption,
-        super(const CreateDocumentInitialState());
+  }) : _appService = appService,
+       _service = service,
+       _file = file,
+       _pdfSigningOption = pdfSigningOption,
+       super(const CreateDocumentInitialState());
 
   Future<void> createDocument() async {
     emit(state.toLoading());
 
     try {
       final file = await _file;
+      final isAllowedFile = await _appService.isAllowedFileUri(file.path);
+
+      if (!isAllowedFile) {
+        throw ArgumentError("Not a valid file URI or path.");
+      }
 
       // TODO Make intermediate states, when file is File and then content is loaded
 
@@ -77,17 +86,17 @@ class CreateDocumentCubit extends Cubit<CreateDocumentState> {
 
     return switch (extension) {
       "pdf" => SigningParameters(
-          level: _pdfSigningOption.level,
-          container: switch (_pdfSigningOption) {
-            PdfSigningOption.pades => null,
-            PdfSigningOption.xades => SigningParametersContainer.asicE,
-            PdfSigningOption.cades => SigningParametersContainer.asicE,
-          },
-        ),
+        level: _pdfSigningOption.level,
+        container: switch (_pdfSigningOption) {
+          PdfSigningOption.pades => null,
+          PdfSigningOption.xades => SigningParametersContainer.asicE,
+          PdfSigningOption.cades => SigningParametersContainer.asicE,
+        },
+      ),
       _ => const SigningParameters(
-          level: SigningParametersLevel.xadesBaselineB,
-          container: SigningParametersContainer.asicE,
-        ),
+        level: SigningParametersLevel.xadesBaselineB,
+        container: SigningParametersContainer.asicE,
+      ),
     };
   }
 

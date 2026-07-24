@@ -12,6 +12,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import '../../strings_context.dart';
 import 'html_preview.dart';
 import 'loading_content.dart';
+import 'plain_text_preview.dart';
 
 /// Widget to preview document from [visualization].
 class DocumentVisualization extends StatelessWidget {
@@ -28,30 +29,31 @@ class DocumentVisualization extends StatelessWidget {
 
     // Drop spaces from Mime-Type
     return switch (mimeType.replaceAll(' ', '')) {
-      "application/pdf;base64" =>
-        _pdfPreview(compute(base64Decode, visualization.content)),
+      "application/pdf;base64" => _pdfPreview(
+        compute(base64Decode, visualization.content),
+      ),
       "text/plain;base64" ||
-      "text/plain;charset=UTF-8;base64" =>
-        _htmlPreview(compute((content) {
-          final text = utf8.decode(base64Decode(content));
-
-          return _htmlDocumentFromText(text);
-        }, visualization.content)),
-      "text/html;base64" => _htmlPreview(
-          compute((content) {
-            return utf8.decode(base64Decode(content));
-          }, visualization.content),
+      "text/plain;charset=UTF-8;base64" => _plainTextPreview(
+        compute(
+          (content) => utf8.decode(base64Decode(content)),
+          visualization.content,
         ),
+      ),
+      "text/html;base64" => _htmlPreview(
+        compute((content) {
+          return utf8.decode(base64Decode(content));
+        }, visualization.content),
+      ),
       "text/plain" ||
-      "text/plain;charset=UTF-8" =>
-        _htmlPreview(_htmlDocumentFromText(visualization.content)),
+      "text/plain;charset=UTF-8" => _plainTextPreview(visualization.content),
       _ => _unsupportedMimeType(context, mimeType),
     };
   }
 
   Widget _unsupportedMimeType(BuildContext context, String mimeType) {
-    final text =
-        context.strings.documentVisualizationCannotVisualizeTypeError(mimeType);
+    final text = context.strings.documentVisualizationCannotVisualizeTypeError(
+      mimeType,
+    );
     final theme = Theme.of(context);
 
     return Center(
@@ -66,37 +68,8 @@ class DocumentVisualization extends StatelessWidget {
     );
   }
 
-  String _htmlDocumentFromText(String text) {
-    return """
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width" />
-    <style>
-        body {
-            background: linear-gradient(#BDBDBD, #EEEEEE);
-            background-attachment: fixed;
-            padding: 25px;
-            margin: 0;
-        }
-        pre {
-            white-space: pre-wrap;
-            font: 10pt Sans-Serif;
-            min-height: 424px;
-            border-radius: 2px;
-            background-color: #FFFFFF;
-            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
-            padding: 15px;
-            margin: auto;
-        }
-    </style>
-</head>
-<body>
-    <pre>$text</pre>
-</body>
-</html>
-""";
+  static Widget _plainTextPreview(FutureOr<String> source) {
+    return PlainTextPreview(source: source);
   }
 
   static Widget _pdfPreview(FutureOr<Uint8List> source) {
@@ -114,7 +87,7 @@ class DocumentVisualization extends StatelessWidget {
 
   static Widget _htmlPreview(FutureOr<String> source) {
     return HtmlPreview(
-      htmlDataSource: source,
+      source: source,
     );
   }
 }

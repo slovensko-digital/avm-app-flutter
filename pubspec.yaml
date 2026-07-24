@@ -1,7 +1,7 @@
 name: autogram
 description: "Autogram v mobile"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.5.0+49
+version: 1.6.0+54
 
 environment:
   sdk: '>=3.11.5 <4.0.0'
@@ -36,7 +36,7 @@ dependencies:
   logging:
   path:
   path_provider:
-  file_picker: '8.1.4' # newer versions have permission bug on Android
+  file_picker:
   flutter_bloc:
   provider:
   basic_utils:
