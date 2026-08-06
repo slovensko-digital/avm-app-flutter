@@ -1,5 +1,18 @@
 # Changelog
 
+## NEXT - v1.6.0(54)
+
+- #118 | Update to Flutter SDK v3.41.9
+- #119 | Update file picker
+- #119 | Security fixes regarding handling files and URIs and Android Intent handling
+- #119 | iOS: Adopt UISceneDelegate for iOS 26
+- #119 | Using PlainTextPreview for previewing plain text files
+
+## 2026-03-28 - v1.5.0(49)
+
+- #113 | eID mSDK update v2.0
+- #107 | iOS: Don't trying to close app after success
+
 ## 2026-03-28 - v1.4.3(47)
 
 - #114 | Made main screen content responsive

@@ -51,9 +51,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i752.GetHtmlDocumentVersionUseCase>(
       () => _i752.GetHtmlDocumentVersionUseCase(),
     );
-    gh.lazySingleton<_i825.IAutogramService>(
-      () => extrernalModule.create(gh<_i429.EncryptionKeyRegistry>()),
-    );
     gh.factoryParam<
       _i687.PresentSignedDocumentCubit,
       _i825.SignDocumentResponseBody,
@@ -66,25 +63,6 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factoryParam<
-      _i374.CreateDocumentCubit,
-      _i687.FutureOr<_i497.File>,
-      _i732.PdfSigningOption
-    >(
-      (file, pdfSigningOption) => _i374.CreateDocumentCubit(
-        service: gh<_i825.IAutogramService>(),
-        file: file,
-        pdfSigningOption: pdfSigningOption,
-      ),
-    );
-    gh.factoryParam<_i520.SignDocumentCubit, String, _i518.Certificate>(
-      (documentId, certificate) => _i520.SignDocumentCubit(
-        service: gh<_i825.IAutogramService>(),
-        eidmsdk: gh<_i713.Eidmsdk>(),
-        documentId: documentId,
-        certificate: certificate,
-      ),
-    );
-    gh.factoryParam<
       _i1033.SelectSigningCertificateCubit,
       _i971.ValueNotifier<_i518.Certificate?>,
       dynamic
@@ -93,6 +71,9 @@ extension GetItInjectableX on _i174.GetIt {
         eidmsdk: gh<_i713.Eidmsdk>(),
         signingCertificate: signingCertificate,
       ),
+    );
+    gh.lazySingleton<_i825.IAutogramService>(
+      () => extrernalModule.create(gh<_i429.EncryptionKeyRegistry>()),
     );
     gh.factory<_i205.DocumentValidationCubit>(
       () =>
@@ -108,6 +89,26 @@ extension GetItInjectableX on _i174.GetIt {
       (documentId, _) => _i21.PreviewDocumentCubit(
         service: gh<_i825.IAutogramService>(),
         documentId: documentId,
+      ),
+    );
+    gh.factoryParam<
+      _i374.CreateDocumentCubit,
+      _i687.FutureOr<_i497.File>,
+      _i732.PdfSigningOption
+    >(
+      (file, pdfSigningOption) => _i374.CreateDocumentCubit(
+        appService: gh<_i403.AppService>(),
+        service: gh<_i825.IAutogramService>(),
+        file: file,
+        pdfSigningOption: pdfSigningOption,
+      ),
+    );
+    gh.factoryParam<_i520.SignDocumentCubit, String, _i518.Certificate>(
+      (documentId, certificate) => _i520.SignDocumentCubit(
+        service: gh<_i825.IAutogramService>(),
+        eidmsdk: gh<_i713.Eidmsdk>(),
+        documentId: documentId,
+        certificate: certificate,
       ),
     );
     gh.factory<_i767.GetDocumentSignatureTypeCubit>(

@@ -33,8 +33,8 @@ ThemeData appTheme(
   );
   // TODO Consider using Typography.material2021().black.apply(fontSizeFactor: 1.2) so that BuildContext is not needed
   final textTheme = Theme.of(context).textTheme.apply(
-        fontSizeFactor: 1.2,
-      );
+    fontSizeFactor: 1.2,
+  );
   final appBarTheme = AppBarTheme(
     titleTextStyle: TextStyle(
       color: colorScheme.onSurface,
@@ -131,57 +131,6 @@ Widget previewAppBar(BuildContext context) {
       ],
     ),
   );
-}
-
-@widgetbook.UseCase(
-  path: '[AVM]',
-  name: 'Radio',
-  type: Radio,
-)
-Widget previewRadio(BuildContext context) {
-  int selectedValue = 0;
-
-  return StatefulBuilder(builder: (context, setState) {
-    Widget customRadio({
-      required int value,
-      bool enabled = true,
-    }) {
-      return Transform.scale(
-        scale: kRadioScale,
-        child: Radio<int>(
-          value: value,
-          groupValue: selectedValue,
-          onChanged: enabled
-              ? (value) {
-                  if (value != null) {
-                    setState(() => selectedValue = value);
-                  }
-                }
-              : null,
-        ),
-      );
-    }
-
-    return OverflowBar(
-      alignment: MainAxisAlignment.start,
-      children: [
-        customRadio(
-          value: 0,
-        ),
-        customRadio(
-          value: 1,
-        ),
-        customRadio(
-          value: 0,
-          enabled: false,
-        ),
-        customRadio(
-          value: 1,
-          enabled: false,
-        ),
-      ],
-    );
-  });
 }
 
 @widgetbook.UseCase(

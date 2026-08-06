@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import android.os.Environment.DIRECTORY_DOWNLOADS
 import android.os.Environment.getExternalStoragePublicDirectory
 import android.util.Log
@@ -19,11 +20,12 @@ import java.io.InputStream
 
 /**
  * Provides functionality for Flutter app:
- *  - `startQrCodeScanner()` - starts built-in QR code scanner app
  *  - `getFileName(String)` - returns only file name from content:// or file:// URI
  *  - `getFile(String)` - returns absolute file path from content:// or file:// URI
  *  - `getDownloadsDirectory()` - returns path to "Download" directory
  *  -  "incomingUri" events - emits URIs to file shared to app or open URLs
+ *
+ *  @see FileUriValidator
  */
 internal class AppService(
     private val context: Context,
@@ -48,6 +50,18 @@ internal class AppService(
     /** Stores the value before [incomingUriSink] was initialized. */
     private var incomingUri: String? = null
 
+    /**
+     * Validates `file://` URIs against private-data and allowed-roots policy.
+     *
+     * Primary external storage covers every `Environment.DIRECTORY_*` public
+     * folder (Download, Documents, Pictures, …) plus the app's own external
+     * files/cache dir, since all of those are nested beneath it.
+     */
+    private val fileUriValidator: FileUriValidator = FileUriValidator(
+        privateDataDir = File(context.applicationInfo.dataDir),
+        allowedRoots = listOfNotNull( Environment.getExternalStorageDirectory()),
+    )
+
     init {
         methods.setMethodCallHandler(this)
         events.setStreamHandler(this)
@@ -67,6 +81,11 @@ internal class AppService(
             else -> null
         } ?: return
 
+        if (!uri.isAllowedFileUri()) {
+            Log.w(TAG, "processIntent: dropping disallowed file:// URI")
+            return
+        }
+
         val sink = incomingUriSink
 
         if (sink == null) {
@@ -80,10 +99,10 @@ internal class AppService(
         Log.d(TAG, "onMethodCall: call.method=${call.method}")
 
         when (call.method) {
-            "startQrCodeScanner" -> result.onStartQrCodeScanner()
             "getFileName" -> result.onGetFileName(call.arguments as String)
             "getFile" -> result.onGetFile(call.arguments as String)
             "getDownloadsDirectory" -> result.onGetDownloadsDirectory()
+            "isAllowedFileUri" -> result.onIsAllowedFileUri(call.arguments as String)
         }
     }
 
@@ -106,24 +125,6 @@ internal class AppService(
             incomingUriSink?.endOfStream()
             incomingUriSink = null
         }
-    }
-
-    private fun MethodChannel.Result.onStartQrCodeScanner() {
-        val intent = Intent()
-            .setClassName("com.sec.android.app.camera", "com.sec.android.app.camera.QrScannerActivity")
-            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-        // val component = intent.resolveActivity(context.packageManager)
-        val result = runCatching { context.startActivity(intent) }
-
-        result.fold(
-            onSuccess = {
-                success(true)
-            },
-            onFailure = { error ->
-                error("START_QR_CODE_SCANNER_ERROR", error.message, null)
-            }
-        )
     }
 
     private fun MethodChannel.Result.onGetFileName(value: String) {
@@ -149,7 +150,15 @@ internal class AppService(
             val uri = value.toUri()
 
             when (uri.scheme) {
-                "file" -> uri.toFile() // Don't need to copy
+                "file" -> {
+                    val file = uri.toFile()
+
+                    if (!fileUriValidator.isAllowed(file)) {
+                        throw SecurityException("file:// URI outside allowed roots")
+                    }
+
+                    file // Don't need to copy
+                }
                 "content" -> uri.openRead()!!.use { stream ->
                     // Copy to file:// in cache dir
                     val name = uri.fileName!!
@@ -181,11 +190,26 @@ internal class AppService(
         success(file.absolutePath)
     }
 
+    private fun MethodChannel.Result.onIsAllowedFileUri(value: String) {
+        val result: Result<Boolean> = runCatching {
+            value.toUri().isAllowedFileUri()
+        }
+
+        result.fold(
+            onSuccess = {
+                success(it)
+            },
+            onFailure = { error ->
+                error("IS_ALLOWED_FILE_URI_ERROR", error.message, null)
+            }
+        )
+    }
+
     /** Gets the file name from this [Uri]. */
     private val Uri.fileName: String?
         get() = when (scheme) {
             "file" -> File(path!!).name
-            "content" -> context.contentResolver.getDisplayName(this)
+            "content" -> context.contentResolver.getDisplayName(this)?.let { File(it).name }
             else -> null
         }
 
@@ -194,6 +218,20 @@ internal class AppService(
         "file" -> File(path!!).inputStream()
         "content" -> context.contentResolver.openInputStream(this)
         else -> null
+    }
+
+    /**
+     * Returns `true` if this URI is safe to surface to Dart. Non-`file://`
+     * schemes pass through; `file://` URIs are checked against the validator.
+     */
+    private fun Uri.isAllowedFileUri(): Boolean {
+        if (scheme != "file") {
+            return true
+        } else {
+            val path = path ?: return false
+
+            return fileUriValidator.isAllowed(File(path))
+        }
     }
 
     companion object {

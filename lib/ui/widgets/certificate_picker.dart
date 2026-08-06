@@ -24,12 +24,22 @@ class CertificatePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: [
-        for (final certificate in certificates) _listItem(certificate),
-      ],
+    return RadioGroup<int>(
+      groupValue: selectedCertificate?.certIndex,
+      onChanged: (index) {
+        if (index != null) {
+          final value = certificates.firstWhere((c) => c.certIndex == index);
+
+          onCertificateChanged(value);
+        }
+      },
+      child: ListView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          for (final certificate in certificates) _listItem(certificate),
+        ],
+      ),
     );
   }
 
@@ -37,7 +47,6 @@ class CertificatePicker extends StatelessWidget {
     return CertificatePickerItem(
       key: ValueKey(certificate.certIndex),
       certificate: certificate,
-      selectedCertificate: selectedCertificate,
       onCertificateChanged: onCertificateChanged,
     );
   }

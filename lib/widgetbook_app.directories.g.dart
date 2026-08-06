@@ -83,8 +83,12 @@ import 'package:autogram/ui/widgets/markdown_text.dart'
     as _autogram_ui_widgets_markdown_text;
 import 'package:autogram/ui/widgets/option_picker.dart'
     as _autogram_ui_widgets_option_picker;
+import 'package:autogram/ui/widgets/plain_text_preview.dart'
+    as _autogram_ui_widgets_plain_text_preview;
 import 'package:autogram/ui/widgets/preference_tile.dart'
     as _autogram_ui_widgets_preference_tile;
+import 'package:autogram/ui/widgets/radio_button.dart'
+    as _autogram_ui_widgets_radio_button;
 import 'package:autogram/ui/widgets/result_view.dart'
     as _autogram_ui_widgets_result_view;
 import 'package:autogram/ui/widgets/retry_view.dart'
@@ -202,11 +206,11 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
-        name: 'Radio',
+        name: 'RadioButton',
         useCases: [
           _widgetbook.WidgetbookUseCase(
-            name: 'Radio',
-            builder: _autogram_ui_app_theme.previewRadio,
+            name: 'RadioButton',
+            builder: _autogram_ui_widgets_radio_button.previewRadioButton,
           ),
         ],
       ),
@@ -292,7 +296,7 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'HtmlPreview',
         useCases: [
           _widgetbook.WidgetbookUseCase(
-            name: 'HtmlPreview',
+            name: '',
             builder: _autogram_ui_widgets_html_preview.previewHtmlPreview,
           ),
         ],
@@ -321,6 +325,21 @@ final directories = <_widgetbook.WidgetbookNode>[
           _widgetbook.WidgetbookUseCase(
             name: 'OptionPicker',
             builder: _autogram_ui_widgets_option_picker.previewOptionPicker,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'PlainTextPreview',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'error',
+            builder: _autogram_ui_widgets_plain_text_preview
+                .previewPlainTextPreviewError,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'normal',
+            builder:
+                _autogram_ui_widgets_plain_text_preview.previewPlainTextPreview,
           ),
         ],
       ),

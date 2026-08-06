@@ -31,23 +31,14 @@ class ResultView extends StatelessWidget {
     this.body,
   });
 
-  const ResultView.success({
-    super.key,
-    required this.titleText,
-    this.body,
-  }) : icon = 'assets/images/tick.svg';
+  const ResultView.success({super.key, required this.titleText, this.body})
+    : icon = 'assets/images/tick.svg';
 
-  const ResultView.error({
-    super.key,
-    required this.titleText,
-    this.body,
-  }) : icon = 'assets/images/danger.svg';
+  const ResultView.error({super.key, required this.titleText, this.body})
+    : icon = 'assets/images/danger.svg';
 
-  const ResultView.info({
-    super.key,
-    required this.titleText,
-    this.body,
-  }) : icon = 'assets/images/info.svg';
+  const ResultView.info({super.key, required this.titleText, this.body})
+    : icon = 'assets/images/info.svg';
 
   @override
   Widget build(BuildContext context) {
@@ -75,20 +66,12 @@ class ResultView extends StatelessWidget {
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        icon,
-        headline,
-        if (body != null) body!,
-      ],
+      children: [icon, headline, ?body],
     );
   }
 }
 
-@widgetbook.UseCase(
-  path: '[Core]',
-  name: 'info',
-  type: ResultView,
-)
+@widgetbook.UseCase(path: '[Core]', name: 'info', type: ResultView)
 Widget previewInfoResultView(BuildContext context) {
   final title = context.knobs.string(
     label: "Title",
@@ -102,18 +85,11 @@ Widget previewInfoResultView(BuildContext context) {
   );
 
   return Center(
-    child: ResultView.info(
-      titleText: title,
-      body: Text(body),
-    ),
+    child: ResultView.info(titleText: title, body: Text(body)),
   );
 }
 
-@widgetbook.UseCase(
-  path: '[Core]',
-  name: 'success',
-  type: ResultView,
-)
+@widgetbook.UseCase(path: '[Core]', name: 'success', type: ResultView)
 Widget previewSuccessResultView(BuildContext context) {
   final title = context.knobs.string(
     label: "Title",
@@ -127,18 +103,11 @@ Widget previewSuccessResultView(BuildContext context) {
   );
 
   return Center(
-    child: ResultView.success(
-      titleText: title,
-      body: Text(body),
-    ),
+    child: ResultView.success(titleText: title, body: Text(body)),
   );
 }
 
-@widgetbook.UseCase(
-  path: '[Core]',
-  name: 'error',
-  type: ResultView,
-)
+@widgetbook.UseCase(path: '[Core]', name: 'error', type: ResultView)
 Widget previewErrorResultView(BuildContext context) {
   final title = context.knobs.string(
     label: "Title",
@@ -152,18 +121,11 @@ Widget previewErrorResultView(BuildContext context) {
   );
 
   return Center(
-    child: ResultView.error(
-      titleText: title,
-      body: Text(body),
-    ),
+    child: ResultView.error(titleText: title, body: Text(body)),
   );
 }
 
-@widgetbook.UseCase(
-  path: '[Core]',
-  name: 'custom',
-  type: ResultView,
-)
+@widgetbook.UseCase(path: '[Core]', name: 'custom', type: ResultView)
 Widget previewCustomResultView(BuildContext context) {
   final title = context.knobs.string(
     label: "Title",
@@ -180,11 +142,7 @@ Widget previewCustomResultView(BuildContext context) {
     child: ResultView(
       icon: 'assets/images/notification.svg',
       titleText: title,
-      body: Column(
-        children: [
-          Text(body),
-        ],
-      ),
+      body: Column(children: [Text(body)]),
     ),
   );
 }

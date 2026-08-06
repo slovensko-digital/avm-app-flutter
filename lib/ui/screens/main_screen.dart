@@ -200,7 +200,7 @@ class _MainScreenState extends State<MainScreen> {
   Future<void> _onOpenFileRequested() async {
     _logger.fine('Requested to open file.');
 
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
+    FilePickerResult? result = await FilePicker.pickFiles(
       dialogTitle: context.strings.buttonOpenDocumentLabel,
     );
 

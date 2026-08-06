@@ -6,6 +6,9 @@ import 'package:basic_utils/basic_utils.dart'
 import 'package:logging/logging.dart' show LogRecord, Level;
 
 final Random _random = Random.secure();
+final _sensitiveQueryParamPattern = RegExp(
+  r'([?&])(key|pushkey|guid)=[^&\s#]*',
+);
 
 /// Creates cryptographic random data encoded as base64.
 String createCryptoRandomString([int length = 32]) {
@@ -28,6 +31,12 @@ X509CertificateData x509CertificateDataFromDer(String data) {
   return X509Utils.x509CertificateFromPem(pem);
 }
 
+/// Redacts values of sensitive query parameters (`key`, `pushkey`, `guid`).
+String _redactSensitive(String input) => input.replaceAllMapped(
+  _sensitiveQueryParamPattern,
+  (m) => '${m[1]}${m[2]}=<REDACTED>',
+);
+
 /// Format given [log] as single message.
 String formatCrashlyticsLog(final LogRecord log) {
   final level = switch (log.level) {
@@ -35,10 +44,11 @@ String formatCrashlyticsLog(final LogRecord log) {
     Level.INFO => 'I',
     Level.WARNING => 'W',
     Level.SEVERE || Level.SHOUT => 'E',
-    _ => "?"
+    _ => "?",
   };
   final tag = log.loggerName;
-  final line1 = "${log.time}: $level/$tag: ${log.message}";
+  final message = _redactSensitive(log.message);
+  final line1 = "${log.time}: $level/$tag: $message";
   final error = log.error;
 
   return (error != null ? "$line1\n$error" : line1);
