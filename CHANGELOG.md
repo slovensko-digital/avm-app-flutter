@@ -1,12 +1,13 @@
 # Changelog
 
-## NEXT - v1.6.0(54)
+## 2026-08-11 - v1.6.0(55)
 
 - #118 | Update to Flutter SDK v3.41.9
 - #119 | Update file picker
 - #119 | Security fixes regarding handling files and URIs and Android Intent handling
 - #119 | iOS: Adopt UISceneDelegate for iOS 26
 - #119 | Using PlainTextPreview for previewing plain text files
+- #122 | Android: Remove unnecessary storage permissions
 
 ## 2026-03-28 - v1.5.0(49)
 
