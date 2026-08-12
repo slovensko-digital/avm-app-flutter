@@ -586,6 +586,30 @@ abstract class AppLocalizations {
   /// **'Chyba pri načítavaní certifikátov z občianskeho preukazu.'**
   String get selectSigningCertificateErrorHeading;
 
+  /// No description provided for @troubleshootingButtonLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Návod na riešenie problémov'**
+  String get troubleshootingButtonLabel;
+
+  /// No description provided for @idCardTroubleshootingTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Ako správne priložiť občiansky preukaz'**
+  String get idCardTroubleshootingTitle;
+
+  /// No description provided for @idCardTroubleshootingInstructions.
+  ///
+  /// In sk, this message translates to:
+  /// **'**Kroky na pripojenie občianskeho preukazu:**\n\n1. Uistite sa, že je váš telefón odomknutý a aplikácia je stále aktívna.\n2. Jemne položte spodnú časť občianskeho preukazu (chip) na zadnú stranu telefónu.\n3. Vyrovnajte preukaz so stredom zadnej strany telefónu.\n4. Nechajte ho v pokoji kým sa údaje nenačítajú.\n5. Ak sa to nepodarí, skúste preukaz jemne posunúť o pár centimetrov.\n\n**Pomôcka:**\n- Chip sa zvyčajne nachádza v spodnej časti preukazu.\n- Nenechávajte ostatné kovové predmety v blízkosti telefónu.\n- Ak máte puzdro, možno bude potrebné ho dočasne odstrániť.'**
+  String get idCardTroubleshootingInstructions;
+
+  /// No description provided for @closeLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zavrieť'**
+  String get closeLabel;
+
   /// No description provided for @certificateIssuer.
   ///
   /// In sk, this message translates to:
