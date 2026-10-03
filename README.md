@@ -136,6 +136,18 @@ Build **iOS** IPA:
 fvm flutter build ipa
 ```
 
+If CocoaPods reports that its specs repository is too out-of-date to find the
+locked Firebase version, refresh the specs and retry:
+
+```shell
+(cd ios && pod install --repo-update)
+fvm flutter build ipa
+```
+
+Keep `ios/Podfile.lock`; refreshing specs does not require deleting the lockfile
+or upgrading Firebase. The Crashlytics build phase uses Dart from `FLUTTER_ROOT`
+so it matches the SDK used to activate `flutterfire_cli` above.
+
 Build **WEB**:
 
 ```shell
