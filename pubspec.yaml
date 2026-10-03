@@ -45,9 +45,9 @@ dependencies:
   notified_preferences:
   widgetbook_annotation:
   widgetbook:
-  firebase_core: 3.15.2
-  firebase_crashlytics:
-  firebase_messaging: ^15.2.10
+  firebase_core: ^4.15.0
+  firebase_crashlytics: ^5.4.0
+  firebase_messaging: ^16.7.0
   flutter_secure_storage: ^10.0.0
   pointycastle: ^4.0.0
   url_launcher:

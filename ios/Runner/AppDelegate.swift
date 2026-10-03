@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import firebase_messaging
 
 @main
 @objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
@@ -39,6 +40,10 @@ import Flutter
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        // With UIScene, plugins are registered later in didInitializeImplicitFlutterEngine,
+        // but notification delegate has to be set before launch finishes
+        FLTFirebaseMessagingPlugin.configureNotificationCenterDelegate()
+
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
