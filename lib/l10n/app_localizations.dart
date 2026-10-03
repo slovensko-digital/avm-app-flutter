@@ -283,14 +283,26 @@ abstract class AppLocalizations {
   /// No description provided for @notificationPermissionRationaleTitle.
   ///
   /// In sk, this message translates to:
-  /// **'Povoliť upozornenia'**
+  /// **'Spárovať zariadenia?'**
   String get notificationPermissionRationaleTitle;
 
   /// No description provided for @notificationPermissionRationaleMessage.
   ///
   /// In sk, this message translates to:
-  /// **'Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.'**
+  /// **'Párovanie vyžaduje zasielanie upozornení.'**
   String get notificationPermissionRationaleMessage;
+
+  /// No description provided for @notificationPermissionRationaleAcceptLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Spárovať'**
+  String get notificationPermissionRationaleAcceptLabel;
+
+  /// No description provided for @notificationPermissionRationaleDeclineLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Odmietnuť párovanie'**
+  String get notificationPermissionRationaleDeclineLabel;
 
   /// No description provided for @menuTitle.
   ///
@@ -369,6 +381,90 @@ abstract class AppLocalizations {
   /// In sk, this message translates to:
   /// **'{count, plural, zero{žiadne} one{1 zariadenie} few{{count} zariadenia} other{{count} zariadení}}'**
   String pairedDevicesSummary(num count);
+
+  /// No description provided for @pairedDevicesInfo.
+  ///
+  /// In sk, this message translates to:
+  /// **'Spárované zariadenia vám môžu posielať žiadosti o podpis ako notifikácie.'**
+  String get pairedDevicesInfo;
+
+  /// No description provided for @pairedDevicesEmpty.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nemáte spárované žiadne zariadenia.\nZariadenie sa spáruje po naskenovaní QR kódu, ktorý to umožňuje.'**
+  String get pairedDevicesEmpty;
+
+  /// No description provided for @pairedDevicesErrorHeading.
+  ///
+  /// In sk, this message translates to:
+  /// **'Chyba pri načítaní spárovaných zariadení'**
+  String get pairedDevicesErrorHeading;
+
+  /// No description provided for @pairedDeviceDeleteTooltip.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zrušiť spárovanie'**
+  String get pairedDeviceDeleteTooltip;
+
+  /// No description provided for @pairIntegrationSuccessMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zariadenie bolo spárované. Žiadosti o podpis vám prídu ako notifikácie.'**
+  String get pairIntegrationSuccessMessage;
+
+  /// No description provided for @pairIntegrationErrorMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Spárovanie zariadenia zlyhalo:\n{error}'**
+  String pairIntegrationErrorMessage(Object error);
+
+  /// No description provided for @pairIntegrationAlreadyPairedMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zariadenie už je spárované.'**
+  String get pairIntegrationAlreadyPairedMessage;
+
+  /// No description provided for @pairIntegrationNotificationsDeniedMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zariadenie je spárované, ale upozornenia sú zakázané. V systémových nastaveniach povoľte aplikácii Autogram upozornenia.'**
+  String get pairIntegrationNotificationsDeniedMessage;
+
+  /// No description provided for @notificationsDeniedMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Upozornenia sú zakázané. Žiadosti o podpis sa nebudú zobrazovať ako notifikácie. V systémových nastaveniach povoľte aplikácii Autogram upozornenia.'**
+  String get notificationsDeniedMessage;
+
+  /// No description provided for @pairingRenewalRequiredMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Doručovanie žiadostí o podpis vyžaduje obnovenie párovania. Znovu naskenujte párovací QR kód z každého zariadenia. Pôvodné párovania už nedoručujú notifikácie.'**
+  String get pairingRenewalRequiredMessage;
+
+  /// No description provided for @pairingRenewalConfirmationMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Doručovanie notifikácií vyžaduje novú registráciu. Pokračovaním sa pôvodné párovania nahradia. Ostatné zariadenia bude potrebné tiež znovu spárovať.'**
+  String get pairingRenewalConfirmationMessage;
+
+  /// No description provided for @notificationStatusUnavailableMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nepodarilo sa overiť doručovanie notifikácií. Skontrolujte pripojenie a skúste to znova.'**
+  String get notificationStatusUnavailableMessage;
+
+  /// No description provided for @newSignRequestMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Prišla nová žiadosť o podpis. Otvorením nahradíte rozpracovaný dokument.'**
+  String get newSignRequestMessage;
+
+  /// No description provided for @openSignRequestLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Otvoriť'**
+  String get openSignRequestLabel;
 
   /// No description provided for @privacyPolicyTitle.
   ///

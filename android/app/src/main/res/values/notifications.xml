@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default FCM notification channel; created in MainActivity -->
+    <string name="sign_request_notification_channel_id" translatable="false">sign_requests</string>
+    <string name="sign_request_notification_channel_name">Žiadosti o podpis</string>
+    <color name="notification_color">#126DFF</color>
+</resources>

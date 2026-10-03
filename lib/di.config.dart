@@ -15,6 +15,7 @@ import 'dart:io' as _i497;
 import 'package:autogram_sign/autogram_sign.dart' as _i825;
 import 'package:eidmsdk/eidmsdk.dart' as _i713;
 import 'package:eidmsdk/types.dart' as _i518;
+import 'package:firebase_messaging/firebase_messaging.dart' as _i892;
 import 'package:flutter/foundation.dart' as _i971;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -31,7 +32,9 @@ import 'bloc/sign_document_cubit.dart' as _i520;
 import 'data/document_signing_type.dart' as _i873;
 import 'data/pdf_signing_option.dart' as _i732;
 import 'di.dart' as _i913;
+import 'services/device_registry.dart' as _i64;
 import 'services/encryption_key_registry.dart' as _i429;
+import 'services/push_notification_service.dart' as _i745;
 import 'use_case/get_document_signature_type_use_case.dart' as _i400;
 import 'use_case/get_html_document_version_use_case.dart' as _i752;
 
@@ -44,10 +47,14 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final extrernalModule = _$ExtrernalModule();
     gh.singleton<_i403.AppService>(() => _i403.AppService());
+    gh.singleton<_i64.DeviceRegistry>(() => _i64.DeviceRegistry());
     gh.singleton<_i429.EncryptionKeyRegistry>(
       () => _i429.EncryptionKeyRegistry(),
     );
     gh.lazySingleton<_i713.Eidmsdk>(() => extrernalModule.eidmsdk);
+    gh.lazySingleton<_i892.FirebaseMessaging>(
+      () => extrernalModule.firebaseMessaging,
+    );
     gh.lazySingleton<_i752.GetHtmlDocumentVersionUseCase>(
       () => _i752.GetHtmlDocumentVersionUseCase(),
     );
@@ -73,14 +80,37 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.lazySingleton<_i825.IAutogramService>(
-      () => extrernalModule.create(gh<_i429.EncryptionKeyRegistry>()),
+      () => extrernalModule.create(
+        gh<_i429.EncryptionKeyRegistry>(),
+        gh<_i64.DeviceRegistry>(),
+      ),
+    );
+    gh.factoryParam<_i520.SignDocumentCubit, String, _i518.Certificate>(
+      (documentId, certificate) => _i520.SignDocumentCubit(
+        service: gh<_i825.IAutogramService>(),
+        eidmsdk: gh<_i713.Eidmsdk>(),
+        documentId: documentId,
+        certificate: certificate,
+      ),
+    );
+    gh.factory<_i578.PairedDeviceListCubit>(
+      () => _i578.PairedDeviceListCubit(
+        service: gh<_i825.IAutogramService>(),
+        deviceRegistry: gh<_i64.DeviceRegistry>(),
+      ),
     );
     gh.factory<_i205.DocumentValidationCubit>(
       () =>
           _i205.DocumentValidationCubit(service: gh<_i825.IAutogramService>()),
     );
-    gh.factory<_i578.PairedDeviceListCubit>(
-      () => _i578.PairedDeviceListCubit(service: gh<_i825.IAutogramService>()),
+    gh.singleton<_i745.PushNotificationService>(
+      () => _i745.PushNotificationService(
+        gh<_i403.AppService>(),
+        gh<_i64.DeviceRegistry>(),
+        gh<_i825.IAutogramService>(),
+        gh<_i892.FirebaseMessaging>(),
+      ),
+      dispose: (i) => i.dispose(),
     );
     gh.lazySingleton<_i400.GetDocumentSignatureTypeUseCase>(
       () => _i400.GetDocumentSignatureTypeUseCase(gh<_i825.IAutogramService>()),
@@ -101,14 +131,6 @@ extension GetItInjectableX on _i174.GetIt {
         service: gh<_i825.IAutogramService>(),
         file: file,
         pdfSigningOption: pdfSigningOption,
-      ),
-    );
-    gh.factoryParam<_i520.SignDocumentCubit, String, _i518.Certificate>(
-      (documentId, certificate) => _i520.SignDocumentCubit(
-        service: gh<_i825.IAutogramService>(),
-        eidmsdk: gh<_i713.Eidmsdk>(),
-        documentId: documentId,
-        certificate: certificate,
       ),
     );
     gh.factory<_i767.GetDocumentSignatureTypeCubit>(

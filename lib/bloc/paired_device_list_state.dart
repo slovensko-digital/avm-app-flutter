@@ -1,3 +1,5 @@
+import 'package:autogram_sign/autogram_sign.dart'
+    show GetDeviceIntegrationsResponseBody$Item;
 import 'package:flutter/foundation.dart' show immutable;
 
 import 'paired_device_list_cubit.dart';
@@ -11,7 +13,9 @@ sealed class PairedDeviceListState {
     return const PairedDeviceListLoadingState();
   }
 
-  PairedDeviceListSuccessState toSuccess(List<Object> items) {
+  PairedDeviceListSuccessState toSuccess(
+    List<GetDeviceIntegrationsResponseBody$Item> items,
+  ) {
     return PairedDeviceListSuccessState(items);
   }
 
@@ -45,12 +49,12 @@ class PairedDeviceListErrorState extends PairedDeviceListState {
 }
 
 class PairedDeviceListSuccessState extends PairedDeviceListState {
-  final List<Object> items;
+  final List<GetDeviceIntegrationsResponseBody$Item> items;
 
   const PairedDeviceListSuccessState(this.items);
 
   @override
   String toString() {
-    return "$runtimeType(documentId: $items)";
+    return "$runtimeType(items: ${items.length})";
   }
 }

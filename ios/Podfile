@@ -1,4 +1,4 @@
-platform :ios, '14.0'
+platform :ios, '15.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -36,11 +36,33 @@ target 'Runner' do
   end
 end
 
+# eID.framework's swiftinterface targets iOS 14.0, but it imports Lottie, which is built for iOS 15.0.
+# Xcode 27 cannot load its Swift 6.2.1 binary module and rebuilds it from that interface, which fails.
+# Compile against a copy with the interface target raised to iOS 15.0; the original framework is still embedded.
+def patch_eid_framework(installer)
+  eid_framework = File.join(__dir__, '.symlinks', 'plugins', 'eidmsdk', 'ios', 'Frameworks', 'eID.framework')
+  return nil unless File.directory?(eid_framework)
+
+  patched_dir = File.join(installer.sandbox.root, 'eID-patched')
+  FileUtils.rm_rf(patched_dir)
+  FileUtils.mkdir_p(patched_dir)
+  FileUtils.cp_r(eid_framework, patched_dir)
+  Dir.glob(File.join(patched_dir, 'eID.framework', 'Modules', 'eID.swiftmodule', '*.swiftinterface')).each do |path|
+    File.write(path, File.read(path).sub('-target arm64-apple-ios14.0', '-target arm64-apple-ios15.0'))
+  end
+  '"${PODS_ROOT}/eID-patched"'
+end
+
 post_install do |installer|
+  eid_search_path = patch_eid_framework(installer)
+
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
     target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+      if target.name == 'eidmsdk' && eid_search_path
+        config.build_settings['FRAMEWORK_SEARCH_PATHS'] = "#{eid_search_path} $(inherited)"
+      end
     end
   end
 end

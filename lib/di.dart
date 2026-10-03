@@ -1,9 +1,11 @@
 import 'package:autogram_sign/autogram_sign.dart';
 import 'package:eidmsdk/eidmsdk.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import 'di.config.dart';
+import 'services/device_registry.dart';
 import 'services/encryption_key_registry.dart';
 
 final getIt = GetIt.instance;
@@ -21,9 +23,16 @@ abstract class ExtrernalModule {
   Eidmsdk get eidmsdk;
 
   @lazySingleton
-  IAutogramService create(EncryptionKeyRegistry encryptionKeyRegistry) {
+  FirebaseMessaging get firebaseMessaging => FirebaseMessaging.instance;
+
+  @lazySingleton
+  IAutogramService create(
+    EncryptionKeyRegistry encryptionKeyRegistry,
+    DeviceRegistry deviceRegistry,
+  ) {
     return AutogramService(
       encryptionKeySource: () => encryptionKeyRegistry.value,
+      deviceTokenSource: deviceRegistry.createToken,
     );
   }
 }

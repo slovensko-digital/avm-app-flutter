@@ -1,7 +1,7 @@
 name: autogram
 description: "Autogram v mobile"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.6.0+55
+version: 1.7.0+56
 
 environment:
   sdk: '>=3.11.5 <4.0.0'
@@ -18,7 +18,8 @@ dependencies:
   autogram_sign:
     git:
       url: https://github.com/slovensko-digital/avm-client-dart
-      ref: v0.4.4
+      ref: v0.5.0
+  device_info_plus: ^12.4.0
   package_info_plus:
   share_plus:
   wakelock_plus:
@@ -45,8 +46,11 @@ dependencies:
   notified_preferences:
   widgetbook_annotation:
   widgetbook:
-  firebase_core: 3.15.2
-  firebase_crashlytics:
+  firebase_core: ^4.15.0
+  firebase_crashlytics: ^5.4.0
+  firebase_messaging: ^16.7.0
+  flutter_secure_storage: ^10.0.0
+  pointycastle: ^4.0.0
   url_launcher:
   mobile_scanner: ^7.1.0
   html:
@@ -54,6 +58,7 @@ dependencies:
   markdown:
 
 dev_dependencies:
+  firebase_messaging_platform_interface: ^4.10.0
   flutter_test:
     sdk: flutter
   flutter_lints:

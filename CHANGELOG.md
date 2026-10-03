@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- #124 | Push notifications for sign requests from paired integrations (iOS: minimum version is 15.0)
+
 ## 2026-08-11 - v1.6.0(55)
 
 - #118 | Update to Flutter SDK v3.41.9

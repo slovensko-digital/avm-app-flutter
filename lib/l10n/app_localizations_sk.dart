@@ -111,11 +111,18 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
-  String get notificationPermissionRationaleTitle => 'Povoliť upozornenia';
+  String get notificationPermissionRationaleTitle => 'Spárovať zariadenia?';
 
   @override
   String get notificationPermissionRationaleMessage =>
-      'Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.';
+      'Párovanie vyžaduje zasielanie upozornení.';
+
+  @override
+  String get notificationPermissionRationaleAcceptLabel => 'Spárovať';
+
+  @override
+  String get notificationPermissionRationaleDeclineLabel =>
+      'Odmietnuť párovanie';
 
   @override
   String get menuTitle => 'Menu';
@@ -198,6 +205,61 @@ class AppLocalizationsSk extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get pairedDevicesInfo =>
+      'Spárované zariadenia vám môžu posielať žiadosti o podpis ako notifikácie.';
+
+  @override
+  String get pairedDevicesEmpty =>
+      'Nemáte spárované žiadne zariadenia.\nZariadenie sa spáruje po naskenovaní QR kódu, ktorý to umožňuje.';
+
+  @override
+  String get pairedDevicesErrorHeading =>
+      'Chyba pri načítaní spárovaných zariadení';
+
+  @override
+  String get pairedDeviceDeleteTooltip => 'Zrušiť spárovanie';
+
+  @override
+  String get pairIntegrationSuccessMessage =>
+      'Zariadenie bolo spárované. Žiadosti o podpis vám prídu ako notifikácie.';
+
+  @override
+  String pairIntegrationErrorMessage(Object error) {
+    return 'Spárovanie zariadenia zlyhalo:\n$error';
+  }
+
+  @override
+  String get pairIntegrationAlreadyPairedMessage =>
+      'Zariadenie už je spárované.';
+
+  @override
+  String get pairIntegrationNotificationsDeniedMessage =>
+      'Zariadenie je spárované, ale upozornenia sú zakázané. V systémových nastaveniach povoľte aplikácii Autogram upozornenia.';
+
+  @override
+  String get notificationsDeniedMessage =>
+      'Upozornenia sú zakázané. Žiadosti o podpis sa nebudú zobrazovať ako notifikácie. V systémových nastaveniach povoľte aplikácii Autogram upozornenia.';
+
+  @override
+  String get pairingRenewalRequiredMessage =>
+      'Doručovanie žiadostí o podpis vyžaduje obnovenie párovania. Znovu naskenujte párovací QR kód z každého zariadenia. Pôvodné párovania už nedoručujú notifikácie.';
+
+  @override
+  String get pairingRenewalConfirmationMessage =>
+      'Doručovanie notifikácií vyžaduje novú registráciu. Pokračovaním sa pôvodné párovania nahradia. Ostatné zariadenia bude potrebné tiež znovu spárovať.';
+
+  @override
+  String get notificationStatusUnavailableMessage =>
+      'Nepodarilo sa overiť doručovanie notifikácií. Skontrolujte pripojenie a skúste to znova.';
+
+  @override
+  String get newSignRequestMessage =>
+      'Prišla nová žiadosť o podpis. Otvorením nahradíte rozpracovaný dokument.';
+
+  @override
+  String get openSignRequestLabel => 'Otvoriť';
 
   @override
   String get privacyPolicyTitle => 'Ochrana osobných údajov';

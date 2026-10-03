@@ -1,3 +1,4 @@
+import 'dart:async' show unawaited;
 import 'dart:developer' as developer;
 
 import 'package:firebase_core/firebase_core.dart';
@@ -11,6 +12,7 @@ import 'app.dart';
 import 'data/settings.dart';
 import 'di.dart';
 import 'firebase_options.dart';
+import 'services/push_notification_service.dart';
 import 'utils.dart';
 
 void main() async {
@@ -28,6 +30,20 @@ void main() async {
 
   // Setup DI
   configureDependencies();
+
+  // Start handling push notifications; same as incoming URI, these can be
+  // handled after app is started
+  unawaited(
+    getIt.get<PushNotificationService>().init().catchError(
+      (error, stackTrace) {
+        Logger.root.severe(
+          "Error initializing push notifications.",
+          error,
+          stackTrace,
+        );
+      },
+    ),
+  );
 
   // Init Settings
   final settings = await Settings.create();

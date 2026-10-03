@@ -14,13 +14,17 @@ import '../../bloc/app_bloc.dart';
 import '../../deep_links.dart';
 import '../../di.dart';
 import '../../file_extensions.dart';
+import '../../push_messages.dart';
 import '../../services/encryption_key_registry.dart';
+import '../../services/push_notification_service.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../onboarding.dart';
 import '../remote_document_signing.dart';
 import '../widgets/autogram_logo.dart';
+import '../widgets/dialogs.dart';
 import '../widgets/main_app_bar.dart';
+import '../widgets/push_notification_status_banner.dart';
 import 'main_menu_screen.dart';
 import 'open_document_screen.dart';
 import 'preview_document_screen.dart';
@@ -36,8 +40,15 @@ import 'start_remote_document_signing_screen.dart';
 class MainScreen extends StatefulWidget {
   /// URI to file being opened.
   final Uri? incomingUri;
+  final SignRequestMessage? foregroundPush;
+  final PushNotificationStatus pushNotificationStatus;
 
-  const MainScreen({super.key, this.incomingUri});
+  const MainScreen({
+    super.key,
+    this.incomingUri,
+    this.foregroundPush,
+    this.pushNotificationStatus = PushNotificationStatus.notRegistered,
+  });
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -51,6 +62,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
 
     _handleNewIncomingUri();
+    _handleForegroundPush();
   }
 
   @override
@@ -68,6 +80,9 @@ class _MainScreenState extends State<MainScreen> {
     if (!identical(oldWidget.incomingUri, widget.incomingUri)) {
       _handleNewIncomingUri();
     }
+    if (!identical(oldWidget.foregroundPush, widget.foregroundPush)) {
+      _handleForegroundPush();
+    }
   }
 
   @override
@@ -84,17 +99,52 @@ class _MainScreenState extends State<MainScreen> {
           child: Scaffold(
             appBar: MainAppBar(context: context, onMenuPressed: _showMenu),
             body: SafeArea(
-              child: _Body(
-                onboardingRequired: onboardingRequired,
-                onStartOnboardingRequested: _onStartOnboardingRequested,
-                onStartQrCodeScannerRequested: _showQrCodeScanner,
-                onOpenFileRequested: _onOpenFileRequested,
+              child: Column(
+                children: [
+                  PushNotificationStatusBanner(
+                    status: widget.pushNotificationStatus,
+                    onRetry: () =>
+                        getIt.get<PushNotificationService>().refreshStatus(),
+                  ),
+                  Expanded(
+                    child: _Body(
+                      onboardingRequired: onboardingRequired,
+                      onStartOnboardingRequested: _onStartOnboardingRequested,
+                      onStartQrCodeScannerRequested: _showQrCodeScanner,
+                      onOpenFileRequested: _onOpenFileRequested,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
         );
       },
     );
+  }
+
+  void _handleForegroundPush() {
+    final uri = widget.foregroundPush?.toUri();
+    if (uri == null) return;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (ModalRoute.of(context)?.isCurrent == true) {
+        _handleDeepLink(uri);
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(context.strings.newSignRequestMessage),
+          duration: const Duration(seconds: 15),
+          action: SnackBarAction(
+            label: context.strings.openSignRequestLabel,
+            onPressed: () => _handleDeepLink(uri),
+          ),
+        ),
+      );
+    });
   }
 
   void _handleNewIncomingUri() {
@@ -188,6 +238,87 @@ class _MainScreenState extends State<MainScreen> {
         route,
         (final route) => route.settings.name == '/',
       );
+
+      final integration = action.integration;
+
+      // Asks over the opened document
+      if (integration != null) {
+        _confirmAndPairIntegration(integration, reportAlreadyPaired: false);
+      }
+    }
+
+    if (action is RegisterIntegrationAction) {
+      _confirmAndPairIntegration(
+        action.integration,
+        reportAlreadyPaired: true,
+      );
+    }
+  }
+
+  /// Asks user to confirm pairing with integration from [pairingToken], so it
+  /// can send next sign requests as push notifications, and shows the result.
+  ///
+  /// Skipped when already paired; [reportAlreadyPaired] then shows a message.
+  Future<void> _confirmAndPairIntegration(
+    String pairingToken, {
+    required bool reportAlreadyPaired,
+  }) async {
+    final service = getIt.get<PushNotificationService>();
+    final strings = context.strings;
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    void showMessage(String message) {
+      scaffoldMessenger.showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: const Duration(seconds: 5),
+        ),
+      );
+    }
+
+    if (await service.isIntegrationPaired(pairingToken)) {
+      _logger.info("Integration is already paired.");
+
+      if (reportAlreadyPaired) {
+        showMessage(
+          service.status.value == PushNotificationStatus.permissionDenied
+              ? strings.pairIntegrationNotificationsDeniedMessage
+              : strings.pairIntegrationAlreadyPairedMessage,
+        );
+      }
+
+      return;
+    }
+
+    if (!mounted) return;
+
+    final confirmed = await showNotificationsPermissionRationaleModal(
+      context,
+      message:
+          service.status.value == PushNotificationStatus.registrationExpired
+          ? strings.pairingRenewalConfirmationMessage
+          : null,
+    );
+
+    if (confirmed != true) {
+      _logger.info("Pairing integration was not confirmed.");
+
+      return;
+    }
+
+    try {
+      final notificationsAllowed = await service.pairIntegration(pairingToken);
+
+      if (!mounted) return;
+      showMessage(
+        notificationsAllowed
+            ? strings.pairIntegrationSuccessMessage
+            : strings.pairIntegrationNotificationsDeniedMessage,
+      );
+    } catch (error, stackTrace) {
+      _logger.severe("Error pairing integration.", error, stackTrace);
+
+      showMessage(strings.pairIntegrationErrorMessage(error));
     }
   }
 
