@@ -1,3 +1,5 @@
+import 'dart:convert' show base64Url, json, utf8;
+
 /// Parser app Deep Link URIs.
 ///
 /// It has to conform:
@@ -59,6 +61,29 @@ DeepLinkAction parseDeepLinkAction(Uri uri) {
     _ => throw ArgumentError.value(
         uri.toString(), "uri", "Invalid or unsupported URI."),
   };
+}
+
+/// Returns integration ID (`sub` claim) from integration pairing token (JWT),
+/// or `null` if the token can't be decoded.
+///
+/// The token is not verified here; server verifies it when pairing.
+String? getPairingTokenIntegrationId(String pairingToken) {
+  final parts = pairingToken.split('.');
+
+  if (parts.length != 3) {
+    return null;
+  }
+
+  try {
+    final payload = json.decode(
+      utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))),
+    );
+    final sub = payload is Map ? payload["sub"] : null;
+
+    return sub is String && sub.isNotEmpty ? sub : null;
+  } on FormatException {
+    return null;
+  }
 }
 
 /// Supported Deep Link action.

@@ -8,6 +8,7 @@ import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart' show Logger;
 
 import '../app_service.dart';
+import '../deep_links.dart';
 import '../push_messages.dart';
 import 'device_registry.dart';
 
@@ -66,6 +67,36 @@ class PushNotificationService {
     await _service.registerDeviceIntegration(pairingToken);
 
     _logger.info("Integration paired.");
+  }
+
+  /// Returns `true` if this device is already paired with integration from
+  /// [pairingToken], so there is no need to pair (and confirm) it again.
+  ///
+  /// Returns `false` when it can't be checked.
+  Future<bool> isIntegrationPaired(String pairingToken) async {
+    final integrationId = getPairingTokenIntegrationId(pairingToken);
+
+    if (integrationId == null) {
+      return false;
+    }
+
+    try {
+      final device = await _deviceRegistry.load();
+
+      // Not registered or registration ID changed - needs to be registered
+      // again, which loses all previous pairings
+      if (device == null || device.registrationId != await _getToken()) {
+        return false;
+      }
+
+      final integrations = await _service.listIntegrations();
+
+      return integrations.any((e) => e.integrationId == integrationId);
+    } catch (error, stackTrace) {
+      _logger.warning("Error checking paired integrations.", error, stackTrace);
+
+      return false;
+    }
   }
 
   Future<RegisteredDevice> _ensureRegistered() {

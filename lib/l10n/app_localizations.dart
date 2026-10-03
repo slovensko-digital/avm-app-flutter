@@ -406,6 +406,12 @@ abstract class AppLocalizations {
   /// **'Spárovanie zariadenia zlyhalo:\n{error}'**
   String pairIntegrationErrorMessage(Object error);
 
+  /// No description provided for @pairIntegrationAlreadyPairedMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zariadenie už je spárované.'**
+  String get pairIntegrationAlreadyPairedMessage;
+
   /// No description provided for @privacyPolicyTitle.
   ///
   /// In sk, this message translates to:

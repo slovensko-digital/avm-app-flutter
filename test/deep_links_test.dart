@@ -55,4 +55,24 @@ void main() {
       );
     });
   });
+
+  group('getPairingTokenIntegrationId', () {
+    test('getPairingTokenIntegrationId returns sub claim', () {
+      // Payload: {"sub":"78d91de7-1cc2-40e4-9a71-3858b4f0319d","exp":1712909720,"jti":"00e017f5-2810-4925-884e-cb7aad03d1a6","aud":"device"}
+      const token =
+          "eyJhbGciOiJFUzI1NiJ9.eyJzdWIiOiI3OGQ5MWRlNy0xY2MyLTQwZTQtOWE3MS0zODU4YjRmMDMxOWQiLCJleHAiOjE3MTI5MDk3MjAsImp0aSI6IjAwZTAxN2Y1LTI4MTAtNDkyNS04ODRlLWNiN2FhZDAzZDFhNiIsImF1ZCI6ImRldmljZSJ9.7Op6W2BvbX2_mgj9dkz1IiolEsQ1Z2a0AzpS5bj4pcG3CJ4Z8j9W3RQE95wrAj3t6nmd9JaGZSlCJNSV_myyLQ";
+
+      expect(getPairingTokenIntegrationId(token),
+          "78d91de7-1cc2-40e4-9a71-3858b4f0319d");
+    });
+
+    test('getPairingTokenIntegrationId returns null for invalid token', () {
+      expect(getPairingTokenIntegrationId(""), isNull);
+      expect(getPairingTokenIntegrationId("a.b"), isNull);
+      expect(getPairingTokenIntegrationId("a.!!!.c"), isNull);
+      // Payload: {"aud":"device"}
+      expect(getPairingTokenIntegrationId("e30.eyJhdWQiOiJkZXZpY2UifQ.sig"),
+          isNull);
+    });
+  });
 }

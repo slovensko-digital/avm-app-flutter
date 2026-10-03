@@ -224,6 +224,10 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String get pairIntegrationAlreadyPairedMessage =>
+      'Zariadenie už je spárované.';
+
+  @override
   String get privacyPolicyTitle => 'Ochrana osobných údajov';
 
   @override

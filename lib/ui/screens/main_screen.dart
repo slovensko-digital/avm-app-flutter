@@ -21,6 +21,7 @@ import '../app_theme.dart';
 import '../onboarding.dart';
 import '../remote_document_signing.dart';
 import '../widgets/autogram_logo.dart';
+import '../widgets/dialogs.dart';
 import '../widgets/main_app_bar.dart';
 import 'main_menu_screen.dart';
 import 'open_document_screen.dart';
@@ -176,12 +177,6 @@ class _MainScreenState extends State<MainScreen> {
     if (action is SignRemoteDocumentAction) {
       getIt.get<EncryptionKeyRegistry>().value = action.key;
 
-      final integration = action.integration;
-
-      if (integration != null) {
-        _pairIntegration(integration);
-      }
-
       final screen = PreviewDocumentScreen(
         documentId: action.guid,
         file: null,
@@ -195,48 +190,73 @@ class _MainScreenState extends State<MainScreen> {
         route,
         (final route) => route.settings.name == '/',
       );
+
+      final integration = action.integration;
+
+      // Asks over the opened document
+      if (integration != null) {
+        _confirmAndPairIntegration(integration, reportAlreadyPaired: false);
+      }
     }
 
     if (action is RegisterIntegrationAction) {
-      _registerIntegration(action.integration);
+      _confirmAndPairIntegration(
+        action.integration,
+        reportAlreadyPaired: true,
+      );
     }
   }
 
-  /// Pairs integration and shows result, as there is no other flow.
-  Future<void> _registerIntegration(String pairingToken) async {
+  /// Asks user to confirm pairing with integration from [pairingToken], so it
+  /// can send next sign requests as push notifications, and shows the result.
+  ///
+  /// Skipped when already paired; [reportAlreadyPaired] then shows a message.
+  Future<void> _confirmAndPairIntegration(
+    String pairingToken, {
+    required bool reportAlreadyPaired,
+  }) async {
+    final service = getIt.get<PushNotificationService>();
     final strings = context.strings;
     final scaffoldMessenger = ScaffoldMessenger.of(context);
-    String message;
+
+    void showMessage(String message) {
+      scaffoldMessenger.showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: const Duration(seconds: 5),
+        ),
+      );
+    }
+
+    if (await service.isIntegrationPaired(pairingToken)) {
+      _logger.info("Integration is already paired.");
+
+      if (reportAlreadyPaired) {
+        showMessage(strings.pairIntegrationAlreadyPairedMessage);
+      }
+
+      return;
+    }
+
+    if (!mounted) return;
+
+    final confirmed = await showNotificationsPermissionRationaleModal(context);
+
+    if (confirmed != true) {
+      _logger.info("Pairing integration was not confirmed.");
+
+      return;
+    }
 
     try {
-      await getIt
-          .get<PushNotificationService>()
-          .pairIntegration(pairingToken);
+      await service.pairIntegration(pairingToken);
 
-      message = strings.pairIntegrationSuccessMessage;
+      showMessage(strings.pairIntegrationSuccessMessage);
     } catch (error, stackTrace) {
       _logger.severe("Error pairing integration.", error, stackTrace);
 
-      message = strings.pairIntegrationErrorMessage(error);
+      showMessage(strings.pairIntegrationErrorMessage(error));
     }
-
-    scaffoldMessenger.showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 5),
-      ),
-    );
-  }
-
-  /// Pairs integration in background, so it can send next sign requests
-  /// as push notifications.
-  void _pairIntegration(String pairingToken) {
-    getIt
-        .get<PushNotificationService>()
-        .pairIntegration(pairingToken)
-        .catchError((error, stackTrace) {
-      _logger.severe("Error pairing integration.", error, stackTrace);
-    });
   }
 
   Future<void> _onStartOnboardingRequested() {
