@@ -3,6 +3,7 @@ import 'dart:io' show Platform;
 
 import 'package:autogram_sign/autogram_sign.dart'
     show IAutogramService, generateAsymmetricKeyPair, generateEncryptionKey;
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart' show Logger;
@@ -123,7 +124,7 @@ class PushNotificationService {
     final pushkey = generateEncryptionKey();
     final response = await _service.registerDevice(
       registrationId: registrationId,
-      displayName: _deviceDisplayName,
+      displayName: await _getDeviceDisplayName(),
       publicKey: keyPair.publicKey,
       pushkey: pushkey,
     );
@@ -160,8 +161,28 @@ class PushNotificationService {
     return token;
   }
 
-  static String get _deviceDisplayName {
-    return "Autogram v mobile (${Platform.isIOS ? "iOS" : "Android"})";
+  /// Returns name shown in paired integrations, e.g.
+  /// "Autogram v mobile (iPhone 15 Pro)".
+  static Future<String> _getDeviceDisplayName() async {
+    final deviceInfo = DeviceInfoPlugin();
+    String deviceName;
+
+    try {
+      if (Platform.isIOS) {
+        // User-assigned name requires special entitlement, so use model name
+        deviceName = (await deviceInfo.iosInfo).modelName;
+      } else {
+        final info = await deviceInfo.androidInfo;
+
+        // User-assigned name, defaults to marketing name (e.g. "Galaxy S23")
+        deviceName = info.name.trim().isNotEmpty ? info.name : info.model;
+      }
+    } catch (error, stackTrace) {
+      _logger.warning("Cannot get device name.", error, stackTrace);
+      deviceName = Platform.isIOS ? "iOS" : "Android";
+    }
+
+    return "Autogram v mobile ($deviceName)";
   }
 
   void _onMessage(RemoteMessage message) {
