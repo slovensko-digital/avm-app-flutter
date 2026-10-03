@@ -19,7 +19,7 @@ dependencies:
     git:
       url: https://github.com/slovensko-digital/avm-client-dart
       ref: v0.5.0
-  device_info_plus: ^13.0.0
+  device_info_plus: ^12.4.0
   package_info_plus:
   share_plus:
   wakelock_plus:
@@ -56,11 +56,6 @@ dependencies:
   html:
   flutter_markdown:
   markdown:
-
-# TODO Remove when autogram_sign v0.5.0 is tagged
-dependency_overrides:
-  autogram_sign:
-    path: ../avm-client-dart
 
 dev_dependencies:
   flutter_test:

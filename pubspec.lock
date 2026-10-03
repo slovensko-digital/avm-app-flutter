@@ -68,9 +68,11 @@ packages:
   autogram_sign:
     dependency: "direct main"
     description:
-      path: "../avm-client-dart"
-      relative: true
-    source: path
+      path: "."
+      ref: "v0.5.0"
+      resolved-ref: "3129707cc4b0b4ba7bc087f82596e2f044b9dc67"
+      url: "https://github.com/slovensko-digital/avm-client-dart"
+    source: git
     version: "0.5.0"
   barcode:
     dependency: transitive
@@ -288,6 +290,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
+  device_info_plus:
+    dependency: "direct main"
+    description:
+      name: device_info_plus
+      sha256: b4fed1b2835da9d670d7bed7db79ae2a94b0f5ad6312268158a9b5479abbacdd
+      url: "https://pub.dev"
+    source: hosted
+    version: "12.4.0"
+  device_info_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: device_info_plus_platform_interface
+      sha256: e1ea89119e34903dca74b883d0dd78eb762814f97fb6c76f35e9ff74d261a18f
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.3"
   dotted_border:
     dependency: "direct main"
     description:
@@ -1506,6 +1524,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.15.0"
+  win32_registry:
+    dependency: transitive
+    description:
+      name: win32_registry
+      sha256: "6f1b564492d0147b330dd794fee8f512cec4977957f310f9951b5f9d83618dae"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   xdg_directories:
     dependency: transitive
     description:
