@@ -1,5 +1,6 @@
 import 'package:autogram_sign/autogram_sign.dart';
 import 'package:eidmsdk/eidmsdk.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
@@ -20,6 +21,9 @@ void configureDependencies() {
 abstract class ExtrernalModule {
   @lazySingleton
   Eidmsdk get eidmsdk;
+
+  @lazySingleton
+  FirebaseMessaging get firebaseMessaging => FirebaseMessaging.instance;
 
   @lazySingleton
   IAutogramService create(

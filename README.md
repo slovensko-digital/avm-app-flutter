@@ -71,6 +71,19 @@ It's similar to [Sign single document](#sign-single-document), but starts with:
 - [`StartRemoteDocumentSigningScreen`](lib/ui/screens/start_remote_document_signing_screen.dart)
 - [`QRCodeScannerScreen`](lib/ui/screens/qr_code_scanner_screen.dart)
 
+#### Push notifications from paired integrations
+
+- A foreground sign request opens directly only on the main screen. While another
+  screen is open, it offers an **Open** action without replacing the current document.
+- Tapping a system notification or the **Open** action explicitly starts the new
+  signing flow, replacing the previous one.
+- Pairing can succeed with notifications denied, but the app reports this separately
+  and explains how to enable notifications in system settings.
+- Registration is checked at startup, on resume, and when FCM rotates its token.
+  An expired registration is shown on the main screen and in paired devices.
+  The server cannot update its token yet: users must scan pairing codes again.
+  The app warns before replacing the registration and does not silently discard it.
+
 ### Scripts
 
 FVM init and Pub get:

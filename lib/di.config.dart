@@ -15,6 +15,7 @@ import 'dart:io' as _i497;
 import 'package:autogram_sign/autogram_sign.dart' as _i825;
 import 'package:eidmsdk/eidmsdk.dart' as _i713;
 import 'package:eidmsdk/types.dart' as _i518;
+import 'package:firebase_messaging/firebase_messaging.dart' as _i892;
 import 'package:flutter/foundation.dart' as _i971;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -51,6 +52,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i429.EncryptionKeyRegistry(),
     );
     gh.lazySingleton<_i713.Eidmsdk>(() => extrernalModule.eidmsdk);
+    gh.lazySingleton<_i892.FirebaseMessaging>(
+      () => extrernalModule.firebaseMessaging,
+    );
     gh.lazySingleton<_i752.GetHtmlDocumentVersionUseCase>(
       () => _i752.GetHtmlDocumentVersionUseCase(),
     );
@@ -99,15 +103,17 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i205.DocumentValidationCubit(service: gh<_i825.IAutogramService>()),
     );
-    gh.lazySingleton<_i400.GetDocumentSignatureTypeUseCase>(
-      () => _i400.GetDocumentSignatureTypeUseCase(gh<_i825.IAutogramService>()),
-    );
     gh.singleton<_i745.PushNotificationService>(
       () => _i745.PushNotificationService(
         gh<_i403.AppService>(),
         gh<_i64.DeviceRegistry>(),
         gh<_i825.IAutogramService>(),
+        gh<_i892.FirebaseMessaging>(),
       ),
+      dispose: (i) => i.dispose(),
+    );
+    gh.lazySingleton<_i400.GetDocumentSignatureTypeUseCase>(
+      () => _i400.GetDocumentSignatureTypeUseCase(gh<_i825.IAutogramService>()),
     );
     gh.factoryParam<_i21.PreviewDocumentCubit, String, dynamic>(
       (documentId, _) => _i21.PreviewDocumentCubit(

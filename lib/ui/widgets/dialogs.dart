@@ -8,7 +8,10 @@ import 'close_button.dart' as avm;
 import 'result_view.dart';
 
 /// Shows bottom sheet with rationale text for notifications permission.
-Future<bool?> showNotificationsPermissionRationaleModal(BuildContext context) {
+Future<bool?> showNotificationsPermissionRationaleModal(
+  BuildContext context, {
+  String? message,
+}) {
   final strings = context.strings;
   final child = Column(
     mainAxisSize: MainAxisSize.min,
@@ -18,7 +21,7 @@ Future<bool?> showNotificationsPermissionRationaleModal(BuildContext context) {
         child: ResultView(
           icon: 'assets/images/notification.svg',
           titleText: strings.notificationPermissionRationaleTitle,
-          body: Text(strings.notificationPermissionRationaleMessage),
+          body: Text(message ?? strings.notificationPermissionRationaleMessage),
         ),
       ),
       const SizedBox(height: 60),
@@ -92,8 +95,9 @@ Widget previewNotificationsPermissionRationaleModal(BuildContext context) {
           children: [
             FilledButton(
               onPressed: () async {
-                final value =
-                    await showNotificationsPermissionRationaleModal(context);
+                final value = await showNotificationsPermissionRationaleModal(
+                  context,
+                );
 
                 setState(() => result = value);
               },

@@ -8,10 +8,12 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/paired_device_list_cubit.dart';
 import '../../di.dart';
+import '../../services/push_notification_service.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
+import '../widgets/push_notification_status_banner.dart';
 
 /// Displays list of paired devices (integrations) that can send sign requests
 /// as push notifications.
@@ -22,15 +24,24 @@ class PairedDeviceListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pushService = getIt.get<PushNotificationService>();
     return BlocProvider<PairedDeviceListCubit>(
-      create: (context) => getIt.get<PairedDeviceListCubit>()..load(),
+      create: (context) {
+        pushService.refreshStatus();
+        return getIt.get<PairedDeviceListCubit>()..load();
+      },
       child: BlocBuilder<PairedDeviceListCubit, PairedDeviceListState>(
         builder: (context, state) {
-          return _Body(
-            state: state,
-            onDeleteRequested: (item) {
-              context.read<PairedDeviceListCubit>().delete(item);
-            },
+          return ValueListenableBuilder(
+            valueListenable: pushService.status,
+            builder: (context, status, _) => _Body(
+              state: state,
+              notificationStatus: status,
+              onRetryStatus: pushService.refreshStatus,
+              onDeleteRequested: (item) {
+                context.read<PairedDeviceListCubit>().delete(item);
+              },
+            ),
           );
         },
       ),
@@ -41,8 +52,15 @@ class PairedDeviceListScreen extends StatelessWidget {
 class _Body extends StatelessWidget {
   final PairedDeviceListState state;
   final ValueSetter<GetDeviceIntegrationsResponseBody$Item> onDeleteRequested;
+  final PushNotificationStatus notificationStatus;
+  final VoidCallback? onRetryStatus;
 
-  const _Body({required this.state, required this.onDeleteRequested});
+  const _Body({
+    required this.state,
+    required this.onDeleteRequested,
+    this.notificationStatus = PushNotificationStatus.notRegistered,
+    this.onRetryStatus,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +69,15 @@ class _Body extends StatelessWidget {
         title: Text(context.strings.pairedDevicesTitle),
       ),
       body: SafeArea(
-        child: _getChild(context),
+        child: Column(
+          children: [
+            PushNotificationStatusBanner(
+              status: notificationStatus,
+              onRetry: onRetryStatus,
+            ),
+            Expanded(child: _getChild(context)),
+          ],
+        ),
       ),
     );
   }
@@ -63,36 +89,36 @@ class _Body extends StatelessWidget {
       PairedDeviceListInitialState _ => const LoadingContent(),
       PairedDeviceListLoadingState _ => const LoadingContent(),
       PairedDeviceListErrorState state => ErrorContent(
-          title: strings.pairedDevicesErrorHeading,
-          error: state.error,
-        ),
+        title: strings.pairedDevicesErrorHeading,
+        error: state.error,
+      ),
       PairedDeviceListSuccessState state when state.items.isEmpty => Center(
-          child: Padding(
-            padding: kScreenMargin,
-            child: Text(
-              strings.pairedDevicesEmpty,
-              textAlign: TextAlign.center,
-            ),
+        child: Padding(
+          padding: kScreenMargin,
+          child: Text(
+            strings.pairedDevicesEmpty,
+            textAlign: TextAlign.center,
           ),
         ),
+      ),
       PairedDeviceListSuccessState state => ListView(
-          children: [
-            Padding(
-              padding: kScreenMargin,
-              child: Text(strings.pairedDevicesInfo),
-            ),
-            for (final item in state.items)
-              ListTile(
-                title: Text(item.displayName),
-                subtitle: Text(item.platform),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete_outline),
-                  tooltip: strings.pairedDeviceDeleteTooltip,
-                  onPressed: () => onDeleteRequested(item),
-                ),
+        children: [
+          Padding(
+            padding: kScreenMargin,
+            child: Text(strings.pairedDevicesInfo),
+          ),
+          for (final item in state.items)
+            ListTile(
+              title: Text(item.displayName),
+              subtitle: Text(item.platform),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete_outline),
+                tooltip: strings.pairedDeviceDeleteTooltip,
+                onPressed: () => onDeleteRequested(item),
               ),
-          ],
-        ),
+            ),
+        ],
+      ),
     };
   }
 }

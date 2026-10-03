@@ -58,6 +58,7 @@ dependencies:
   markdown:
 
 dev_dependencies:
+  firebase_messaging_platform_interface: ^4.10.0
   flutter_test:
     sdk: flutter
   flutter_lints:

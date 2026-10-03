@@ -6,6 +6,7 @@ import 'app_service.dart';
 import 'bloc/app_bloc.dart';
 import 'di.dart';
 import 'l10n/app_localizations.dart';
+import 'services/push_notification_service.dart';
 import 'strings_context.dart';
 import 'ui/app_theme.dart';
 import 'ui/screens/main_screen.dart';
@@ -21,14 +22,21 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appService = getIt.get<AppService>();
+    final pushService = getIt.get<PushNotificationService>();
 
-    final home = ValueListenableBuilder(
-      valueListenable: appService.incomingUri,
-      builder: (context, incomingUri, _) {
+    final home = ListenableBuilder(
+      listenable: Listenable.merge([
+        appService.incomingUri,
+        pushService.foregroundMessage,
+        pushService.status,
+      ]),
+      builder: (context, _) {
         // TODO Convert to stateful and show modal dialog with question whether to start over with different input file
 
         return MainScreen(
-          incomingUri: incomingUri,
+          incomingUri: appService.incomingUri.value,
+          foregroundPush: pushService.foregroundMessage.value,
+          pushNotificationStatus: pushService.status.value,
         );
       },
     );

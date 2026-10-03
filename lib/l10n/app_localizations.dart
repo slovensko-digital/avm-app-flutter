@@ -424,6 +424,48 @@ abstract class AppLocalizations {
   /// **'Zariadenie už je spárované.'**
   String get pairIntegrationAlreadyPairedMessage;
 
+  /// No description provided for @pairIntegrationNotificationsDeniedMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zariadenie je spárované, ale upozornenia sú zakázané. V systémových nastaveniach povoľte aplikácii Autogram upozornenia.'**
+  String get pairIntegrationNotificationsDeniedMessage;
+
+  /// No description provided for @notificationsDeniedMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Upozornenia sú zakázané. Žiadosti o podpis sa nebudú zobrazovať ako notifikácie. V systémových nastaveniach povoľte aplikácii Autogram upozornenia.'**
+  String get notificationsDeniedMessage;
+
+  /// No description provided for @pairingRenewalRequiredMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Doručovanie žiadostí o podpis vyžaduje obnovenie párovania. Znovu naskenujte párovací QR kód z každého zariadenia. Pôvodné párovania už nedoručujú notifikácie.'**
+  String get pairingRenewalRequiredMessage;
+
+  /// No description provided for @pairingRenewalConfirmationMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Doručovanie notifikácií vyžaduje novú registráciu. Pokračovaním sa pôvodné párovania nahradia. Ostatné zariadenia bude potrebné tiež znovu spárovať.'**
+  String get pairingRenewalConfirmationMessage;
+
+  /// No description provided for @notificationStatusUnavailableMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nepodarilo sa overiť doručovanie notifikácií. Skontrolujte pripojenie a skúste to znova.'**
+  String get notificationStatusUnavailableMessage;
+
+  /// No description provided for @newSignRequestMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Prišla nová žiadosť o podpis. Otvorením nahradíte rozpracovaný dokument.'**
+  String get newSignRequestMessage;
+
+  /// No description provided for @openSignRequestLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Otvoriť'**
+  String get openSignRequestLabel;
+
   /// No description provided for @privacyPolicyTitle.
   ///
   /// In sk, this message translates to:

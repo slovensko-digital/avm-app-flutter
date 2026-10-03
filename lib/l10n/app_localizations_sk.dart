@@ -235,6 +235,33 @@ class AppLocalizationsSk extends AppLocalizations {
       'Zariadenie už je spárované.';
 
   @override
+  String get pairIntegrationNotificationsDeniedMessage =>
+      'Zariadenie je spárované, ale upozornenia sú zakázané. V systémových nastaveniach povoľte aplikácii Autogram upozornenia.';
+
+  @override
+  String get notificationsDeniedMessage =>
+      'Upozornenia sú zakázané. Žiadosti o podpis sa nebudú zobrazovať ako notifikácie. V systémových nastaveniach povoľte aplikácii Autogram upozornenia.';
+
+  @override
+  String get pairingRenewalRequiredMessage =>
+      'Doručovanie žiadostí o podpis vyžaduje obnovenie párovania. Znovu naskenujte párovací QR kód z každého zariadenia. Pôvodné párovania už nedoručujú notifikácie.';
+
+  @override
+  String get pairingRenewalConfirmationMessage =>
+      'Doručovanie notifikácií vyžaduje novú registráciu. Pokračovaním sa pôvodné párovania nahradia. Ostatné zariadenia bude potrebné tiež znovu spárovať.';
+
+  @override
+  String get notificationStatusUnavailableMessage =>
+      'Nepodarilo sa overiť doručovanie notifikácií. Skontrolujte pripojenie a skúste to znova.';
+
+  @override
+  String get newSignRequestMessage =>
+      'Prišla nová žiadosť o podpis. Otvorením nahradíte rozpracovaný dokument.';
+
+  @override
+  String get openSignRequestLabel => 'Otvoriť';
+
+  @override
   String get privacyPolicyTitle => 'Ochrana osobných údajov';
 
   @override
