@@ -134,6 +134,10 @@ class PresentSignedDocumentScreen extends StatelessWidget {
   /// Handles close request.
   Future<void> _handleClose(BuildContext context) {
     if (openFromDeepLink && Platform.isAndroid) {
+      // On Android 12+ app is only moved to background, so go back to
+      // MainScreen first; otherwise this screen is shown when app is reopened
+      Navigator.of(context).popUntil((route) => route.isFirst);
+
       return SystemNavigator.pop();
     } else {
       return Navigator.of(context).maybePop();
