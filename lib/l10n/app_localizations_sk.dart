@@ -111,11 +111,18 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
-  String get notificationPermissionRationaleTitle => 'Povoliť upozornenia';
+  String get notificationPermissionRationaleTitle => 'Spárovať zariadenia?';
 
   @override
   String get notificationPermissionRationaleMessage =>
-      'Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.';
+      'Párovanie vyžaduje zasielanie upozornení.';
+
+  @override
+  String get notificationPermissionRationaleAcceptLabel => 'Spárovať';
+
+  @override
+  String get notificationPermissionRationaleDeclineLabel =>
+      'Odmietnuť párovanie';
 
   @override
   String get menuTitle => 'Menu';

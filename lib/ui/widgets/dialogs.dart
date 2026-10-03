@@ -29,7 +29,7 @@ Future<bool?> showNotificationsPermissionRationaleModal(BuildContext context) {
         onPressed: () {
           Navigator.maybePop(context, true);
         },
-        child: Text(strings.buttonAcknowledgeAndAgreeLabel),
+        child: Text(strings.notificationPermissionRationaleAcceptLabel),
       ),
       const SizedBox(height: kButtonSpace),
       TextButton(
@@ -39,7 +39,7 @@ Future<bool?> showNotificationsPermissionRationaleModal(BuildContext context) {
         onPressed: () {
           Navigator.maybePop(context, false);
         },
-        child: Text(strings.buttonDisagreeLabel),
+        child: Text(strings.notificationPermissionRationaleDeclineLabel),
       ),
     ],
   );

@@ -283,14 +283,26 @@ abstract class AppLocalizations {
   /// No description provided for @notificationPermissionRationaleTitle.
   ///
   /// In sk, this message translates to:
-  /// **'Povoliť upozornenia'**
+  /// **'Spárovať zariadenia?'**
   String get notificationPermissionRationaleTitle;
 
   /// No description provided for @notificationPermissionRationaleMessage.
   ///
   /// In sk, this message translates to:
-  /// **'Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.'**
+  /// **'Párovanie vyžaduje zasielanie upozornení.'**
   String get notificationPermissionRationaleMessage;
+
+  /// No description provided for @notificationPermissionRationaleAcceptLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Spárovať'**
+  String get notificationPermissionRationaleAcceptLabel;
+
+  /// No description provided for @notificationPermissionRationaleDeclineLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Odmietnuť párovanie'**
+  String get notificationPermissionRationaleDeclineLabel;
 
   /// No description provided for @menuTitle.
   ///

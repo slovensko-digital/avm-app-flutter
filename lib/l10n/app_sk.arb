@@ -34,8 +34,10 @@
   "deepLinkParseErrorMessage": "Nepodporovaný alebo nesprávny odkaz:\n{error}",
   "stepIndicatorText": "Krok {stepNumber} z {totalSteps}",
 
-  "notificationPermissionRationaleTitle": "Povoliť upozornenia",
-  "notificationPermissionRationaleMessage": "Na zaslanie upozornení o dokumentoch na podpis potrebujeme povolenie.",
+  "notificationPermissionRationaleTitle": "Spárovať zariadenia?",
+  "notificationPermissionRationaleMessage": "Párovanie vyžaduje zasielanie upozornení.",
+  "notificationPermissionRationaleAcceptLabel": "Spárovať",
+  "notificationPermissionRationaleDeclineLabel": "Odmietnuť párovanie",
 
   "menuTitle": "Menu",
   "settingsTitle": "Nastavenia",
