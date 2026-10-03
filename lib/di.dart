@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import 'di.config.dart';
+import 'services/device_registry.dart';
 import 'services/encryption_key_registry.dart';
 
 final getIt = GetIt.instance;
@@ -21,9 +22,13 @@ abstract class ExtrernalModule {
   Eidmsdk get eidmsdk;
 
   @lazySingleton
-  IAutogramService create(EncryptionKeyRegistry encryptionKeyRegistry) {
+  IAutogramService create(
+    EncryptionKeyRegistry encryptionKeyRegistry,
+    DeviceRegistry deviceRegistry,
+  ) {
     return AutogramService(
       encryptionKeySource: () => encryptionKeyRegistry.value,
+      deviceTokenSource: deviceRegistry.createToken,
     );
   }
 }

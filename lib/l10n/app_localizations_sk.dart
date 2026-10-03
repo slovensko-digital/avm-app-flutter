@@ -200,6 +200,30 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String get pairedDevicesInfo =>
+      'Spárované zariadenia vám môžu posielať žiadosti o podpis ako notifikácie.';
+
+  @override
+  String get pairedDevicesEmpty =>
+      'Nemáte spárované žiadne zariadenia.\nZariadenie sa spáruje po naskenovaní QR kódu, ktorý to umožňuje.';
+
+  @override
+  String get pairedDevicesErrorHeading =>
+      'Chyba pri načítaní spárovaných zariadení';
+
+  @override
+  String get pairedDeviceDeleteTooltip => 'Zrušiť spárovanie';
+
+  @override
+  String get pairIntegrationSuccessMessage =>
+      'Zariadenie bolo spárované. Žiadosti o podpis vám prídu ako notifikácie.';
+
+  @override
+  String pairIntegrationErrorMessage(Object error) {
+    return 'Spárovanie zariadenia zlyhalo:\n$error';
+  }
+
+  @override
   String get privacyPolicyTitle => 'Ochrana osobných údajov';
 
   @override

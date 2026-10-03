@@ -123,7 +123,7 @@ class _Body extends StatelessWidget {
 
     final pairedDevices = PreferenceTile(
       title: strings.pairedDevicesTitle,
-      summary: strings.pairedDevicesSummary(0),
+      summary: null,
       onPressed: () {
         _showPairedDevicesScreen(context);
       },
@@ -140,8 +140,8 @@ class _Body extends StatelessWidget {
         divider,
         signatureType,
         divider,
-        // pairedDevices,  TODO: uncomment when pairing works
-        // divider,
+        pairedDevices,
+        divider,
       ],
     );
   }

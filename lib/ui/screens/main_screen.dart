@@ -15,6 +15,7 @@ import '../../deep_links.dart';
 import '../../di.dart';
 import '../../file_extensions.dart';
 import '../../services/encryption_key_registry.dart';
+import '../../services/push_notification_service.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
 import '../onboarding.dart';
@@ -175,6 +176,12 @@ class _MainScreenState extends State<MainScreen> {
     if (action is SignRemoteDocumentAction) {
       getIt.get<EncryptionKeyRegistry>().value = action.key;
 
+      final integration = action.integration;
+
+      if (integration != null) {
+        _pairIntegration(integration);
+      }
+
       final screen = PreviewDocumentScreen(
         documentId: action.guid,
         file: null,
@@ -189,6 +196,47 @@ class _MainScreenState extends State<MainScreen> {
         (final route) => route.settings.name == '/',
       );
     }
+
+    if (action is RegisterIntegrationAction) {
+      _registerIntegration(action.integration);
+    }
+  }
+
+  /// Pairs integration and shows result, as there is no other flow.
+  Future<void> _registerIntegration(String pairingToken) async {
+    final strings = context.strings;
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    String message;
+
+    try {
+      await getIt
+          .get<PushNotificationService>()
+          .pairIntegration(pairingToken);
+
+      message = strings.pairIntegrationSuccessMessage;
+    } catch (error, stackTrace) {
+      _logger.severe("Error pairing integration.", error, stackTrace);
+
+      message = strings.pairIntegrationErrorMessage(error);
+    }
+
+    scaffoldMessenger.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 5),
+      ),
+    );
+  }
+
+  /// Pairs integration in background, so it can send next sign requests
+  /// as push notifications.
+  void _pairIntegration(String pairingToken) {
+    getIt
+        .get<PushNotificationService>()
+        .pairIntegration(pairingToken)
+        .catchError((error, stackTrace) {
+      _logger.severe("Error pairing integration.", error, stackTrace);
+    });
   }
 
   Future<void> _onStartOnboardingRequested() {

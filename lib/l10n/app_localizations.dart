@@ -370,6 +370,42 @@ abstract class AppLocalizations {
   /// **'{count, plural, zero{žiadne} one{1 zariadenie} few{{count} zariadenia} other{{count} zariadení}}'**
   String pairedDevicesSummary(num count);
 
+  /// No description provided for @pairedDevicesInfo.
+  ///
+  /// In sk, this message translates to:
+  /// **'Spárované zariadenia vám môžu posielať žiadosti o podpis ako notifikácie.'**
+  String get pairedDevicesInfo;
+
+  /// No description provided for @pairedDevicesEmpty.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nemáte spárované žiadne zariadenia.\nZariadenie sa spáruje po naskenovaní QR kódu, ktorý to umožňuje.'**
+  String get pairedDevicesEmpty;
+
+  /// No description provided for @pairedDevicesErrorHeading.
+  ///
+  /// In sk, this message translates to:
+  /// **'Chyba pri načítaní spárovaných zariadení'**
+  String get pairedDevicesErrorHeading;
+
+  /// No description provided for @pairedDeviceDeleteTooltip.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zrušiť spárovanie'**
+  String get pairedDeviceDeleteTooltip;
+
+  /// No description provided for @pairIntegrationSuccessMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Zariadenie bolo spárované. Žiadosti o podpis vám prídu ako notifikácie.'**
+  String get pairIntegrationSuccessMessage;
+
+  /// No description provided for @pairIntegrationErrorMessage.
+  ///
+  /// In sk, this message translates to:
+  /// **'Spárovanie zariadenia zlyhalo:\n{error}'**
+  String pairIntegrationErrorMessage(Object error);
+
   /// No description provided for @privacyPolicyTitle.
   ///
   /// In sk, this message translates to:

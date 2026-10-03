@@ -46,6 +46,16 @@ DeepLinkAction parseDeepLinkAction(Uri uri) {
           pushkey: uri.queryParameters["pushkey"],
         );
       }(),
+    "/api/v1/qr-code-register" => () {
+        final integration = uri.queryParameters["integration"];
+
+        if (integration == null || integration.isEmpty) {
+          throw ArgumentError.value(
+              uri.toString(), "uri", '"integration" param is missing a value.');
+        }
+
+        return RegisterIntegrationAction(integration: integration);
+      }(),
     _ => throw ArgumentError.value(
         uri.toString(), "uri", "Invalid or unsupported URI."),
   };
@@ -71,5 +81,20 @@ class SignRemoteDocumentAction extends DeepLinkAction {
   @override
   String toString() {
     return "$runtimeType(guid: $guid)";
+  }
+}
+
+/// Action to pair this device with integration, without any document.
+class RegisterIntegrationAction extends DeepLinkAction {
+  /// Integration pairing token (JWT).
+  final String integration;
+
+  RegisterIntegrationAction({
+    required this.integration,
+  });
+
+  @override
+  String toString() {
+    return "$runtimeType()";
   }
 }

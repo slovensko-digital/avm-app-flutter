@@ -52,5 +52,18 @@ void main() {
         '${log.time}: I/test: QR code scanner result: https://autogram.slovensko.digital/api/v1/qr-code?guid=<REDACTED>&key=<REDACTED>',
       );
     });
+
+    test('formatCrashlyticsLog strips integration pairing token', () {
+      final log = LogRecord(
+        Level.INFO,
+        'Received URI: avm://autogram.slovensko.digital/api/v1/qr-code?guid=abc&key=def&integration=eyJhbGciOiJFUzI1NiJ9.eyJzdWIiOiI3OCJ9.7Op6W2Bv',
+        'test',
+      );
+
+      expect(
+        formatCrashlyticsLog(log),
+        '${log.time}: I/test: Received URI: avm://autogram.slovensko.digital/api/v1/qr-code?guid=<REDACTED>&key=<REDACTED>&integration=<REDACTED>',
+      );
+    });
   });
 }

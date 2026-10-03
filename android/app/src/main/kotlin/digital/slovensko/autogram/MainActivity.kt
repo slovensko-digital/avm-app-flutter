@@ -1,5 +1,7 @@
 package digital.slovensko.autogram
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +16,22 @@ class MainActivity : FlutterFragmentActivity() {
         super.onCreate(savedInstanceState)
 
         Log.d(TAG, "onCreate: savedInstanceState=$savedInstanceState, intent=$intent")
+
+        createNotificationChannel()
+    }
+
+    /**
+     * Creates default FCM notification channel for sign requests; see
+     * "default_notification_channel_id" in AndroidManifest.xml.
+     */
+    private fun createNotificationChannel() {
+        val channel = NotificationChannel(
+            getString(R.string.sign_request_notification_channel_id),
+            getString(R.string.sign_request_notification_channel_name),
+            NotificationManager.IMPORTANCE_HIGH
+        )
+
+        getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {

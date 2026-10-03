@@ -7,7 +7,7 @@ import 'package:logging/logging.dart' show LogRecord, Level;
 
 final Random _random = Random.secure();
 final _sensitiveQueryParamPattern = RegExp(
-  r'([?&])(key|pushkey|guid)=[^&\s#]*',
+  r'([?&])(key|pushkey|guid|integration)=[^&\s#]*',
 );
 
 /// Creates cryptographic random data encoded as base64.
@@ -31,7 +31,8 @@ X509CertificateData x509CertificateDataFromDer(String data) {
   return X509Utils.x509CertificateFromPem(pem);
 }
 
-/// Redacts values of sensitive query parameters (`key`, `pushkey`, `guid`).
+/// Redacts values of sensitive query parameters (`key`, `pushkey`, `guid`,
+/// `integration`).
 String _redactSensitive(String input) => input.replaceAllMapped(
   _sensitiveQueryParamPattern,
   (m) => '${m[1]}${m[2]}=<REDACTED>',

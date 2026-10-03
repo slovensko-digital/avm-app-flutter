@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools">
 
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
   <queries>
     <intent>
       <action android:name="android.intent.action.VIEW_DOWNLOADS" />
@@ -96,6 +98,16 @@
         <data android:pathPrefix="/api/" />
       </intent-filter>
     </activity>
+    <!-- FCM notifications (sign requests) -->
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_icon"
+      android:resource="@drawable/ic_notification" />
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_color"
+      android:resource="@color/notification_color" />
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_channel_id"
+      android:value="@string/sign_request_notification_channel_id" />
     <!-- Don't delete the meta-data below.
          This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
     <meta-data
