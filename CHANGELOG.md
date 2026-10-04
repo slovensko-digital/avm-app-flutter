@@ -1,8 +1,11 @@
 # Changelog
 
-## Unreleased
+## 2026-10-04 - v1.7.0(56)
 
-- #124 | Push notifications for sign requests from paired integrations (iOS: minimum version is 15.0)
+- #124 | Push notifications for sign requests from paired integrations
+- #124 | Pairing with integration from QR code and paired devices screen
+- #124 | Android: Return to main screen when closing app after signing
+- #124 | Update Firebase (iOS: minimum version is 15.0)
 
 ## 2026-08-11 - v1.6.0(55)
 
