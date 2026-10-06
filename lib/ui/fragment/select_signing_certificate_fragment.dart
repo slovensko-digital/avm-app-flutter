@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../bloc/select_signing_certificate_cubit.dart';
 import '../../strings_context.dart';
+import '../screens/id_card_troubleshooting_dialog.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
 import '../widgets/markdown_text.dart';
@@ -38,6 +39,8 @@ class SelectSigningCertificateFragment extends StatelessWidget {
       SelectSigningCertificateErrorState state => ErrorContent(
           title: strings.selectSigningCertificateErrorHeading,
           error: state.error,
+          actionButtonLabel: strings.troubleshootingButtonLabel,
+          onActionPressed: () => showTroubleshootingDialog(context),
         ),
       SelectSigningCertificateSuccessState state => successBuilder(
           context,
@@ -67,6 +70,18 @@ class SelectSigningCertificateFragment extends StatelessWidget {
       body: MarkdownText(
         strings.selectSigningCertificateNoCertificateBody,
       ),
+    );
+  }
+
+  /// Shows the troubleshooting dialog with ID card attachment instructions.
+  static void showTroubleshootingDialog(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      pageBuilder: (_, __, ___) => const IdCardTroubleshootingDialog(),
+      transitionDuration: const Duration(milliseconds: 300),
+      transitionBuilder: (context, animation, _, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
     );
   }
 }
