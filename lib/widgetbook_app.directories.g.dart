@@ -93,6 +93,8 @@ import 'package:autogram/ui/widgets/result_view.dart'
     as _autogram_ui_widgets_result_view;
 import 'package:autogram/ui/widgets/retry_view.dart'
     as _autogram_ui_widgets_retry_view;
+import 'package:autogram/ui/widgets/sign_request_banner.dart'
+    as _autogram_ui_widgets_sign_request_banner;
 import 'package:autogram/ui/widgets/signature_type_picker.dart'
     as _autogram_ui_widgets_signature_type_picker;
 import 'package:autogram/ui/widgets/step_indicator.dart'
@@ -316,6 +318,16 @@ final directories = <_widgetbook.WidgetbookNode>[
           _widgetbook.WidgetbookUseCase(
             name: '',
             builder: _autogram_ui_widgets_markdown_text.previewMarkdownText,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'MaterialBanner',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'sign request',
+            builder: _autogram_ui_widgets_sign_request_banner
+                .previewSignRequestBanner,
           ),
         ],
       ),

@@ -85,11 +85,24 @@ void main() {
     ),
   );
 
-  Future<void> openExistingDocument(WidgetTester tester) async {
+  Future<void> openExistingDocument(
+    WidgetTester tester, {
+    VoidCallback? onSignPressed,
+  }) async {
     await tester.pumpWidget(host());
     navigator.currentState!.push(
       MaterialPageRoute<void>(
-        builder: (_) => const Scaffold(body: Text('Original document')),
+        builder: (_) => Scaffold(
+          body: Column(
+            children: [
+              const Expanded(child: Text('Original document')),
+              FilledButton(
+                onPressed: onSignPressed,
+                child: Text(strings.buttonSignLabel),
+              ),
+            ],
+          ),
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -105,6 +118,7 @@ void main() {
       expect(find.text('Original document'), findsOneWidget);
       expect(find.byType(PreviewDocumentScreen), findsNothing);
       expect(keys.value, 'original-key');
+      expect(find.text(strings.newSignRequestTitle), findsOneWidget);
       expect(find.text(strings.newSignRequestMessage), findsOneWidget);
 
       await tester.tap(find.text(strings.openSignRequestLabel));
@@ -118,6 +132,97 @@ void main() {
             .documentId,
         'new-document',
       );
+      expect(find.text(strings.newSignRequestTitle), findsNothing);
+    },
+  );
+
+  testWidgets('foreground push does not cover the sign button', (
+    tester,
+  ) async {
+    var signs = 0;
+    await openExistingDocument(tester, onSignPressed: () => signs++);
+    final signButton = find.text(strings.buttonSignLabel);
+    final signButtonRect = tester.getRect(signButton);
+
+    foreground.value = newDocument;
+    await tester.pumpAndSettle();
+
+    final banner = find.byType(MaterialBanner);
+    expect(banner, findsOneWidget);
+    expect(tester.getRect(banner).bottom, lessThan(signButtonRect.top));
+    expect(tester.getRect(signButton), signButtonRect);
+
+    await tester.tap(signButton);
+    expect(signs, 1);
+  });
+
+  testWidgets('dismissed foreground push keeps the active document', (
+    tester,
+  ) async {
+    await openExistingDocument(tester);
+    foreground.value = newDocument;
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text(strings.buttonCloseLabel));
+    await tester.pumpAndSettle();
+    expect(find.byType(MaterialBanner), findsNothing);
+    expect(find.text('Original document'), findsOneWidget);
+    expect(keys.value, 'original-key');
+
+    // Not shown again on the next screen
+    navigator.currentState!.push(
+      MaterialPageRoute<void>(
+        builder: (_) => const Scaffold(body: Text('Next screen')),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Next screen'), findsOneWidget);
+    expect(find.byType(MaterialBanner), findsNothing);
+  });
+
+  testWidgets('newer foreground push replaces the older one', (tester) async {
+    await openExistingDocument(tester);
+    foreground.value = const SignRequestMessage(
+      documentGuid: 'older-document',
+      documentEncryptionKey: 'older-key',
+    );
+    await tester.pumpAndSettle();
+    foreground.value = newDocument;
+    await tester.pumpAndSettle();
+    expect(find.byType(MaterialBanner), findsOneWidget);
+
+    await tester.tap(find.text(strings.openSignRequestLabel));
+    await tester.pumpAndSettle();
+    expect(keys.value, 'new-key');
+    expect(
+      tester
+          .widget<PreviewDocumentScreen>(find.byType(PreviewDocumentScreen))
+          .documentId,
+      'new-document',
+    );
+    expect(find.byType(MaterialBanner), findsNothing);
+  });
+
+  testWidgets(
+    'not opened foreground push is not shown over the next opened document',
+    (tester) async {
+      await openExistingDocument(tester);
+      foreground.value = const SignRequestMessage(
+        documentGuid: 'older-document',
+        documentEncryptionKey: 'older-key',
+      );
+      await tester.pumpAndSettle();
+      expect(find.byType(MaterialBanner), findsOneWidget);
+
+      incoming.value = newDocument.toUri();
+      await tester.pumpAndSettle();
+      expect(
+        tester
+            .widget<PreviewDocumentScreen>(find.byType(PreviewDocumentScreen))
+            .documentId,
+        'new-document',
+      );
+      expect(find.byType(MaterialBanner), findsNothing);
     },
   );
 
