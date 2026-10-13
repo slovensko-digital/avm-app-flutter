@@ -25,6 +25,7 @@ import '../widgets/autogram_logo.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/main_app_bar.dart';
 import '../widgets/push_notification_status_banner.dart';
+import '../widgets/sign_request_banner.dart';
 import 'main_menu_screen.dart';
 import 'open_document_screen.dart';
 import 'preview_document_screen.dart';
@@ -134,17 +135,23 @@ class _MainScreenState extends State<MainScreen> {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.strings.newSignRequestMessage),
-          duration: const Duration(seconds: 15),
-          action: SnackBarAction(
-            label: context.strings.openSignRequestLabel,
-            onPressed: () => _handleDeepLink(uri),
-          ),
-        ),
+      final banner = signRequestBanner(
+        context,
+        onOpenPressed: () => _handleDeepLink(uri),
+        onDismissPressed: _hideSignRequestBanner,
       );
+
+      // Newer sign request replaces the older one
+      ScaffoldMessenger.of(context)
+        ..clearMaterialBanners()
+        ..showMaterialBanner(banner);
     });
+  }
+
+  /// Hides banner from [_handleForegroundPush], so it's not shown also over
+  /// the next opened document.
+  void _hideSignRequestBanner() {
+    ScaffoldMessenger.of(context).clearMaterialBanners();
   }
 
   void _handleNewIncomingUri() {
@@ -187,6 +194,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> _openNewFile(FutureOr<File> file) {
     getIt.get<EncryptionKeyRegistry>().newValue();
+    _hideSignRequestBanner();
 
     final screen = OpenDocumentScreen(file: file);
     final route = MaterialPageRoute(builder: (_) => screen);
@@ -224,6 +232,7 @@ class _MainScreenState extends State<MainScreen> {
 
     if (action is SignRemoteDocumentAction) {
       getIt.get<EncryptionKeyRegistry>().value = action.key;
+      _hideSignRequestBanner();
 
       final screen = PreviewDocumentScreen(
         documentId: action.guid,

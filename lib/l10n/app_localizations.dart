@@ -454,10 +454,16 @@ abstract class AppLocalizations {
   /// **'Nepodarilo sa overiť doručovanie notifikácií. Skontrolujte pripojenie a skúste to znova.'**
   String get notificationStatusUnavailableMessage;
 
+  /// No description provided for @newSignRequestTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Prišla nová žiadosť o podpis'**
+  String get newSignRequestTitle;
+
   /// No description provided for @newSignRequestMessage.
   ///
   /// In sk, this message translates to:
-  /// **'Prišla nová žiadosť o podpis. Otvorením nahradíte rozpracovaný dokument.'**
+  /// **'Otvorením nahradíte rozpracovaný dokument.'**
   String get newSignRequestMessage;
 
   /// No description provided for @openSignRequestLabel.

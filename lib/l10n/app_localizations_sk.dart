@@ -255,8 +255,11 @@ class AppLocalizationsSk extends AppLocalizations {
       'Nepodarilo sa overiť doručovanie notifikácií. Skontrolujte pripojenie a skúste to znova.';
 
   @override
+  String get newSignRequestTitle => 'Prišla nová žiadosť o podpis';
+
+  @override
   String get newSignRequestMessage =>
-      'Prišla nová žiadosť o podpis. Otvorením nahradíte rozpracovaný dokument.';
+      'Otvorením nahradíte rozpracovaný dokument.';
 
   @override
   String get openSignRequestLabel => 'Otvoriť';
