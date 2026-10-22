@@ -93,13 +93,14 @@
 
   "previewDocumentTitle": "Náhľad dokumentu",
   "previewDocumentErrorHeading": "Chyba pri načítaní vizualizácie dokumentu",
+  "documentServerLabel": "Dokument zo servera",
   "shareDocumentText": "\n\nSúbor z aplikácie Autogram v mobile",
 
   "documentVisualizationCannotVisualizeTypeError": "Neviem vizualizovať {type} typ.",
 
   "documentVerificationDataToSignMismatchError": "Údaje na podpis nezodpovedajú zobrazenému dokumentu, preto dokument nebol podpísaný.",
   "documentVerificationLocalDocumentMismatchError": "Dokument zo servera nezodpovedá vybranému súboru.",
-  "documentVerificationTransformationMismatchError": "Šablóna na zobrazenie formulára nezodpovedá podpisovanému dokumentu.",
+  "documentVerificationUnsupportedDocumentTypeError": "Z tohto servera je zatiaľ možné podpísať iba PDF dokumenty, textové súbory a obrázky (PNG, JPEG).",
   "documentVerificationUnsupportedDataError": "Dokument zo servera sa nepodarilo overiť.",
 
   "documentValidationLoadingLabel": "Prebieha overovanie podpisov",

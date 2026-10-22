@@ -1,3 +1,4 @@
+import 'package:autogram/data/avm_server.dart';
 import 'package:autogram/deep_links.dart';
 import 'package:test/test.dart';
 
@@ -44,6 +45,58 @@ void main() {
       expect(value, const TypeMatcher<RegisterIntegrationAction>());
       expect((value as RegisterIntegrationAction).integration,
           "eyJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJkZXZpY2UifQ.sig");
+    });
+
+    test('parseDeepLinkAction returns other server without pairing', () {
+      final value = parseDeepLinkAction(Uri.parse(
+          "https://AVM.example.org:8443/api/v1/qr-code?guid=1&key=2&integration=jwt&pushkey=3"));
+
+      expect(value, const TypeMatcher<SignRemoteDocumentAction>());
+      value as SignRemoteDocumentAction;
+      expect(value.guid, "1");
+      expect(value.key, "2");
+      expect(value.server, const AvmServer("avm.example.org:8443"));
+      expect(value.server.isOfficial, isFalse);
+      expect(value.server.baseUrl,
+          Uri.parse("https://avm.example.org:8443/api/v1"));
+      expect(value.integration, isNull);
+      expect(value.pushkey, isNull);
+    });
+
+    test('parseDeepLinkAction returns official server', () {
+      for (final uri in [
+        "https://autogram.slovensko.digital/api/v1/qr-code?guid=1&key=2",
+        "avm://autogram.slovensko.digital:443/api/v1/qr-code?guid=1&key=2",
+      ]) {
+        final value = parseDeepLinkAction(Uri.parse(uri));
+
+        expect((value as SignRemoteDocumentAction).server, AvmServer.official,
+            reason: uri);
+        expect(value.server.isOfficial, isTrue);
+      }
+    });
+
+    test('parseDeepLinkAction throws for invalid or misleading server', () {
+      for (final uri in [
+        "https:///api/v1/qr-code?guid=1&key=2",
+        "https://autogram.slovensko.digital@avm.example.org/api/v1/qr-code?guid=1&key=2",
+        "https://\u0430utogram.slovensko.digital/api/v1/qr-code?guid=1&key=2",
+        "https://avm(example).org/api/v1/qr-code?guid=1&key=2",
+      ]) {
+        expect(
+          () => parseDeepLinkAction(Uri.parse(uri)),
+          throwsA(predicate((e) => e is ArgumentError && e.name == 'uri')),
+          reason: uri,
+        );
+      }
+    });
+
+    test('parseDeepLinkAction throws for pairing with other server', () {
+      expect(
+        () => parseDeepLinkAction(Uri.parse(
+            "https://avm.example.org/api/v1/qr-code-register?integration=jwt")),
+        throwsA(predicate((e) => e is ArgumentError && e.name == 'uri')),
+      );
     });
 
     test('parseDeepLinkAction throws for integration register URI without token',

@@ -10,6 +10,7 @@ import '../../bloc/select_signing_certificate_cubit.dart';
 import '../../certificate_extensions.dart';
 import '../../data/document_signing_type.dart';
 import '../../data/document_to_sign.dart';
+import '../../data/server_document.dart';
 import '../../data/settings.dart';
 import '../../data/signature_type.dart';
 import '../../di.dart';
@@ -32,14 +33,14 @@ import 'sign_document_screen.dart';
 ///
 /// Navigates next to [SignDocumentScreen].
 class SelectCertificateScreen extends StatelessWidget {
-  final String documentId;
+  final ServerDocument document;
   final VerifiableVisualizationResponseBody visualization;
   final DocumentSigningType signingType;
   final bool openFromDeepLink;
 
   const SelectCertificateScreen({
     super.key,
-    required this.documentId,
+    required this.document,
     required this.visualization,
     required this.signingType,
     required this.openFromDeepLink,
@@ -72,7 +73,7 @@ class SelectCertificateScreen extends StatelessWidget {
               child: _Body(
                 state: state,
                 signingType: signingType,
-                documentId: documentId,
+                document: document,
                 onSignDocumentRequested: (certificate, signatureType) {
                   _onSignDocumentRequested(
                     context: context,
@@ -99,7 +100,11 @@ class SelectCertificateScreen extends StatelessWidget {
     context.read<Settings>().signingCertificate.value = certificate;
 
     final screen = SignDocumentScreen(
-      document: DocumentToSign(id: documentId, visualization: visualization),
+      document: DocumentToSign(
+        document.id,
+        server: document.server,
+        visualization: visualization,
+      ),
       certificate: certificate,
       signatureType: signatureType,
       signingType: signingType,
@@ -122,7 +127,7 @@ class _Body extends StatelessWidget {
   final SelectSigningCertificateState state;
 
   final DocumentSigningType signingType;
-  final String documentId;
+  final ServerDocument document;
   final void Function(Certificate certificate, SignatureType signatureType)?
       onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
@@ -130,7 +135,7 @@ class _Body extends StatelessWidget {
   const _Body({
     required this.state,
     this.signingType = DocumentSigningType.local,
-    this.documentId = '',
+    this.document = const ServerDocument(''),
     this.onSignDocumentRequested,
     this.onReloadCertificatesRequested,
   });
@@ -150,7 +155,7 @@ class _Body extends StatelessWidget {
         return _SelectSignatureTypeContent(
           certificate: certificate,
           signingType: signingType,
-          documentId: documentId,
+          document: document,
           onSignDocumentRequested: (final SignatureType signatureType) {
             onSignDocumentRequested?.call(certificate, signatureType);
           },
@@ -172,14 +177,14 @@ class _Body extends StatelessWidget {
 class _SelectSignatureTypeContent extends StatefulWidget {
   final String? subject;
   final DocumentSigningType signingType;
-  final String documentId;
+  final ServerDocument document;
   final ValueSetter<SignatureType>? onSignDocumentRequested;
   final VoidCallback? onReloadCertificatesRequested;
 
   _SelectSignatureTypeContent({
     required Certificate certificate,
     required this.signingType,
-    required this.documentId,
+    required this.document,
     required this.onSignDocumentRequested,
     required this.onReloadCertificatesRequested,
   }) : subject = certificate.tbsCertificate.subject[X500Oids.cn];
@@ -217,7 +222,7 @@ class _SelectSignatureTypeContentState
             break;
 
           case DocumentSigningType.remote:
-            cubit.getDocumentSignatureType(widget.documentId);
+            cubit.getDocumentSignatureType(widget.document);
             break;
         }
 

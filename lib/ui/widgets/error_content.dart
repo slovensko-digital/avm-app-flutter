@@ -44,8 +44,8 @@ class ErrorContent extends StatelessWidget {
         strings.documentVerificationDataToSignMismatchError,
       DocumentVerificationFailure.localDocumentMismatch =>
         strings.documentVerificationLocalDocumentMismatchError,
-      DocumentVerificationFailure.transformationMismatch =>
-        strings.documentVerificationTransformationMismatchError,
+      DocumentVerificationFailure.unsupportedDocumentType =>
+        strings.documentVerificationUnsupportedDocumentTypeError,
       DocumentVerificationFailure.unsupportedData =>
         strings.documentVerificationUnsupportedDataError,
     };

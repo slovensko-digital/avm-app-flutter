@@ -7,6 +7,7 @@ import 'package:logging/logging.dart';
 
 import '../data/document_to_sign.dart';
 import '../data/signature_type.dart';
+import '../services/autogram_services.dart';
 import '../ui/screens/sign_document_screen.dart';
 import '../verification/data_to_sign_verifier.dart';
 import 'sign_document_state.dart';
@@ -22,18 +23,18 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
   static final _log = Logger((SignDocumentCubit).toString());
   static const _defaultLanguage = 'sk';
 
-  final IAutogramService _service;
+  final AutogramServices _services;
   final Eidmsdk _eidmsdk;
 
   final DocumentToSign document;
   final Certificate certificate;
 
   SignDocumentCubit({
-    required IAutogramService service,
+    required AutogramServices services,
     required Eidmsdk eidmsdk,
     @factoryParam required this.document,
     @factoryParam required this.certificate,
-  })  : _service = service,
+  })  : _services = services,
         _eidmsdk = eidmsdk,
         super(const SignDocumentInitialState());
 
@@ -44,8 +45,9 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
 
     final documentId = document.id;
     final visualization = document.visualization;
+    final service = _services.of(document.server);
 
-    _log.info("Start signing Document with id: $documentId.");
+    _log.info("Start signing $document.");
 
     try {
       emit(state.toLoading());
@@ -57,7 +59,7 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
         signingTime: visualization.signingTime,
       );
 
-      data = await _service.setDataToSign(documentId, dataToSignRequest);
+      data = await service.setDataToSign(documentId, dataToSignRequest);
 
       _log.info("Got data to sign.");
 
@@ -111,7 +113,7 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
           signingTime: data.signingTime,
         ),
       );
-      final signedDocument = await _service.signDocument(
+      final signedDocument = await service.signDocument(
         documentId,
         signRequest,
         true,

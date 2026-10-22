@@ -1,4 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<dokument><hlavicka><dic>1</dic><ico>Áno</ico><fyzickaOsoba><priezvisko>x</priezvisko><meno>Riadok 1
-Riadok 2</meno><titulPred /><titulZa>0</titulZa><datumNarodenia>Žilina</datumNarodenia></fyzickaOsoba><pravnickaOsoba><obchodneMeno><riadok>Text riadok &amp; &lt;ok&gt; "q" č</riadok><riadok>1</riadok></obchodneMeno></pravnickaOsoba><sidlo><ulica>Áno</ulica><supisneOrientacneCislo>x</supisneOrientacneCislo><psc>Riado</psc><obec /></sidlo><miestoPodnikaniaFO><ulica>0</ulica><supisneOrientacneCislo>Žilina</supisneOrientacneCislo><psc>Text </psc><obec>1</obec></miestoPodnikaniaFO></hlavicka><odvod><vysledok>Áno</vysledok><zaObdobie><datumOd>x</datumOd><datumDo>Riadok 1
-Riadok 2</datumDo></zaObdobie><koeficient /><odvod>0</odvod><vynosDlhopisu>Žilina</vynosDlhopisu></odvod><vypracoval><vypracoval>Text vypracoval &amp; &lt;ok&gt; "q" č</vypracoval><dna>1</dna><telefon>Áno</telefon><podpis /></vypracoval></dokument>

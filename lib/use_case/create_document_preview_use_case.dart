@@ -1,31 +1,36 @@
-import 'dart:convert' show utf8;
+import 'dart:convert' show base64Decode, utf8;
 import 'dart:typed_data' show Uint8List;
 
 import 'package:autogram_sign/autogram_sign.dart'
-    show
-        VerifiableVisualizationResponseBody,
-        VerifiableVisualizationTransformation;
+    show DocumentVisualizationResponseBody, VerifiableVisualizationResponseBody;
 import 'package:flutter/foundation.dart' show compute, visibleForTesting;
 import 'package:injectable/injectable.dart';
 
 import '../data/document_preview.dart';
 import '../verification/data_to_sign_verifier.dart';
-import '../verification/xml_data_container.dart';
-import '../xslt/xslt.dart';
 
-/// Creates [DocumentPreview] from [VerifiableVisualizationResponseBody] - the
-/// document is visualized on the device, so the visualization doesn't have to
-/// be trusted from the server.
+/// Creates [DocumentPreview] of the document to sign.
 ///
-/// XML Datacontainer is transformed by its XSLT, which is verified against the
-/// digest in the XML Datacontainer. The XML Datacontainer itself is verified
-/// later against the data to sign.
+/// Simple documents - PDF, plain text and PNG or JPEG image - are visualized
+/// on the device from the data object covered by the signature, so the
+/// visualization doesn't have to be trusted from the server. Other documents,
+/// e.g. e-forms, can be visualized only by the trusted server, see
+/// [fromServerVisualization].
 @lazySingleton
 class CreateDocumentPreviewUseCase {
+  /// Creates preview of the document from its signed data object, or
+  /// [UnsupportedDocumentPreview] when it can't be visualized on the device.
   Future<DocumentPreview> call(
     VerifiableVisualizationResponseBody visualization,
   ) {
     return compute(createDocumentPreview, visualization);
+  }
+
+  /// Creates preview from the [visualization] created by the server.
+  Future<DocumentPreview> fromServerVisualization(
+    DocumentVisualizationResponseBody visualization,
+  ) {
+    return compute(createServerVisualizationPreview, visualization);
   }
 
   @visibleForTesting
@@ -34,16 +39,11 @@ class CreateDocumentPreviewUseCase {
   ) {
     final document = visualization.document;
     final data = decodeSignedDataObject(document);
-
-    if (XmlDataContainer.isXmlDataContainerMimeType(document.mimeType)) {
-      return _xmlDataContainerPreview(data, visualization.transformation);
-    }
-
-    final mimeType = document.mimeType.split(";").first.trim().toLowerCase();
+    final (type, charset) = _parseMimeType(document.mimeType);
 
     // content must match the type, so it can't be visualized differently
     // than other applications would display the signed document
-    return switch (mimeType) {
+    final preview = switch (type) {
       "application/pdf" when _startsWith(data, "%PDF-".codeUnits) =>
         PdfDocumentPreview(data),
       "image/png" when _startsWith(data, _pngSignature) => ImageDocumentPreview(
@@ -51,62 +51,70 @@ class CreateDocumentPreviewUseCase {
       ),
       "image/jpeg" when _startsWith(data, _jpegSignature) =>
         ImageDocumentPreview(data),
-      "text/plain" => TextDocumentPreview(_decodeText(data)),
-      "application/xml" || "text/xml" => TextDocumentPreview(
-        _prettyXml(_decodeText(data)),
+      "text/plain" when charset == null || _utf8Charsets.contains(charset) =>
+        _textPreview(data),
+      _ => null,
+    };
+
+    return preview ?? UnsupportedDocumentPreview(type);
+  }
+
+  @visibleForTesting
+  static DocumentPreview createServerVisualizationPreview(
+    DocumentVisualizationResponseBody visualization,
+  ) {
+    final mimeType = visualization.mimeType;
+    final content = visualization.content;
+
+    // Drop spaces from Mime-Type
+    return switch (mimeType.replaceAll(" ", "")) {
+      "application/pdf;base64" => PdfDocumentPreview(base64Decode(content)),
+      "text/plain;base64" || "text/plain;charset=UTF-8;base64" =>
+        TextDocumentPreview(utf8.decode(base64Decode(content))),
+      "text/html;base64" => HtmlDocumentPreview(
+        utf8.decode(base64Decode(content)),
       ),
+      "text/plain" ||
+      "text/plain;charset=UTF-8" => TextDocumentPreview(content),
       _ => UnsupportedDocumentPreview(mimeType),
     };
   }
 
-  static DocumentPreview _xmlDataContainerPreview(
-    Uint8List data,
-    VerifiableVisualizationTransformation? transformation,
-  ) {
-    final xdc = XmlDataContainer.parse(data);
-    final embedded = xdc.embeddedTransformation;
+  /// Parses media type and charset from the [mimeType] - e.g.
+  /// `text/plain; charset=UTF-8;base64`.
+  static (String type, String? charset) _parseMimeType(String mimeType) {
+    final [type, ...parameters] = mimeType.split(";");
+    String? charset;
 
-    XsltProcessor? processor;
-    try {
-      if (embedded != null) {
-        processor = XsltProcessor.fromElement(embedded);
-      } else if (xdc.transformationDigest != null && transformation != null) {
-        final xslt = decodeBase64(transformation.content, "transformation");
-        xdc.verifyTransformation(xslt);
-        processor = XsltProcessor.parse(utf8.decode(xslt));
+    for (final parameter in parameters) {
+      final [name, ...value] = parameter.split("=");
+
+      if (name.trim().toLowerCase() == "charset") {
+        charset = value.join("=").replaceAll('"', "").trim().toLowerCase();
       }
-
-      if (processor != null) {
-        final result = processor.transformElement(xdc.formData);
-        final destination =
-            xdc.mediaDestinationTypeDescription ??
-            (result.method == OutputMethod.text ? "TXT" : "HTML");
-
-        return destination == "TXT"
-            ? TextDocumentPreview(result.content)
-            : HtmlDocumentPreview(result.content);
-      }
-    } on XsltException {
-      // e-form XSLT uses features, which are not supported on the device
     }
 
-    // visualize at least the e-form data covered by the signature
-    return TextDocumentPreview(xdc.formData.toXmlString(pretty: true));
+    return (type.trim().toLowerCase(), charset);
   }
 
-  static String _decodeText(Uint8List data) {
-    final text = utf8.decode(data, allowMalformed: true);
-    return text.startsWith("﻿") ? text.substring(1) : text;
-  }
+  /// Decodes UTF-8 text; `null` when it's not valid, as the text wouldn't be
+  /// visualized as it's signed.
+  static DocumentPreview? _textPreview(Uint8List data) {
+    final String text;
 
-  static String _prettyXml(String xml) {
     try {
-      return parseXml(xml).toXmlString(pretty: true);
-    } on Exception {
-      return xml;
+      text = utf8.decode(data);
+    } on FormatException {
+      return null;
     }
+
+    // UTF-8 BOM
+    return TextDocumentPreview(
+      text.startsWith("﻿") ? text.substring(1) : text,
+    );
   }
 
+  static const _utf8Charsets = {"utf-8", "utf8"};
   static const _pngSignature = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A];
   static const _jpegSignature = [0xFF, 0xD8, 0xFF];
 

@@ -333,6 +333,9 @@ class AppLocalizationsSk extends AppLocalizations {
       'Chyba pri načítaní vizualizácie dokumentu';
 
   @override
+  String get documentServerLabel => 'Dokument zo servera';
+
+  @override
   String get shareDocumentText => '\n\nSúbor z aplikácie Autogram v mobile';
 
   @override
@@ -349,8 +352,8 @@ class AppLocalizationsSk extends AppLocalizations {
       'Dokument zo servera nezodpovedá vybranému súboru.';
 
   @override
-  String get documentVerificationTransformationMismatchError =>
-      'Šablóna na zobrazenie formulára nezodpovedá podpisovanému dokumentu.';
+  String get documentVerificationUnsupportedDocumentTypeError =>
+      'Z tohto servera je zatiaľ možné podpísať iba PDF dokumenty, textové súbory a obrázky (PNG, JPEG).';
 
   @override
   String get documentVerificationUnsupportedDataError =>

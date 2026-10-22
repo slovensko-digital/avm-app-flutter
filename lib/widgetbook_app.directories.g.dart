@@ -63,6 +63,8 @@ import 'package:autogram/ui/widgets/close_button.dart'
     as _autogram_ui_widgets_close_button;
 import 'package:autogram/ui/widgets/dialogs.dart'
     as _autogram_ui_widgets_dialogs;
+import 'package:autogram/ui/widgets/document_server_strip.dart'
+    as _autogram_ui_widgets_document_server_strip;
 import 'package:autogram/ui/widgets/document_signature_info.dart'
     as _autogram_ui_widgets_document_signature_info;
 import 'package:autogram/ui/widgets/document_validation_strip.dart'
@@ -245,6 +247,16 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'CertificateDetails',
             builder: _autogram_ui_widgets_certificate_details
                 .previewCertificateDetails,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'DocumentServerStrip',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: '',
+            builder: _autogram_ui_widgets_document_server_strip
+                .previewDocumentServerStrip,
           ),
         ],
       ),

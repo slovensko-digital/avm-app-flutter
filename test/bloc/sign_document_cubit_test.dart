@@ -2,8 +2,10 @@ import 'dart:convert' show base64, jsonDecode, utf8;
 import 'dart:io' show File;
 
 import 'package:autogram/bloc/sign_document_cubit.dart';
+import 'package:autogram/data/avm_server.dart';
 import 'package:autogram/data/document_to_sign.dart';
 import 'package:autogram/data/signature_type.dart';
+import 'package:autogram/services/autogram_services.dart';
 import 'package:autogram/verification/document_verification_exception.dart';
 import 'package:autogram_sign/autogram_sign.dart';
 import 'package:eidmsdk/eidmsdk.dart';
@@ -29,9 +31,9 @@ void main() {
       final service = _Service(fixture.dataToSign);
       final eidmsdk = _Eidmsdk();
       final cubit = SignDocumentCubit(
-        service: service,
+        services: _Services({AvmServer.official: service}),
         eidmsdk: eidmsdk,
-        document: DocumentToSign(id: "1", visualization: fixture.visualization),
+        document: DocumentToSign("1", visualization: fixture.visualization),
         certificate: _certificate,
       );
 
@@ -42,6 +44,32 @@ void main() {
         service.dataToSignRequest?.signingTime,
         fixture.visualization.signingTime,
       );
+      expect(service.signedDocumentIds, ["1"]);
+      expect(eidmsdk.signedData, [fixture.dataToSign.dataToSign]);
+    });
+
+    test('signs document on the server, which stores it', () async {
+      const server = AvmServer("avm.example.org");
+      final fixture = _loadFixture("xades_txt");
+      final official = _Service(fixture.dataToSign);
+      final other = _Service(fixture.dataToSign);
+      final eidmsdk = _Eidmsdk();
+      final cubit = SignDocumentCubit(
+        services: _Services({AvmServer.official: official, server: other}),
+        eidmsdk: eidmsdk,
+        document: DocumentToSign(
+          "1",
+          server: server,
+          visualization: fixture.visualization,
+        ),
+        certificate: _certificate,
+      );
+
+      await cubit.signDocument(SignatureType.withoutTimestamp);
+
+      expect(cubit.state, isA<SignDocumentSuccessState>());
+      expect(official.dataToSignRequest, isNull);
+      expect(other.signedDocumentIds, ["1"]);
       expect(eidmsdk.signedData, [fixture.dataToSign.dataToSign]);
     });
 
@@ -54,9 +82,9 @@ void main() {
       );
       final eidmsdk = _Eidmsdk();
       final cubit = SignDocumentCubit(
-        service: _Service(fixture.dataToSign),
+        services: _Services({AvmServer.official: _Service(fixture.dataToSign)}),
         eidmsdk: eidmsdk,
-        document: DocumentToSign(id: "1", visualization: visualization),
+        document: DocumentToSign("1", visualization: visualization),
         certificate: _certificate,
       );
 
@@ -94,9 +122,19 @@ _loadFixture(String name) {
   );
 }
 
+class _Services extends Fake implements AutogramServices {
+  final Map<AvmServer, IAutogramService> services;
+
+  _Services(this.services);
+
+  @override
+  IAutogramService of(AvmServer server) => services[server]!;
+}
+
 class _Service extends Fake implements IAutogramService {
   final DataToSignStructure dataToSign;
   DataToSignRequestBody? dataToSignRequest;
+  final signedDocumentIds = <String>[];
 
   _Service(this.dataToSign);
 
@@ -116,6 +154,8 @@ class _Service extends Fake implements IAutogramService {
     SignRequestBody body, [
     bool returnSignedDocument = true,
   ]) async {
+    signedDocumentIds.add(documentId);
+
     return const SignDocumentResponseBody(
       filename: "signed.pdf",
       mimeType: SignDocumentResponseBodyMimeType.applicationPdfBase64,

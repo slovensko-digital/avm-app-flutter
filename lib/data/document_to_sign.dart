@@ -1,16 +1,14 @@
 import 'package:autogram_sign/autogram_sign.dart'
     show VerifiableVisualizationResponseBody;
 
-/// Document to be signed - its id on the server and the data objects covered
-/// by the signature, which were visualized to the user.
-class DocumentToSign {
-  final String id;
+import 'server_document.dart';
+
+/// [ServerDocument] to sign with its [visualization], against which the data
+/// to sign are verified.
+class DocumentToSign extends ServerDocument {
+  /// Data objects covered by the signature, from which the document was
+  /// visualized.
   final VerifiableVisualizationResponseBody visualization;
 
-  const DocumentToSign({required this.id, required this.visualization});
-
-  @override
-  String toString() {
-    return "$runtimeType(id: $id)";
-  }
+  const DocumentToSign(super.id, {super.server, required this.visualization});
 }

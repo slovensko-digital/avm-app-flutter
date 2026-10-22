@@ -11,6 +11,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../app_service.dart';
 import '../../bloc/app_bloc.dart';
+import '../../data/server_document.dart';
 import '../../deep_links.dart';
 import '../../di.dart';
 import '../../file_extensions.dart';
@@ -226,7 +227,7 @@ class _MainScreenState extends State<MainScreen> {
       getIt.get<EncryptionKeyRegistry>().value = action.key;
 
       final screen = PreviewDocumentScreen(
-        documentId: action.guid,
+        document: ServerDocument(action.guid, server: action.server),
         file: null,
         openFromDeepLink: true,
       );

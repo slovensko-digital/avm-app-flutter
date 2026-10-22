@@ -408,32 +408,21 @@ void main() {
   });
 
   group('XmlDataContainer', () {
-    test('verifies referenced transformation', () {
+    test('parses e-form data', () {
       final visualization = _loadFixture("xades_xdc").visualization;
       final xdc = XmlDataContainer.parse(
         base64.decode(visualization.document.content),
       );
 
       expect(xdc.formData.name.local, "GeneralAgenda");
-      expect(xdc.mediaDestinationTypeDescription, "TXT");
-      expect(xdc.embeddedTransformation, isNull);
-      xdc.verifyTransformation(
-        base64.decode(visualization.transformation!.content),
-      );
+      expect(xdc.containsForm(_loadFile("general_agenda.xml")), isTrue);
+      expect(xdc.containsForm(utf8.encode("<GeneralAgenda/>")), isFalse);
     });
 
-    test('fails when transformation differs', () {
-      final visualization = _loadFixture("xades_xdc").visualization;
-      final xdc = XmlDataContainer.parse(
-        base64.decode(visualization.document.content),
-      );
-      final transformation = utf8
-          .decode(base64.decode(visualization.transformation!.content))
-          .replaceFirst("Predmet: ", "Predmet:: ");
-
+    test('fails for other XML than XML Datacontainer', () {
       _expectFailure(
-        () => xdc.verifyTransformation(utf8.encode(transformation)),
-        DocumentVerificationFailure.transformationMismatch,
+        () => XmlDataContainer.parse(_loadFile("general_agenda.xml")),
+        DocumentVerificationFailure.unsupportedData,
       );
     });
   });

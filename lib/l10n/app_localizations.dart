@@ -586,6 +586,12 @@ abstract class AppLocalizations {
   /// **'Chyba pri načítaní vizualizácie dokumentu'**
   String get previewDocumentErrorHeading;
 
+  /// No description provided for @documentServerLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument zo servera'**
+  String get documentServerLabel;
+
   /// No description provided for @shareDocumentText.
   ///
   /// In sk, this message translates to:
@@ -610,11 +616,11 @@ abstract class AppLocalizations {
   /// **'Dokument zo servera nezodpovedá vybranému súboru.'**
   String get documentVerificationLocalDocumentMismatchError;
 
-  /// No description provided for @documentVerificationTransformationMismatchError.
+  /// No description provided for @documentVerificationUnsupportedDocumentTypeError.
   ///
   /// In sk, this message translates to:
-  /// **'Šablóna na zobrazenie formulára nezodpovedá podpisovanému dokumentu.'**
-  String get documentVerificationTransformationMismatchError;
+  /// **'Z tohto servera je zatiaľ možné podpísať iba PDF dokumenty, textové súbory a obrázky (PNG, JPEG).'**
+  String get documentVerificationUnsupportedDocumentTypeError;
 
   /// No description provided for @documentVerificationUnsupportedDataError.
   ///

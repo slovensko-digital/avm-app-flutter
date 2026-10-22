@@ -1,38 +1,22 @@
-import 'dart:convert' show base64;
 import 'dart:typed_data' show Uint8List;
 
 import 'package:xml/xml.dart';
 
-import 'digest_algorithm.dart';
 import 'document_verification_exception.dart';
 import 'xml_utils.dart';
 
 /// Slovak XML Datacontainer (XDC) with e-form data and references to its XSD
 /// and XSLT.
 ///
-/// Digest of the XDC is in the data to sign, so the e-form data and digest of
-/// its presentation schema (XSLT) is covered by the signature.
+/// Digest of the XDC is in the data to sign, so the e-form data are covered by
+/// the signature.
 class XmlDataContainer {
   static const mimeType = "application/vnd.gov.sk.xmldatacontainer+xml";
 
   /// Root element of the e-form data from `xdc:XMLData`.
   final XmlElement formData;
 
-  /// XSLT embedded in `xdc:UsedPresentationSchemaEmbedded`.
-  final XmlElement? embeddedTransformation;
-
-  /// Digest of the referenced XSLT from `xdc:UsedPresentationSchemaReference`.
-  final ({DigestAlgorithm algorithm, Uint8List value})? transformationDigest;
-
-  /// TXT, HTML or XHTML from the presentation schema.
-  final String? mediaDestinationTypeDescription;
-
-  const XmlDataContainer._({
-    required this.formData,
-    required this.embeddedTransformation,
-    required this.transformationDigest,
-    required this.mediaDestinationTypeDescription,
-  });
+  const XmlDataContainer._({required this.formData});
 
   /// Whether the [mimeType] is the one of XML Datacontainer.
   static bool isXmlDataContainerMimeType(String mimeType) {
@@ -61,76 +45,7 @@ class XmlDataContainer {
       );
     }
 
-    XmlElement? presentationSchema;
-    XmlElement? embeddedTransformation;
-    ({DigestAlgorithm algorithm, Uint8List value})? transformationDigest;
-
-    final embedded = _descendants(root, "UsedPresentationSchemaEmbedded");
-    final referenced = _descendants(root, "UsedPresentationSchemaReference");
-    if (embedded.length + referenced.length > 1) {
-      throw const DocumentVerificationException(
-        DocumentVerificationFailure.unsupportedData,
-        "Multiple presentation schemas in XML Datacontainer.",
-      );
-    }
-
-    if (embedded.isNotEmpty) {
-      presentationSchema = embedded.single;
-      embeddedTransformation = presentationSchema.childElements.singleOrNull;
-    } else if (referenced.isNotEmpty) {
-      presentationSchema = referenced.single;
-
-      final Uint8List value;
-      try {
-        value = base64.decode(
-          presentationSchema.getAttribute("DigestValue") ?? "",
-        );
-      } on FormatException {
-        throw const DocumentVerificationException(
-          DocumentVerificationFailure.unsupportedData,
-          "Invalid digest of presentation schema.",
-        );
-      }
-
-      transformationDigest = (
-        algorithm: DigestAlgorithm.fromOidUrn(
-          presentationSchema.getAttribute("DigestMethod"),
-        ),
-        value: value,
-      );
-    }
-
-    return XmlDataContainer._(
-      formData: xmlData.childElements.single,
-      embeddedTransformation: embeddedTransformation,
-      transformationDigest: transformationDigest,
-      mediaDestinationTypeDescription: presentationSchema?.getAttribute(
-        "MediaDestinationTypeDescription",
-      ),
-    );
-  }
-
-  /// Verifies that the [transformation] is the XSLT referenced from this
-  /// XML Datacontainer.
-  ///
-  /// The [transformation] must be canonicalized by the `TransformAlgorithm`
-  /// of the reference, as the digest is computed from canonical XML.
-  void verifyTransformation(Uint8List transformation) {
-    final digest = transformationDigest;
-    if (digest == null) {
-      throw const DocumentVerificationException(
-        DocumentVerificationFailure.transformationMismatch,
-        "XML Datacontainer doesn't reference any presentation schema.",
-      );
-    }
-
-    final actual = digest.algorithm.digest([transformation]);
-    if (!_equals(actual, digest.value)) {
-      throw const DocumentVerificationException(
-        DocumentVerificationFailure.transformationMismatch,
-        "XSLT doesn't match the digest in XML Datacontainer.",
-      );
-    }
+    return XmlDataContainer._(formData: xmlData.childElements.single);
   }
 
   /// Whether the [formData] is the same e-form as the root element of the
@@ -150,15 +65,6 @@ class XmlDataContainer {
     } on DocumentVerificationException {
       return false;
     }
-  }
-
-  static List<XmlElement> _descendants(XmlElement root, String localName) {
-    return root.descendantElements
-        .where(
-          (element) =>
-              isElement(element, XmlNamespaces.xmlDataContainer, localName),
-        )
-        .toList();
   }
 
   static bool _sameElement(XmlElement a, XmlElement b) {
@@ -227,15 +133,5 @@ class XmlDataContainer {
     }
 
     return children;
-  }
-
-  static bool _equals(List<int> a, List<int> b) {
-    if (a.length != b.length) return false;
-
-    for (var i = 0; i < a.length; i++) {
-      if (a[i] != b[i]) return false;
-    }
-
-    return true;
   }
 }

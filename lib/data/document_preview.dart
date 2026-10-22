@@ -1,7 +1,7 @@
 import 'dart:typed_data' show Uint8List;
 
-/// Document visualized on the device from the data objects covered by the
-/// signature.
+/// Visualized document - on the device from the data objects covered by the
+/// signature or by the trusted server.
 ///
 /// See also:
 ///  - [CreateDocumentPreviewUseCase]
@@ -27,15 +27,15 @@ class TextDocumentPreview extends DocumentPreview {
   const TextDocumentPreview(this.text);
 }
 
-/// HTML document or e-form transformed to HTML.
+/// HTML visualization of e-form from the server.
 class HtmlDocumentPreview extends DocumentPreview {
   final String html;
 
   const HtmlDocumentPreview(this.html);
 }
 
-/// Document of type, which can't be visualized on the device, or with content,
-/// which doesn't match its type.
+/// Document of type, which can't be visualized, or with content, which doesn't
+/// match its type.
 class UnsupportedDocumentPreview extends DocumentPreview {
   final String mimeType;
 

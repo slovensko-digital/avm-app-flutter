@@ -2,6 +2,7 @@ import 'package:autogram/bloc/app_bloc.dart';
 import 'package:autogram/bloc/document_validation_cubit.dart';
 import 'package:autogram/bloc/paired_device_list_cubit.dart';
 import 'package:autogram/bloc/preview_document_cubit.dart';
+import 'package:autogram/data/server_document.dart';
 import 'package:autogram/data/settings.dart';
 import 'package:autogram/di.dart';
 import 'package:autogram/l10n/app_localizations.dart';
@@ -9,6 +10,7 @@ import 'package:autogram/l10n/app_localizations_sk.dart';
 import 'package:autogram/push_messages.dart';
 import 'package:autogram/services/device_registry.dart';
 import 'package:autogram/services/encryption_key_registry.dart';
+import 'package:autogram/services/autogram_services.dart';
 import 'package:autogram/services/push_notification_service.dart';
 import 'package:autogram/ui/screens/main_screen.dart';
 import 'package:autogram/ui/screens/paired_device_list_screen.dart';
@@ -47,8 +49,8 @@ void main() {
     pushService = _PushService();
     getIt.registerSingleton<EncryptionKeyRegistry>(keys);
     getIt.registerSingleton<PushNotificationService>(pushService);
-    getIt.registerFactoryParam<PreviewDocumentCubit, String, dynamic>(
-      (id, _) => _PreviewCubit(id),
+    getIt.registerFactoryParam<PreviewDocumentCubit, ServerDocument, dynamic>(
+      (document, _) => _PreviewCubit(document),
     );
     getIt.registerFactory<DocumentValidationCubit>(() => _ValidationCubit());
   });
@@ -116,7 +118,8 @@ void main() {
       expect(
         tester
             .widget<PreviewDocumentScreen>(find.byType(PreviewDocumentScreen))
-            .documentId,
+            .document
+            .id,
         'new-document',
       );
     },
@@ -266,12 +269,14 @@ void main() {
 
 class _Api extends Fake implements IAutogramService {}
 
+class _Services extends Fake implements AutogramServices {}
+
 class _PreviewCubit extends PreviewDocumentCubit {
-  _PreviewCubit(String id)
+  _PreviewCubit(ServerDocument document)
     : super(
-        service: _Api(),
+        services: _Services(),
         createDocumentPreview: CreateDocumentPreviewUseCase(),
-        documentId: id,
+        document: document,
       );
 
   @override
@@ -281,10 +286,10 @@ class _PreviewCubit extends PreviewDocumentCubit {
 }
 
 class _ValidationCubit extends DocumentValidationCubit {
-  _ValidationCubit() : super(service: _Api());
+  _ValidationCubit() : super(services: _Services());
 
   @override
-  Future<void> validateDocument(String documentId) async {
+  Future<void> validateDocument(ServerDocument document) async {
     emit(const DocumentValidationNotSignedState());
   }
 }

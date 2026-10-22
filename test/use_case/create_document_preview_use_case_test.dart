@@ -3,7 +3,6 @@ import 'dart:io' show File;
 
 import 'package:autogram/data/document_preview.dart';
 import 'package:autogram/use_case/create_document_preview_use_case.dart';
-import 'package:autogram/verification/document_verification_exception.dart';
 import 'package:autogram_sign/autogram_sign.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,108 +11,9 @@ const _fixtures = "test/verification/fixtures";
 
 /// Tests for the [CreateDocumentPreviewUseCase] class.
 void main() {
-  group('CreateDocumentPreviewUseCase', () {
+  group('CreateDocumentPreviewUseCase.createDocumentPreview', () {
     const createDocumentPreview =
         CreateDocumentPreviewUseCase.createDocumentPreview;
-
-    test('transforms XML Datacontainer by verified referenced XSLT', () {
-      final preview = createDocumentPreview(_loadVisualization("xades_xdc"));
-
-      expect(
-        preview,
-        isA<TextDocumentPreview>().having(
-          (preview) => preview.text,
-          "text",
-          "Všeobecná agenda\n"
-              "\tPredmet: Testovacie podanie\n"
-              "\tText: Podávam túto testovaciu všeobecnú žiadosť.",
-        ),
-      );
-    });
-
-    test('fails when referenced XSLT differs from its digest', () {
-      final visualization = _loadVisualization("xades_xdc");
-      final transformation = visualization.transformation!;
-      final xslt = utf8.decode(base64.decode(transformation.content));
-      final changed = visualization.copyWith(
-        transformation: transformation.copyWith(
-          content: base64.encode(
-            utf8.encode(xslt.replaceFirst("Predmet: ", "Vec: ")),
-          ),
-        ),
-      );
-
-      expect(
-        () => createDocumentPreview(changed),
-        throwsA(
-          isA<DocumentVerificationException>().having(
-            (e) => e.reason,
-            "reason",
-            DocumentVerificationFailure.transformationMismatch,
-          ),
-        ),
-      );
-    });
-
-    test('visualizes e-form data when referenced XSLT is missing', () {
-      final visualization = _loadVisualization("xades_xdc").copyWithWrapped(
-        transformation: const Wrapped.value(null),
-      );
-
-      final preview = createDocumentPreview(visualization);
-
-      expect(
-        preview,
-        isA<TextDocumentPreview>().having(
-          (preview) => preview.text,
-          "text",
-          allOf(
-            startsWith("<GeneralAgenda"),
-            contains("<subject>Testovacie podanie</subject>"),
-          ),
-        ),
-      );
-    });
-
-    test('transforms XML Datacontainer by embedded XSLT to HTML', () {
-      final preview = createDocumentPreview(
-        _xmlDataContainer(
-          '<xsl:output method="html"/>'
-          '<xsl:template match="/">'
-          '<html><body><h1><xsl:value-of select="t:Form/t:subject"/></h1>'
-          '</body></html>'
-          '</xsl:template>',
-        ),
-      );
-
-      expect(
-        preview,
-        isA<HtmlDocumentPreview>().having(
-          (preview) => preview.html,
-          "html",
-          contains("<h1>Predmet formulára</h1>"),
-        ),
-      );
-    });
-
-    test('visualizes e-form data when XSLT is not supported', () {
-      final preview = createDocumentPreview(
-        _xmlDataContainer(
-          '<xsl:template match="/">'
-          '<xsl:value-of select="document(\'form.xml\')"/>'
-          '</xsl:template>',
-        ),
-      );
-
-      expect(
-        preview,
-        isA<TextDocumentPreview>().having(
-          (preview) => preview.text,
-          "text",
-          contains("<subject>Predmet formulára</subject>"),
-        ),
-      );
-    });
 
     test('visualizes PDF document', () {
       final visualization = _loadVisualization("pades_pdf");
@@ -143,6 +43,37 @@ void main() {
       );
     });
 
+    test('visualizes PNG and JPEG images', () {
+      final png = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00];
+      final jpeg = [0xFF, 0xD8, 0xFF, 0xE0, 0x00];
+
+      expect(
+        createDocumentPreview(_visualization("image/png;base64", png)),
+        isA<ImageDocumentPreview>(),
+      );
+      expect(
+        createDocumentPreview(_visualization("image/jpeg;base64", jpeg)),
+        isA<ImageDocumentPreview>(),
+      );
+      expect(
+        createDocumentPreview(_visualization("image/png;base64", jpeg)),
+        isA<UnsupportedDocumentPreview>(),
+      );
+    });
+
+    test('does not visualize e-form', () {
+      final preview = createDocumentPreview(_loadVisualization("xades_xdc"));
+
+      expect(
+        preview,
+        isA<UnsupportedDocumentPreview>().having(
+          (preview) => preview.mimeType,
+          "mimeType",
+          "application/vnd.gov.sk.xmldatacontainer+xml",
+        ),
+      );
+    });
+
     test('does not visualize document with content of other type', () {
       final visualization = _loadVisualization("xades_txt");
       final preview = createDocumentPreview(
@@ -163,17 +94,92 @@ void main() {
       );
     });
 
-    test('does not visualize document of unsupported type', () {
-      final visualization = _loadVisualization("xades_txt");
-      final preview = createDocumentPreview(
-        visualization.copyWith(
-          document: visualization.document.copyWith(
-            mimeType: "application/msword;base64",
-          ),
+    test('does not visualize text, which is not in UTF-8', () {
+      final text = utf8.encode("Príliš žluťoučký kôň");
+
+      expect(
+        createDocumentPreview(
+          _visualization("text/plain; charset=windows-1250;base64", text),
+        ),
+        isA<UnsupportedDocumentPreview>(),
+      );
+      expect(
+        createDocumentPreview(
+          _visualization("text/plain;base64", [0x50, 0xF8, 0xED, 0x6C]),
+        ),
+        isA<UnsupportedDocumentPreview>(),
+      );
+      expect(
+        createDocumentPreview(
+          _visualization("text/plain; charset=\"utf-8\";base64", text),
+        ),
+        isA<TextDocumentPreview>(),
+      );
+    });
+
+    test('does not visualize document of other type', () {
+      for (final mimeType in [
+        "application/xml;base64",
+        "text/html;base64",
+        "application/msword;base64",
+      ]) {
+        expect(
+          createDocumentPreview(_visualization(mimeType, utf8.encode("<a/>"))),
+          isA<UnsupportedDocumentPreview>(),
+          reason: mimeType,
+        );
+      }
+    });
+  });
+
+  group('CreateDocumentPreviewUseCase.createServerVisualizationPreview', () {
+    const createServerVisualizationPreview =
+        CreateDocumentPreviewUseCase.createServerVisualizationPreview;
+
+    test('creates preview from server visualization', () {
+      final html = createServerVisualizationPreview(
+        DocumentVisualizationResponseBody(
+          mimeType: "text/html;base64",
+          content: base64.encode(utf8.encode("<h1>Všeobecná agenda</h1>")),
+        ),
+      );
+      final text = createServerVisualizationPreview(
+        const DocumentVisualizationResponseBody(
+          mimeType: "text/plain; charset=UTF-8",
+          content: "Všeobecná agenda",
+        ),
+      );
+      final unsupported = createServerVisualizationPreview(
+        const DocumentVisualizationResponseBody(
+          mimeType: "image/svg+xml;base64",
+          content: "",
         ),
       );
 
-      expect(preview, isA<UnsupportedDocumentPreview>());
+      expect(
+        html,
+        isA<HtmlDocumentPreview>().having(
+          (preview) => preview.html,
+          "html",
+          "<h1>Všeobecná agenda</h1>",
+        ),
+      );
+      expect(
+        text,
+        isA<TextDocumentPreview>().having(
+          (preview) => preview.text,
+          "text",
+          "Všeobecná agenda",
+        ),
+      );
+      expect(
+        unsupported,
+        isA<UnsupportedDocumentPreview>().having(
+          (preview) => preview.mimeType,
+          "mimeType",
+          "image/svg+xml;base64",
+        ),
+      );
     });
   });
 }
@@ -184,28 +190,16 @@ VerifiableVisualizationResponseBody _loadVisualization(String name) {
   return VerifiableVisualizationResponseBody.fromJson(json["visualization"]);
 }
 
-/// Creates XAdES visualization of XML Datacontainer with embedded XSLT with
-/// given [templates].
-VerifiableVisualizationResponseBody _xmlDataContainer(String templates) {
-  final xml =
-      '''<?xml version="1.0" encoding="UTF-8"?>
-<xdc:XMLDataContainer xmlns:xdc="http://data.gov.sk/def/container/xmldatacontainer+xml/1.1">
-  <xdc:XMLData ContentType="application/xml; charset=UTF-8" Identifier="http://data.gov.sk/doc/eform/Test/1.0" Version="1.0">
-    <Form xmlns="urn:test"><subject>Predmet formulára</subject></Form>
-  </xdc:XMLData>
-  <xdc:UsedSchemasEmbedded>
-    <xdc:UsedPresentationSchemaEmbedded ContentType="application/xslt+xml">
-      <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:t="urn:test">$templates</xsl:stylesheet>
-    </xdc:UsedPresentationSchemaEmbedded>
-  </xdc:UsedSchemasEmbedded>
-</xdc:XMLDataContainer>''';
-
+VerifiableVisualizationResponseBody _visualization(
+  String mimeType,
+  List<int> content,
+) {
   return VerifiableVisualizationResponseBody(
     signatureForm: VerifiableVisualizationResponseBodySignatureForm.xades,
     document: SignedDataObject(
-      filename: "form.xdcf",
-      mimeType: "application/vnd.gov.sk.xmldatacontainer+xml;base64",
-      content: base64.encode(utf8.encode(xml)),
+      filename: "document",
+      mimeType: mimeType,
+      content: base64.encode(content),
     ),
   );
 }

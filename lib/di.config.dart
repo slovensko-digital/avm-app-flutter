@@ -32,7 +32,9 @@ import 'bloc/sign_document_cubit.dart' as _i520;
 import 'data/document_signing_type.dart' as _i873;
 import 'data/document_to_sign.dart' as _i815;
 import 'data/pdf_signing_option.dart' as _i732;
+import 'data/server_document.dart' as _i567;
 import 'di.dart' as _i913;
+import 'services/autogram_services.dart' as _i853;
 import 'services/device_registry.dart' as _i64;
 import 'services/encryption_key_registry.dart' as _i429;
 import 'services/push_notification_service.dart' as _i745;
@@ -96,10 +98,6 @@ extension GetItInjectableX on _i174.GetIt {
         deviceRegistry: gh<_i64.DeviceRegistry>(),
       ),
     );
-    gh.factory<_i205.DocumentValidationCubit>(
-      () =>
-          _i205.DocumentValidationCubit(service: gh<_i825.IAutogramService>()),
-    );
     gh.singleton<_i745.PushNotificationService>(
       () => _i745.PushNotificationService(
         gh<_i403.AppService>(),
@@ -109,8 +107,18 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       dispose: (i) => i.dispose(),
     );
+    gh.lazySingleton<_i853.AutogramServices>(
+      () => _i853.AutogramServices(
+        gh<_i825.IAutogramService>(),
+        gh<_i429.EncryptionKeyRegistry>(),
+      ),
+    );
     gh.lazySingleton<_i400.GetDocumentSignatureTypeUseCase>(
-      () => _i400.GetDocumentSignatureTypeUseCase(gh<_i825.IAutogramService>()),
+      () => _i400.GetDocumentSignatureTypeUseCase(gh<_i853.AutogramServices>()),
+    );
+    gh.factory<_i205.DocumentValidationCubit>(
+      () =>
+          _i205.DocumentValidationCubit(services: gh<_i853.AutogramServices>()),
     );
     gh.factoryParam<
       _i520.SignDocumentCubit,
@@ -118,18 +126,10 @@ extension GetItInjectableX on _i174.GetIt {
       _i518.Certificate
     >(
       (document, certificate) => _i520.SignDocumentCubit(
-        service: gh<_i825.IAutogramService>(),
+        services: gh<_i853.AutogramServices>(),
         eidmsdk: gh<_i713.Eidmsdk>(),
         document: document,
         certificate: certificate,
-      ),
-    );
-    gh.factoryParam<_i21.PreviewDocumentCubit, String, _i497.File?>(
-      (documentId, file) => _i21.PreviewDocumentCubit(
-        service: gh<_i825.IAutogramService>(),
-        createDocumentPreview: gh<_i799.CreateDocumentPreviewUseCase>(),
-        documentId: documentId,
-        file: file,
       ),
     );
     gh.factoryParam<
@@ -142,6 +142,18 @@ extension GetItInjectableX on _i174.GetIt {
         service: gh<_i825.IAutogramService>(),
         file: file,
         pdfSigningOption: pdfSigningOption,
+      ),
+    );
+    gh.factoryParam<
+      _i21.PreviewDocumentCubit,
+      _i567.ServerDocument,
+      _i497.File?
+    >(
+      (document, file) => _i21.PreviewDocumentCubit(
+        services: gh<_i853.AutogramServices>(),
+        createDocumentPreview: gh<_i799.CreateDocumentPreviewUseCase>(),
+        document: document,
+        file: file,
       ),
     );
     gh.factory<_i767.GetDocumentSignatureTypeCubit>(

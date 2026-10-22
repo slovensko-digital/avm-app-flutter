@@ -6,8 +6,9 @@ enum DocumentVerificationFailure {
   /// Visualized document is not the document selected by the user.
   localDocumentMismatch,
 
-  /// XSLT transformation doesn't match the digest in the XML Datacontainer.
-  transformationMismatch,
+  /// Document from other than the official server can't be visualized on the
+  /// device - only PDF, plain text and PNG or JPEG image can be.
+  unsupportedDocumentType,
 
   /// Data received from the server are malformed or not supported.
   unsupportedData,

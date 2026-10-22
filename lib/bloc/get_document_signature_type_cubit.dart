@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart' show Cubit;
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 
+import '../data/server_document.dart';
 import '../data/signature_type.dart';
 import '../use_case/get_document_signature_type_use_case.dart';
 import 'get_document_signature_type_state.dart';
@@ -27,11 +28,11 @@ class GetDocumentSignatureTypeCubit
   }
 
   /// Gets the Document [SignatureType].
-  Future<void> getDocumentSignatureType(String documentId) async {
+  Future<void> getDocumentSignatureType(ServerDocument document) async {
     emit(const GetDocumentSignatureTypeLoadingState());
 
     try {
-      final signatureType = await _getDocumentSignatureType(documentId);
+      final signatureType = await _getDocumentSignatureType(document);
 
       _log.info("Got Document SignatureType: ${signatureType?.name}.");
 
