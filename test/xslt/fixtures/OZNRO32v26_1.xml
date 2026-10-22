@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<dokument><hlavicka><dic /><ico>0</ico><zaObdobie><mesiac>1000000</mesiac><rok>123.45</rok></zaObdobie><fyzickaOsoba><priezvisko>1</priezvisko><meno>Áno</meno><titulPred>x</titulPred><titulZa>Riadok 1
+Riadok 2</titulZa><datumNarodenia /></fyzickaOsoba><pravnickaOsoba><obchodneMeno><riadok>0</riadok></obchodneMeno></pravnickaOsoba><sidlo><ulica>Žilina</ulica><supisneOrientacneCislo>Text supisneOrientac</supisneOrientacneCislo><psc>1</psc><obec>Áno</obec></sidlo><miestoPodnikaniaFO><ulica>x</ulica><supisneOrientacneCislo>Riadok 1
+Riadok 2</supisneOrientacneCislo><psc /><obec>0</obec></miestoPodnikaniaFO></hlavicka><opravnenieNaVykon><opravnenieR1><opravnenie>Žilina</opravnenie><datum>Text datum &amp; &lt;ok&gt; "q" č</datum></opravnenieR1><opravnenieR2><opravnenie>1</opravnenie><datum>Áno</datum></opravnenieR2><opravnenieR3><opravnenie>x</opravnenie><datum>Riadok 1
+Riadok 2</datum></opravnenieR3><opravnenieR4><opravnenie /><datum>0</datum></opravnenieR4><opravnenieR5><opravnenie>Žilina</opravnenie><datum>Text datum &amp; &lt;ok&gt; "q" č</datum></opravnenieR5></opravnenieNaVykon><odvod><vysledok>1</vysledok><koeficient>Áno</koeficient><odvod>x</odvod><vynosDlhopisu>Riadok 1
+Riadok 2</vynosDlhopisu></odvod><vypracoval><vypracoval /><dna>0</dna><telefon>Žilina</telefon><podpis>0</podpis></vypracoval></dokument>

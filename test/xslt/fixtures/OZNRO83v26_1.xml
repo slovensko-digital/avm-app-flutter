@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<dokument><hlavicka><dic /><ico>0</ico><fyzickaOsoba><priezvisko>Žilina</priezvisko><meno>Text meno &amp; &lt;ok&gt; "q" č</meno><titulPred>1</titulPred><titulZa>Áno</titulZa><datumNarodenia>x</datumNarodenia></fyzickaOsoba><pravnickaOsoba><obchodneMeno><riadok>Riadok 1
+Riadok 2</riadok></obchodneMeno></pravnickaOsoba><sidlo><ulica /><supisneOrientacneCislo>0</supisneOrientacneCislo><psc>Žilin</psc><obec>Text obec &amp; &lt;ok&gt; "q" č</obec></sidlo><miestoPodnikaniaFO><ulica>1</ulica><supisneOrientacneCislo>Áno</supisneOrientacneCislo><psc>x</psc><obec>Riadok 1
+Riadok 2</obec></miestoPodnikaniaFO></hlavicka><odvod><vysledok /><zaObdobie><datumOd>0</datumOd><datumDo>Žilina</datumDo></zaObdobie><koeficient>Text koeficient &amp; &lt;ok&gt; "q" č</koeficient><odvod>1</odvod><vynosDlhopisu>Áno</vynosDlhopisu></odvod><vypracoval><vypracoval>x</vypracoval><dna>Riadok 1
+Riadok 2</dna><telefon /><podpis /></vypracoval></dokument>
