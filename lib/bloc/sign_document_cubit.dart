@@ -5,13 +5,18 @@ import 'package:flutter_bloc/flutter_bloc.dart' show Cubit;
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 
+import '../data/document_to_sign.dart';
 import '../data/signature_type.dart';
 import '../ui/screens/sign_document_screen.dart';
+import '../verification/data_to_sign_verifier.dart';
 import 'sign_document_state.dart';
 
 export 'sign_document_state.dart';
 
 /// Cubit for the [SignDocumentScreen].
+///
+/// Data to sign are verified against the visualized document before they are
+/// signed.
 @injectable
 class SignDocumentCubit extends Cubit<SignDocumentState> {
   static final _log = Logger((SignDocumentCubit).toString());
@@ -20,13 +25,13 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
   final IAutogramService _service;
   final Eidmsdk _eidmsdk;
 
-  final String documentId;
+  final DocumentToSign document;
   final Certificate certificate;
 
   SignDocumentCubit({
     required IAutogramService service,
     required Eidmsdk eidmsdk,
-    @factoryParam required this.documentId,
+    @factoryParam required this.document,
     @factoryParam required this.certificate,
   })  : _service = service,
         _eidmsdk = eidmsdk,
@@ -37,6 +42,9 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
     DataToSignStructure data;
     final signingCertificate = certificate.certData;
 
+    final documentId = document.id;
+    final visualization = document.visualization;
+
     _log.info("Start signing Document with id: $documentId.");
 
     try {
@@ -45,11 +53,18 @@ class SignDocumentCubit extends Cubit<SignDocumentState> {
       final dataToSignRequest = DataToSignRequestBody(
         signingCertificate: signingCertificate,
         addTimestamp: signatureType.addTimestamp,
+        // PDF was prepared for signing with this signing time
+        signingTime: visualization.signingTime,
       );
 
       data = await _service.setDataToSign(documentId, dataToSignRequest);
 
       _log.info("Got data to sign.");
+
+      // the server can't make the user sign other than visualized document
+      DataToSignVerifier.verify(visualization, data.dataToSign);
+
+      _log.info("Data to sign verified against visualized document.");
     } catch (error, stackTrace) {
       _log.severe("Error getting data to sign.", error, stackTrace);
 

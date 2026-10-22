@@ -1,3 +1,5 @@
+import 'package:autogram_sign/autogram_sign.dart'
+    show VerifiableVisualizationResponseBody;
 import 'package:eidmsdk/types.dart' show Certificate;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +9,7 @@ import '../../bloc/get_document_signature_type_cubit.dart';
 import '../../bloc/select_signing_certificate_cubit.dart';
 import '../../certificate_extensions.dart';
 import '../../data/document_signing_type.dart';
+import '../../data/document_to_sign.dart';
 import '../../data/settings.dart';
 import '../../data/signature_type.dart';
 import '../../di.dart';
@@ -30,12 +33,14 @@ import 'sign_document_screen.dart';
 /// Navigates next to [SignDocumentScreen].
 class SelectCertificateScreen extends StatelessWidget {
   final String documentId;
+  final VerifiableVisualizationResponseBody visualization;
   final DocumentSigningType signingType;
   final bool openFromDeepLink;
 
   const SelectCertificateScreen({
     super.key,
     required this.documentId,
+    required this.visualization,
     required this.signingType,
     required this.openFromDeepLink,
   });
@@ -94,7 +99,7 @@ class SelectCertificateScreen extends StatelessWidget {
     context.read<Settings>().signingCertificate.value = certificate;
 
     final screen = SignDocumentScreen(
-      documentId: documentId,
+      document: DocumentToSign(id: documentId, visualization: visualization),
       certificate: certificate,
       signatureType: signatureType,
       signingType: signingType,

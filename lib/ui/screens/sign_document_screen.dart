@@ -10,6 +10,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/sign_document_cubit.dart';
 import '../../data/document_signing_type.dart';
+import '../../data/document_to_sign.dart';
 import '../../data/signature_type.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
@@ -23,7 +24,7 @@ import 'present_signed_document_screen.dart';
 ///
 /// Navigates next to [PresentSignedDocumentScreen] on success.
 class SignDocumentScreen extends StatelessWidget {
-  final String documentId;
+  final DocumentToSign document;
   final Certificate certificate;
   final SignatureType signatureType;
   final DocumentSigningType signingType;
@@ -31,7 +32,7 @@ class SignDocumentScreen extends StatelessWidget {
 
   const SignDocumentScreen({
     super.key,
-    required this.documentId,
+    required this.document,
     required this.certificate,
     required this.signatureType,
     required this.signingType,
@@ -43,7 +44,7 @@ class SignDocumentScreen extends StatelessWidget {
     final body = BlocProvider<SignDocumentCubit>(
       create: (context) {
         return GetIt.instance.get<SignDocumentCubit>(
-          param1: documentId,
+          param1: document,
           param2: certificate,
         )..signDocument(signatureType);
       },

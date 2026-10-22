@@ -14,6 +14,7 @@ import 'package:autogram/ui/screens/main_screen.dart';
 import 'package:autogram/ui/screens/paired_device_list_screen.dart';
 import 'package:autogram/ui/screens/preview_document_screen.dart';
 import 'package:autogram/ui/widgets/push_notification_status_banner.dart';
+import 'package:autogram/use_case/create_document_preview_use_case.dart';
 import 'package:autogram_sign/autogram_sign.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -266,7 +267,12 @@ void main() {
 class _Api extends Fake implements IAutogramService {}
 
 class _PreviewCubit extends PreviewDocumentCubit {
-  _PreviewCubit(String id) : super(service: _Api(), documentId: id);
+  _PreviewCubit(String id)
+    : super(
+        service: _Api(),
+        createDocumentPreview: CreateDocumentPreviewUseCase(),
+        documentId: id,
+      );
 
   @override
   Future<void> getVisualization() async {

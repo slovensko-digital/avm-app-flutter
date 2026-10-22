@@ -20,7 +20,12 @@ XmlDocument parseXmlDocument(List<int> data, String what) {
   final XmlDocument document;
 
   try {
-    document = XmlDocument.parse(utf8.decode(data));
+    // line endings normalized according to XML 1.0 section 2.11
+    final xml = utf8
+        .decode(data)
+        .replaceAll("\r\n", "\n")
+        .replaceAll("\r", "\n");
+    document = XmlDocument.parse(xml);
   } on Exception catch (error) {
     throw DocumentVerificationException(
       DocumentVerificationFailure.unsupportedData,

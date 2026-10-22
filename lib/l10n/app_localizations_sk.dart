@@ -341,6 +341,22 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String get documentVerificationDataToSignMismatchError =>
+      'Údaje na podpis nezodpovedajú zobrazenému dokumentu, preto dokument nebol podpísaný.';
+
+  @override
+  String get documentVerificationLocalDocumentMismatchError =>
+      'Dokument zo servera nezodpovedá vybranému súboru.';
+
+  @override
+  String get documentVerificationTransformationMismatchError =>
+      'Šablóna na zobrazenie formulára nezodpovedá podpisovanému dokumentu.';
+
+  @override
+  String get documentVerificationUnsupportedDataError =>
+      'Dokument zo servera sa nepodarilo overiť.';
+
+  @override
   String get documentValidationLoadingLabel => 'Prebieha overovanie podpisov';
 
   @override

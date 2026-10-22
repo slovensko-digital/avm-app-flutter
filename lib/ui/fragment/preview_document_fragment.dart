@@ -1,10 +1,14 @@
 import 'package:autogram_sign/autogram_sign.dart'
-    show DocumentVisualizationResponseBody;
+    show
+        SignedDataObject,
+        VerifiableVisualizationResponseBody,
+        VerifiableVisualizationResponseBodySignatureForm;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/preview_document_cubit.dart';
+import '../../data/document_preview.dart';
 import '../../strings_context.dart';
 import '../widgets/document_visualization.dart';
 import '../widgets/error_content.dart';
@@ -27,7 +31,7 @@ class PreviewDocumentFragment extends StatelessWidget {
       PreviewDocumentInitialState _ => const LoadingContent(),
       PreviewDocumentLoadingState _ => const LoadingContent(),
       PreviewDocumentSuccessState state => _SuccessContent(
-          visualization: state.visualization,
+          preview: state.preview,
         ),
       PreviewDocumentErrorState state => ErrorContent(
           title: context.strings.previewDocumentErrorHeading,
@@ -37,11 +41,11 @@ class PreviewDocumentFragment extends StatelessWidget {
   }
 }
 
-/// Displays [visualization] using [DocumentVisualization] with dotted border.
+/// Displays [preview] using [DocumentVisualization] with dotted border.
 class _SuccessContent extends StatelessWidget {
-  final DocumentVisualizationResponseBody visualization;
+  final DocumentPreview preview;
 
-  const _SuccessContent({required this.visualization});
+  const _SuccessContent({required this.preview});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +62,7 @@ class _SuccessContent extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(2),
-        child: DocumentVisualization(visualization: visualization),
+        child: DocumentVisualization(preview: preview),
       ),
       ),
     );
@@ -95,11 +99,15 @@ Widget previewErrorPreviewDocumentScreen(BuildContext context) {
 Widget previewSuccessPreviewDocumentScreen(BuildContext context) {
   return const PreviewDocumentFragment(
     state: PreviewDocumentSuccessState(
-      DocumentVisualizationResponseBody(
-        mimeType: "text/plain;base64",
-        filename: "sample.txt",
-        content: "",
+      VerifiableVisualizationResponseBody(
+        signatureForm: VerifiableVisualizationResponseBodySignatureForm.xades,
+        document: SignedDataObject(
+          mimeType: "text/plain;base64",
+          filename: "sample.txt",
+          content: "",
+        ),
       ),
+      TextDocumentPreview("Sample text"),
     ),
   );
 }

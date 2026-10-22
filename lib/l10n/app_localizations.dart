@@ -598,6 +598,30 @@ abstract class AppLocalizations {
   /// **'Neviem vizualizovať {type} typ.'**
   String documentVisualizationCannotVisualizeTypeError(Object type);
 
+  /// No description provided for @documentVerificationDataToSignMismatchError.
+  ///
+  /// In sk, this message translates to:
+  /// **'Údaje na podpis nezodpovedajú zobrazenému dokumentu, preto dokument nebol podpísaný.'**
+  String get documentVerificationDataToSignMismatchError;
+
+  /// No description provided for @documentVerificationLocalDocumentMismatchError.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument zo servera nezodpovedá vybranému súboru.'**
+  String get documentVerificationLocalDocumentMismatchError;
+
+  /// No description provided for @documentVerificationTransformationMismatchError.
+  ///
+  /// In sk, this message translates to:
+  /// **'Šablóna na zobrazenie formulára nezodpovedá podpisovanému dokumentu.'**
+  String get documentVerificationTransformationMismatchError;
+
+  /// No description provided for @documentVerificationUnsupportedDataError.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument zo servera sa nepodarilo overiť.'**
+  String get documentVerificationUnsupportedDataError;
+
   /// No description provided for @documentValidationLoadingLabel.
   ///
   /// In sk, this message translates to:

@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Document is visualized on the device from the signed data objects instead of visualization from the server
+- Data to sign are verified against the visualized document (and the selected local file) before signing with eID
+- XSLT transformation of XML e-forms on the device
+- Requires AVM server with `GET /documents/{guid}/verifiable-visualization` endpoint
+
 ## 2026-10-04 - v1.7.0(56)
 
 - #124 | Push notifications for sign requests from paired integrations

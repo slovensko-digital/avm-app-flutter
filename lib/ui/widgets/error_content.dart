@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../strings_context.dart';
 import '../../util/errors.dart';
+import '../../verification/document_verification_exception.dart';
 import 'loading_content.dart';
 import 'result_view.dart';
 
@@ -17,7 +19,11 @@ class ErrorContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final message = getErrorMessage(error);
+    final message = switch (error) {
+      DocumentVerificationException error =>
+        _getDocumentVerificationErrorMessage(context, error.reason),
+      _ => getErrorMessage(error),
+    };
 
     return Center(
       child: ResultView.error(
@@ -25,6 +31,24 @@ class ErrorContent extends StatelessWidget {
         body: Text(message),
       ),
     );
+  }
+
+  static String _getDocumentVerificationErrorMessage(
+    BuildContext context,
+    DocumentVerificationFailure reason,
+  ) {
+    final strings = context.strings;
+
+    return switch (reason) {
+      DocumentVerificationFailure.dataToSignMismatch =>
+        strings.documentVerificationDataToSignMismatchError,
+      DocumentVerificationFailure.localDocumentMismatch =>
+        strings.documentVerificationLocalDocumentMismatchError,
+      DocumentVerificationFailure.transformationMismatch =>
+        strings.documentVerificationTransformationMismatchError,
+      DocumentVerificationFailure.unsupportedData =>
+        strings.documentVerificationUnsupportedDataError,
+    };
   }
 }
 

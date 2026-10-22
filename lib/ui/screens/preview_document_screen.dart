@@ -1,7 +1,7 @@
 import 'dart:io' show File;
 
 import 'package:autogram_sign/autogram_sign.dart'
-    show DocumentValidationResponseBody;
+    show DocumentValidationResponseBody, VerifiableVisualizationResponseBody;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -56,13 +56,16 @@ class PreviewDocumentScreen extends StatelessWidget {
       create: (context) {
         return GetIt.instance.get<PreviewDocumentCubit>(
           param1: documentId,
+          param2: file,
         )..getVisualization();
       },
       child: BlocBuilder<PreviewDocumentCubit, PreviewDocumentState>(
         builder: (context, state) {
           return _Content(
             state: state,
-            onSignRequested: () => _onSignRequested(context),
+            onSignRequested: (visualization) {
+              _onSignRequested(context, visualization);
+            },
           );
         },
       ),
@@ -123,9 +126,13 @@ class PreviewDocumentScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _onSignRequested(BuildContext context) {
+  Future<void> _onSignRequested(
+    BuildContext context,
+    VerifiableVisualizationResponseBody visualization,
+  ) {
     final screen = SelectCertificateScreen(
       documentId: documentId,
+      visualization: visualization,
       signingType:
           file != null ? DocumentSigningType.local : DocumentSigningType.remote,
       openFromDeepLink: openFromDeepLink,
@@ -139,7 +146,7 @@ class PreviewDocumentScreen extends StatelessWidget {
 /// [PreviewDocumentScreen] content.
 class _Content extends StatelessWidget {
   final PreviewDocumentState state;
-  final VoidCallback? onSignRequested;
+  final ValueSetter<VerifiableVisualizationResponseBody>? onSignRequested;
 
   const _Content({
     required this.state,
@@ -148,6 +155,8 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = this.state;
+
     return Column(
       children: [
         // Document preview
@@ -163,7 +172,7 @@ class _Content extends StatelessWidget {
               style: FilledButton.styleFrom(
                 minimumSize: kPrimaryButtonMinimumSize,
               ),
-              onPressed: () => onSignRequested?.call(),
+              onPressed: () => onSignRequested?.call(state.visualization),
               child: Text(context.strings.buttonSignLabel),
             ),
           ),

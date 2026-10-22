@@ -97,6 +97,11 @@
 
   "documentVisualizationCannotVisualizeTypeError": "Neviem vizualizovať {type} typ.",
 
+  "documentVerificationDataToSignMismatchError": "Údaje na podpis nezodpovedajú zobrazenému dokumentu, preto dokument nebol podpísaný.",
+  "documentVerificationLocalDocumentMismatchError": "Dokument zo servera nezodpovedá vybranému súboru.",
+  "documentVerificationTransformationMismatchError": "Šablóna na zobrazenie formulára nezodpovedá podpisovanému dokumentu.",
+  "documentVerificationUnsupportedDataError": "Dokument zo servera sa nepodarilo overiť.",
+
   "documentValidationLoadingLabel": "Prebieha overovanie podpisov",
   "documentValidationNoSignaturesLabel": "Dokument zatiaľ neobsahuje **žiadny podpis**",
   "documentValidationHasInvalidSignaturesLabel": "Dokument obsahuje **neplatné podpisy**",
