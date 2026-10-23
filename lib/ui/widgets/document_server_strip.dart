@@ -29,7 +29,7 @@ class DocumentServerStrip extends StatelessWidget {
         color: const Color(0xFFEBCFAA),
         child: Row(
           children: [
-            const Icon(Icons.dns_outlined, color: foregroundColor),
+            const Icon(Icons.warning, color: foregroundColor),
             const SizedBox(width: 12),
             Expanded(
               child: Text.rich(

@@ -8,7 +8,6 @@ import '../../data/avm_server.dart';
 import '../../data/settings.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
-import '../widgets/result_view.dart';
 import 'preview_document_screen.dart';
 import 'trusted_server_list_screen.dart';
 
@@ -84,6 +83,8 @@ class _BodyState extends State<_Body> {
   @override
   Widget build(BuildContext context) {
     final strings = context.strings;
+    final theme = Theme.of(context);
+    final onSurface = theme.colorScheme.onSurface;
 
     return Column(
       children: [
@@ -93,30 +94,31 @@ class _BodyState extends State<_Body> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ResultView(
-                  icon: 'assets/images/lock.svg',
-                  titleText: strings.trustServerHeading,
+                Semantics(
+                  header: true,
+                  child: Text(
+                    strings.trustServerHeading,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                _ServerCard(server: widget.server),
-                const SizedBox(height: 24),
-                _InfoRow(
-                  icon: Icons.check_circle_outline,
-                  iconColor: const Color(0xFF078814),
-                  text: strings.trustServerVerifiedInfo,
+                const SizedBox(height: 20),
+                _ServerWarning(server: widget.server),
+                const SizedBox(height: 20),
+                Text(
+                  "${strings.trustServerVerifiedInfo} "
+                  "${strings.trustServerNotVerifiedInfo}",
                 ),
-                const SizedBox(height: 16),
-                _InfoRow(
-                  icon: Icons.warning_amber_outlined,
-                  iconColor: const Color(0xFF9A5B00),
-                  text: strings.trustServerNotVerifiedInfo,
+                const SizedBox(height: 12),
+                Text(
+                  strings.trustServerDocumentTypesInfo,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                 ),
-                const SizedBox(height: 16),
-                _InfoRow(
-                  icon: Icons.info_outline,
-                  iconColor: Theme.of(context).colorScheme.primary,
-                  text: strings.trustServerDocumentTypesInfo,
-                ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 CheckboxListTile(
                   value: _remember,
                   onChanged: (value) {
@@ -125,6 +127,16 @@ class _BodyState extends State<_Body> {
                   title: Text(strings.trustServerRememberLabel),
                   controlAffinity: ListTileControlAffinity.leading,
                   contentPadding: EdgeInsets.zero,
+                  // ID-SK checkbox - big box with border and check mark
+                  checkboxScaleFactor: kRadioScale,
+                  checkboxShape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(3)),
+                  ),
+                  side: WidgetStateBorderSide.resolveWith(
+                    (_) => BorderSide(color: onSurface, width: 2),
+                  ),
+                  fillColor: const WidgetStatePropertyAll(Colors.transparent),
+                  checkColor: onSurface,
                 ),
               ],
             ),
@@ -158,13 +170,17 @@ class _BodyState extends State<_Body> {
   }
 }
 
-/// Presents the [server] with note, that it's not the official one.
-class _ServerCard extends StatelessWidget {
-  static const _secondaryColor = Color(0xFF5A4A36);
+/// Warning about the [server], that it's not the official one; styled as
+/// ID-SK warning with its yellow colors.
+class _ServerWarning extends StatelessWidget {
+  static const _lightYellow = Color(0xFFFAF4EC);
+  static const _mediumYellow = Color(0xFFEBCFAA);
+  static const _yellow = Color(0xFFBD730C);
+  static const _darkYellow = Color(0xFF4E2A00);
 
   final AvmServer server;
 
-  const _ServerCard({required this.server});
+  const _ServerWarning({required this.server});
 
   @override
   Widget build(BuildContext context) {
@@ -173,57 +189,45 @@ class _ServerCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFFBF0E2),
-        border: Border.all(color: const Color(0xFFEBCFAA)),
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        color: _lightYellow,
+        border: Border.all(color: _mediumYellow),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 4,
+        spacing: 12,
         children: [
-          Text(
-            strings.trustServerLabel,
-            style: const TextStyle(color: _secondaryColor),
-          ),
-          Text(
-            server.authority,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+          const Icon(Icons.warning, color: _yellow),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 4,
+              children: [
+                Text(
+                  strings.trustServerLabel,
+                  style: const TextStyle(color: _darkYellow),
+                ),
+                Text(
+                  server.authority,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  strings.trustServerNotOfficialLabel(
+                    AvmServer.official.authority,
+                  ),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: _darkYellow,
+                  ),
+                ),
+              ],
             ),
-          ),
-          Text(
-            strings.trustServerNotOfficialLabel(AvmServer.official.authority),
-            style: const TextStyle(color: _secondaryColor),
           ),
         ],
       ),
-    );
-  }
-}
-
-/// Info [text] with leading [icon].
-class _InfoRow extends StatelessWidget {
-  final IconData icon;
-  final Color iconColor;
-  final String text;
-
-  const _InfoRow({
-    required this.icon,
-    required this.iconColor,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 12,
-      children: [
-        Icon(icon, color: iconColor),
-        Expanded(child: Text(text)),
-      ],
     );
   }
 }
