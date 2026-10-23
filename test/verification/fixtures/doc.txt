@@ -1,0 +1,2 @@
+Ahoj svet!
+Toto je testovaci dokument.

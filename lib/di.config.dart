@@ -30,11 +30,15 @@ import 'bloc/preview_document_cubit.dart' as _i21;
 import 'bloc/select_signing_certificate_cubit.dart' as _i1033;
 import 'bloc/sign_document_cubit.dart' as _i520;
 import 'data/document_signing_type.dart' as _i873;
+import 'data/document_to_sign.dart' as _i815;
 import 'data/pdf_signing_option.dart' as _i732;
+import 'data/server_document.dart' as _i567;
 import 'di.dart' as _i913;
+import 'services/autogram_services.dart' as _i853;
 import 'services/device_registry.dart' as _i64;
 import 'services/encryption_key_registry.dart' as _i429;
 import 'services/push_notification_service.dart' as _i745;
+import 'use_case/create_document_preview_use_case.dart' as _i799;
 import 'use_case/get_document_signature_type_use_case.dart' as _i400;
 import 'use_case/get_html_document_version_use_case.dart' as _i752;
 
@@ -54,6 +58,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i713.Eidmsdk>(() => extrernalModule.eidmsdk);
     gh.lazySingleton<_i892.FirebaseMessaging>(
       () => extrernalModule.firebaseMessaging,
+    );
+    gh.lazySingleton<_i799.CreateDocumentPreviewUseCase>(
+      () => _i799.CreateDocumentPreviewUseCase(),
     );
     gh.lazySingleton<_i752.GetHtmlDocumentVersionUseCase>(
       () => _i752.GetHtmlDocumentVersionUseCase(),
@@ -85,23 +92,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i64.DeviceRegistry>(),
       ),
     );
-    gh.factoryParam<_i520.SignDocumentCubit, String, _i518.Certificate>(
-      (documentId, certificate) => _i520.SignDocumentCubit(
-        service: gh<_i825.IAutogramService>(),
-        eidmsdk: gh<_i713.Eidmsdk>(),
-        documentId: documentId,
-        certificate: certificate,
-      ),
-    );
     gh.factory<_i578.PairedDeviceListCubit>(
       () => _i578.PairedDeviceListCubit(
         service: gh<_i825.IAutogramService>(),
         deviceRegistry: gh<_i64.DeviceRegistry>(),
       ),
-    );
-    gh.factory<_i205.DocumentValidationCubit>(
-      () =>
-          _i205.DocumentValidationCubit(service: gh<_i825.IAutogramService>()),
     );
     gh.singleton<_i745.PushNotificationService>(
       () => _i745.PushNotificationService(
@@ -112,13 +107,29 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       dispose: (i) => i.dispose(),
     );
-    gh.lazySingleton<_i400.GetDocumentSignatureTypeUseCase>(
-      () => _i400.GetDocumentSignatureTypeUseCase(gh<_i825.IAutogramService>()),
+    gh.lazySingleton<_i853.AutogramServices>(
+      () => _i853.AutogramServices(
+        gh<_i825.IAutogramService>(),
+        gh<_i429.EncryptionKeyRegistry>(),
+      ),
     );
-    gh.factoryParam<_i21.PreviewDocumentCubit, String, dynamic>(
-      (documentId, _) => _i21.PreviewDocumentCubit(
-        service: gh<_i825.IAutogramService>(),
-        documentId: documentId,
+    gh.lazySingleton<_i400.GetDocumentSignatureTypeUseCase>(
+      () => _i400.GetDocumentSignatureTypeUseCase(gh<_i853.AutogramServices>()),
+    );
+    gh.factory<_i205.DocumentValidationCubit>(
+      () =>
+          _i205.DocumentValidationCubit(services: gh<_i853.AutogramServices>()),
+    );
+    gh.factoryParam<
+      _i520.SignDocumentCubit,
+      _i815.DocumentToSign,
+      _i518.Certificate
+    >(
+      (document, certificate) => _i520.SignDocumentCubit(
+        services: gh<_i853.AutogramServices>(),
+        eidmsdk: gh<_i713.Eidmsdk>(),
+        document: document,
+        certificate: certificate,
       ),
     );
     gh.factoryParam<
@@ -131,6 +142,18 @@ extension GetItInjectableX on _i174.GetIt {
         service: gh<_i825.IAutogramService>(),
         file: file,
         pdfSigningOption: pdfSigningOption,
+      ),
+    );
+    gh.factoryParam<
+      _i21.PreviewDocumentCubit,
+      _i567.ServerDocument,
+      _i497.File?
+    >(
+      (document, file) => _i21.PreviewDocumentCubit(
+        services: gh<_i853.AutogramServices>(),
+        createDocumentPreview: gh<_i799.CreateDocumentPreviewUseCase>(),
+        document: document,
+        file: file,
       ),
     );
     gh.factory<_i767.GetDocumentSignatureTypeCubit>(

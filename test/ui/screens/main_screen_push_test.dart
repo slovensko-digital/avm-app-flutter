@@ -2,6 +2,7 @@ import 'package:autogram/bloc/app_bloc.dart';
 import 'package:autogram/bloc/document_validation_cubit.dart';
 import 'package:autogram/bloc/paired_device_list_cubit.dart';
 import 'package:autogram/bloc/preview_document_cubit.dart';
+import 'package:autogram/data/server_document.dart';
 import 'package:autogram/data/settings.dart';
 import 'package:autogram/di.dart';
 import 'package:autogram/l10n/app_localizations.dart';
@@ -9,11 +10,14 @@ import 'package:autogram/l10n/app_localizations_sk.dart';
 import 'package:autogram/push_messages.dart';
 import 'package:autogram/services/device_registry.dart';
 import 'package:autogram/services/encryption_key_registry.dart';
+import 'package:autogram/services/autogram_services.dart';
 import 'package:autogram/services/push_notification_service.dart';
 import 'package:autogram/ui/screens/main_screen.dart';
 import 'package:autogram/ui/screens/paired_device_list_screen.dart';
 import 'package:autogram/ui/screens/preview_document_screen.dart';
+import 'package:autogram/ui/screens/trust_server_screen.dart';
 import 'package:autogram/ui/widgets/push_notification_status_banner.dart';
+import 'package:autogram/use_case/create_document_preview_use_case.dart';
 import 'package:autogram_sign/autogram_sign.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -46,8 +50,8 @@ void main() {
     pushService = _PushService();
     getIt.registerSingleton<EncryptionKeyRegistry>(keys);
     getIt.registerSingleton<PushNotificationService>(pushService);
-    getIt.registerFactoryParam<PreviewDocumentCubit, String, dynamic>(
-      (id, _) => _PreviewCubit(id),
+    getIt.registerFactoryParam<PreviewDocumentCubit, ServerDocument, dynamic>(
+      (document, _) => _PreviewCubit(document),
     );
     getIt.registerFactory<DocumentValidationCubit>(() => _ValidationCubit());
   });
@@ -115,7 +119,8 @@ void main() {
       expect(
         tester
             .widget<PreviewDocumentScreen>(find.byType(PreviewDocumentScreen))
-            .documentId,
+            .document
+            .id,
         'new-document',
       );
     },
@@ -140,6 +145,85 @@ void main() {
     expect(find.text('Original document'), findsNothing);
     expect(find.byType(PreviewDocumentScreen), findsOneWidget);
     expect(keys.value, 'new-key');
+  });
+
+  testWidgets('document from other server is opened after warning', (
+    tester,
+  ) async {
+    await tester.pumpWidget(host());
+    incoming.value = Uri.https('avm.example.org', '/api/v1/qr-code', {
+      'guid': 'other-document',
+      'key': 'other-key',
+    });
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TrustServerScreen), findsOneWidget);
+    expect(find.text('avm.example.org'), findsOneWidget);
+    expect(find.byType(PreviewDocumentScreen), findsNothing);
+
+    await tester.ensureVisible(find.text(strings.trustServerRememberLabel));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.trustServerRememberLabel));
+    await tester.tap(find.text(strings.buttonContinueLabel));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TrustServerScreen), findsNothing);
+    final preview = tester.widget<PreviewDocumentScreen>(
+      find.byType(PreviewDocumentScreen),
+    );
+    expect(preview.document.id, 'other-document');
+    expect(preview.document.server.authority, 'avm.example.org');
+    expect(keys.value, 'other-key');
+    expect(settings.trustedServers.value, ['avm.example.org']);
+  });
+
+  testWidgets('other server is not remembered without user consent', (
+    tester,
+  ) async {
+    await tester.pumpWidget(host());
+    incoming.value = Uri.https('avm.example.org', '/api/v1/qr-code', {
+      'guid': 'other-document',
+      'key': 'other-key',
+    });
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.buttonContinueLabel));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(PreviewDocumentScreen), findsOneWidget);
+    expect(settings.trustedServers.value, isEmpty);
+  });
+
+  testWidgets('document from other server is not opened when canceled', (
+    tester,
+  ) async {
+    await tester.pumpWidget(host());
+    incoming.value = Uri.https('avm.example.org', '/api/v1/qr-code', {
+      'guid': 'other-document',
+      'key': 'other-key',
+    });
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.buttonCancelLabel));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TrustServerScreen), findsNothing);
+    expect(find.byType(PreviewDocumentScreen), findsNothing);
+    expect(find.byType(MainScreen), findsOneWidget);
+    expect(settings.trustedServers.value, isEmpty);
+  });
+
+  testWidgets('document from trusted server is opened without warning', (
+    tester,
+  ) async {
+    settings.trustedServers.value = ['avm.example.org'];
+    await tester.pumpWidget(host());
+    incoming.value = Uri.https('avm.example.org', '/api/v1/qr-code', {
+      'guid': 'other-document',
+      'key': 'other-key',
+    });
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TrustServerScreen), findsNothing);
+    expect(find.byType(PreviewDocumentScreen), findsOneWidget);
   });
 
   testWidgets('denied permission is not reported as notification success', (
@@ -265,8 +349,15 @@ void main() {
 
 class _Api extends Fake implements IAutogramService {}
 
+class _Services extends Fake implements AutogramServices {}
+
 class _PreviewCubit extends PreviewDocumentCubit {
-  _PreviewCubit(String id) : super(service: _Api(), documentId: id);
+  _PreviewCubit(ServerDocument document)
+    : super(
+        services: _Services(),
+        createDocumentPreview: CreateDocumentPreviewUseCase(),
+        document: document,
+      );
 
   @override
   Future<void> getVisualization() async {
@@ -275,10 +366,10 @@ class _PreviewCubit extends PreviewDocumentCubit {
 }
 
 class _ValidationCubit extends DocumentValidationCubit {
-  _ValidationCubit() : super(service: _Api());
+  _ValidationCubit() : super(services: _Services());
 
   @override
-  Future<void> validateDocument(String documentId) async {
+  Future<void> validateDocument(ServerDocument document) async {
     emit(const DocumentValidationNotSignedState());
   }
 }

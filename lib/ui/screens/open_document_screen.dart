@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../bloc/create_document_cubit.dart';
+import '../../data/server_document.dart';
 import '../../data/settings.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
@@ -62,7 +63,7 @@ class OpenDocumentScreen extends StatelessWidget {
   void _onSuccess(BuildContext context, CreateDocumentSuccessState state) {
     final screen = PreviewDocumentScreen(
       file: state.file,
-      documentId: state.documentId,
+      document: ServerDocument(state.documentId),
     );
     final route = MaterialPageRoute(builder: (context) => screen);
 

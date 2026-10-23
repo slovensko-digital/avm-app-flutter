@@ -19,6 +19,7 @@
   "buttonOpenDocumentLabel": "Vybrať dokument",
   "buttonSignLabel": "Podpísať",
   "buttonSkipLabel": "Preskočiť",
+  "buttonContinueLabel": "Pokračovať",
   "buttonScanQrCodeLabel": "Skenovať QR kód",
   "buttonSelectCertificateLabel": "Vybrať certifikát",
   "buttonSignWithCertificateLabel": "Podpísať ako {subject}",
@@ -56,6 +57,20 @@
   "pairedDevicesEmpty": "Nemáte spárované žiadne zariadenia.\nZariadenie sa spáruje po naskenovaní QR kódu, ktorý to umožňuje.",
   "pairedDevicesErrorHeading": "Chyba pri načítaní spárovaných zariadení",
   "pairedDeviceDeleteTooltip": "Zrušiť spárovanie",
+
+  "trustServerTitle": "Iný server",
+  "trustServerHeading": "Dôverujete tomuto zdroju?",
+  "trustServerLabel": "Dokument poskytuje",
+  "trustServerNotOfficialLabel": "Nie je to oficiálny server {server}.",
+  "trustServerVerifiedInfo": "Aplikácia overí, že podpíšete presne ten dokument, ktorý uvidíte.",
+  "trustServerNotVerifiedInfo": "Neoverí však, kto dokument poskytuje, ani čo sa s podpísaným dokumentom stane.",
+  "trustServerDocumentTypesInfo": "Podpísať je možné iba PDF dokumenty, textové súbory a obrázky.",
+  "trustServerRememberLabel": "Dôverovať tomuto zdroju aj nabudúce",
+
+  "trustedServersTitle": "Dôveryhodné zdroje",
+  "trustedServersInfo": "Pri dokumentoch z týchto zdrojov sa nezobrazuje upozornenie, že nie sú z oficiálneho servera. Po odstránení zdroja sa upozornenie zobrazí znova.",
+  "trustedServersEmpty": "Nedôverujete žiadnemu inému zdroju.\nZdroj pridáte pri otvorení dokumentu z neho.",
+  "trustedServerDeleteTooltip": "Odstrániť zdroj",
   "pairIntegrationSuccessMessage": "Zariadenie bolo spárované. Žiadosti o podpis vám prídu ako notifikácie.",
   "pairIntegrationErrorMessage": "Spárovanie zariadenia zlyhalo:\n{error}",
   "pairIntegrationAlreadyPairedMessage": "Zariadenie už je spárované.",
@@ -93,9 +108,15 @@
 
   "previewDocumentTitle": "Náhľad dokumentu",
   "previewDocumentErrorHeading": "Chyba pri načítaní vizualizácie dokumentu",
+  "documentServerLabel": "Dokument zo zdroja",
   "shareDocumentText": "\n\nSúbor z aplikácie Autogram v mobile",
 
   "documentVisualizationCannotVisualizeTypeError": "Neviem vizualizovať {type} typ.",
+
+  "documentVerificationDataToSignMismatchError": "Údaje na podpis nezodpovedajú zobrazenému dokumentu, preto dokument nebol podpísaný.",
+  "documentVerificationLocalDocumentMismatchError": "Dokument zo servera nezodpovedá vybranému súboru.",
+  "documentVerificationUnsupportedDocumentTypeError": "Z tohto servera je zatiaľ možné podpísať iba PDF dokumenty, textové súbory a obrázky (PNG, JPEG).",
+  "documentVerificationUnsupportedDataError": "Dokument zo servera sa nepodarilo overiť.",
 
   "documentValidationLoadingLabel": "Prebieha overovanie podpisov",
   "documentValidationNoSignaturesLabel": "Dokument zatiaľ neobsahuje **žiadny podpis**",

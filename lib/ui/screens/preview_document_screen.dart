@@ -1,7 +1,7 @@
 import 'dart:io' show File;
 
 import 'package:autogram_sign/autogram_sign.dart'
-    show DocumentValidationResponseBody;
+    show DocumentValidationResponseBody, VerifiableVisualizationResponseBody;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -9,6 +9,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../bloc/preview_document_cubit.dart';
 import '../../data/document_signing_type.dart';
+import '../../data/server_document.dart';
 import '../../file_system_entity_extensions.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
@@ -16,13 +17,15 @@ import '../fragment/document_validation_fragment.dart';
 import '../fragment/document_validation_info_fragment.dart';
 import '../fragment/preview_document_fragment.dart';
 import '../widgets/dialogs.dart' as avm;
+import '../widgets/document_server_strip.dart';
 import 'open_document_screen.dart';
 import 'select_certificate_screen.dart';
 
-/// Screen for previewing single document from [file] and [documentId].
+/// Screen for previewing single document from [file] and [document].
 ///
 /// Contains two fragments:
-///  - [DocumentValidationFragment]
+///  - [DocumentValidationFragment] - for document from the official server,
+///    otherwise [DocumentServerStrip]
 ///  - [PreviewDocumentFragment]
 ///
 /// Uses [PreviewDocumentCubit].
@@ -34,35 +37,41 @@ import 'select_certificate_screen.dart';
 ///  - [OpenDocumentScreen]
 class PreviewDocumentScreen extends StatelessWidget {
   final File? file;
-  final String documentId;
+  final ServerDocument document;
   final bool openFromDeepLink;
 
   const PreviewDocumentScreen({
     super.key,
     this.file,
-    required this.documentId,
+    required this.document,
     this.openFromDeepLink = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final child1 = DocumentValidationFragment(
-      documentId: documentId,
-      onShowDocumentValidationInfoRequested: (data) {
-        _onShowDocumentValidationInfoRequested(context, data);
-      },
-    );
+    // Signatures validated by other server can't be trusted
+    final child1 = document.server.isOfficial
+        ? DocumentValidationFragment(
+            document: document,
+            onShowDocumentValidationInfoRequested: (data) {
+              _onShowDocumentValidationInfoRequested(context, data);
+            },
+          )
+        : DocumentServerStrip(server: document.server);
     final child2 = BlocProvider<PreviewDocumentCubit>(
       create: (context) {
         return GetIt.instance.get<PreviewDocumentCubit>(
-          param1: documentId,
+          param1: document,
+          param2: file,
         )..getVisualization();
       },
       child: BlocBuilder<PreviewDocumentCubit, PreviewDocumentState>(
         builder: (context, state) {
           return _Content(
             state: state,
-            onSignRequested: () => _onSignRequested(context),
+            onSignRequested: (visualization) {
+              _onSignRequested(context, visualization);
+            },
           );
         },
       ),
@@ -123,9 +132,13 @@ class PreviewDocumentScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _onSignRequested(BuildContext context) {
+  Future<void> _onSignRequested(
+    BuildContext context,
+    VerifiableVisualizationResponseBody visualization,
+  ) {
     final screen = SelectCertificateScreen(
-      documentId: documentId,
+      document: document,
+      visualization: visualization,
       signingType:
           file != null ? DocumentSigningType.local : DocumentSigningType.remote,
       openFromDeepLink: openFromDeepLink,
@@ -139,7 +152,7 @@ class PreviewDocumentScreen extends StatelessWidget {
 /// [PreviewDocumentScreen] content.
 class _Content extends StatelessWidget {
   final PreviewDocumentState state;
-  final VoidCallback? onSignRequested;
+  final ValueSetter<VerifiableVisualizationResponseBody>? onSignRequested;
 
   const _Content({
     required this.state,
@@ -148,6 +161,8 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = this.state;
+
     return Column(
       children: [
         // Document preview
@@ -163,7 +178,7 @@ class _Content extends StatelessWidget {
               style: FilledButton.styleFrom(
                 minimumSize: kPrimaryButtonMinimumSize,
               ),
-              onPressed: () => onSignRequested?.call(),
+              onPressed: () => onSignRequested?.call(state.visualization),
               child: Text(context.strings.buttonSignLabel),
             ),
           ),

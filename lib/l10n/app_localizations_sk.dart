@@ -64,6 +64,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get buttonSkipLabel => 'Preskočiť';
 
   @override
+  String get buttonContinueLabel => 'Pokračovať';
+
+  @override
   String get buttonScanQrCodeLabel => 'Skenovať QR kód';
 
   @override
@@ -222,6 +225,49 @@ class AppLocalizationsSk extends AppLocalizations {
   String get pairedDeviceDeleteTooltip => 'Zrušiť spárovanie';
 
   @override
+  String get trustServerTitle => 'Iný server';
+
+  @override
+  String get trustServerHeading => 'Dôverujete tomuto zdroju?';
+
+  @override
+  String get trustServerLabel => 'Dokument poskytuje';
+
+  @override
+  String trustServerNotOfficialLabel(Object server) {
+    return 'Nie je to oficiálny server $server.';
+  }
+
+  @override
+  String get trustServerVerifiedInfo =>
+      'Aplikácia overí, že podpíšete presne ten dokument, ktorý uvidíte.';
+
+  @override
+  String get trustServerNotVerifiedInfo =>
+      'Neoverí však, kto dokument poskytuje, ani čo sa s podpísaným dokumentom stane.';
+
+  @override
+  String get trustServerDocumentTypesInfo =>
+      'Podpísať je možné iba PDF dokumenty, textové súbory a obrázky.';
+
+  @override
+  String get trustServerRememberLabel => 'Dôverovať tomuto zdroju aj nabudúce';
+
+  @override
+  String get trustedServersTitle => 'Dôveryhodné zdroje';
+
+  @override
+  String get trustedServersInfo =>
+      'Pri dokumentoch z týchto zdrojov sa nezobrazuje upozornenie, že nie sú z oficiálneho servera. Po odstránení zdroja sa upozornenie zobrazí znova.';
+
+  @override
+  String get trustedServersEmpty =>
+      'Nedôverujete žiadnemu inému zdroju.\nZdroj pridáte pri otvorení dokumentu z neho.';
+
+  @override
+  String get trustedServerDeleteTooltip => 'Odstrániť zdroj';
+
+  @override
   String get pairIntegrationSuccessMessage =>
       'Zariadenie bolo spárované. Žiadosti o podpis vám prídu ako notifikácie.';
 
@@ -333,12 +379,31 @@ class AppLocalizationsSk extends AppLocalizations {
       'Chyba pri načítaní vizualizácie dokumentu';
 
   @override
+  String get documentServerLabel => 'Dokument zo zdroja';
+
+  @override
   String get shareDocumentText => '\n\nSúbor z aplikácie Autogram v mobile';
 
   @override
   String documentVisualizationCannotVisualizeTypeError(Object type) {
     return 'Neviem vizualizovať $type typ.';
   }
+
+  @override
+  String get documentVerificationDataToSignMismatchError =>
+      'Údaje na podpis nezodpovedajú zobrazenému dokumentu, preto dokument nebol podpísaný.';
+
+  @override
+  String get documentVerificationLocalDocumentMismatchError =>
+      'Dokument zo servera nezodpovedá vybranému súboru.';
+
+  @override
+  String get documentVerificationUnsupportedDocumentTypeError =>
+      'Z tohto servera je zatiaľ možné podpísať iba PDF dokumenty, textové súbory a obrázky (PNG, JPEG).';
+
+  @override
+  String get documentVerificationUnsupportedDataError =>
+      'Dokument zo servera sa nepodarilo overiť.';
 
   @override
   String get documentValidationLoadingLabel => 'Prebieha overovanie podpisov';

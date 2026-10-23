@@ -1,11 +1,16 @@
 import 'dart:convert' show base64Url, json, utf8;
 
+import 'data/avm_server.dart';
+
 /// Parser app Deep Link URIs.
 ///
 /// It has to conform:
 ///  - schema: "https" or "avm"
-///  - authority: "autogram.slovensko.digital"
+///  - authority: "autogram.slovensko.digital" or other [AvmServer]
 ///  - path: "/api/v1/"
+///
+/// Document from other than the official server can be signed, but the device
+/// can't be paired with its integration.
 ///
 /// Throws [ArgumentError] in case of invalid or unknown schema or structure.
 // TODO Move this code + test into autogram_sign module; however, it needs to check uri.authority, so it should be function on IAutogramService
@@ -19,7 +24,11 @@ DeepLinkAction parseDeepLinkAction(Uri uri) {
           uri.toString(), "uri", "Invalid or unsupported scheme.");
   }
 
-  if (uri.authority != "autogram.slovensko.digital") {
+  final AvmServer server;
+
+  try {
+    server = AvmServer.fromUri(uri);
+  } on ArgumentError {
     throw ArgumentError.value(
         uri.toString(), "uri", "Invalid or unsupported authority.");
   }
@@ -41,14 +50,18 @@ DeepLinkAction parseDeepLinkAction(Uri uri) {
               uri.toString(), "uri", '"key" param is missing a value.');
         }
 
+        // Device is registered only on the official server
+        final isOfficial = server.isOfficial;
+
         return SignRemoteDocumentAction(
           guid: uri.queryParameters["guid"]!,
           key: uri.queryParameters["key"]!,
-          integration: uri.queryParameters["integration"],
-          pushkey: uri.queryParameters["pushkey"],
+          server: server,
+          integration: isOfficial ? uri.queryParameters["integration"] : null,
+          pushkey: isOfficial ? uri.queryParameters["pushkey"] : null,
         );
       }(),
-    "/api/v1/qr-code-register" => () {
+    "/api/v1/qr-code-register" when server.isOfficial => () {
         final integration = uri.queryParameters["integration"];
 
         if (integration == null || integration.isEmpty) {
@@ -93,19 +106,23 @@ sealed class DeepLinkAction {}
 class SignRemoteDocumentAction extends DeepLinkAction {
   final String guid;
   final String key;
+
+  /// Server, which stores the document.
+  final AvmServer server;
   final String? integration;
   final String? pushkey;
 
   SignRemoteDocumentAction({
     required this.guid,
     required this.key,
+    this.server = AvmServer.official,
     required this.integration,
     required this.pushkey,
   });
 
   @override
   String toString() {
-    return "$runtimeType(guid: $guid)";
+    return "$runtimeType(guid: $guid, server: ${server.authority})";
   }
 }
 
