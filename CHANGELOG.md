@@ -5,6 +5,7 @@
 - PDF, plain text and PNG/JPEG documents are visualized on the device from the signed data objects; other documents (e.g. e-forms) are visualized by the official server as before
 - Data to sign are verified against the visualized document (and the selected local file) before signing with eID
 - Documents from other AVM servers (QR code `https://<server>/api/v1/qr-code?guid=...&key=...`) can be signed - only PDF, plain text and PNG/JPEG images, without pairing with integrations
+- Warning before opening document from other AVM server, which the user can trust also next time; trusted servers can be removed in Settings
 - Requires AVM server with `GET /documents/{guid}/verifiable-visualization` endpoint
 
 ## 2026-10-04 - v1.7.0(56)

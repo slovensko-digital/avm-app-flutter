@@ -15,6 +15,7 @@ import 'package:autogram/services/push_notification_service.dart';
 import 'package:autogram/ui/screens/main_screen.dart';
 import 'package:autogram/ui/screens/paired_device_list_screen.dart';
 import 'package:autogram/ui/screens/preview_document_screen.dart';
+import 'package:autogram/ui/screens/trust_server_screen.dart';
 import 'package:autogram/ui/widgets/push_notification_status_banner.dart';
 import 'package:autogram/use_case/create_document_preview_use_case.dart';
 import 'package:autogram_sign/autogram_sign.dart';
@@ -144,6 +145,85 @@ void main() {
     expect(find.text('Original document'), findsNothing);
     expect(find.byType(PreviewDocumentScreen), findsOneWidget);
     expect(keys.value, 'new-key');
+  });
+
+  testWidgets('document from other server is opened after warning', (
+    tester,
+  ) async {
+    await tester.pumpWidget(host());
+    incoming.value = Uri.https('avm.example.org', '/api/v1/qr-code', {
+      'guid': 'other-document',
+      'key': 'other-key',
+    });
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TrustServerScreen), findsOneWidget);
+    expect(find.text('avm.example.org'), findsOneWidget);
+    expect(find.byType(PreviewDocumentScreen), findsNothing);
+
+    await tester.ensureVisible(find.text(strings.trustServerRememberLabel));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.trustServerRememberLabel));
+    await tester.tap(find.text(strings.buttonContinueLabel));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TrustServerScreen), findsNothing);
+    final preview = tester.widget<PreviewDocumentScreen>(
+      find.byType(PreviewDocumentScreen),
+    );
+    expect(preview.document.id, 'other-document');
+    expect(preview.document.server.authority, 'avm.example.org');
+    expect(keys.value, 'other-key');
+    expect(settings.trustedServers.value, ['avm.example.org']);
+  });
+
+  testWidgets('other server is not remembered without user consent', (
+    tester,
+  ) async {
+    await tester.pumpWidget(host());
+    incoming.value = Uri.https('avm.example.org', '/api/v1/qr-code', {
+      'guid': 'other-document',
+      'key': 'other-key',
+    });
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.buttonContinueLabel));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(PreviewDocumentScreen), findsOneWidget);
+    expect(settings.trustedServers.value, isEmpty);
+  });
+
+  testWidgets('document from other server is not opened when canceled', (
+    tester,
+  ) async {
+    await tester.pumpWidget(host());
+    incoming.value = Uri.https('avm.example.org', '/api/v1/qr-code', {
+      'guid': 'other-document',
+      'key': 'other-key',
+    });
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.buttonCancelLabel));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TrustServerScreen), findsNothing);
+    expect(find.byType(PreviewDocumentScreen), findsNothing);
+    expect(find.byType(MainScreen), findsOneWidget);
+    expect(settings.trustedServers.value, isEmpty);
+  });
+
+  testWidgets('document from trusted server is opened without warning', (
+    tester,
+  ) async {
+    settings.trustedServers.value = ['avm.example.org'];
+    await tester.pumpWidget(host());
+    incoming.value = Uri.https('avm.example.org', '/api/v1/qr-code', {
+      'guid': 'other-document',
+      'key': 'other-key',
+    });
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TrustServerScreen), findsNothing);
+    expect(find.byType(PreviewDocumentScreen), findsOneWidget);
   });
 
   testWidgets('denied permission is not reported as notification success', (

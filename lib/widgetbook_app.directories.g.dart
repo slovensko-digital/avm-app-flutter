@@ -48,6 +48,10 @@ import 'package:autogram/ui/screens/sign_document_screen.dart'
     as _autogram_ui_screens_sign_document_screen;
 import 'package:autogram/ui/screens/start_remote_document_signing_screen.dart'
     as _autogram_ui_screens_start_remote_document_signing_screen;
+import 'package:autogram/ui/screens/trust_server_screen.dart'
+    as _autogram_ui_screens_trust_server_screen;
+import 'package:autogram/ui/screens/trusted_server_list_screen.dart'
+    as _autogram_ui_screens_trusted_server_list_screen;
 import 'package:autogram/ui/widgets/app_version_text.dart'
     as _autogram_ui_widgets_app_version_text;
 import 'package:autogram/ui/widgets/autogram_logo.dart'
@@ -726,6 +730,26 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: '',
             builder: _autogram_ui_screens_start_remote_document_signing_screen
                 .previewStartRemoteDocumentSigningScreen,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'TrustServerScreen',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: '',
+            builder: _autogram_ui_screens_trust_server_screen
+                .previewTrustServerScreen,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'TrustedServerListScreen',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: '',
+            builder: _autogram_ui_screens_trusted_server_list_screen
+                .previewTrustedServerListScreen,
           ),
         ],
       ),

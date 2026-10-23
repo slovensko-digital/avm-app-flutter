@@ -202,6 +202,12 @@ abstract class AppLocalizations {
   /// **'Preskočiť'**
   String get buttonSkipLabel;
 
+  /// No description provided for @buttonContinueLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Pokračovať'**
+  String get buttonContinueLabel;
+
   /// No description provided for @buttonScanQrCodeLabel.
   ///
   /// In sk, this message translates to:
@@ -405,6 +411,78 @@ abstract class AppLocalizations {
   /// In sk, this message translates to:
   /// **'Zrušiť spárovanie'**
   String get pairedDeviceDeleteTooltip;
+
+  /// No description provided for @trustServerTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Iný server'**
+  String get trustServerTitle;
+
+  /// No description provided for @trustServerHeading.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dôverujete tomuto serveru?'**
+  String get trustServerHeading;
+
+  /// No description provided for @trustServerLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument poskytuje server'**
+  String get trustServerLabel;
+
+  /// No description provided for @trustServerNotOfficialLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nie je to oficiálny server {server}.'**
+  String trustServerNotOfficialLabel(Object server);
+
+  /// No description provided for @trustServerVerifiedInfo.
+  ///
+  /// In sk, this message translates to:
+  /// **'Aplikácia overí, že podpíšete presne ten dokument, ktorý uvidíte.'**
+  String get trustServerVerifiedInfo;
+
+  /// No description provided for @trustServerNotVerifiedInfo.
+  ///
+  /// In sk, this message translates to:
+  /// **'Neoverí však, kto dokument poskytuje, ani čo sa s podpísaným dokumentom stane.'**
+  String get trustServerNotVerifiedInfo;
+
+  /// No description provided for @trustServerDocumentTypesInfo.
+  ///
+  /// In sk, this message translates to:
+  /// **'Podpísať je možné iba PDF dokumenty, textové súbory a obrázky.'**
+  String get trustServerDocumentTypesInfo;
+
+  /// No description provided for @trustServerRememberLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dôverovať tomuto serveru aj nabudúce'**
+  String get trustServerRememberLabel;
+
+  /// No description provided for @trustedServersTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dôveryhodné servery'**
+  String get trustedServersTitle;
+
+  /// No description provided for @trustedServersInfo.
+  ///
+  /// In sk, this message translates to:
+  /// **'Pri dokumentoch z týchto serverov sa nezobrazuje upozornenie, že nie sú z oficiálneho servera. Po odstránení servera sa upozornenie zobrazí znova.'**
+  String get trustedServersInfo;
+
+  /// No description provided for @trustedServersEmpty.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nedôverujete žiadnemu inému serveru.\nServer pridáte pri otvorení dokumentu z neho.'**
+  String get trustedServersEmpty;
+
+  /// No description provided for @trustedServerDeleteTooltip.
+  ///
+  /// In sk, this message translates to:
+  /// **'Odstrániť server'**
+  String get trustedServerDeleteTooltip;
 
   /// No description provided for @pairIntegrationSuccessMessage.
   ///

@@ -12,6 +12,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import '../../app_service.dart';
 import '../../bloc/app_bloc.dart';
 import '../../data/server_document.dart';
+import '../../data/settings.dart';
 import '../../deep_links.dart';
 import '../../di.dart';
 import '../../file_extensions.dart';
@@ -30,6 +31,7 @@ import 'main_menu_screen.dart';
 import 'open_document_screen.dart';
 import 'preview_document_screen.dart';
 import 'start_remote_document_signing_screen.dart';
+import 'trust_server_screen.dart';
 
 /// Main app screen that presents app features.
 ///
@@ -226,11 +228,16 @@ class _MainScreenState extends State<MainScreen> {
     if (action is SignRemoteDocumentAction) {
       getIt.get<EncryptionKeyRegistry>().value = action.key;
 
-      final screen = PreviewDocumentScreen(
-        document: ServerDocument(action.guid, server: action.server),
+      final server = action.server;
+      final preview = PreviewDocumentScreen(
+        document: ServerDocument(action.guid, server: server),
         file: null,
         openFromDeepLink: true,
       );
+      // Warn about other than official server, unless the user trusts it
+      final screen = context.read<Settings>().isTrustedServer(server)
+          ? preview
+          : TrustServerScreen(server: server, next: preview);
       final route = MaterialPageRoute(builder: (_) => screen);
 
       // Removing other routes because might want to open another file from URL;

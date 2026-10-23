@@ -64,6 +64,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get buttonSkipLabel => 'Preskočiť';
 
   @override
+  String get buttonContinueLabel => 'Pokračovať';
+
+  @override
   String get buttonScanQrCodeLabel => 'Skenovať QR kód';
 
   @override
@@ -220,6 +223,49 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get pairedDeviceDeleteTooltip => 'Zrušiť spárovanie';
+
+  @override
+  String get trustServerTitle => 'Iný server';
+
+  @override
+  String get trustServerHeading => 'Dôverujete tomuto serveru?';
+
+  @override
+  String get trustServerLabel => 'Dokument poskytuje server';
+
+  @override
+  String trustServerNotOfficialLabel(Object server) {
+    return 'Nie je to oficiálny server $server.';
+  }
+
+  @override
+  String get trustServerVerifiedInfo =>
+      'Aplikácia overí, že podpíšete presne ten dokument, ktorý uvidíte.';
+
+  @override
+  String get trustServerNotVerifiedInfo =>
+      'Neoverí však, kto dokument poskytuje, ani čo sa s podpísaným dokumentom stane.';
+
+  @override
+  String get trustServerDocumentTypesInfo =>
+      'Podpísať je možné iba PDF dokumenty, textové súbory a obrázky.';
+
+  @override
+  String get trustServerRememberLabel => 'Dôverovať tomuto serveru aj nabudúce';
+
+  @override
+  String get trustedServersTitle => 'Dôveryhodné servery';
+
+  @override
+  String get trustedServersInfo =>
+      'Pri dokumentoch z týchto serverov sa nezobrazuje upozornenie, že nie sú z oficiálneho servera. Po odstránení servera sa upozornenie zobrazí znova.';
+
+  @override
+  String get trustedServersEmpty =>
+      'Nedôverujete žiadnemu inému serveru.\nServer pridáte pri otvorení dokumentu z neho.';
+
+  @override
+  String get trustedServerDeleteTooltip => 'Odstrániť server';
 
   @override
   String get pairIntegrationSuccessMessage =>
