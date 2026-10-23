@@ -20,6 +20,9 @@ const kMainAppBarForegroundColor = Color(0xFFFFFFFF);
 /// [Radio] scale factor to default size.
 const kRadioScale = 1.66;
 
+/// App font family, the same as in ID-SK; see /assets/fonts.
+const kFontFamily = "Source Sans 3";
+
 /// Returns M3 [ThemeData].
 ThemeData appTheme(
   BuildContext context, {
@@ -32,11 +35,16 @@ ThemeData appTheme(
     primary: primaryColor,
   );
   // TODO Consider using Typography.material2021().black.apply(fontSizeFactor: 1.2) so that BuildContext is not needed
+  // Font family has to be set also here, as this text theme has the platform
+  // font family, which would override ThemeData.fontFamily
   final textTheme = Theme.of(context).textTheme.apply(
     fontSizeFactor: 1.2,
+    fontFamily: kFontFamily,
   );
+  // Text styles of components below don't inherit font family of textTheme
   final appBarTheme = AppBarTheme(
     titleTextStyle: TextStyle(
+      fontFamily: kFontFamily,
       color: colorScheme.onSurface,
       fontSize: 20,
       fontWeight: FontWeight.w700,
@@ -45,6 +53,7 @@ ThemeData appTheme(
   );
   final dialogTheme = DialogThemeData(
     titleTextStyle: TextStyle(
+      fontFamily: kFontFamily,
       color: colorScheme.onSurface,
       fontSize: 20,
       fontWeight: FontWeight.w700,
@@ -65,6 +74,7 @@ ThemeData appTheme(
     borderRadius: BorderRadius.all(Radius.circular(8)),
   );
   const buttonTextStyle = TextStyle(
+    fontFamily: kFontFamily,
     fontWeight: FontWeight.bold,
     letterSpacing: 1.2,
   );
@@ -73,8 +83,7 @@ ThemeData appTheme(
     useMaterial3: true,
     primaryColor: primaryColor,
     colorScheme: colorScheme,
-    fontFamily: "Source Sans 3",
-    // see /assets/fonts
+    fontFamily: kFontFamily,
     textTheme: textTheme,
     appBarTheme: appBarTheme,
     dialogTheme: dialogTheme,

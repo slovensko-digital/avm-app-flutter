@@ -421,13 +421,13 @@ abstract class AppLocalizations {
   /// No description provided for @trustServerHeading.
   ///
   /// In sk, this message translates to:
-  /// **'Dôverujete tomuto serveru?'**
+  /// **'Dôverujete tomuto zdroju?'**
   String get trustServerHeading;
 
   /// No description provided for @trustServerLabel.
   ///
   /// In sk, this message translates to:
-  /// **'Dokument poskytuje server'**
+  /// **'Dokument poskytuje'**
   String get trustServerLabel;
 
   /// No description provided for @trustServerNotOfficialLabel.

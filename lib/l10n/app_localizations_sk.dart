@@ -228,10 +228,10 @@ class AppLocalizationsSk extends AppLocalizations {
   String get trustServerTitle => 'Iný server';
 
   @override
-  String get trustServerHeading => 'Dôverujete tomuto serveru?';
+  String get trustServerHeading => 'Dôverujete tomuto zdroju?';
 
   @override
-  String get trustServerLabel => 'Dokument poskytuje server';
+  String get trustServerLabel => 'Dokument poskytuje';
 
   @override
   String trustServerNotOfficialLabel(Object server) {

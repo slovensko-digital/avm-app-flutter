@@ -59,8 +59,8 @@
   "pairedDeviceDeleteTooltip": "Zrušiť spárovanie",
 
   "trustServerTitle": "Iný server",
-  "trustServerHeading": "Dôverujete tomuto serveru?",
-  "trustServerLabel": "Dokument poskytuje server",
+  "trustServerHeading": "Dôverujete tomuto zdroju?",
+  "trustServerLabel": "Dokument poskytuje",
   "trustServerNotOfficialLabel": "Nie je to oficiálny server {server}.",
   "trustServerVerifiedInfo": "Aplikácia overí, že podpíšete presne ten dokument, ktorý uvidíte.",
   "trustServerNotVerifiedInfo": "Neoverí však, kto dokument poskytuje, ani čo sa s podpísaným dokumentom stane.",
