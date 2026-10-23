@@ -9,9 +9,6 @@ class AvmServer {
   /// Official AVM server.
   static const official = AvmServer("autogram.slovensko.digital");
 
-  /// DNS name or IPv4 address; Dart [Uri] normalizes host to lower case.
-  static final _hostPattern = RegExp(r"^[a-z0-9][a-z0-9.-]*$");
-
   /// Host with optional port of the server.
   final String authority;
 
@@ -19,17 +16,20 @@ class AvmServer {
 
   /// Creates [AvmServer] from host and port of the [uri].
   ///
-  /// Throws [ArgumentError] when the [uri] has invalid host or contains user
-  /// info, which could be used to mislead the user about the server.
+  /// Throws [ArgumentError] when the [uri] has no host.
   factory AvmServer.fromUri(Uri uri) {
-    if (!_hostPattern.hasMatch(uri.host) || uri.userInfo.isNotEmpty) {
-      throw ArgumentError.value(uri.toString(), "uri", "Invalid authority.");
+    if (uri.host.isEmpty) {
+      throw ArgumentError.value(uri.toString(), "uri", "Missing host.");
     }
 
-    // default HTTPS port in case of "avm" scheme
-    final hasPort = uri.hasPort && uri.port != 443;
+    // HTTPS also for "avm" scheme, so its default port is omitted
+    final url = Uri(
+      scheme: "https",
+      host: uri.host,
+      port: uri.hasPort ? uri.port : null,
+    );
 
-    return AvmServer(hasPort ? "${uri.host}:${uri.port}" : uri.host);
+    return AvmServer(url.authority);
   }
 
   /// Whether this is the [official] server.

@@ -76,19 +76,21 @@ void main() {
       }
     });
 
-    test('parseDeepLinkAction throws for invalid or misleading server', () {
-      for (final uri in [
-        "https:///api/v1/qr-code?guid=1&key=2",
-        "https://autogram.slovensko.digital@avm.example.org/api/v1/qr-code?guid=1&key=2",
-        "https://\u0430utogram.slovensko.digital/api/v1/qr-code?guid=1&key=2",
-        "https://avm(example).org/api/v1/qr-code?guid=1&key=2",
-      ]) {
-        expect(
-          () => parseDeepLinkAction(Uri.parse(uri)),
-          throwsA(predicate((e) => e is ArgumentError && e.name == 'uri')),
-          reason: uri,
-        );
-      }
+    test('parseDeepLinkAction returns server without user info', () {
+      final value = parseDeepLinkAction(Uri.parse(
+          "https://autogram.slovensko.digital@avm.example.org/api/v1/qr-code?guid=1&key=2"));
+
+      expect((value as SignRemoteDocumentAction).server,
+          const AvmServer("avm.example.org"));
+      expect(value.server.isOfficial, isFalse);
+    });
+
+    test('parseDeepLinkAction throws for URI without server', () {
+      expect(
+        () => parseDeepLinkAction(
+            Uri.parse("https:///api/v1/qr-code?guid=1&key=2")),
+        throwsA(predicate((e) => e is ArgumentError && e.name == 'uri')),
+      );
     });
 
     test('parseDeepLinkAction throws for pairing with other server', () {
