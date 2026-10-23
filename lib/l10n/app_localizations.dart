@@ -667,7 +667,7 @@ abstract class AppLocalizations {
   /// No description provided for @documentServerLabel.
   ///
   /// In sk, this message translates to:
-  /// **'Dokument zo servera'**
+  /// **'Dokument zo zdroja'**
   String get documentServerLabel;
 
   /// No description provided for @shareDocumentText.

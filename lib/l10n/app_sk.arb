@@ -108,7 +108,7 @@
 
   "previewDocumentTitle": "Náhľad dokumentu",
   "previewDocumentErrorHeading": "Chyba pri načítaní vizualizácie dokumentu",
-  "documentServerLabel": "Dokument zo servera",
+  "documentServerLabel": "Dokument zo zdroja",
   "shareDocumentText": "\n\nSúbor z aplikácie Autogram v mobile",
 
   "documentVisualizationCannotVisualizeTypeError": "Neviem vizualizovať {type} typ.",

@@ -379,7 +379,7 @@ class AppLocalizationsSk extends AppLocalizations {
       'Chyba pri načítaní vizualizácie dokumentu';
 
   @override
-  String get documentServerLabel => 'Dokument zo servera';
+  String get documentServerLabel => 'Dokument zo zdroja';
 
   @override
   String get shareDocumentText => '\n\nSúbor z aplikácie Autogram v mobile';
