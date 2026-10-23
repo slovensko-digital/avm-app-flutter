@@ -254,18 +254,18 @@ class AppLocalizationsSk extends AppLocalizations {
   String get trustServerRememberLabel => 'Dôverovať tomuto zdroju aj nabudúce';
 
   @override
-  String get trustedServersTitle => 'Dôveryhodné servery';
+  String get trustedServersTitle => 'Dôveryhodné zdroje';
 
   @override
   String get trustedServersInfo =>
-      'Pri dokumentoch z týchto serverov sa nezobrazuje upozornenie, že nie sú z oficiálneho servera. Po odstránení servera sa upozornenie zobrazí znova.';
+      'Pri dokumentoch z týchto zdrojov sa nezobrazuje upozornenie, že nie sú z oficiálneho servera. Po odstránení zdroja sa upozornenie zobrazí znova.';
 
   @override
   String get trustedServersEmpty =>
-      'Nedôverujete žiadnemu inému serveru.\nServer pridáte pri otvorení dokumentu z neho.';
+      'Nedôverujete žiadnemu inému zdroju.\nZdroj pridáte pri otvorení dokumentu z neho.';
 
   @override
-  String get trustedServerDeleteTooltip => 'Odstrániť server';
+  String get trustedServerDeleteTooltip => 'Odstrániť zdroj';
 
   @override
   String get pairIntegrationSuccessMessage =>

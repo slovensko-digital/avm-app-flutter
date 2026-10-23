@@ -463,25 +463,25 @@ abstract class AppLocalizations {
   /// No description provided for @trustedServersTitle.
   ///
   /// In sk, this message translates to:
-  /// **'Dôveryhodné servery'**
+  /// **'Dôveryhodné zdroje'**
   String get trustedServersTitle;
 
   /// No description provided for @trustedServersInfo.
   ///
   /// In sk, this message translates to:
-  /// **'Pri dokumentoch z týchto serverov sa nezobrazuje upozornenie, že nie sú z oficiálneho servera. Po odstránení servera sa upozornenie zobrazí znova.'**
+  /// **'Pri dokumentoch z týchto zdrojov sa nezobrazuje upozornenie, že nie sú z oficiálneho servera. Po odstránení zdroja sa upozornenie zobrazí znova.'**
   String get trustedServersInfo;
 
   /// No description provided for @trustedServersEmpty.
   ///
   /// In sk, this message translates to:
-  /// **'Nedôverujete žiadnemu inému serveru.\nServer pridáte pri otvorení dokumentu z neho.'**
+  /// **'Nedôverujete žiadnemu inému zdroju.\nZdroj pridáte pri otvorení dokumentu z neho.'**
   String get trustedServersEmpty;
 
   /// No description provided for @trustedServerDeleteTooltip.
   ///
   /// In sk, this message translates to:
-  /// **'Odstrániť server'**
+  /// **'Odstrániť zdroj'**
   String get trustedServerDeleteTooltip;
 
   /// No description provided for @pairIntegrationSuccessMessage.
