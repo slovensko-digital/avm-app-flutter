@@ -65,7 +65,7 @@
   "trustServerVerifiedInfo": "Aplikácia overí, že podpíšete presne ten dokument, ktorý uvidíte.",
   "trustServerNotVerifiedInfo": "Neoverí však, kto dokument poskytuje, ani čo sa s podpísaným dokumentom stane.",
   "trustServerDocumentTypesInfo": "Podpísať je možné iba PDF dokumenty, textové súbory a obrázky.",
-  "trustServerRememberLabel": "Dôverovať tomuto serveru aj nabudúce",
+  "trustServerRememberLabel": "Dôverovať tomuto zdroju aj nabudúce",
 
   "trustedServersTitle": "Dôveryhodné servery",
   "trustedServersInfo": "Pri dokumentoch z týchto serverov sa nezobrazuje upozornenie, že nie sú z oficiálneho servera. Po odstránení servera sa upozornenie zobrazí znova.",

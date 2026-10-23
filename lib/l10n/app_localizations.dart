@@ -457,7 +457,7 @@ abstract class AppLocalizations {
   /// No description provided for @trustServerRememberLabel.
   ///
   /// In sk, this message translates to:
-  /// **'Dôverovať tomuto serveru aj nabudúce'**
+  /// **'Dôverovať tomuto zdroju aj nabudúce'**
   String get trustServerRememberLabel;
 
   /// No description provided for @trustedServersTitle.

@@ -251,7 +251,7 @@ class AppLocalizationsSk extends AppLocalizations {
       'Podpísať je možné iba PDF dokumenty, textové súbory a obrázky.';
 
   @override
-  String get trustServerRememberLabel => 'Dôverovať tomuto serveru aj nabudúce';
+  String get trustServerRememberLabel => 'Dôverovať tomuto zdroju aj nabudúce';
 
   @override
   String get trustedServersTitle => 'Dôveryhodné servery';
