@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-13 - v1.7.1(57)
+
+- #126 | New sign request while signing is offered in banner on top with "Close" action; it no longer covers "Sign" button or reappears over next documents
+
 ## 2026-10-04 - v1.7.0(56)
 
 - #124 | Push notifications for sign requests from paired integrations

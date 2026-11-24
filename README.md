@@ -74,7 +74,9 @@ It's similar to [Sign single document](#sign-single-document), but starts with:
 #### Push notifications from paired integrations
 
 - A foreground sign request opens directly only on the main screen. While another
-  screen is open, it offers an **Open** action without replacing the current document.
+  screen is open, it's offered in a banner on top (so it doesn't cover the **Sign**
+  button) with **Open** and **Close** actions, without replacing the current document.
+  A newer request replaces the offered one and opening any document hides it.
 - Tapping a system notification or the **Open** action explicitly starts the new
   signing flow, replacing the previous one.
 - Pairing can succeed with notifications denied, but the app reports this separately
