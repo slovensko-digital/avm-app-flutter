@@ -4,6 +4,7 @@
 
 - PDF, plain text and PNG/JPEG documents are visualized on the device from the signed data objects; other documents (e.g. e-forms) are visualized by the official server as before
 - Data to sign are verified against the visualized document (and the selected local file) before signing with eID
+- When the data to sign don't match the document, signing ends on its own error screen, which only allows to cancel signing
 - Documents from other AVM servers (QR code `https://<server>/api/v1/qr-code?guid=...&key=...`) can be signed - only PDF, plain text and PNG/JPEG images, without pairing with integrations
 - Warning before opening document from other AVM server, which the user can trust also next time; trusted sources can be removed in Settings
 - App font Source Sans 3 (as in ID-SK) is used for all texts - it was replaced by the platform font

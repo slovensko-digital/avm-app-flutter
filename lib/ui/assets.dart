@@ -45,6 +45,7 @@ Widget previewImages(BuildContext context) {
   final files = [
     'close.svg',
     'danger.svg',
+    'document_mismatch.svg',
     'info.svg',
     'lock.svg',
     'notification.svg',

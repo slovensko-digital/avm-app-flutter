@@ -82,6 +82,7 @@ flutter:
     - assets/images/lock.svg
     - assets/images/notification.svg
     - assets/images/danger.svg
+    - assets/images/document_mismatch.svg
     - assets/images/info.svg
     - assets/images/tick.svg
   fonts:

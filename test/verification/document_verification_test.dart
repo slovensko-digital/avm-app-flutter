@@ -260,7 +260,8 @@ void main() {
             fixture.visualization.copyWith(pdfByteRange: byteRange),
             fixture.dataToSign.dataToSign,
           ),
-          DocumentVerificationFailure.unsupportedData,
+          // signature wouldn't cover exactly the visualized PDF
+          DocumentVerificationFailure.dataToSignMismatch,
         );
       }
     });
@@ -277,7 +278,8 @@ void main() {
           visualization,
           fixture.dataToSign.dataToSign,
         ),
-        DocumentVerificationFailure.unsupportedData,
+        // visualized bytes wouldn't be covered by the signature
+        DocumentVerificationFailure.dataToSignMismatch,
       );
     });
 

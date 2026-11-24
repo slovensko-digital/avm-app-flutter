@@ -707,6 +707,11 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'SignDocumentScreen',
         useCases: [
           _widgetbook.WidgetbookUseCase(
+            name: 'data to sign mismatch',
+            builder: _autogram_ui_screens_sign_document_screen
+                .previewDataToSignMismatchSignDocumentScreen,
+          ),
+          _widgetbook.WidgetbookUseCase(
             name: 'error',
             builder: _autogram_ui_screens_sign_document_screen
                 .previewErrorSignDocumentScreen,

@@ -3,7 +3,10 @@ import 'dart:developer' as developer;
 import 'package:autogram_sign/autogram_sign.dart'
     show SignDocumentResponseBody, SignDocumentResponseBodyMimeType;
 import 'package:eidmsdk/types.dart' show Certificate;
+import 'package:flutter/foundation.dart'
+    show TargetPlatform, defaultTargetPlatform;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show SystemNavigator;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -13,6 +16,7 @@ import '../../data/document_signing_type.dart';
 import '../../data/document_to_sign.dart';
 import '../../data/signature_type.dart';
 import '../../strings_context.dart';
+import '../../verification/document_verification_exception.dart';
 import '../app_theme.dart';
 import '../widgets/error_content.dart';
 import '../widgets/loading_content.dart';
@@ -60,6 +64,7 @@ class SignDocumentScreen extends StatelessWidget {
             onRetryRequested: () {
               context.read<SignDocumentCubit>().signDocument(signatureType);
             },
+            onCancelRequested: () => _onCancelRequested(context),
           );
         },
       ),
@@ -91,17 +96,59 @@ class SignDocumentScreen extends StatelessWidget {
       },
     );
   }
+
+  /// Cancels signing - goes back to MainScreen, not to the previous screen,
+  /// from which the signing could be repeated.
+  Future<void> _onCancelRequested(BuildContext context) async {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+
+    if (openFromDeepLink && defaultTargetPlatform == TargetPlatform.android) {
+      // back to the app, which opened the document, as after signing - see
+      // PresentSignedDocumentScreen
+      await SystemNavigator.pop();
+    }
+  }
 }
 
 /// [SignDocumentScreen] body.
 class _Body extends StatelessWidget {
   final SignDocumentState state;
   final VoidCallback? onRetryRequested;
+  final VoidCallback? onCancelRequested;
 
-  const _Body({required this.state, this.onRetryRequested});
+  const _Body({
+    required this.state,
+    this.onRetryRequested,
+    this.onCancelRequested,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final state = this.state;
+
+    // signing of the document, which doesn't match, can only be canceled
+    if (state case SignDocumentErrorState(
+      error: DocumentVerificationException(isDocumentMismatch: true),
+    )) {
+      return Padding(
+        padding: kScreenMargin,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(child: _getChild(context, state)),
+            // Secondary button - as on PresentSignedDocumentScreen
+            TextButton(
+              style: TextButton.styleFrom(
+                minimumSize: kPrimaryButtonMinimumSize,
+              ),
+              onPressed: onCancelRequested,
+              child: Text(context.strings.buttonCancelLabel),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Padding(
       padding: kScreenMargin,
       child: _getChild(context, state),
@@ -151,6 +198,25 @@ Widget previewErrorSignDocumentScreen(BuildContext context) {
     state: const SignDocumentErrorState("Error message!"),
     onRetryRequested: () {
       developer.log('onRetryRequested');
+    },
+  );
+}
+
+@widgetbook.UseCase(
+  path: '[Screens]',
+  name: 'data to sign mismatch',
+  type: SignDocumentScreen,
+)
+Widget previewDataToSignMismatchSignDocumentScreen(BuildContext context) {
+  return _Body(
+    state: const SignDocumentErrorState(
+      DocumentVerificationException(
+        DocumentVerificationFailure.dataToSignMismatch,
+        "Digest of 'platba.txt' doesn't match the visualized document.",
+      ),
+    ),
+    onCancelRequested: () {
+      developer.log('onCancelRequested');
     },
   );
 }

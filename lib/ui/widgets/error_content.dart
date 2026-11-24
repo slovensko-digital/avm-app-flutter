@@ -7,7 +7,8 @@ import '../../verification/document_verification_exception.dart';
 import 'loading_content.dart';
 import 'result_view.dart';
 
-/// Displays error result in [ResultView.error].
+/// Displays error result in [ResultView.error], or in
+/// [ResultView.documentMismatch] when the document doesn't match.
 ///
 /// See also:
 ///  - [LoadingContent]
@@ -25,11 +26,16 @@ class ErrorContent extends StatelessWidget {
       _ => getErrorMessage(error),
     };
 
+    final body = Text(message);
+    final isDocumentMismatch = switch (error) {
+      DocumentVerificationException error => error.isDocumentMismatch,
+      _ => false,
+    };
+
     return Center(
-      child: ResultView.error(
-        titleText: title,
-        body: Text(message),
-      ),
+      child: isDocumentMismatch
+          ? ResultView.documentMismatch(titleText: title, body: body)
+          : ResultView.error(titleText: title, body: body),
     );
   }
 

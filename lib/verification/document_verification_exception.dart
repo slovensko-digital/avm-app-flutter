@@ -24,6 +24,14 @@ class DocumentVerificationException implements Exception {
 
   const DocumentVerificationException(this.reason, this.message);
 
+  /// Whether the document from the server doesn't match the visualized or
+  /// selected document - signing it makes no sense to repeat.
+  bool get isDocumentMismatch => switch (reason) {
+    DocumentVerificationFailure.dataToSignMismatch ||
+    DocumentVerificationFailure.localDocumentMismatch => true,
+    _ => false,
+  };
+
   @override
   String toString() {
     return "DocumentVerificationException(reason: ${reason.name}, message: $message)";

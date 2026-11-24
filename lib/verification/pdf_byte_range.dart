@@ -90,9 +90,11 @@ class PdfByteRange {
     r"/ByteRange\s*\[\s*(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s*\]",
   );
 
+  /// Invalid `/ByteRange` means, that the signature wouldn't cover exactly
+  /// the visualized PDF.
   static DocumentVerificationException _invalid(String message) {
     return DocumentVerificationException(
-      DocumentVerificationFailure.unsupportedData,
+      DocumentVerificationFailure.dataToSignMismatch,
       "Invalid PDF /ByteRange: $message.",
     );
   }
