@@ -18,7 +18,7 @@ dependencies:
   autogram_sign:
     git:
       url: https://github.com/slovensko-digital/avm-client-dart
-      ref: v0.5.0
+      ref: ccr-6a9fd0aa-v7e49h
   device_info_plus: ^12.4.0
   package_info_plus:
   share_plus:
@@ -56,6 +56,9 @@ dependencies:
   html:
   flutter_markdown:
   markdown:
+  archive:
+  crypto:
+  xml:
 
 dev_dependencies:
   firebase_messaging_platform_interface: ^4.10.0
@@ -74,11 +77,13 @@ flutter:
   assets:
     - assets/icons/menu.svg
     - assets/icons/qr_code_scanner.svg
+    - assets/icons/warning.svg
     - assets/images/autogram_logo.png
     - assets/images/close.svg
     - assets/images/lock.svg
     - assets/images/notification.svg
     - assets/images/danger.svg
+    - assets/images/document_mismatch.svg
     - assets/images/info.svg
     - assets/images/tick.svg
   fonts:

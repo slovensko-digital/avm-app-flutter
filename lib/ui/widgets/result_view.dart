@@ -40,6 +40,14 @@ class ResultView extends StatelessWidget {
   const ResultView.info({super.key, required this.titleText, this.body})
     : icon = 'assets/images/info.svg';
 
+  /// Error, when the document from the server doesn't match the visualized
+  /// or selected document.
+  const ResultView.documentMismatch({
+    super.key,
+    required this.titleText,
+    this.body,
+  }) : icon = 'assets/images/document_mismatch.svg';
+
   @override
   Widget build(BuildContext context) {
     final icon = SvgPicture.asset(

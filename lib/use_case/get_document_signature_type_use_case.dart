@@ -1,19 +1,22 @@
-import 'package:autogram_sign/autogram_sign.dart'
-    show IAutogramService, SigningParametersLevel;
+import 'package:autogram_sign/autogram_sign.dart' show SigningParametersLevel;
 import 'package:injectable/injectable.dart' show lazySingleton;
 
+import '../data/server_document.dart';
 import '../data/signature_type.dart';
+import '../services/autogram_services.dart';
 
 /// Gets the Document [SignatureType].
 @lazySingleton
 class GetDocumentSignatureTypeUseCase {
-  final IAutogramService autogramService;
+  final AutogramServices services;
 
-  GetDocumentSignatureTypeUseCase(this.autogramService);
+  GetDocumentSignatureTypeUseCase(this.services);
 
-  /// Gets the [SignatureType] of Document with given [documentId].
-  Future<SignatureType?> call(String documentId) async {
-    final params = await autogramService.getDocumentParameters(documentId);
+  /// Gets the [SignatureType] of the [document].
+  Future<SignatureType?> call(ServerDocument document) async {
+    final params = await services
+        .of(document.server)
+        .getDocumentParameters(document.id);
 
     return switch (params.level) {
       null => null,

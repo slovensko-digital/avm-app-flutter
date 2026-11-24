@@ -15,6 +15,7 @@ import '../onboarding.dart';
 import '../widgets/option_picker.dart';
 import '../widgets/preference_tile.dart';
 import 'paired_device_list_screen.dart';
+import 'trusted_server_list_screen.dart';
 
 /// App setting screen for editing [Settings].
 ///
@@ -23,6 +24,7 @@ import 'paired_device_list_screen.dart';
 ///  - display for [Settings.signingCertificate]
 ///  - editor for [Settings.signatureType]
 ///  - navigate to [PairedDeviceListScreen]
+///  - navigate to [TrustedServerListScreen]
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -129,6 +131,14 @@ class _Body extends StatelessWidget {
       },
     );
 
+    final trustedServers = PreferenceTile(
+      title: strings.trustedServersTitle,
+      summary: null,
+      onPressed: () {
+        _showTrustedServersScreen(context);
+      },
+    );
+
     const divider = Divider(height: 1);
 
     return ListView(
@@ -141,6 +151,8 @@ class _Body extends StatelessWidget {
         signatureType,
         divider,
         pairedDevices,
+        divider,
+        trustedServers,
         divider,
       ],
     );
@@ -158,6 +170,13 @@ class _Body extends StatelessWidget {
 
   Future<void> _showPairedDevicesScreen(BuildContext context) {
     const screen = PairedDeviceListScreen();
+    final route = MaterialPageRoute(builder: (_) => screen);
+
+    return Navigator.of(context).push(route);
+  }
+
+  Future<void> _showTrustedServersScreen(BuildContext context) {
+    const screen = TrustedServerListScreen();
     final route = MaterialPageRoute(builder: (_) => screen);
 
     return Navigator.of(context).push(route);
@@ -294,6 +313,9 @@ class _MockSettings implements Settings {
   @override
   late final ValueNotifier<bool> remoteDocumentSigningOnboardingPassed =
       ValueNotifier(false);
+
+  @override
+  late final ValueNotifier<List<String>> trustedServers = ValueNotifier([]);
 
   @override
   Future<bool> clear() {

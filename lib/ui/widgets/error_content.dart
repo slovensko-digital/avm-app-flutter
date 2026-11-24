@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../../strings_context.dart';
 import '../../util/errors.dart';
+import '../../verification/document_verification_exception.dart';
 import 'loading_content.dart';
 import 'result_view.dart';
 
-/// Displays error result in [ResultView.error].
+/// Displays error result in [ResultView.error], or in
+/// [ResultView.documentMismatch] when the document doesn't match.
 ///
 /// See also:
 ///  - [LoadingContent]
@@ -17,14 +20,41 @@ class ErrorContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final message = getErrorMessage(error);
+    final message = switch (error) {
+      DocumentVerificationException error =>
+        _getDocumentVerificationErrorMessage(context, error.reason),
+      _ => getErrorMessage(error),
+    };
+
+    final body = Text(message);
+    final isDocumentMismatch = switch (error) {
+      DocumentVerificationException error => error.isDocumentMismatch,
+      _ => false,
+    };
 
     return Center(
-      child: ResultView.error(
-        titleText: title,
-        body: Text(message),
-      ),
+      child: isDocumentMismatch
+          ? ResultView.documentMismatch(titleText: title, body: body)
+          : ResultView.error(titleText: title, body: body),
     );
+  }
+
+  static String _getDocumentVerificationErrorMessage(
+    BuildContext context,
+    DocumentVerificationFailure reason,
+  ) {
+    final strings = context.strings;
+
+    return switch (reason) {
+      DocumentVerificationFailure.dataToSignMismatch =>
+        strings.documentVerificationDataToSignMismatchError,
+      DocumentVerificationFailure.localDocumentMismatch =>
+        strings.documentVerificationLocalDocumentMismatchError,
+      DocumentVerificationFailure.unsupportedDocumentType =>
+        strings.documentVerificationUnsupportedDocumentTypeError,
+      DocumentVerificationFailure.unsupportedData =>
+        strings.documentVerificationUnsupportedDataError,
+    };
   }
 }
 

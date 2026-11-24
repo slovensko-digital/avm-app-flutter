@@ -43,7 +43,8 @@ class WidgetbookApp extends StatelessWidget {
       appBuilder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: appTheme(context),
+          // the app supports only light theme, see App
+          theme: appTheme(context, brightness: Brightness.light),
           home: Scaffold(
             body: SizedBox.expand(
               child: child,

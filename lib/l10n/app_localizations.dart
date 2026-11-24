@@ -202,6 +202,12 @@ abstract class AppLocalizations {
   /// **'Preskočiť'**
   String get buttonSkipLabel;
 
+  /// No description provided for @buttonContinueLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Pokračovať'**
+  String get buttonContinueLabel;
+
   /// No description provided for @buttonScanQrCodeLabel.
   ///
   /// In sk, this message translates to:
@@ -406,6 +412,78 @@ abstract class AppLocalizations {
   /// **'Zrušiť spárovanie'**
   String get pairedDeviceDeleteTooltip;
 
+  /// No description provided for @trustServerTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Iný server'**
+  String get trustServerTitle;
+
+  /// No description provided for @trustServerHeading.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dôverujete tomuto zdroju?'**
+  String get trustServerHeading;
+
+  /// No description provided for @trustServerLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument poskytuje'**
+  String get trustServerLabel;
+
+  /// No description provided for @trustServerNotOfficialLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nie je to oficiálny server {server}.'**
+  String trustServerNotOfficialLabel(Object server);
+
+  /// No description provided for @trustServerVerifiedInfo.
+  ///
+  /// In sk, this message translates to:
+  /// **'Aplikácia overí, že podpíšete presne ten dokument, ktorý uvidíte.'**
+  String get trustServerVerifiedInfo;
+
+  /// No description provided for @trustServerNotVerifiedInfo.
+  ///
+  /// In sk, this message translates to:
+  /// **'Neoverí však, kto dokument poskytuje, ani čo sa s podpísaným dokumentom stane.'**
+  String get trustServerNotVerifiedInfo;
+
+  /// No description provided for @trustServerDocumentTypesInfo.
+  ///
+  /// In sk, this message translates to:
+  /// **'Podpísať je možné iba PDF dokumenty, textové súbory a obrázky.'**
+  String get trustServerDocumentTypesInfo;
+
+  /// No description provided for @trustServerRememberLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dôverovať tomuto zdroju aj nabudúce'**
+  String get trustServerRememberLabel;
+
+  /// No description provided for @trustedServersTitle.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dôveryhodné zdroje'**
+  String get trustedServersTitle;
+
+  /// No description provided for @trustedServersInfo.
+  ///
+  /// In sk, this message translates to:
+  /// **'Pri dokumentoch z týchto zdrojov sa nezobrazuje upozornenie, že nie sú z oficiálneho servera. Po odstránení zdroja sa upozornenie zobrazí znova.'**
+  String get trustedServersInfo;
+
+  /// No description provided for @trustedServersEmpty.
+  ///
+  /// In sk, this message translates to:
+  /// **'Nedôverujete žiadnemu inému zdroju.\nZdroj pridáte pri otvorení dokumentu z neho.'**
+  String get trustedServersEmpty;
+
+  /// No description provided for @trustedServerDeleteTooltip.
+  ///
+  /// In sk, this message translates to:
+  /// **'Odstrániť zdroj'**
+  String get trustedServerDeleteTooltip;
+
   /// No description provided for @pairIntegrationSuccessMessage.
   ///
   /// In sk, this message translates to:
@@ -586,6 +664,12 @@ abstract class AppLocalizations {
   /// **'Chyba pri načítaní vizualizácie dokumentu'**
   String get previewDocumentErrorHeading;
 
+  /// No description provided for @documentServerLabel.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument zo zdroja'**
+  String get documentServerLabel;
+
   /// No description provided for @shareDocumentText.
   ///
   /// In sk, this message translates to:
@@ -597,6 +681,30 @@ abstract class AppLocalizations {
   /// In sk, this message translates to:
   /// **'Neviem vizualizovať {type} typ.'**
   String documentVisualizationCannotVisualizeTypeError(Object type);
+
+  /// No description provided for @documentVerificationDataToSignMismatchError.
+  ///
+  /// In sk, this message translates to:
+  /// **'Údaje na podpis nezodpovedajú zobrazenému dokumentu, preto dokument nebol podpísaný.'**
+  String get documentVerificationDataToSignMismatchError;
+
+  /// No description provided for @documentVerificationLocalDocumentMismatchError.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument zo servera nezodpovedá vybranému súboru.'**
+  String get documentVerificationLocalDocumentMismatchError;
+
+  /// No description provided for @documentVerificationUnsupportedDocumentTypeError.
+  ///
+  /// In sk, this message translates to:
+  /// **'Z tohto servera je zatiaľ možné podpísať iba PDF dokumenty, textové súbory a obrázky (PNG, JPEG).'**
+  String get documentVerificationUnsupportedDocumentTypeError;
+
+  /// No description provided for @documentVerificationUnsupportedDataError.
+  ///
+  /// In sk, this message translates to:
+  /// **'Dokument zo servera sa nepodarilo overiť.'**
+  String get documentVerificationUnsupportedDataError;
 
   /// No description provided for @documentValidationLoadingLabel.
   ///

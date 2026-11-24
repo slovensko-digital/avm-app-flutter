@@ -48,6 +48,10 @@ import 'package:autogram/ui/screens/sign_document_screen.dart'
     as _autogram_ui_screens_sign_document_screen;
 import 'package:autogram/ui/screens/start_remote_document_signing_screen.dart'
     as _autogram_ui_screens_start_remote_document_signing_screen;
+import 'package:autogram/ui/screens/trust_server_screen.dart'
+    as _autogram_ui_screens_trust_server_screen;
+import 'package:autogram/ui/screens/trusted_server_list_screen.dart'
+    as _autogram_ui_screens_trusted_server_list_screen;
 import 'package:autogram/ui/widgets/app_version_text.dart'
     as _autogram_ui_widgets_app_version_text;
 import 'package:autogram/ui/widgets/autogram_logo.dart'
@@ -58,11 +62,15 @@ import 'package:autogram/ui/widgets/certificate_details.dart'
     as _autogram_ui_widgets_certificate_details;
 import 'package:autogram/ui/widgets/certificate_picker.dart'
     as _autogram_ui_widgets_certificate_picker;
+import 'package:autogram/ui/widgets/checkbox_field.dart'
+    as _autogram_ui_widgets_checkbox_field;
 import 'package:autogram/ui/widgets/chip.dart' as _autogram_ui_widgets_chip;
 import 'package:autogram/ui/widgets/close_button.dart'
     as _autogram_ui_widgets_close_button;
 import 'package:autogram/ui/widgets/dialogs.dart'
     as _autogram_ui_widgets_dialogs;
+import 'package:autogram/ui/widgets/document_server_strip.dart'
+    as _autogram_ui_widgets_document_server_strip;
 import 'package:autogram/ui/widgets/document_signature_info.dart'
     as _autogram_ui_widgets_document_signature_info;
 import 'package:autogram/ui/widgets/document_validation_strip.dart'
@@ -81,6 +89,8 @@ import 'package:autogram/ui/widgets/main_app_bar.dart'
     as _autogram_ui_widgets_main_app_bar;
 import 'package:autogram/ui/widgets/markdown_text.dart'
     as _autogram_ui_widgets_markdown_text;
+import 'package:autogram/ui/widgets/notification_banner.dart'
+    as _autogram_ui_widgets_notification_banner;
 import 'package:autogram/ui/widgets/option_picker.dart'
     as _autogram_ui_widgets_option_picker;
 import 'package:autogram/ui/widgets/plain_text_preview.dart'
@@ -160,6 +170,15 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
+        name: 'CheckboxField',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'CheckboxField',
+            builder: _autogram_ui_widgets_checkbox_field.previewCheckboxField,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
         name: 'Chip',
         useCases: [
           _widgetbook.WidgetbookUseCase(
@@ -206,6 +225,16 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
+        name: 'NotificationBanner',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'NotificationBanner',
+            builder: _autogram_ui_widgets_notification_banner
+                .previewNotificationBanner,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
         name: 'RadioButton',
         useCases: [
           _widgetbook.WidgetbookUseCase(
@@ -245,6 +274,16 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'CertificateDetails',
             builder: _autogram_ui_widgets_certificate_details
                 .previewCertificateDetails,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'DocumentServerStrip',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: '',
+            builder: _autogram_ui_widgets_document_server_strip
+                .previewDocumentServerStrip,
           ),
         ],
       ),
@@ -691,6 +730,11 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'SignDocumentScreen',
         useCases: [
           _widgetbook.WidgetbookUseCase(
+            name: 'data to sign mismatch',
+            builder: _autogram_ui_screens_sign_document_screen
+                .previewDataToSignMismatchSignDocumentScreen,
+          ),
+          _widgetbook.WidgetbookUseCase(
             name: 'error',
             builder: _autogram_ui_screens_sign_document_screen
                 .previewErrorSignDocumentScreen,
@@ -714,6 +758,26 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: '',
             builder: _autogram_ui_screens_start_remote_document_signing_screen
                 .previewStartRemoteDocumentSigningScreen,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'TrustServerScreen',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: '',
+            builder: _autogram_ui_screens_trust_server_screen
+                .previewTrustServerScreen,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'TrustedServerListScreen',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: '',
+            builder: _autogram_ui_screens_trusted_server_list_screen
+                .previewTrustedServerListScreen,
           ),
         ],
       ),

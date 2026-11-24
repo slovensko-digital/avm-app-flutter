@@ -42,7 +42,7 @@ packages:
     source: hosted
     version: "2.0.3"
   archive:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: archive
       sha256: a96e8b390886ee8abb49b7bd3ac8df6f451c621619f52a26e815fdcf568959ff
@@ -69,11 +69,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v0.5.0"
-      resolved-ref: "3129707cc4b0b4ba7bc087f82596e2f044b9dc67"
+      ref: ccr-6a9fd0aa-v7e49h
+      resolved-ref: e5f99b4ba3b1aef10a07158d77a66c83cbac4975
       url: "https://github.com/slovensko-digital/avm-client-dart"
     source: git
-    version: "0.5.0"
+    version: "0.6.0"
   barcode:
     dependency: transitive
     description:
@@ -251,7 +251,7 @@ packages:
     source: hosted
     version: "0.3.5+2"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       sha256: c8ea0233063ba03258fbcf2ca4d6dadfefe14f02fab57702265467a19f27fadf
@@ -1541,7 +1541,7 @@ packages:
     source: hosted
     version: "1.1.0"
   xml:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: xml
       sha256: "971043b3a0d3da28727e40ed3e0b5d18b742fa5a68665cca88e74b7876d5e025"

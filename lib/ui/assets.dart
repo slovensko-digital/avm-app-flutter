@@ -13,6 +13,7 @@ Widget previewIcons(BuildContext context) {
   final files = [
     'menu.svg',
     'qr_code_scanner.svg',
+    'warning.svg',
   ];
   const double spacing = 8;
 
@@ -45,6 +46,7 @@ Widget previewImages(BuildContext context) {
   final files = [
     'close.svg',
     'danger.svg',
+    'document_mismatch.svg',
     'info.svg',
     'lock.svg',
     'notification.svg',

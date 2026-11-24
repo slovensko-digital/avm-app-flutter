@@ -4,6 +4,7 @@ import 'package:eidmsdk/types.dart';
 import 'package:flutter/foundation.dart';
 import 'package:notified_preferences/notified_preferences.dart';
 
+import 'avm_server.dart';
 import 'pdf_signing_option.dart';
 import 'signature_type.dart';
 
@@ -26,6 +27,13 @@ abstract interface class Settings {
 
   /// Whether passed onboarding screen for "Remote Document Signing" feature.
   ValueNotifier<bool> get remoteDocumentSigningOnboardingPassed;
+
+  /// [AvmServer.authority] values of other than official servers, which the
+  /// user trusts, so documents from them are opened without warning.
+  ///
+  /// See also:
+  ///  - [TrustedServersSettings]
+  ValueNotifier<List<String>> get trustedServers;
 
   /// Clear all setting.
   Future<bool> clear();
@@ -89,4 +97,35 @@ class _SettingsImpl with NotifiedPreferences implements Settings {
     key: "onboarding.remoteDocumentSigning.passed",
     initialValue: false,
   );
+
+  @override
+  late final ValueNotifier<List<String>> trustedServers = createSetting(
+    key: "servers.trusted",
+    initialValue: const <String>[],
+  );
+}
+
+/// Trust of the user in other than official [AvmServer], stored in
+/// [Settings.trustedServers].
+extension TrustedServersSettings on Settings {
+  /// Whether documents from the [server] can be opened without warning.
+  bool isTrustedServer(AvmServer server) {
+    return server.isOfficial ||
+        trustedServers.value.contains(server.authority);
+  }
+
+  /// Remembers, that the user trusts the [server].
+  void trustServer(AvmServer server) {
+    if (!isTrustedServer(server)) {
+      trustedServers.value = [...trustedServers.value, server.authority];
+    }
+  }
+
+  /// Forgets, that the user trusts the [server].
+  void distrustServer(AvmServer server) {
+    trustedServers.value = [
+      for (final authority in trustedServers.value)
+        if (authority != server.authority) authority,
+    ];
+  }
 }

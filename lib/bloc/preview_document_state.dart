@@ -1,7 +1,8 @@
 import 'package:autogram_sign/autogram_sign.dart'
-    show DocumentVisualizationResponseBody;
+    show VerifiableVisualizationResponseBody;
 import 'package:flutter/foundation.dart';
 
+import '../data/document_preview.dart';
 import 'preview_document_cubit.dart';
 
 /// State for [PreviewDocumentCubit].
@@ -14,8 +15,10 @@ sealed class PreviewDocumentState {
   }
 
   PreviewDocumentSuccessState toSuccess(
-      DocumentVisualizationResponseBody visualization) {
-    return PreviewDocumentSuccessState(visualization);
+    VerifiableVisualizationResponseBody visualization,
+    DocumentPreview preview,
+  ) {
+    return PreviewDocumentSuccessState(visualization, preview);
   }
 
   PreviewDocumentErrorState toError(Object error) {
@@ -48,12 +51,16 @@ class PreviewDocumentErrorState extends PreviewDocumentState {
 }
 
 class PreviewDocumentSuccessState extends PreviewDocumentState {
-  final DocumentVisualizationResponseBody visualization;
+  /// Data objects covered by the signature, needed to verify data to sign.
+  final VerifiableVisualizationResponseBody visualization;
 
-  const PreviewDocumentSuccessState(this.visualization);
+  /// Document visualized on the device from the [visualization].
+  final DocumentPreview preview;
+
+  const PreviewDocumentSuccessState(this.visualization, this.preview);
 
   @override
   String toString() {
-    return "$runtimeType(visualization: ...)";
+    return "$runtimeType(preview: ${preview.runtimeType})";
   }
 }
