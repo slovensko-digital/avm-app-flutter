@@ -64,7 +64,7 @@
   "pairingRenewalRequiredMessage": "Doručovanie žiadostí o podpis vyžaduje obnovenie párovania. Znovu naskenujte párovací QR kód z každého zariadenia. Pôvodné párovania už nedoručujú notifikácie.",
   "pairingRenewalConfirmationMessage": "Doručovanie notifikácií vyžaduje novú registráciu. Pokračovaním sa pôvodné párovania nahradia. Ostatné zariadenia bude potrebné tiež znovu spárovať.",
   "notificationStatusUnavailableMessage": "Nepodarilo sa overiť doručovanie notifikácií. Skontrolujte pripojenie a skúste to znova.",
-  "newSignRequestTitle": "Prišla nová žiadosť o podpis",
+  "newSignRequestTitle": "Nová žiadosť o podpis",
   "newSignRequestMessage": "Otvorením nahradíte rozpracovaný dokument.",
   "openSignRequestLabel": "Otvoriť",
   "privacyPolicyTitle": "Ochrana osobných údajov",

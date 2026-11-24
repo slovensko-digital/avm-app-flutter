@@ -163,7 +163,7 @@ void main() {
     foreground.value = newDocument;
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text(strings.buttonCloseLabel));
+    await tester.tap(find.byTooltip(strings.buttonCloseLabel));
     await tester.pumpAndSettle();
     expect(find.byType(MaterialBanner), findsNothing);
     expect(find.text('Original document'), findsOneWidget);

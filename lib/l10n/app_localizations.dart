@@ -457,7 +457,7 @@ abstract class AppLocalizations {
   /// No description provided for @newSignRequestTitle.
   ///
   /// In sk, this message translates to:
-  /// **'Prišla nová žiadosť o podpis'**
+  /// **'Nová žiadosť o podpis'**
   String get newSignRequestTitle;
 
   /// No description provided for @newSignRequestMessage.
