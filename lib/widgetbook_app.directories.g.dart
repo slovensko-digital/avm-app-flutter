@@ -62,6 +62,8 @@ import 'package:autogram/ui/widgets/certificate_details.dart'
     as _autogram_ui_widgets_certificate_details;
 import 'package:autogram/ui/widgets/certificate_picker.dart'
     as _autogram_ui_widgets_certificate_picker;
+import 'package:autogram/ui/widgets/checkbox_field.dart'
+    as _autogram_ui_widgets_checkbox_field;
 import 'package:autogram/ui/widgets/chip.dart' as _autogram_ui_widgets_chip;
 import 'package:autogram/ui/widgets/close_button.dart'
     as _autogram_ui_widgets_close_button;
@@ -87,6 +89,8 @@ import 'package:autogram/ui/widgets/main_app_bar.dart'
     as _autogram_ui_widgets_main_app_bar;
 import 'package:autogram/ui/widgets/markdown_text.dart'
     as _autogram_ui_widgets_markdown_text;
+import 'package:autogram/ui/widgets/notification_banner.dart'
+    as _autogram_ui_widgets_notification_banner;
 import 'package:autogram/ui/widgets/option_picker.dart'
     as _autogram_ui_widgets_option_picker;
 import 'package:autogram/ui/widgets/plain_text_preview.dart'
@@ -166,6 +170,15 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
+        name: 'CheckboxField',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'CheckboxField',
+            builder: _autogram_ui_widgets_checkbox_field.previewCheckboxField,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
         name: 'Chip',
         useCases: [
           _widgetbook.WidgetbookUseCase(
@@ -208,6 +221,16 @@ final directories = <_widgetbook.WidgetbookNode>[
           _widgetbook.WidgetbookUseCase(
             name: 'MaterialBanner ',
             builder: _autogram_ui_app_theme.previewMaterialBanner,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'NotificationBanner',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'NotificationBanner',
+            builder: _autogram_ui_widgets_notification_banner
+                .previewNotificationBanner,
           ),
         ],
       ),

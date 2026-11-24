@@ -13,6 +13,7 @@ Widget previewIcons(BuildContext context) {
   final files = [
     'menu.svg',
     'qr_code_scanner.svg',
+    'warning.svg',
   ];
   const double spacing = 8;
 

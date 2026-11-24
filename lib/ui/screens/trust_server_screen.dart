@@ -8,6 +8,8 @@ import '../../data/avm_server.dart';
 import '../../data/settings.dart';
 import '../../strings_context.dart';
 import '../app_theme.dart';
+import '../widgets/checkbox_field.dart';
+import '../widgets/notification_banner.dart';
 import 'preview_document_screen.dart';
 import 'trusted_server_list_screen.dart';
 
@@ -84,7 +86,6 @@ class _BodyState extends State<_Body> {
   Widget build(BuildContext context) {
     final strings = context.strings;
     final theme = Theme.of(context);
-    final onSurface = theme.colorScheme.onSurface;
 
     return Column(
       children: [
@@ -112,31 +113,20 @@ class _BodyState extends State<_Body> {
                   "${strings.trustServerNotVerifiedInfo}",
                 ),
                 const SizedBox(height: 12),
+                // secondary text as ID-SK hint - the same size, only grey
                 Text(
                   strings.trustServerDocumentTypesInfo,
-                  style: theme.textTheme.bodySmall?.copyWith(
+                  style: TextStyle(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
-                const SizedBox(height: 12),
-                CheckboxListTile(
+                const SizedBox(height: 20),
+                CheckboxField(
                   value: _remember,
                   onChanged: (value) {
-                    setState(() => _remember = value ?? false);
+                    setState(() => _remember = value);
                   },
-                  title: Text(strings.trustServerRememberLabel),
-                  controlAffinity: ListTileControlAffinity.leading,
-                  contentPadding: EdgeInsets.zero,
-                  // ID-SK checkbox - big box with border and check mark
-                  checkboxScaleFactor: kRadioScale,
-                  checkboxShape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(3)),
-                  ),
-                  side: WidgetStateBorderSide.resolveWith(
-                    (_) => BorderSide(color: onSurface, width: 2),
-                  ),
-                  fillColor: const WidgetStatePropertyAll(Colors.transparent),
-                  checkColor: onSurface,
+                  label: Text(strings.trustServerRememberLabel),
                 ),
               ],
             ),
@@ -170,14 +160,8 @@ class _BodyState extends State<_Body> {
   }
 }
 
-/// Warning about the [server], that it's not the official one; styled as
-/// ID-SK warning with its yellow colors.
+/// Warning about the [server], that it's not the official one.
 class _ServerWarning extends StatelessWidget {
-  static const _lightYellow = Color(0xFFFAF4EC);
-  static const _mediumYellow = Color(0xFFEBCFAA);
-  static const _yellow = Color(0xFFBD730C);
-  static const _darkYellow = Color(0xFF4E2A00);
-
   final AvmServer server;
 
   const _ServerWarning({required this.server});
@@ -186,47 +170,10 @@ class _ServerWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = context.strings;
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _lightYellow,
-        border: Border.all(color: _mediumYellow),
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 12,
-        children: [
-          const Icon(Icons.warning, color: _yellow),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 4,
-              children: [
-                Text(
-                  strings.trustServerLabel,
-                  style: const TextStyle(color: _darkYellow),
-                ),
-                Text(
-                  server.authority,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  strings.trustServerNotOfficialLabel(
-                    AvmServer.official.authority,
-                  ),
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: _darkYellow,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+    return NotificationBanner(
+      title: Text("${strings.trustServerLabel} ${server.authority}"),
+      body: Text(
+        strings.trustServerNotOfficialLabel(AvmServer.official.authority),
       ),
     );
   }

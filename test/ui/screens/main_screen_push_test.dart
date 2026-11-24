@@ -158,7 +158,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(TrustServerScreen), findsOneWidget);
-    expect(find.text('avm.example.org'), findsOneWidget);
+    expect(find.textContaining('avm.example.org'), findsOneWidget);
     expect(find.byType(PreviewDocumentScreen), findsNothing);
 
     await tester.ensureVisible(find.text(strings.trustServerRememberLabel));
